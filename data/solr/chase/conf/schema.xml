@@ -156,12 +156,32 @@
 	    -->
 	<field name="_version_" type="long" indexed="true" stored="true" multiValued="false"/>
 	<field name="id" type="string" indexed="true" stored="true" required="true" multiValued="false" />
-        <field name="time" type="tdate" indexed="true" stored="true" multiValued="false"/>
+        <field name="created_at" type="tdate" indexed="true" stored="true" multiValued="false"/>
 	<field name="geo" type="string" indexed="true" stored="true" multiValued="false"/>
-	<field name="tweet" type="string" indexed="true" stored="true" multiValued="false"/>
-	<field name="hashtag" type="string" indexed="true" stored="true" multiValued="true"/>
-	<field name="user" type="string" indexed="true" stored="true" multiValued="false"/>
-	      
+	<field name="coordinates" type="string" indexed="true" stored="true" multiValued="true"/>
+	<field name="favorite_count" type="int" indexed="true" stored="true" multiValued="false"/>	
+	<field name="in_reply_to_screen_name" type="string" indexed="true" stored="true" multiValued="false"/>
+	<field name="in_reply_to_status_id" type="string" indexed="true" stored="true" multiValued="false"/>
+	<field name="in_reply_to_user_id" type="string" indexed="true" stored="true" multiValued="false"/>
+	<field name="lang" type="string" indexed="true" stored="true" multiValued="false"/>
+	<field name="place_full_name" type="string" indexed="true" stored="true" multiValued="false"/>
+	<field name="place_coordinates" type="string" indexed="true" stored="true" multiValued="true"/>
+	<field name="retweet_count" type="int" indexed="true" stored="true" multiValued="false"/>	
+	<field name="retweeted" type="boolean" indexed="true" stored="true" multiValued="false"/>	
+	<field name="quoted_status_id" type="string" indexed="true" stored="true" multiValued="false"/>		
+	<field name="status_text" type="text_general" indexed="true" stored="true" multiValued="false"/>
+	<field name="entities_hashtag" type="string" indexed="true" stored="true" multiValued="true"/>
+	<field name="entities_symbol" type="string" indexed="true" stored="true" multiValued="true"/>
+	<field name="entities_url" type="string" indexed="true" stored="true" multiValued="true"/>
+	<field name="entities_user_mention" type="string" indexed="true" stored="true" multiValued="true"/>
+	<field name="user_id" type="string" indexed="true" stored="true" multiValued="false"/>
+	<field name="user_screen_name" type="string" indexed="true" stored="true" multiValued="false"/>
+	<field name="user_statuses_count" type="int" indexed="true" stored="true" multiValued="false"/>
+	<field name="user_friends_count" type="int" indexed="true" stored="true" multiValued="false"/>
+	<field name="user_followers_count" type="int" indexed="true" stored="true" multiValued="false"/>
+	<field name="user_location" type="string" indexed="true" stored="true" multiValued="false"/>	
+	<field name="user_location_coordinates" type="string" indexed="true" stored="true" multiValued="true"/>	
+
        	<dynamicField name="*_i"  type="int"    indexed="true"  stored="true"/>
 	   <dynamicField name="*_is" type="int"    indexed="true"  stored="true"  multiValued="true"/>
 	   <dynamicField name="*_s"  type="string"  indexed="true"  stored="true" />

@@ -1,8 +1,26 @@
-from tweepy import Stream
-from tweepy import OAuthHandler
-from dc import twitter_stream as ts
+import logging
 import sys
+import json
+import os
+import urllib.request
 
+import datetime
+from SolrClient import SolrClient
+from tweepy import OAuthHandler
+from tweepy import Stream
+from tweepy.streaming import StreamListener
+from geopy.geocoders import Nominatim
+
+LANGUAGES_ACCETED=["en"]
+LOG_DIR=os.getcwd()+"/logs"
+SOLR_SERVER="http://localhost:8983/solr"
+SOLR_CORE="chase"
+TWITTER_TIME_PATTERN="%a %b %d %H:%M:%S %z %Y"
+SOLR_TIME_PATTERN="%Y-%m-%dT%H:%M:%SZ" #YYYY-MM-DDThh:mm:ssZ
+LOCATION_COORDINATES={} #cache to look up location geocodes
+geolocator = Nominatim()
+logger = logging.getLogger(__name__)
+logging.basicConfig(filename=LOG_DIR+'/twitter_stream.log', level=logging.INFO, filemode='w')
 
 def read_oauth(file):
     vars = {}
@@ -21,11 +39,132 @@ def read_search_criteria(file):
     return vars
 
 
+class TwitterStream(StreamListener):
+    __solr = None
+    __core=None
+    __count=0
+
+    def __init__(self):
+        super().__init__()
+        self.__solr=SolrClient(SOLR_SERVER)
+        self.__core=SOLR_CORE
+
+    def on_data(self, data):
+        self.__count+=1
+        jdata = None
+        try:
+            jdata = json.loads(data)
+            #created_at_time
+            str_created_at= jdata["created_at"]
+            time=datetime.datetime.strptime(str_created_at, TWITTER_TIME_PATTERN)
+            str_solr_time=time.utcnow().strftime(SOLR_TIME_PATTERN)
+
+            #entities hashtags
+            hashtags=jdata["entities"]["hashtags"]
+            hashtag_list=[]
+            for hashtag in hashtags:
+                hashtag_list.append(hashtag["text"])
+
+            #entities urls
+            urls=jdata["entities"]["urls"]
+            url_list=[]
+            for url in urls:
+                url_list.append(url["expanded_url"])
+
+            #entities user_mentions
+            user_mentions=jdata["entities"]["user_mentions"]
+            user_mention_list=[]
+            for um in user_mentions:
+                user_mention_list.append(um["id"])
+
+            #user_location
+            str_user_loc=jdata["user"]["location"]
+            if str_user_loc in LOCATION_COORDINATES.keys():
+                geocode_obj = LOCATION_COORDINATES[str_user_loc]
+            else:
+                geocode_obj=None #currently the api for getting geo codes seems to be unstable
+                # geocode_obj = geolocator.geocode(str_user_loc)
+                # LOCATION_COORDINATES[str_user_loc]=geocode_obj
+            geocode_coordinates=[]
+            if geocode_obj is not None:
+                geocode_coordinates.append(geocode_obj.latitude)
+                geocode_coordinates.append(geocode_obj.longitude)
+
+            #quoted status id if exists
+            if "quoted_status_id" in jdata:
+                quoted_status_id=jdata["quoted_status_id"]
+            else:
+                quoted_status_id=None
+
+            #place exists
+            place=jdata["place"]
+            if place is not None:
+                place_full_name=place["full_name"]
+                place_coordinates=place['bounding_box']['coordinates'][0][0]
+            else:
+                place_full_name=None
+                place_coordinates=None
+
+            docs = [{'id':jdata["id"],
+                   'created_at':str_solr_time,
+                   'geo':jdata["geo"],
+                   'coordinates':jdata["coordinates"],
+                   'favorite_count':jdata["favorite_count"],
+                   'in_reply_to_screen_name':jdata["in_reply_to_screen_name"],
+                   'in_reply_to_status_id':jdata["in_reply_to_status_id"],
+                   'in_reply_to_user_id':jdata["in_reply_to_user_id"],
+                   'lang':jdata["lang"],
+                   'place_full_name':place_full_name,
+                   'place_coordinates':place_coordinates,
+                   'retweet_count':jdata["retweet_count"],
+                   'retweeted':jdata["retweeted"],
+                   'quoted_status_id':quoted_status_id,
+                   'status_text':jdata["text"],
+                   'entities_hashtag':hashtag_list,
+                   'entities_symbol':jdata["entities"]["symbols"],
+                   'entities_url':url_list,
+                   'entities_user_mention':user_mention_list,
+                   'user_id':jdata["user"]["id"],
+                   'user_screen_name':jdata["user"]["screen_name"],
+                   'user_statuses_count':jdata["user"]["statuses_count"],
+                   'user_friends_count':jdata["user"]["friends_count"],
+                   'user_followers_count':jdata["user"]["followers_count"],
+                   'user_location':str_user_loc,
+                   'user_location_coordinates':geocode_coordinates}]
+            self.__solr.index(self.__core,docs)
+
+            if self.__count%50==0:
+                code=urllib.request.\
+                    urlopen("http://localhost:8983/solr/{}/update?commit=true".format(self.__core)).read()
+                now=datetime.datetime.now()
+                print("{} processed: {}".format(now, self.__count))
+                logger.info("{} processed: {}".format(now,self.__count))
+        except Exception as exc:
+            print("Error encountered for {}, error:{} (see log file for details)".format(self.__count, exc))
+            if jdata is not None:
+                tweet_id=jdata["id"]
+            else:
+                tweet_id="[failed to parse]"
+            logger.info("Error encountered for counter={}, tweet={}, error:{} (see log file for details)".
+                        format(self.__count, tweet_id, exc))
+            if jdata is not None:
+                file = LOG_DIR+"/"+str(tweet_id)+".txt"
+                logger.info("\t input data json written to {}".format(file))
+                with open(file, 'w') as outfile:
+                    json.dump(jdata, outfile)
+        return(True)
+
+    def on_error(self, status):
+        print(status)
+
+    def on_status(self, status):
+        print(status.text)
+
 oauth=read_oauth(sys.argv[1])
 sc=read_search_criteria(sys.argv[2])
 auth = OAuthHandler(oauth["C_KEY"], oauth["C_SECRET"])
 auth.set_access_token(oauth["A_TOKEN"], oauth["A_SECRET"])
 
-twitterStream = Stream(auth, ts.TwitterStream())
-twitterStream.filter(track=[sc["KEYWORDS"]])
+twitterStream = Stream(auth, TwitterStream())
+twitterStream.filter(track=[sc["KEYWORDS"]], languages=LANGUAGES_ACCETED)
 

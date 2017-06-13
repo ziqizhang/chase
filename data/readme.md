@@ -9,3 +9,7 @@ This will run a solr instance at the background on the default port 8983. You ca
 To stop that server, open a console run
 
 bin/solr stop -p 8983
+
+
+to commit changes to index:
+http://localhost:8983/solr/chase/update?commit=true
