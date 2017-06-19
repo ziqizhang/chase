@@ -169,7 +169,9 @@ class TwitterStream(StreamListener):
         print(status.text)
 
 oauth=read_oauth(sys.argv[1])
+print(sys.argv[1])
 sc=read_search_criteria(sys.argv[2])
+print(sys.argv[2])
 auth = OAuthHandler(oauth["C_KEY"], oauth["C_SECRET"])
 auth.set_access_token(oauth["A_TOKEN"], oauth["A_SECRET"])
 
