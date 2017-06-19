@@ -11,6 +11,7 @@ from tweepy import Stream
 from tweepy.streaming import StreamListener
 from geopy.geocoders import Nominatim
 
+IGNORE_RETWEETS=True
 LANGUAGES_ACCETED=["en"]
 LOG_DIR=os.getcwd()+"/logs"
 SOLR_SERVER="http://localhost:8983/solr"
@@ -39,6 +40,12 @@ def read_search_criteria(file):
     return vars
 
 
+def ignoreRetweet(status_text):
+    if "rt @" in status_text.lower() and IGNORE_RETWEETS:
+        return True
+    return False
+
+
 class TwitterStream(StreamListener):
     __solr = None
     __core=None
@@ -54,7 +61,7 @@ class TwitterStream(StreamListener):
         jdata = None
         try:
             jdata = json.loads(data)
-            if jdata is not None and "id" in jdata.keys():
+            if jdata is not None and "id" in jdata.keys() and not ignoreRetweet(jdata["text"]):
                 #created_at_time
                 str_created_at= jdata["created_at"]
                 time=datetime.datetime.strptime(str_created_at, TWITTER_TIME_PATTERN)
