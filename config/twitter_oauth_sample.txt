@@ -1,4 +1,0 @@
-C_KEY="your consumer key"
-C_SECRET="your consumer secret"
-A_TOKEN="your access token"
-A_SECRET="your access secret"
