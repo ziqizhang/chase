@@ -40,28 +40,30 @@ def read_search_criteria(file):
     return vars
 
 
-def ignoreRetweet(status_text):
-    if "rt @" in status_text.lower() and IGNORE_RETWEETS:
-        return True
-    return False
-
 
 class TwitterStream(StreamListener):
     __solr = None
     __core=None
     __count=0
+    __count_retweet=0
 
     def __init__(self):
         super().__init__()
         self.__solr=SolrClient(SOLR_SERVER)
         self.__core=SOLR_CORE
 
+    def ignoreRetweet(self, status_text):
+        if "rt @" in status_text.lower() and IGNORE_RETWEETS:
+            self.__count_retweet+=1
+            return True
+        return False
+
     def on_data(self, data):
         self.__count+=1
         jdata = None
         try:
             jdata = json.loads(data)
-            if jdata is not None and "id" in jdata.keys() and not ignoreRetweet(jdata["text"]):
+            if jdata is not None and "id" in jdata.keys() and not self.ignoreRetweet(jdata["text"]):
                 #created_at_time
                 str_created_at= jdata["created_at"]
                 time=datetime.datetime.strptime(str_created_at, TWITTER_TIME_PATTERN)
@@ -149,10 +151,13 @@ class TwitterStream(StreamListener):
 
                 if self.__count%500==0:
                     code=urllib.request.\
-                        urlopen("http://localhost:8983/solr/{}/update?commit=true".format(self.__core)).read()
+                        urlopen("http://localhost:8983/solr/{}/update?commit=true".
+                                format(self.__core)).read()
                     now=datetime.datetime.now()
-                    print("{} processed: {}".format(now, self.__count))
-                    logger.info("{} processed: {}".format(now,self.__count))
+                    print("{} processed: {}, where {} are retweets and ignored".
+                          format(now, self.__count, self.__count_retweet))
+                    logger.info("{} processed: {}, where {} are retweets and ignored".
+                                format(now,self.__count, self.__count_retweet))
         except Exception as exc:
             print("Error encountered for {}, error:{} (see log file for details)".format(self.__count, exc))
             if jdata is not None and "id" in jdata.keys():
