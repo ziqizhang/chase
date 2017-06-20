@@ -1,2 +1,2 @@
-KEYWORDS=black people,black men,black women,blacks,black race,muslim,islam,islamic,immigration,migrant,immigrant,eastern europe,foreign migrant,homosexual,gay,lesbian,transgender,lgbt,bisexual,disability,disabled,paralympics,mental health,#FinsburyPark,finsbury park,van attack,Darren Osborne,grenfells
+KEYWORDS=black people,black men,black women,blacks,black race,muslim,islam,islamic,immigration,migrant,immigrant,eastern europe,foreign migrant,homosexual,gay,lesbian,transgender,lgbt,bisexual,disability,disabled,paralympics,mental health,#FinsburyPark,finsbury park,van attack,Darren Osborne,grenfell
 
