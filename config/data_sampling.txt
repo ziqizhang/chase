@@ -1,0 +1,7 @@
+timespans=[2017-06-13T00:00:00Z TO 2017-06-14T00:00:00Z],[2017-06-14T00:00:00Z TO 2017-06-15T00:00:00Z]
+samples_per_timespan=1
+elements_per_sample=1000
+
+
+#total samples = samples_per_timespan x size of timespans
+#total elements collected = elements_per_sample x total samples
