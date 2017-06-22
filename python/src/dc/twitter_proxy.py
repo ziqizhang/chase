@@ -41,6 +41,7 @@ def read_search_criteria(file):
 
 
 
+
 class TwitterStream(StreamListener):
     __solr = None
     __core=None
