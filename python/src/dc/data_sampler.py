@@ -6,8 +6,10 @@ import random
 from SolrClient import SolrClient
 
 SOLR_SERVER="http://localhost:8983/solr"
-SOLR_CORE="chase"
-KEYWORDS='ban+kill+die+evil+hate+attack+terrorist+terrorism+threat+#DeportallMuslims+#refugeesnotwelcome'
+SOLR_CORE="chase_searchapi"
+#KEYWORDS='ban+kill+die+evil+hate+attack+terrorist+terrorism+threat+#DeportallMuslims+#refugeesnotwelcome'
+KEYWORDS='*'
+
 
 logger = logging.getLogger(__name__)
 LOG_DIR=os.getcwd()+"/logs"
@@ -88,4 +90,4 @@ def collect_samples(config_file,out_folder):
 
 
 collect_samples("/home/zqz/Work/chase/config/data_sampling.txt",
-                "/home/zqz/Work/chase/data/annotation/keyword_filtered")
+                "/home/zqz/Work/chase/data/annotation/tag_filtered")

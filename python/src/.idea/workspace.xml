@@ -20,11 +20,11 @@
   </component>
   <component name="FileEditorManager">
     <leaf SIDE_TABS_SIZE_LIMIT_KEY="300">
-      <file leaf-file-name="twitter_proxy.py" pinned="false" current-in-tab="true">
+      <file leaf-file-name="twitter_proxy.py" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/dc/twitter_proxy.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="61">
-              <caret line="41" column="0" selection-start-line="41" selection-start-column="0" selection-end-line="41" selection-end-column="0" />
+            <state relative-caret-position="3842">
+              <caret line="226" column="12" selection-start-line="226" selection-start-column="12" selection-end-line="226" selection-end-column="12" />
               <folding>
                 <element signature="e#0#14#0" expanded="true" />
               </folding>
@@ -35,8 +35,20 @@
       <file leaf-file-name="data_sampler.py" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/dc/data_sampler.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="153">
-              <caret line="9" column="105" selection-start-line="9" selection-start-column="105" selection-end-line="9" selection-end-column="105" />
+            <state relative-caret-position="192">
+              <caret line="36" column="85" selection-start-line="32" selection-start-column="3" selection-end-line="36" selection-end-column="85" />
+              <folding>
+                <element signature="e#0#10#0" expanded="true" />
+              </folding>
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="util.py" pinned="false" current-in-tab="true">
+        <entry file="file://$PROJECT_DIR$/dc/util.py">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="307">
+              <caret line="40" column="50" selection-start-line="40" selection-start-column="50" selection-end-line="40" selection-end-column="50" />
               <folding>
                 <element signature="e#0#10#0" expanded="true" />
               </folding>
@@ -62,8 +74,9 @@
         <option value="$PROJECT_DIR$/dc/twitter_stream" />
         <option value="$PROJECT_DIR$/dc/twitter_stream.py" />
         <option value="$PROJECT_DIR$/dc/__init__.py" />
-        <option value="$PROJECT_DIR$/dc/data_sampler.py" />
         <option value="$PROJECT_DIR$/dc/twitter_proxy.py" />
+        <option value="$PROJECT_DIR$/dc/data_sampler.py" />
+        <option value="$PROJECT_DIR$/dc/util.py" />
       </list>
     </option>
   </component>
@@ -98,7 +111,6 @@
       <foldersAlwaysOnTop value="true" />
     </navigator>
     <panes>
-      <pane id="Scratches" />
       <pane id="ProjectPane">
         <subPane>
           <PATH>
@@ -137,6 +149,7 @@
           </PATH>
         </subPane>
       </pane>
+      <pane id="Scratches" />
     </panes>
   </component>
   <component name="PropertiesComponent">
@@ -149,7 +162,7 @@
       <recent name="$PROJECT_DIR$/dc/twitter" />
     </key>
   </component>
-  <component name="RunManager" selected="Python.data_sampler">
+  <component name="RunManager" selected="Python.util">
     <configuration default="false" name="twitter_proxy.py" type="PythonConfigurationType" factoryName="Python" temporary="true">
       <option name="INTERPRETER_OPTIONS" value="" />
       <option name="PARENT_ENVS" value="true" />
@@ -180,6 +193,23 @@
       <option name="ADD_SOURCE_ROOTS" value="true" />
       <module name="src" />
       <option name="SCRIPT_NAME" value="$PROJECT_DIR$/dc/data_sampler.py" />
+      <option name="PARAMETERS" value="" />
+      <option name="SHOW_COMMAND_LINE" value="false" />
+      <method />
+    </configuration>
+    <configuration default="false" name="util" type="PythonConfigurationType" factoryName="Python" temporary="true">
+      <option name="INTERPRETER_OPTIONS" value="" />
+      <option name="PARENT_ENVS" value="true" />
+      <envs>
+        <env name="PYTHONUNBUFFERED" value="1" />
+      </envs>
+      <option name="SDK_HOME" value="" />
+      <option name="WORKING_DIRECTORY" value="$PROJECT_DIR$/dc" />
+      <option name="IS_MODULE_SDK" value="true" />
+      <option name="ADD_CONTENT_ROOTS" value="true" />
+      <option name="ADD_SOURCE_ROOTS" value="true" />
+      <module name="src" />
+      <option name="SCRIPT_NAME" value="$PROJECT_DIR$/dc/util.py" />
       <option name="PARAMETERS" value="" />
       <option name="SHOW_COMMAND_LINE" value="false" />
       <method />
@@ -334,14 +364,16 @@
       <option name="USE_KEYWORD" value="false" />
       <method />
     </configuration>
-    <list size="2">
+    <list size="3">
       <item index="0" class="java.lang.String" itemvalue="Python.twitter_proxy.py" />
       <item index="1" class="java.lang.String" itemvalue="Python.data_sampler" />
+      <item index="2" class="java.lang.String" itemvalue="Python.util" />
     </list>
     <recent_temporary>
-      <list size="2">
-        <item index="0" class="java.lang.String" itemvalue="Python.data_sampler" />
-        <item index="1" class="java.lang.String" itemvalue="Python.twitter_proxy.py" />
+      <list size="3">
+        <item index="0" class="java.lang.String" itemvalue="Python.util" />
+        <item index="1" class="java.lang.String" itemvalue="Python.data_sampler" />
+        <item index="2" class="java.lang.String" itemvalue="Python.twitter_proxy.py" />
       </list>
     </recent_temporary>
   </component>
@@ -352,11 +384,11 @@
     <frame x="65" y="24" width="1301" height="744" extended-state="6" />
     <editor active="true" />
     <layout>
-      <window_info id="Project" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.2973396" sideWeight="0.5" order="0" side_tool="false" content_ui="combo" />
+      <window_info id="Project" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.16744915" sideWeight="0.5" order="0" side_tool="false" content_ui="combo" />
       <window_info id="Version Control" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
       <window_info id="Python Console" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="0" side_tool="false" content_ui="tabs" />
-      <window_info id="Run" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.3116279" sideWeight="0.5" order="4" side_tool="false" content_ui="tabs" />
-      <window_info id="Debug" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.41395348" sideWeight="0.5" order="5" side_tool="false" content_ui="tabs" />
+      <window_info id="Run" active="true" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.4248062" sideWeight="0.5" order="4" side_tool="false" content_ui="tabs" />
+      <window_info id="Debug" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.45581394" sideWeight="0.5" order="5" side_tool="false" content_ui="tabs" />
       <window_info id="Cvs" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.25" sideWeight="0.5" order="6" side_tool="false" content_ui="tabs" />
       <window_info id="TODO" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="8" side_tool="false" content_ui="tabs" />
       <window_info id="Message" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" />
@@ -393,14 +425,29 @@
           <option name="timeStamp" value="7" />
         </line-breakpoint>
         <line-breakpoint enabled="true" suspend="THREAD" type="python-line">
-          <url>file://$PROJECT_DIR$/dc/twitter_proxy.py</url>
-          <line>178</line>
-          <option name="timeStamp" value="30" />
+          <url>file://$PROJECT_DIR$/dc/data_sampler.py</url>
+          <line>87</line>
+          <option name="timeStamp" value="55" />
         </line-breakpoint>
         <line-breakpoint enabled="true" suspend="THREAD" type="python-line">
-          <url>file://$PROJECT_DIR$/dc/data_sampler.py</url>
-          <line>85</line>
-          <option name="timeStamp" value="55" />
+          <url>file://$PROJECT_DIR$/dc/twitter_proxy.py</url>
+          <line>226</line>
+          <option name="timeStamp" value="58" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" suspend="THREAD" type="python-line">
+          <url>file://$PROJECT_DIR$/dc/util.py</url>
+          <line>29</line>
+          <option name="timeStamp" value="68" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" suspend="THREAD" type="python-line">
+          <url>file://$PROJECT_DIR$/dc/util.py</url>
+          <line>23</line>
+          <option name="timeStamp" value="69" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" suspend="THREAD" type="python-line">
+          <url>file://$PROJECT_DIR$/dc/util.py</url>
+          <line>11</line>
+          <option name="timeStamp" value="70" />
         </line-breakpoint>
       </breakpoints>
       <default-breakpoints>
@@ -410,7 +457,7 @@
           </properties>
         </breakpoint>
       </default-breakpoints>
-      <option name="time" value="58" />
+      <option name="time" value="71" />
     </breakpoint-manager>
     <watches-manager>
       <configuration name="PythonConfigurationType">
@@ -419,6 +466,36 @@
     </watches-manager>
   </component>
   <component name="editorHistoryManager">
+    <entry file="file://$PROJECT_DIR$/dc/twitter_proxy.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="3842">
+          <caret line="226" column="12" selection-start-line="226" selection-start-column="12" selection-end-line="226" selection-end-column="12" />
+          <folding>
+            <element signature="e#0#14#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/dc/data_sampler.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="0">
+          <caret line="0" column="0" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
+          <folding>
+            <element signature="e#0#10#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/dc/twitter_proxy.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="3842">
+          <caret line="226" column="12" selection-start-line="226" selection-start-column="12" selection-end-line="226" selection-end-column="12" />
+          <folding>
+            <element signature="e#0#14#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
     <entry file="file://$PROJECT_DIR$/dc/twitter_proxy.py">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="255">
@@ -517,26 +594,42 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="73">
           <caret line="296" column="0" selection-start-line="296" selection-start-column="0" selection-end-line="296" selection-end-column="0" />
-          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$USER_HOME$/Programs/anaconda3/lib/python3.6/site-packages/tweepy/binder.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="116">
+          <caret line="173" column="0" selection-start-line="173" selection-start-column="0" selection-end-line="173" selection-end-column="0" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/dc/twitter_proxy.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="3842">
+          <caret line="226" column="12" selection-start-line="226" selection-start-column="12" selection-end-line="226" selection-end-column="12" />
+          <folding>
+            <element signature="e#0#14#0" expanded="true" />
+          </folding>
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/dc/data_sampler.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="153">
-          <caret line="9" column="105" selection-start-line="9" selection-start-column="105" selection-end-line="9" selection-end-column="105" />
+        <state relative-caret-position="192">
+          <caret line="36" column="85" selection-start-line="32" selection-start-column="3" selection-end-line="36" selection-end-column="85" />
           <folding>
             <element signature="e#0#10#0" expanded="true" />
           </folding>
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/dc/twitter_proxy.py">
+    <entry file="file://$PROJECT_DIR$/dc/util.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="61">
-          <caret line="41" column="0" selection-start-line="41" selection-start-column="0" selection-end-line="41" selection-end-column="0" />
+        <state relative-caret-position="307">
+          <caret line="40" column="50" selection-start-line="40" selection-start-column="50" selection-end-line="40" selection-end-column="50" />
           <folding>
-            <element signature="e#0#14#0" expanded="true" />
+            <element signature="e#0#10#0" expanded="true" />
           </folding>
         </state>
       </provider>

@@ -5,6 +5,8 @@ import os
 import urllib.request
 
 import datetime
+
+import tweepy
 from SolrClient import SolrClient
 from tweepy import OAuthHandler
 from tweepy import Stream
@@ -16,6 +18,7 @@ LANGUAGES_ACCETED=["en"]
 LOG_DIR=os.getcwd()+"/logs"
 SOLR_SERVER="http://localhost:8983/solr"
 SOLR_CORE="chase"
+SOLR_CORE_SEARCHAPI="chase_searchapi"
 TWITTER_TIME_PATTERN="%a %b %d %H:%M:%S %z %Y"
 SOLR_TIME_PATTERN="%Y-%m-%dT%H:%M:%SZ" #YYYY-MM-DDThh:mm:ssZ
 LOCATION_COORDINATES={} #cache to look up location geocodes
@@ -40,6 +43,35 @@ def read_search_criteria(file):
     return vars
 
 
+class TwitterSearch():
+    __solr=None
+    __core=None
+    __api=None
+
+    def __init__(self, oauth):
+        super().__init__()
+        self.__solr=SolrClient(SOLR_SERVER)
+        self.__core=SOLR_CORE_SEARCHAPI
+        self.__api=tweepy.API(oauth)
+
+    def index(self, keywords):
+        for keyword in keywords:
+            count=0
+            for status in tweepy.Cursor(self.__api.search, q=keyword,
+                                        tweet_mode="extended", lang="en").items(500):
+                count+=1
+                #created_at_time
+                str_created_at= status.created_at
+                str_solr_time=str_created_at.utcnow().strftime(SOLR_TIME_PATTERN)
+                docs = [{'id':status.id,
+                       'created_at':str_solr_time,
+                       'status_text':status.full_text}
+                       ]
+                self.__solr.index(self.__core,docs)
+            print(str(count)+","+keyword)
+        code=urllib.request.\
+                        urlopen("http://localhost:8983/solr/{}/update?commit=true".
+                                format(self.__core)).read()
 
 
 class TwitterStream(StreamListener):
@@ -188,6 +220,9 @@ print(sys.argv[2])
 auth = OAuthHandler(oauth["C_KEY"], oauth["C_SECRET"])
 auth.set_access_token(oauth["A_TOKEN"], oauth["A_SECRET"])
 
-twitterStream = Stream(auth, TwitterStream())
-twitterStream.filter(track=[sc["KEYWORDS"]], languages=LANGUAGES_ACCETED)
+# twitterStream = Stream(auth, TwitterStream())
+# twitterStream.filter(track=[sc["KEYWORDS"]], languages=LANGUAGES_ACCETED)
 
+searcher = TwitterSearch(auth)
+searcher.index(["#refugeesnotwelcome","#DeportallMuslims", "#banislam","#banmuslims", "#destroyislam",
+                "#norefugees","#nomuslims"])
