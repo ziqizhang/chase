@@ -10,6 +10,8 @@ import time
 import warnings
 warnings.simplefilter(action='ignore', category=FutureWarning)
 import numpy as np
+from sklearn.model_selection import GridSearchCV
+
 from sklearn.metrics import classification_report
 from sklearn.linear_model import LogisticRegression
 import pandas as pd
@@ -19,7 +21,7 @@ from sklearn.feature_extraction.text import TfidfVectorizer
 from sklearn.model_selection import train_test_split
 import nltk
 from nltk.stem.porter import *
-
+from sklearn.pipeline import Pipeline
 from vaderSentiment.vaderSentiment import SentimentIntensityAnalyzer as VS
 from textstat.textstat import *
 start_time = time.time()
@@ -57,6 +59,7 @@ def preprocess(text_string):
     parsed_text = re.sub(space_pattern, ' ', text_string)
     parsed_text = re.sub(giant_url_regex, '', parsed_text)
     parsed_text = re.sub(mention_regex, '', parsed_text)
+    #parsed_text = re.sub('#[\w\-]+', '',parsed_text)
     #parsed_text = parsed_text.code("utf-8", errors='ignore')
     return parsed_text
 
@@ -108,6 +111,7 @@ def count_twitter_objs(text_string):
     parsed_text = re.sub(space_pattern, ' ', text_string)
     parsed_text = re.sub(giant_url_regex, 'URLHERE', parsed_text)
     parsed_text = re.sub(mention_regex, 'MENTIONHERE', parsed_text)
+    #parsed_text = re.sub('#', '', parsed_text) #replace the tag leave the word
     parsed_text = re.sub(hashtag_regex, 'HASHTAGHERE', parsed_text)
     return (parsed_text.count('URLHERE'), parsed_text.count('MENTIONHERE'), parsed_text.count('HASHTAGHERE'))
 
@@ -124,6 +128,14 @@ def class_to_name(class_label):
         return "Neither"
     else:
         return "No label"
+def name_to_class(class_label):
+    #U= unknown, R = Religion, E = Ethnicity, S = Sexuality, Y = yes blank = no, x = don't use
+    if (class_label == "r") or (class_label == "e") or (class_label == "s") or (class_label == "y"):
+        return "0" #Hate speech
+    elif class_label == "":
+        return "2"#neither
+    else:
+        return "x"#dont use
 
 def other_features(tweet):
     """This function takes a string and returns a list of features.
@@ -168,16 +180,18 @@ def get_feature_array(tweets):
 if __name__ == '__main__':
     print("hello world")
     dataset = pd.read_csv("labeled_data.csv") #currently only a 500 subset
-
-    chaseDataset = pd.read_csv("chaseTweets.csv", encoding="latin-1") #This reads chase tweets from a CSV file that are used later
+    #dataset = pd.read_csv("davidsonxchaseHate.csv", encoding="latin-1")
+    #dataset = pd.read_csv("chaseTrain.csv", encoding="latin-1")
+    chaseDataset = pd.read_csv("train1.csv", encoding="latin-1") #This reads chase tweets from a CSV file that are used later
 
 
     #print(dataset.describe())
     print(dataset.columns)
     tweets = dataset.tweet #store the tweets in an easier way
-    chaseTweets = chaseDataset.Tweet
+    chaseTweets = chaseDataset.tweet
     print(len(tweets), " tweets to classify")
     train, test, y_train, y_test = train_test_split(dataset.tweet, dataset.hate_speech, test_size=0.5)
+    #train, test, y_train, y_test = train_test_split(dataset.tweet, dataset.score, test_size=0.25)
     print(len(train), "length of train")
     print(len(test), "length of test")
 
@@ -195,11 +209,6 @@ if __name__ == '__main__':
         min_df=5,
         max_df=0.75
     )
-    #text_clf = Pipeline([('vect', vectorizer),
-                         #('tfidf', TfidfTransformer()),
-                         #('clf', LinearSVC(class_weight='balanced', C=0.01, penalty='l2', loss='squared_hinge', multi_class='ovr'))
-                         # ('clf', MultinomialNB())
-                         #])
 
     #text_clf = text_clf.fit(train,y_train)
     #print(test)
@@ -231,6 +240,10 @@ if __name__ == '__main__':
         max_df=0.75,
     )
 
+    #text_clf = Pipeline([#('vect', vectorizer),
+     #                    ('tfidf', vectorizer),
+      #                   ('clf', LinearSVC(class_weight='balanced', C=0.01, penalty='l2', loss='squared_hinge', multi_class='ovr'))
+       #                  ])
     pos = pos_vectorizer.fit_transform(pd.Series(tweet_tags)).toarray()
     pos_vocab = {v: i for i, v in enumerate(pos_vectorizer.get_feature_names())}
 
@@ -254,8 +267,9 @@ if __name__ == '__main__':
     select = SelectFromModel(LogisticRegression(class_weight='balanced',penalty="l1",C=0.01))
     X1 = select.fit_transform(X,y)
     model = LinearSVC(class_weight='balanced', C=0.01, penalty='l2', loss='squared_hinge', multi_class='ovr').fit(X1, y)
-    LogisticRegression(class_weight='balanced', penalty='l2', C=0.01).fit(X1, y)
-   # text_clf.fit(X1,y)
+    model = LogisticRegression(class_weight='balanced', penalty='l2', C=0.01).fit(X1, y)
+
+
     y_preds = model.predict(X1)
 
     print(classification_report( y, y_preds ))
@@ -265,29 +279,64 @@ if __name__ == '__main__':
                   'tfidf__use_idf': (True, False),
                   'clf__alpha': (1e-2, 1e-3),
                   }
-    #gs_clf = GridSearchCV(model, parameters, n_jobs=-1)  # n_jobs works as the amount of searches that can be done at one time. -1 means it will decide to use all cores
-    #gs_clf = gs_clf.fit(train.data[:400], train.target[:400])
 
+    #print(gs_clf.predict(['God is love']))
     print("Running classification model...")
-    y = model.predict(X1)
-
-    print("""----------------------
-    Predicting tweets
-    ----------------------""")
-    for i,t in enumerate(tweets):
+    #print("""\t----------------------
+    #Predicting tweets
+    #----------------------""")
+    #for i,t in enumerate(tweets):
         #print(t)
-        print(t + " :::::::::: " + class_to_name(y[i]))
+     #   print(t + " :::::::::: " + class_to_name(y[i]))
 
-    print("""----------------------
+    #test1 = model.transform(chaseDataset)
+    #prediction = model.predict(test1)
+    tfidf = vectorizer.fit_transform(chaseTweets).toarray()
+    vocab = {v:i for i, v in enumerate(vectorizer.get_feature_names())}
+    idf_vals = vectorizer.idf_
+    idf_dict = {i: idf_vals[i] for i in vocab.values()}
+
+    tweet_tags = []
+    for t in chaseTweets:
+        tokens = basic_tokenize(preprocess(t))
+        tags = nltk.pos_tag(tokens)
+        tag_list = [x[1] for x in tags]
+        tag_str = " ".join(tag_list)
+        tweet_tags.append(tag_str)
+    pos = pos_vectorizer.fit_transform(pd.Series(tweet_tags)).toarray()
+    pos_vocab = {v: i for i, v in enumerate(pos_vectorizer.get_feature_names())}
+
+    feats = get_feature_array(chaseTweets)
+
+    M = np.concatenate([tfidf, pos, feats], axis=1)
+    print(M.shape)
+
+    variables = [''] * len(vocab)
+    for k, v in vocab.items():
+        variables[v] = k
+
+    pos_variables = [''] * len(pos_vocab)
+    for k, v in pos_vocab.items():
+        pos_variables[v] = k
+
+    feature_names = variables + pos_variables + other_features_names
+    X = pd.DataFrame(M)
+    y = chaseDataset['score'].astype(int)
+    X1 = select.fit_transform(X,y)
+    model = LinearSVC(class_weight='balanced', C=0.01, penalty='l2', loss='squared_hinge', multi_class='ovr').fit(X1, y)
+    model = LogisticRegression(class_weight='balanced', penalty='l2', C=0.01).fit(X1, y)
+
+    y_preds = model.predict(X1)
+
+    print("""\t----------------------
     Predicting chase tweets
     ----------------------""")
     for i, t in enumerate(chaseTweets):
         # print(t)
-        print(t + " :::::::::: " + class_to_name(y[i]))
+        print(t + " :::::::::: " + class_to_name(y_preds[i]))
     #while True:
         #strinput = input()
         #print(train.target_names[gs_clf.predict([strinput])[0]])  # This line predicts based upon text
         #print(gs_clf.best_score_)
-
 
 
