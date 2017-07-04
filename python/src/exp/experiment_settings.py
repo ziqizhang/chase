@@ -8,9 +8,16 @@ def create_settings():
     data_in='/home/zqz/Work/hate-speech-and-offensive-language/data/labeled_data_small.csv'
 
     settings=[]
-    settings.append(['davidson_data+davidson_feature', #just a name to identify this experimental setting
-                     'dddf',
+    settings.append(['td_original', #just a name to identify this experimental setting
+                     'td_original',
                      data_in,
                      fv_davison.FeatureVectorizerDavidson(),
+                     True,
                      sys_out])
+    settings.append(['td_original_noFS', #just a name to identify this experimental setting
+                      'td_original_noFS',
+                      data_in,
+                      fv_davison.FeatureVectorizerDavidson(),
+                      False,
+                      sys_out])
     return settings

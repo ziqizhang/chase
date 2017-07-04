@@ -18,8 +18,13 @@ def load_classifier_model(classifier_pickled=None):
             classifier = pickle.load(model)
         return classifier
 
-def outputFalsePredictions(pred, truth, model_name, task):
-    filename = os.path.join(os.path.dirname(__file__), "false_nfold_pred-%s-%s.csv" % (model_name, task))
+def outputFalsePredictions(pred, truth, model_name, task,outfolder):
+    subfolder=outfolder+"/errors"
+    try:
+        os.stat(subfolder)
+    except:
+        os.mkdir(subfolder)
+    filename = os.path.join(subfolder, "errors-%s-%s.csv" % (model_name, task))
     file = open(filename, "w")
     for p, t in zip(pred, truth):
         if p==t:
@@ -30,8 +35,8 @@ def outputFalsePredictions(pred, truth, model_name, task):
             file.write(line)
     file.close()
 
-def saveOutput(prediction, model_name, task):
-    filename = os.path.join(os.path.dirname(__file__), "prediction-%s-%s.csv" % (model_name, task))
+def saveOutput(prediction, model_name, task,outfolder):
+    filename = os.path.join(outfolder, "prediction-%s-%s.csv" % (model_name, task))
     file = open(filename, "w")
     for entry in prediction:
         if (isinstance(entry, float)):
@@ -65,9 +70,14 @@ def prepare_score_string(p, r, f1, s, labels, target_names, digits):
     return string
 
 def save_scores(nfold_predictions, x_test, heldout_predictions, y_test, model_name, task_name,
-                identifier, digits):
-    outputFalsePredictions(nfold_predictions, x_test, model_name, task_name)
-    filename = os.path.join(os.path.dirname(__file__), "scores-%s-%s.csv" % (model_name, task_name))
+                identifier, digits, outfolder):
+    outputFalsePredictions(nfold_predictions, x_test, model_name, task_name,outfolder)
+    subfolder=outfolder+"/scores"
+    try:
+        os.stat(subfolder)
+    except:
+        os.mkdir(subfolder)
+    filename = os.path.join(subfolder, "scores-%s-%s.csv" % (model_name, task_name))
     file = open(filename, "a+")
     file.write(identifier)
     if nfold_predictions is not None:

@@ -23,13 +23,12 @@ from ml import text_preprocess as tp
 # Model selection
 WITH_SGD = True
 WITH_SLR = True
-WITH_RANDOM_FOREST = True
+WITH_RANDOM_FOREST = False #this algorithm may not work on very small feature vectors
 WITH_LIBLINEAR_SVM = True
 WITH_RBF_SVM = True
 WITH_ANN = False
 
 # Random Forest model(or any tree-based model) do not ncessarily need feature scaling
-N_FOLD_VALIDATION_ONLY = True
 SCALING = False
 # feature scaling with bound [0,1] is ncessarily for MNB model
 SCALING_STRATEGY_MIN_MAX = 0
@@ -40,13 +39,6 @@ SCALING_STRATEGY = SCALING_STRATEGY_MEAN_STD
 # DIRECTLY LOAD PRE-TRAINED MODEL FOR PREDICTION
 # ENABLE THIS VARIABLE TO TEST NEW TEST SET WITHOUT TRAINING
 LOAD_MODEL_FROM_FILE = False
-
-# set automatic feature ranking and selection
-AUTO_FEATURE_SELECTION=True
-# set manually selected feature index list here
-# check random forest setting when changing this variable
-MANUAL_SELECTED_FEATURES = []
-
 # The number of CPUs to use to do the computation. -1 means 'all CPUs'
 NUM_CPU = -1
 N_FOLD_VALIDATION = 5
@@ -64,6 +56,7 @@ class ChaseClassifier(object):
     def __init__(self, task, identifier,
                  data_file,
                  feat_v: fv.FeatureVectorizer,
+                 feature_selection: bool,
                  folder_sysout):
         self.raw_data = numpy.empty
         self.data_file = data_file
@@ -72,6 +65,7 @@ class ChaseClassifier(object):
         self.feat_v = feat_v  # inclusive
         self.sys_out = folder_sysout  # exclusive 16
         self.feature_size = DNN_FEATURE_SIZE
+        self.feature_selection=feature_selection
 
     def load_data(self):
         self.raw_data = pd.read_csv(self.data_file, sep=',', encoding="utf-8")
@@ -93,9 +87,8 @@ class ChaseClassifier(object):
         print("\tbegin feature extraction and vectorization...")
         tweets_cleaned = [tp.preprocess(x) for x in tweets]
         M = self.feat_v.transform_inputs(tweets, tweets_cleaned, self.sys_out, "na")
-        #M = pd.DataFrame(M)
 
-        if AUTO_FEATURE_SELECTION:
+        if self.feature_selection:
             select = SelectFromModel(LogisticRegression(class_weight='balanced',penalty="l1",C=0.01))
             M = select.fit_transform(M, self.raw_data['class'])
 
@@ -107,44 +100,56 @@ class ChaseClassifier(object):
         y_train = y_train.astype(int)
         y_test = y_test.astype(int)
 
+        if SCALING:
+            print("feature scaling method: [%s]" % SCALING_STRATEGY)
+
+            if SCALING_STRATEGY == SCALING_STRATEGY_MEAN_STD:
+                X_train_data = util.feature_scaling_mean_std(X_train_data)
+                X_test_data = util.feature_scaling_mean_std(X_test_data)
+            elif SCALING_STRATEGY == SCALING_STRATEGY_MIN_MAX:
+                X_train_data = util.feature_scaling_min_max(X_train_data)
+                X_test_data = util.feature_scaling_min_max(X_test_data)
+            else:
+                raise ArithmeticError("SCALING STRATEGY IS NOT SET CORRECTLY!")
+
 
         ######################### SGDClassifier #######################
         if WITH_SGD:
             cl.learn_generative(NUM_CPU, N_FOLD_VALIDATION, self.task_name, LOAD_MODEL_FROM_FILE, "sgd",
                                 X_train_data, y_train,
-                                X_test_data, y_test, self.identifier)
+                                X_test_data, y_test, self.identifier, self.sys_out)
 
         ######################### Stochastic Logistic Regression#######################
         if WITH_SLR:
             cl.learn_generative(NUM_CPU, N_FOLD_VALIDATION, self.task_name, LOAD_MODEL_FROM_FILE, "lr",
                                 X_train_data, y_train,
-                                X_test_data, y_test, self.identifier)
+                                X_test_data, y_test, self.identifier, self.sys_out)
 
         ######################### Random Forest Classifier #######################
         if WITH_RANDOM_FOREST:
             cl.learn_discriminative(NUM_CPU, N_FOLD_VALIDATION, self.task_name, LOAD_MODEL_FROM_FILE, "rf",
                                     X_train_data,
                                     y_train,
-                                    X_test_data, y_test, self.identifier)
+                                    X_test_data, y_test, self.identifier, self.sys_out)
 
         ###################  liblinear SVM ##############################
         if WITH_LIBLINEAR_SVM:
             cl.learn_discriminative(NUM_CPU, N_FOLD_VALIDATION, self.task_name, LOAD_MODEL_FROM_FILE,
                                     "svm-l", X_train_data,
-                                    y_train, X_test_data, y_test, self.identifier)
+                                    y_train, X_test_data, y_test, self.identifier, self.sys_out)
 
         ##################### RBF svm #####################
         if WITH_RBF_SVM:
             cl.learn_discriminative(NUM_CPU, N_FOLD_VALIDATION, self.task_name, LOAD_MODEL_FROM_FILE,
                                     "svm-rbf", X_train_data,
-                                    y_train, X_test_data, y_test, self.identifier)
+                                    y_train, X_test_data, y_test, self.identifier, self.sys_out)
 
         ################# Artificial Neural Network #################
         if WITH_ANN:
             cl.learn_dnn(NUM_CPU, N_FOLD_VALIDATION, self.task_name, LOAD_MODEL_FROM_FILE, "ann",
                          self.feature_size,
                          X_train_data,
-                         y_train, X_test_data, y_test, self.identifier)
+                         y_train, X_test_data, y_test, self.identifier, self.sys_out)
 
         print("complete!")
 
@@ -156,7 +161,7 @@ class ChaseClassifier(object):
               .format(len(tweets), datetime.datetime.now()))
         print("\tbegin feature extraction and vectorization...")
         tweets_cleaned = [tp.preprocess(x) for x in tweets]
-        M_train = self.feat_v.transform_inputs(tweets, tweets_cleaned, self.sys_out)
+        M_train = self.feat_v.transform_inputs(tweets, tweets_cleaned, self.sys_out, "na")
         featurematrix = pd.DataFrame(M_train)
         labels = self.raw_data.hatespeech['class'].astype(int)
 
@@ -201,8 +206,8 @@ class ChaseClassifier(object):
 if __name__ == '__main__':
     settings = experiment_settings.create_settings()
     for ds in settings:
-        print("\nSTARTING EXPERIMENT SETTING:" + '; '.join(map(str, ds)))
-        classifier = ChaseClassifier(ds[0], ds[1], ds[2], ds[3], ds[4])
+        print("##########\nSTARTING EXPERIMENT SETTING:" + '; '.join(map(str, ds)))
+        classifier = ChaseClassifier(ds[0], ds[1], ds[2], ds[3], ds[4],ds[5])
         classifier.load_data()
 
         # ============= random sampling =================================
