@@ -5,6 +5,7 @@ import random
 
 from SolrClient import SolrClient
 
+
 SOLR_SERVER="http://localhost:8983/solr"
 SOLR_CORE="chase_searchapi"
 #KEYWORDS='ban+kill+die+evil+hate+attack+terrorist+terrorism+threat+#DeportallMuslims+#refugeesnotwelcome'

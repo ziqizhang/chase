@@ -1,3 +1,5 @@
 config/twitter_oauth.txt
 aws/*
 data/*
+output/*
+.idea/*
