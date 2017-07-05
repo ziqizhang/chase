@@ -23,7 +23,7 @@ from ml import text_preprocess as tp
 # Model selection
 WITH_SGD = True
 WITH_SLR = True
-WITH_RANDOM_FOREST = False #this algorithm may not work on very small feature vectors
+WITH_RANDOM_FOREST = True #this algorithm may not work on very small feature vectors
 WITH_LIBLINEAR_SVM = True
 WITH_RBF_SVM = True
 WITH_ANN = False
@@ -87,10 +87,12 @@ class ChaseClassifier(object):
         print("\tbegin feature extraction and vectorization...")
         tweets_cleaned = [tp.preprocess(x) for x in tweets]
         M = self.feat_v.transform_inputs(tweets, tweets_cleaned, self.sys_out, "na")
-
+        print("FEATURE MATRIX dimensions={}".format(len(M)))
         if self.feature_selection:
+            print("FEATURE SELECTION BEGINS, {}".format(datetime.datetime.now()))
             select = SelectFromModel(LogisticRegression(class_weight='balanced',penalty="l1",C=0.01))
             M = select.fit_transform(M, self.raw_data['class'])
+            print("REDUCED FEATURE MATRIX dimensions={}".format(len(M)))
 
         # split the dataset into two parts, 0.75 for train and 0.25 for testing
         X_train_data, X_test_data, y_train, y_test = \
@@ -186,7 +188,7 @@ class ChaseClassifier(object):
         ##################### RBF svm #####################
         if WITH_RBF_SVM:
             ct.tag(NUM_CPU, "svm-rbf", self.task_name, featurematrix)
-        print("complete!")
+        print("complete at {}".format(datetime.datetime.now()))
 
     def saveOutput(self, prediction, model_name):
         filename = os.path.join(os.path.dirname(__file__), "prediction-%s-%s.csv" % (model_name, self.task_name))
