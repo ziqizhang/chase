@@ -104,8 +104,8 @@ class ChaseClassifier(object):
         y_train = y_train.astype(int)
         y_test = y_test.astype(int)
 
-        if SCALING:
-            print("feature scaling method: [%s]" % SCALING_STRATEGY)
+        if not self.feature_selection:
+            print("APPLYING FEATURE SCALING: [%s]" % SCALING_STRATEGY)
 
             if SCALING_STRATEGY == SCALING_STRATEGY_MEAN_STD:
                 X_train_data = util.feature_scaling_mean_std(X_train_data)

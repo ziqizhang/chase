@@ -56,14 +56,14 @@ class FeatureVectorizerChaseBasic(fv.FeatureVectorizer):
 
         """
         # Features group 1: tfidf weighted n-grams
-        tfidf = fe.get_ngram_tfidf(self.ngram_vectorizer, tweets_original, out_folder, flag)
+        tfidf = fe.get_ngram_tfidf(self.ngram_vectorizer, tweets_original, out_folder, flag)[0]
 
         # Features group 2: PoS for ngrams
-        pos=fe.get_ngram_pos_tfidf(self.pos_vectorizer, tweets_cleaned, out_folder, flag)
+        pos=fe.get_ngram_pos_tfidf(self.pos_vectorizer, tweets_cleaned, out_folder, flag)[0]
 
         # Features group 3: other features
         print("\tgenerating other feature vectors, {}".format(datetime.datetime.now()))
-        feats = fe.get_oth_features(tweets_original, tweets_cleaned)
+        feats = fe.get_oth_features(tweets_original, tweets_cleaned)[0]
         print("\t\tcompleted, {}, {}".format(feats.shape,datetime.datetime.now()))
 
 
