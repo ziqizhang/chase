@@ -57,6 +57,7 @@ class ChaseClassifier(object):
                  data_file,
                  feat_v: fv.FeatureVectorizer,
                  feature_selection: bool,
+                 gridsearch:bool,
                  folder_sysout):
         self.raw_data = numpy.empty
         self.data_file = data_file
@@ -66,6 +67,7 @@ class ChaseClassifier(object):
         self.sys_out = folder_sysout  # exclusive 16
         self.feature_size = DNN_FEATURE_SIZE
         self.feature_selection=feature_selection
+        self.gridsearch=gridsearch
 
     def load_data(self):
         self.raw_data = pd.read_csv(self.data_file, sep=',', encoding="utf-8")
@@ -119,39 +121,40 @@ class ChaseClassifier(object):
         if WITH_SGD:
             cl.learn_generative(NUM_CPU, N_FOLD_VALIDATION, self.task_name, LOAD_MODEL_FROM_FILE, "sgd",
                                 X_train_data, y_train,
-                                X_test_data, y_test, self.identifier, self.sys_out)
+                                X_test_data, y_test, self.identifier, self.sys_out,
+                                self.gridsearch)
 
         ######################### Stochastic Logistic Regression#######################
         if WITH_SLR:
             cl.learn_generative(NUM_CPU, N_FOLD_VALIDATION, self.task_name, LOAD_MODEL_FROM_FILE, "lr",
                                 X_train_data, y_train,
-                                X_test_data, y_test, self.identifier, self.sys_out)
+                                X_test_data, y_test, self.identifier, self.sys_out,self.gridsearch)
 
         ######################### Random Forest Classifier #######################
         if WITH_RANDOM_FOREST:
             cl.learn_discriminative(NUM_CPU, N_FOLD_VALIDATION, self.task_name, LOAD_MODEL_FROM_FILE, "rf",
                                     X_train_data,
                                     y_train,
-                                    X_test_data, y_test, self.identifier, self.sys_out)
+                                    X_test_data, y_test, self.identifier, self.sys_out,self.gridsearch)
 
         ###################  liblinear SVM ##############################
         if WITH_LIBLINEAR_SVM:
             cl.learn_discriminative(NUM_CPU, N_FOLD_VALIDATION, self.task_name, LOAD_MODEL_FROM_FILE,
                                     "svm-l", X_train_data,
-                                    y_train, X_test_data, y_test, self.identifier, self.sys_out)
+                                    y_train, X_test_data, y_test, self.identifier, self.sys_out,self.gridsearch)
 
         ##################### RBF svm #####################
         if WITH_RBF_SVM:
             cl.learn_discriminative(NUM_CPU, N_FOLD_VALIDATION, self.task_name, LOAD_MODEL_FROM_FILE,
                                     "svm-rbf", X_train_data,
-                                    y_train, X_test_data, y_test, self.identifier, self.sys_out)
+                                    y_train, X_test_data, y_test, self.identifier, self.sys_out,self.gridsearch)
 
         ################# Artificial Neural Network #################
         if WITH_ANN:
             cl.learn_dnn(NUM_CPU, N_FOLD_VALIDATION, self.task_name, LOAD_MODEL_FROM_FILE, "ann",
                          self.feature_size,
                          X_train_data,
-                         y_train, X_test_data, y_test, self.identifier, self.sys_out)
+                         y_train, X_test_data, y_test, self.identifier, self.sys_out,self.gridsearch)
 
         print("complete!")
 
@@ -209,7 +212,7 @@ if __name__ == '__main__':
     settings = experiment_settings.create_settings()
     for ds in settings:
         print("##########\nSTARTING EXPERIMENT SETTING:" + '; '.join(map(str, ds)))
-        classifier = ChaseClassifier(ds[0], ds[1], ds[2], ds[3], ds[4],ds[5])
+        classifier = ChaseClassifier(ds[0], ds[1], ds[2], ds[3], ds[4],ds[5],ds[6])
         classifier.load_data()
 
         # ============= random sampling =================================

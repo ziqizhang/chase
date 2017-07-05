@@ -1,6 +1,71 @@
+import datetime
+from sklearn.externals import joblib
+from sklearn.feature_extraction import DictVectorizer
+from sklearn.feature_extraction.text import TfidfVectorizer
 from textstat.textstat import *
 from ml import nlp
 import numpy as np
+import pandas as pd
+
+#generates tfidf weighted ngram feature as a matrix and the vocabulary
+def get_ngram_tfidf(ngram_vectorizer: TfidfVectorizer, tweets, out_folder, flag):
+    joblib.dump(ngram_vectorizer, out_folder + '/'+flag+'_ngram_tfidf.pkl')
+    print("\tgenerating n-gram vectors, {}".format(datetime.datetime.now()))
+    tfidf = ngram_vectorizer.fit_transform(tweets).toarray()
+    print("\t\t complete, dim={}, {}".format(tfidf.shape,datetime.datetime.now()))
+    vocab = {v: i for i, v in enumerate(ngram_vectorizer.get_feature_names())}
+    idf_vals = ngram_vectorizer.idf_
+    idf_dict = {i: idf_vals[i] for i in vocab.values()}  # keys are indices; values are IDF scores
+    #todo: output vocabulary index
+    return tfidf, vocab
+
+
+#generates tfidf weighted PoS of ngrams as a feature matrix and the vocabulary
+def get_ngram_pos_tfidf(pos_vectorizer:TfidfVectorizer, tweets, out_folder, flag):
+    print("\tcreating pos tags, {}".format(datetime.datetime.now()))
+    tweet_tags = nlp.get_pos_tags(tweets)
+    print("\tgenerating pos tag vectors, {}".format(datetime.datetime.now()))
+    pos = pos_vectorizer.fit_transform(pd.Series(tweet_tags)).toarray()
+    joblib.dump(pos_vectorizer, out_folder + '/'+flag+'_pos.pkl')
+    print("\t\tcompleted, dim={}, {}".format(pos.shape,datetime.datetime.now()))
+    pos_vocab = {v: i for i, v in enumerate(pos_vectorizer.get_feature_names())}
+    #todo: output vocabulary index
+    return pos, pos_vocab
+
+#todo: return a hashtag matrix indicating the presence of particular hashtags in tweets. input is the list of all tweets
+#DictVectorizer should be used, see http://scikit-learn.org/stable/modules/generated/sklearn.feature_extraction.DictVectorizer.html#sklearn.feature_extraction.DictVectorizer
+def get_hashtags_in_tweets(dict_vectorizer: DictVectorizer, tweets, out_folder, flag):
+    pass
+
+
+#todo: return matrix containing a number indicating the extent to which CAPs are used in the tweets
+#see 'other_features_' that processes a single tweet, and 'get_oth_features' that calls the former to process all tweets
+def get_capitalizations(tweets, cleaned_tweets):
+    pass
+
+#todo: return matrix containing a number indicating the extent to which misspellings are found in the tweets
+#see 'other_features_' that processes a single tweet, and 'get_oth_features' that calls the former to process all tweets
+def get_misspellings(tweets, cleaned_tweets):
+    pass
+
+
+#todo: return matrix containing a number indicating the extent to which special chars are found in the tweets
+#see 'other_features_' that processes a single tweet, and 'get_oth_features' that calls the former to process all tweets
+def get_specialchars(tweets, cleaned_tweets):
+    pass
+
+
+#todo: return matrix containing a number indicating the extent to which special punctuations are found in the tweets
+#see 'other_features_' that processes a single tweet, and 'get_oth_features' that calls the former to process all tweets
+def get_specialpunct(tweets, cleaned_tweets):
+    pass
+
+
+#todo: this should encode 'we vs them' patterns in tweets but this is the most complicated..
+def get_dependency_feature(tweets, cleaned_tweets):
+    pass
+
+
 
 def other_features_(tweet, cleaned_tweet):
     """This function takes a string and returns a list of features.
@@ -9,9 +74,6 @@ def other_features_(tweet, cleaned_tweet):
 
     This is modified to only include those features in the final
     model."""
-    other_features_names = ["FKRA", "FRE","num_syllables", "avg_syl_per_word", "num_chars", "num_chars_total", \
-                        "num_terms", "num_words", "num_unique_words", "vader neg","vader pos","vader neu", "vader compound", \
-                        "num_hashtags", "num_mentions", "num_urls", "is_retweet"]
 
     sentiment = nlp.sentiment_analyzer.polarity_scores(tweet)
 
@@ -75,4 +137,8 @@ def get_oth_features(tweets, cleaned_tweets):
         count+=1
         # if count%100==0:
         #     print("\t {}".format(count))
-    return np.array(feats)
+    other_features_names = ["FKRA", "FRE","num_syllables", "avg_syl_per_word", "num_chars", "num_chars_total", \
+                        "num_terms", "num_words", "num_unique_words", "vader neg","vader pos","vader neu", "vader compound", \
+                        "num_hashtags", "num_mentions", "num_urls", "is_retweet"]
+
+    return np.array(feats), other_features_names

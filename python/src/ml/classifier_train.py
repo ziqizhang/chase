@@ -19,7 +19,7 @@ import numpy as np
 
 
 def learn_discriminative(cpus, nfold, task, load_model, model, X_train, y_train, X_test, y_test,
-                         identifier, outfolder):
+                         identifier, outfolder, gridsearch=True):
     classifier = None
     model_file = None
     subfolder=outfolder+"/models"
@@ -31,29 +31,36 @@ def learn_discriminative(cpus, nfold, task, load_model, model, X_train, y_train,
     if (model == "rf"):
         print("== Random Forest ...{}".format(datetime.datetime.now()))
         classifier = RandomForestClassifier(n_estimators=20, n_jobs=cpus)
-        rfc_tuning_params = {"max_depth": [3, 5, None],
+        if gridsearch:
+            rfc_tuning_params = {"max_depth": [3, 5, None],
                              "max_features": [1, 3, 5, 7, 10],
                              "min_samples_split": [2, 5, 10],
                              "min_samples_leaf": [1, 3, 10],
                              "bootstrap": [True, False],
                              "criterion": ["gini", "entropy"]}
+        else:
+            rfc_tuning_params={}
         classifier = GridSearchCV(classifier, param_grid=rfc_tuning_params, cv=nfold,
                                   n_jobs=cpus)
         model_file = os.path.join(subfolder, "random-forest_classifier-%s.m" % task)
     if (model == "svm-l"):
-        tuned_parameters = [{'gamma': np.logspace(-9, 3, 3), 'probability': [True], 'C': np.logspace(-2, 10, 3)},
-                            {'C': [1e-1, 1e-3, 1e-5, 0.2, 0.5, 1, 1.2, 1.3, 1.5, 1.6, 1.7, 1.8, 2]}]
+        if gridsearch:
+            tuned_parameters = {'C': [1e-1, 1e-3, 1e-5, 0.2, 0.5, 1, 1.2, 1.3, 1.5, 1.6, 1.7, 1.8, 2]}
+        else:
+            tuned_parameters={}
         print("== SVM, kernel=linear ...{}".format(datetime.datetime.now()))
         classifier = svm.LinearSVC()
-        classifier = GridSearchCV(classifier, tuned_parameters[1], cv=nfold, n_jobs=cpus)
+        classifier = GridSearchCV(classifier, tuned_parameters, cv=nfold, n_jobs=cpus)
         model_file = os.path.join(subfolder, "liblinear-svm-linear-%s.m" % task)
 
     if (model == "svm-rbf"):
-        tuned_parameters = [{'gamma': np.logspace(-9, 3, 3), 'probability': [True], 'C': np.logspace(-2, 10, 3)},
-                             {'C': [1e-1, 1e-3, 1e-5, 0.2, 0.5, 1, 1.2, 1.3, 1.5, 1.6, 1.7, 1.8, 2]}]
+        if gridsearch:
+            tuned_parameters = {'gamma': np.logspace(-9, 3, 3), 'probability': [True], 'C': np.logspace(-2, 10, 3)}
+        else:
+            tuned_parameters={}
         print("== SVM, kernel=rbf ...{}".format(datetime.datetime.now()))
         classifier = svm.SVC()
-        classifier = GridSearchCV(classifier, param_grid=tuned_parameters[0], cv=nfold, n_jobs=cpus)
+        classifier = GridSearchCV(classifier, param_grid=tuned_parameters, cv=nfold, n_jobs=cpus)
         model_file = os.path.join(subfolder, "liblinear-svm-rbf-%s.m" % task)
 
     best_param = []
@@ -85,7 +92,7 @@ def learn_discriminative(cpus, nfold, task, load_model, model, X_train, y_train,
 
 
 def learn_generative(cpus, nfold, task, load_model, model, X_train, y_train, X_test, y_test,
-                     identifier, outfolder):
+                     identifier, outfolder, gridsearch=True):
     classifier = None
     model_file = None
     subfolder=outfolder+"/models"
@@ -97,11 +104,14 @@ def learn_generative(cpus, nfold, task, load_model, model, X_train, y_train, X_t
     if (model == "sgd"):
         print("== SGD ...{}".format(datetime.datetime.now()))
         #DISABLED because grid search takes too long to complete
-        sgd_params = {"loss": ["log", "modified_huber", 'squared_loss'],
+        if gridsearch:
+            sgd_params = {"loss": ["log", "modified_huber", 'squared_loss'],
                       "penalty": ['l2', 'l1'],
                       "alpha": [0.0001, 0.001, 0.01, 0.03, 0.05, 0.1],
                       "n_iter": [1000],
                       "learning_rate": ["optimal"]}
+        else:
+            sgd_params={}
         classifier = SGDClassifier(loss='log', penalty='l2', n_jobs=cpus)
 
         classifier = GridSearchCV(classifier, param_grid=sgd_params, cv=nfold,
@@ -109,10 +119,13 @@ def learn_generative(cpus, nfold, task, load_model, model, X_train, y_train, X_t
         model_file = os.path.join(subfolder, "sgd-classifier-%s.m" % task)
     if (model == "lr"):
         print("== Stochastic Logistic Regression ...{}".format(datetime.datetime.now()))
-        slr_params = {"penalty": ['l2'],
+        if gridsearch:
+            slr_params = {"penalty": ['l2'],
                       "solver": ['liblinear'],
                       "C": list(np.power(10.0, np.arange(-10, 10))),
                       "max_iter": [10000]}
+        else:
+            slr_params={}
         classifier = LogisticRegression(random_state=111)
         classifier = GridSearchCV(classifier, param_grid=slr_params, cv=nfold,
                                   n_jobs=cpus)
@@ -146,7 +159,7 @@ def learn_generative(cpus, nfold, task, load_model, model, X_train, y_train, X_t
 
 
 def learn_dnn(cpus, nfold, task, load_model, model, input_dim, X_train, y_train, X_test, y_test,
-              identifier,outfolder):
+              identifier,outfolder, gridsearch=True):
     print("== Perform ANN ...")  # create model
     subfolder=outfolder+"/models"
     try:

@@ -7,17 +7,21 @@ def create_settings():
     data_in='/home/zqz/Work/hate-speech-and-offensive-language/data/labeled_data.csv'
     #data_in='/home/zqz/Work/hate-speech-and-offensive-language/data/labeled_data_small.csv'
 
+    #setting this to true will perform param tuning on the training data,
+    #will take significantly longer time. but possibly better results
+    USE_GRID_SEARCH=False
+
     settings=[]
     settings.append(['td_original', #just a name to identify this experimental setting
                      'td_original',
                      data_in,
                      fv_davison.FeatureVectorizerDavidson(),
-                     True,
+                     True,USE_GRID_SEARCH,
                      sys_out])
     settings.append(['td_original_noFS', #just a name to identify this experimental setting
                       'td_original_noFS',
                       data_in,
                       fv_davison.FeatureVectorizerDavidson(),
-                      False,
+                      False,USE_GRID_SEARCH,
                       sys_out])
     return settings

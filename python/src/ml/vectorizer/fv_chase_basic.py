@@ -7,7 +7,7 @@ import pandas as pd
 from sklearn.feature_extraction.text import TfidfVectorizer
 from ml.vectorizer import feature_vectorizer as fv
 
-class FeatureVectorizerDavidson(fv.FeatureVectorizer):
+class FeatureVectorizerChaseBasic(fv.FeatureVectorizer):
     def __init__(self):
         super().__init__()
         self.ngram_vectorizer = TfidfVectorizer(
@@ -59,7 +59,6 @@ class FeatureVectorizerDavidson(fv.FeatureVectorizer):
         tfidf = fe.get_ngram_tfidf(self.ngram_vectorizer, tweets_original, out_folder, flag)
 
         # Features group 2: PoS for ngrams
-        # Features group 2: PoS for ngrams
         pos=fe.get_ngram_pos_tfidf(self.pos_vectorizer, tweets_cleaned, out_folder, flag)
 
         # Features group 3: other features
@@ -67,7 +66,15 @@ class FeatureVectorizerDavidson(fv.FeatureVectorizer):
         feats = fe.get_oth_features(tweets_original, tweets_cleaned)
         print("\t\tcompleted, {}, {}".format(feats.shape,datetime.datetime.now()))
 
+
+        #####
+        # calling skeleton functions (to be implemented) to generate more features
+        #####
+        feats_cap = fe.get_capitalizations(tweets_original, tweets_cleaned)
+        feats_hashtag=fe.get_hashtags_in_tweets(None, tweets_original, out_folder, flag)
+        feats_misspelling =fe.get_misspellings(tweets_original, tweets_cleaned)
+
         # Now concatenate all features in to single sparse matrix
-        M = np.concatenate([tfidf, pos, feats], axis=1)
+        M = np.concatenate([tfidf, pos, feats, feats_cap, feats_hashtag, feats_misspelling], axis=1)
         #print(M.shape)
         return pd.DataFrame(M)
