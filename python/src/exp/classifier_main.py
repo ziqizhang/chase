@@ -87,12 +87,12 @@ class ChaseClassifier(object):
         print("\tbegin feature extraction and vectorization...")
         tweets_cleaned = [tp.preprocess(x) for x in tweets]
         M = self.feat_v.transform_inputs(tweets, tweets_cleaned, self.sys_out, "na")
-        print("FEATURE MATRIX dimensions={}".format(len(M)))
+        print("FEATURE MATRIX dimensions={}".format(M.shape))
         if self.feature_selection:
             print("FEATURE SELECTION BEGINS, {}".format(datetime.datetime.now()))
             select = SelectFromModel(LogisticRegression(class_weight='balanced',penalty="l1",C=0.01))
             M = select.fit_transform(M, self.raw_data['class'])
-            print("REDUCED FEATURE MATRIX dimensions={}".format(len(M)))
+            print("REDUCED FEATURE MATRIX dimensions={}".format(M.shape))
 
         # split the dataset into two parts, 0.75 for train and 0.25 for testing
         X_train_data, X_test_data, y_train, y_test = \

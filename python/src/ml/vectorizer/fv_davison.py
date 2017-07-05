@@ -61,7 +61,7 @@ class FeatureVectorizerDavidson(fv.FeatureVectorizer):
         joblib.dump(self.ngram_vectorizer, out_folder + '/'+flag+'_ngram_tfidf.pkl')
         print("\tgenerating n-gram vectors, {}".format(datetime.datetime.now()))
         tfidf = self.ngram_vectorizer.fit_transform(tweets_original).toarray()
-        print("\t\t complete, {}".format(datetime.datetime.now()))
+        print("\t\t complete, dim={}, {}".format(tfidf.shape,datetime.datetime.now()))
         vocab = {v: i for i, v in enumerate(self.ngram_vectorizer.get_feature_names())}
         idf_vals = self.ngram_vectorizer.idf_
         idf_dict = {i: idf_vals[i] for i in vocab.values()}  # keys are indices; values are IDF scores
@@ -72,14 +72,15 @@ class FeatureVectorizerDavidson(fv.FeatureVectorizer):
         print("\tgenerating pos tag vectors, {}".format(datetime.datetime.now()))
         pos = self.pos_vectorizer.fit_transform(pd.Series(tweet_tags)).toarray()
         joblib.dump(self.pos_vectorizer, out_folder + '/'+flag+'_pos.pkl')
-        print("\t\tcompleted, {}".format(datetime.datetime.now()))
+        print("\t\tcompleted, dim={}, {}".format(pos.shape,datetime.datetime.now()))
         pos_vocab = {v: i for i, v in enumerate(self.pos_vectorizer.get_feature_names())}
 
         # Features group 3: other features
         print("\tgenerating other feature vectors, {}".format(datetime.datetime.now()))
         feats = fe.get_oth_features(tweets_original, tweets_cleaned)
-        print("\t\tcompleted, {}".format(datetime.datetime.now()))
+        print("\t\tcompleted, {}, {}".format(feats.shape,datetime.datetime.now()))
 
         # Now concatenate all features in to single sparse matrix
         M = np.concatenate([tfidf, pos, feats], axis=1)
+        #print(M.shape)
         return pd.DataFrame(M)
