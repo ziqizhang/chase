@@ -37,6 +37,7 @@ def merge_annotations(in_folder, out_file):
 # out_file="/home/zqz/Work/chase/data/annotation/unfilered_merged.csv"
 # in_folder="/home/zqz/Work/chase/data/annotation/keyword_filtered"
 # out_file="/home/zqz/Work/chase/data/annotation/keywordfilered_merged.csv"
-in_folder="/home/zqz/Work/chase/data/annotation/tag_filtered"
-out_file="/home/zqz/Work/chase/data/annotation/tagfilered_merged.csv"
+print(os.getcwd())
+in_folder="../../../data/annotation/tag_filtered"
+out_file="../../../data/annotation/tagfilered_merged.csv"
 merge_annotations(in_folder,out_file)
