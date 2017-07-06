@@ -57,26 +57,30 @@ def get_hashtags_in_tweets(dict_vectorizer: DictVectorizer, tweets, out_folder, 
 
 #todo: return matrix containing a number indicating the extent to which CAPs are used in the tweets
 #see 'other_features_' that processes a single tweet, and 'get_oth_features' that calls the former to process all tweets
-def get_capitalizations(tweets, cleaned_tweets,out_folder):
-    caps_feature_matrix=None
+def get_capitalization(tweets, cleaned_tweets,out_folder):
+    caps_feature_matrix = []
+    for t in tweets:
+        totalChar = sum(1 for c in t if c != ' ')
+        numcaps = sum(1 for c in t if c.isupper())
+        caps_feature_matrix.append((numcaps/totalChar)*100)
     caps_feature_vocab="CAPITALIZATION"
     pickle.dump(caps_feature_vocab,
                 open(out_folder+"/"+TWEET_CAPS_FEATURES_VOCAB+".pk", "wb"))
-
+    return caps_feature_matrix
 #todo: return matrix containing a number indicating the extent to which misspellings are found in the tweets
 #see 'other_features_' that processes a single tweet, and 'get_oth_features' that calls the former to process all tweets
 def get_misspellings(tweets, cleaned_tweets,out_folder):
-    caps_feature_matrix=None
-    caps_feature_vocab="CAPITALIZATION"
+    mispellings_feature_matrix = None
+    caps_feature_vocab="MISSPELLINGS"
     pickle.dump(caps_feature_vocab,
-                open(out_folder+"/"+TWEET_CAPS_FEATURES_VOCAB+".pk", "wb" ))
+                open(out_folder+"/"+TWEET_MISSPELLING_FEATURES_VOCAB+".pk", "wb" ))
 
 
 #todo: return matrix containing a number indicating the extent to which special chars are found in the tweets
 #see 'other_features_' that processes a single tweet, and 'get_oth_features' that calls the former to process all tweets
 def get_specialchars(tweets, cleaned_tweets,out_folder):
-    specialchar_feature_matrix=None
-    specialchar_feature_vocab="SEPCIALCHAR"
+    specialchar_feature_matrix=[]
+    specialchar_feature_vocab="SPECIALCHAR"
     pickle.dump(specialchar_feature_vocab,
                 open(out_folder+"/"+TWEET_SPECIALCHAR_FEATURES_VOCAB+".pk", "wb" ))
 
@@ -84,11 +88,13 @@ def get_specialchars(tweets, cleaned_tweets,out_folder):
 #todo: return matrix containing a number indicating the extent to which special punctuations are found in the tweets
 #see 'other_features_' that processes a single tweet, and 'get_oth_features' that calls the former to process all tweets
 def get_specialpunct(tweets, cleaned_tweets,out_folder):
-    specialpunc_feature_matrix=None
-    specialpunc_feature_vocab="SEPCIALPUNC"
+    specialpunc_feature_matrix=[]
+    for t in cleaned_tweets:
+        specialpunc_feature_matrix.append(len(re.findall('\!|\?', t)))
+    specialpunc_feature_vocab = "SPECIALPUNC"
     pickle.dump(specialpunc_feature_vocab,
                 open(out_folder+"/"+TWEET_SPECIALPUNC_FEATURES_VOCAB+".pk", "wb" ))
-
+    return specialpunc_feature_matrix
 
 #todo: this should encode 'we vs them' patterns in tweets but this is the most complicated..
 def get_dependency_feature(tweets, cleaned_tweets,out_folder):
@@ -117,11 +123,11 @@ def other_features_(tweet, cleaned_tweet):
     num_words = len(words.split())
     avg_syl = round(float((syllables+0.001))/float(num_words+0.001),4)
     num_unique_terms = len(set(words.split()))
-
     ###Modified FK grade, where avg words per sentence is just num words/1
     FKRA = round(float(0.39 * float(num_words)/1.0) + float(11.8 * avg_syl) - 15.59,1)
     ##Modified FRE score, where sentence fixed to 1
     FRE = round(206.835 - 1.015*(float(num_words)/1.0) - (84.6*float(avg_syl)),2)
+
 
     twitter_objs = count_twitter_objs(tweet) #Count #, @, and http://
     features = [FKRA, FRE, syllables, num_chars, num_chars_total, num_terms, num_words,
@@ -163,6 +169,8 @@ def get_oth_features(tweets, cleaned_tweets,out_folder):
     each tweet, and returns a numpy array of tweet x features"""
     feats=[]
     count=0
+    specialchars = get_specialpunct(tweets, cleaned_tweets,out_folder)
+    capitalization = get_capitalization(tweets,cleaned_tweets,out_folder)
     for t, tc in zip(tweets, cleaned_tweets):
         feats.append(other_features_(t, tc))
         count+=1
@@ -170,7 +178,7 @@ def get_oth_features(tweets, cleaned_tweets,out_folder):
         #     print("\t {}".format(count))
     other_features_names = ["FKRA", "FRE","num_syllables", "avg_syl_per_word", "num_chars", "num_chars_total", \
                         "num_terms", "num_words", "num_unique_words", "vader neg","vader pos","vader neu", "vader compound", \
-                        "num_hashtags", "num_mentions", "num_urls", "is_retweet"]
+                        "num_hashtags", "num_mentions", "num_urls", "is_retweet","capitalizsation"]
     feature_matrix=np.array(feats)
     pickle.dump(other_features_names,
                 open(out_folder+"/"+TWEET_TD_OTHER_FEATURES_VOCAB+".pk", "wb" ))
