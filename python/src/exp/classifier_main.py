@@ -4,7 +4,7 @@
 from __future__ import print_function
 
 import os
-
+import sys
 import datetime
 
 from sklearn.feature_selection import SelectFromModel
@@ -100,12 +100,12 @@ class ChaseClassifier(object):
             M = select.fit_transform(M, self.raw_data['class'])
             print("REDUCED FEATURE MATRIX dimensions={}".format(M.shape))
 
-        # if SCALING_STRATEGY == SCALING_STRATEGY_MEAN_STD:
-        #     M = util.feature_scaling_mean_std(M)
-        # elif SCALING_STRATEGY == SCALING_STRATEGY_MIN_MAX:
-        #     M = util.feature_scaling_min_max(M)
-        # else:
-        #     raise ArithmeticError("SCALING STRATEGY IS NOT SET CORRECTLY!")
+        if SCALING_STRATEGY == SCALING_STRATEGY_MEAN_STD:
+            M = util.feature_scaling_mean_std(M)
+        elif SCALING_STRATEGY == SCALING_STRATEGY_MIN_MAX:
+            M = util.feature_scaling_min_max(M)
+        else:
+            raise ArithmeticError("SCALING STRATEGY IS NOT SET CORRECTLY!")
 
 
         # split the dataset into two parts, 0.75 for train and 0.25 for testing
@@ -221,7 +221,7 @@ class ChaseClassifier(object):
 
 
 if __name__ == '__main__':
-    settings = experiment_settings.create_settings()
+    settings = experiment_settings.create_settings(sys.argv[1], sys.argv[2])
     for ds in settings:
         print("##########\nSTARTING EXPERIMENT SETTING:" + '; '.join(map(str, ds)))
         classifier = ChaseClassifier(ds[0], ds[1], ds[2], ds[3], ds[4],ds[5],ds[6])

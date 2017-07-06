@@ -6,6 +6,19 @@ from textstat.textstat import *
 from ml import nlp
 import numpy as np
 import pandas as pd
+import pickle
+
+NGRAM_FEATURES_VOCAB="feature_vocab_ngram"
+NGRAM_POS_FEATURES_VOCAB="feature_vocab_ngram_pos"
+SKIPGRAM_FEATURES_VOCAB="feature_vocab_skipgram"
+SKIPGRAM_POS_FEATURES_VOCAB="feature_vocab_skipgram_pos"
+TWEET_TD_OTHER_FEATURES_VOCAB="feature_vocab_td_other"
+TWEET_HASHTAG_FEATURES_VOCAB="feature_vocab_hashtag"
+TWEET_CAPS_FEATURES_VOCAB="feature_vocab_capitalization"
+TWEET_MISSPELLING_FEATURES_VOCAB="feature_vocab_misspelling"
+TWEET_SPECIALPUNC_FEATURES_VOCAB="feature_vocab_special_punc"
+TWEET_SPECIALCHAR_FEATURES_VOCAB="feature_vocab_special_char"
+TWEET_DEPENDENCY_FEATURES_VOCAB="feature_vocab_dependency"
 
 #generates tfidf weighted ngram feature as a matrix and the vocabulary
 def get_ngram_tfidf(ngram_vectorizer: TfidfVectorizer, tweets, out_folder, flag):
@@ -16,7 +29,7 @@ def get_ngram_tfidf(ngram_vectorizer: TfidfVectorizer, tweets, out_folder, flag)
     vocab = {v: i for i, v in enumerate(ngram_vectorizer.get_feature_names())}
     idf_vals = ngram_vectorizer.idf_
     idf_dict = {i: idf_vals[i] for i in vocab.values()}  # keys are indices; values are IDF scores
-    #todo: output vocabulary index
+    pickle.dump(vocab, open(out_folder+"/"+NGRAM_FEATURES_VOCAB+".pk", "wb" ))
     return tfidf, vocab
 
 
@@ -29,42 +42,60 @@ def get_ngram_pos_tfidf(pos_vectorizer:TfidfVectorizer, tweets, out_folder, flag
     joblib.dump(pos_vectorizer, out_folder + '/'+flag+'_pos.pkl')
     print("\t\tcompleted, dim={}, {}".format(pos.shape,datetime.datetime.now()))
     pos_vocab = {v: i for i, v in enumerate(pos_vectorizer.get_feature_names())}
-    #todo: output vocabulary index
+    pickle.dump(pos_vocab, open(out_folder+"/"+NGRAM_POS_FEATURES_VOCAB+".pk", "wb" ))
     return pos, pos_vocab
 
 #todo: return a hashtag matrix indicating the presence of particular hashtags in tweets. input is the list of all tweets
 #DictVectorizer should be used, see http://scikit-learn.org/stable/modules/generated/sklearn.feature_extraction.DictVectorizer.html#sklearn.feature_extraction.DictVectorizer
 def get_hashtags_in_tweets(dict_vectorizer: DictVectorizer, tweets, out_folder, flag):
-    pass
+    #pass
+    hashtag_feature_matrix=None
+    hashtag_feature_vocab=None
+    pickle.dump(hashtag_feature_vocab,
+                open(out_folder+"/"+TWEET_HASHTAG_FEATURES_VOCAB+".pk", "wb" ))
 
 
 #todo: return matrix containing a number indicating the extent to which CAPs are used in the tweets
 #see 'other_features_' that processes a single tweet, and 'get_oth_features' that calls the former to process all tweets
-def get_capitalizations(tweets, cleaned_tweets):
-    pass
+def get_capitalizations(tweets, cleaned_tweets,out_folder):
+    caps_feature_matrix=None
+    caps_feature_vocab="CAPITALIZATION"
+    pickle.dump(caps_feature_vocab,
+                open(out_folder+"/"+TWEET_CAPS_FEATURES_VOCAB+".pk", "wb"))
 
 #todo: return matrix containing a number indicating the extent to which misspellings are found in the tweets
 #see 'other_features_' that processes a single tweet, and 'get_oth_features' that calls the former to process all tweets
-def get_misspellings(tweets, cleaned_tweets):
-    pass
+def get_misspellings(tweets, cleaned_tweets,out_folder):
+    caps_feature_matrix=None
+    caps_feature_vocab="CAPITALIZATION"
+    pickle.dump(caps_feature_vocab,
+                open(out_folder+"/"+TWEET_CAPS_FEATURES_VOCAB+".pk", "wb" ))
 
 
 #todo: return matrix containing a number indicating the extent to which special chars are found in the tweets
 #see 'other_features_' that processes a single tweet, and 'get_oth_features' that calls the former to process all tweets
-def get_specialchars(tweets, cleaned_tweets):
-    pass
+def get_specialchars(tweets, cleaned_tweets,out_folder):
+    specialchar_feature_matrix=None
+    specialchar_feature_vocab="SEPCIALCHAR"
+    pickle.dump(specialchar_feature_vocab,
+                open(out_folder+"/"+TWEET_SPECIALCHAR_FEATURES_VOCAB+".pk", "wb" ))
 
 
 #todo: return matrix containing a number indicating the extent to which special punctuations are found in the tweets
 #see 'other_features_' that processes a single tweet, and 'get_oth_features' that calls the former to process all tweets
-def get_specialpunct(tweets, cleaned_tweets):
-    pass
+def get_specialpunct(tweets, cleaned_tweets,out_folder):
+    specialpunc_feature_matrix=None
+    specialpunc_feature_vocab="SEPCIALPUNC"
+    pickle.dump(specialpunc_feature_vocab,
+                open(out_folder+"/"+TWEET_SPECIALPUNC_FEATURES_VOCAB+".pk", "wb" ))
 
 
 #todo: this should encode 'we vs them' patterns in tweets but this is the most complicated..
-def get_dependency_feature(tweets, cleaned_tweets):
-    pass
-
+def get_dependency_feature(tweets, cleaned_tweets,out_folder):
+    dependency_feature_matrix=None
+    dependency_feature_vocab=None
+    pickle.dump(dependency_feature_vocab,
+                open(out_folder+"/"+TWEET_DEPENDENCY_FEATURES_VOCAB+".pk", "wb" ))
 
 
 def other_features_(tweet, cleaned_tweet):
@@ -127,7 +158,7 @@ def count_twitter_objs(text_string):
     return (parsed_text.count('URLHERE'), parsed_text.count('MENTIONHERE'), parsed_text.count('HASHTAGHERE'))
 
 
-def get_oth_features(tweets, cleaned_tweets):
+def get_oth_features(tweets, cleaned_tweets,out_folder):
     """Takes a list of tweets, generates features for
     each tweet, and returns a numpy array of tweet x features"""
     feats=[]
@@ -140,5 +171,8 @@ def get_oth_features(tweets, cleaned_tweets):
     other_features_names = ["FKRA", "FRE","num_syllables", "avg_syl_per_word", "num_chars", "num_chars_total", \
                         "num_terms", "num_words", "num_unique_words", "vader neg","vader pos","vader neu", "vader compound", \
                         "num_hashtags", "num_mentions", "num_urls", "is_retweet"]
+    feature_matrix=np.array(feats)
+    pickle.dump(other_features_names,
+                open(out_folder+"/"+TWEET_TD_OTHER_FEATURES_VOCAB+".pk", "wb" ))
 
-    return np.array(feats), other_features_names
+    return feature_matrix, other_features_names
