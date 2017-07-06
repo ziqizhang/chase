@@ -12,17 +12,17 @@ def create_settings():
     USE_GRID_SEARCH=False
 
     settings=[]
-    settings.append(['td_original', #just a name to identify this experimental setting
-                     'td_original',
+    settings.append(['td_original-fs-gs', #just a name to identify this experimental setting
+                     'td_original-fs-gs',
                      data_in,
                      fv_davison.FeatureVectorizerDavidson(),#what feature vectorizer to use
                      True, #use feature selection
                      True, #do grid search
                      sys_out])
-    settings.append(['td_original_noFS', #just a name to identify this experimental setting
-                      'td_original_noFS',
-                      data_in,
-                      fv_davison.FeatureVectorizerDavidson(),
-                      False,False,
-                      sys_out])
+    # settings.append(['td_original_noFS', #just a name to identify this experimental setting
+    #                   'td_original_noFS',
+    #                   data_in,
+    #                   fv_davison.FeatureVectorizerDavidson(),
+    #                   False,False,
+    #                   sys_out])
     return settings

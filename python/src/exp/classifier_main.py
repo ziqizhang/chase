@@ -90,11 +90,23 @@ class ChaseClassifier(object):
         tweets_cleaned = [tp.preprocess(x) for x in tweets]
         M = self.feat_v.transform_inputs(tweets, tweets_cleaned, self.sys_out, "na")
         print("FEATURE MATRIX dimensions={}".format(M.shape))
+
+        #if not self.feature_selection:
+        print("APPLYING FEATURE SCALING: [%s]" % SCALING_STRATEGY)
+
         if self.feature_selection:
             print("FEATURE SELECTION BEGINS, {}".format(datetime.datetime.now()))
             select = SelectFromModel(LogisticRegression(class_weight='balanced',penalty="l1",C=0.01))
             M = select.fit_transform(M, self.raw_data['class'])
             print("REDUCED FEATURE MATRIX dimensions={}".format(M.shape))
+
+        # if SCALING_STRATEGY == SCALING_STRATEGY_MEAN_STD:
+        #     M = util.feature_scaling_mean_std(M)
+        # elif SCALING_STRATEGY == SCALING_STRATEGY_MIN_MAX:
+        #     M = util.feature_scaling_min_max(M)
+        # else:
+        #     raise ArithmeticError("SCALING STRATEGY IS NOT SET CORRECTLY!")
+
 
         # split the dataset into two parts, 0.75 for train and 0.25 for testing
         X_train_data, X_test_data, y_train, y_test = \
@@ -104,17 +116,17 @@ class ChaseClassifier(object):
         y_train = y_train.astype(int)
         y_test = y_test.astype(int)
 
-        if not self.feature_selection:
-            print("APPLYING FEATURE SCALING: [%s]" % SCALING_STRATEGY)
-
-            if SCALING_STRATEGY == SCALING_STRATEGY_MEAN_STD:
-                X_train_data = util.feature_scaling_mean_std(X_train_data)
-                X_test_data = util.feature_scaling_mean_std(X_test_data)
-            elif SCALING_STRATEGY == SCALING_STRATEGY_MIN_MAX:
-                X_train_data = util.feature_scaling_min_max(X_train_data)
-                X_test_data = util.feature_scaling_min_max(X_test_data)
-            else:
-                raise ArithmeticError("SCALING STRATEGY IS NOT SET CORRECTLY!")
+        # #if not self.feature_selection:
+        # print("APPLYING FEATURE SCALING: [%s]" % SCALING_STRATEGY)
+        #
+        # if SCALING_STRATEGY == SCALING_STRATEGY_MEAN_STD:
+        #     X_train_data = util.feature_scaling_mean_std(X_train_data)
+        #     X_test_data = util.feature_scaling_mean_std(X_test_data)
+        # elif SCALING_STRATEGY == SCALING_STRATEGY_MIN_MAX:
+        #     X_train_data = util.feature_scaling_min_max(X_train_data)
+        #     X_test_data = util.feature_scaling_min_max(X_test_data)
+        # else:
+        #     raise ArithmeticError("SCALING STRATEGY IS NOT SET CORRECTLY!")
 
 
         ######################### SGDClassifier #######################
@@ -156,7 +168,7 @@ class ChaseClassifier(object):
                          X_train_data,
                          y_train, X_test_data, y_test, self.identifier, self.sys_out,self.gridsearch)
 
-        print("complete!")
+        print("complete, {}".format(datetime.datetime.now()))
 
     #todo: this is not completed. feature dimension must be the same as training data
     def testing(self):
