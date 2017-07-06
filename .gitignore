@@ -3,3 +3,4 @@ aws/*
 data/*
 output/*
 .idea/*
+*.pyc
