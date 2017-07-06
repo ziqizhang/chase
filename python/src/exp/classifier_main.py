@@ -6,6 +6,7 @@ from __future__ import print_function
 import os
 import sys
 import datetime
+import pickle
 
 from sklearn.feature_selection import SelectFromModel
 from sklearn.linear_model import LogisticRegression
@@ -19,6 +20,7 @@ from sklearn.model_selection import train_test_split
 import pandas as pd
 from ml import util
 from ml import text_preprocess as tp
+from ml import feature_extractor as fe
 
 # Model selection
 WITH_SGD = True
@@ -72,41 +74,9 @@ class ChaseClassifier(object):
     def load_data(self):
         self.raw_data = pd.read_csv(self.data_file, sep=',', encoding="utf-8")
 
-    def scale_data(self, data):
-        if SCALING_STRATEGY == SCALING_STRATEGY_MEAN_STD:
-            data = util.feature_scaling_mean_std(data)
-        elif SCALING_STRATEGY == SCALING_STRATEGY_MIN_MAX:
-            data = util.feature_scaling_min_max(data)
-        else:
-            raise ArithmeticError("SCALING STRATEGY IS NOT SET CORRECTLY!")
-        return data
-
     def training(self):
-        tweets = self.raw_data.tweet
-        tweets = [x for x in tweets if type(x) == str]
-        print("FEATURE EXTRACTION AND VECTORIZATION FOR ALL data, insatance={}, {}"
-              .format(len(tweets), datetime.datetime.now()))
-        print("\tbegin feature extraction and vectorization...")
-        tweets_cleaned = [tp.preprocess(x) for x in tweets]
-        M = self.feat_v.transform_inputs(tweets, tweets_cleaned, self.sys_out, "na")
-        print("FEATURE MATRIX dimensions={}".format(M.shape))
-
-        #if not self.feature_selection:
-        print("APPLYING FEATURE SCALING: [%s]" % SCALING_STRATEGY)
-
-        if self.feature_selection:
-            print("FEATURE SELECTION BEGINS, {}".format(datetime.datetime.now()))
-            select = SelectFromModel(LogisticRegression(class_weight='balanced',penalty="l1",C=0.01))
-            M = select.fit_transform(M, self.raw_data['class'])
-            print("REDUCED FEATURE MATRIX dimensions={}".format(M.shape))
-
-        if SCALING_STRATEGY == SCALING_STRATEGY_MEAN_STD:
-            M = util.feature_scaling_mean_std(M)
-        elif SCALING_STRATEGY == SCALING_STRATEGY_MIN_MAX:
-            M = util.feature_scaling_min_max(M)
-        else:
-            raise ArithmeticError("SCALING STRATEGY IS NOT SET CORRECTLY!")
-
+        M=self.feature_extraction()[0]
+        M=self.feature_optimize(M)
 
         # split the dataset into two parts, 0.75 for train and 0.25 for testing
         X_train_data, X_test_data, y_train, y_test = \
@@ -170,40 +140,117 @@ class ChaseClassifier(object):
 
         print("complete, {}".format(datetime.datetime.now()))
 
-    #todo: this is not completed. feature dimension must be the same as training data
-    def testing(self):
-        tweets = self.raw_data.tweet
-        tweets = [x for x in tweets if type(x) == str]
-        print("FEATURE EXTRACTION AND VECTORIZATION FOR Training data, insatance={}, {}"
-              .format(len(tweets), datetime.datetime.now()))
-        print("\tbegin feature extraction and vectorization...")
-        tweets_cleaned = [tp.preprocess(x) for x in tweets]
-        M_train = self.feat_v.transform_inputs(tweets, tweets_cleaned, self.sys_out, "na")
-        featurematrix = pd.DataFrame(M_train)
-        labels = self.raw_data.hatespeech['class'].astype(int)
 
-        print("Applying pre-trained models to tag data (i.e., testing) :: testing data size:", len(tweets))
+    #todo: this is not completed. feature dimension must be the same as training data
+    def testing(self, expected_feature_types, training_feature_vocab_folder, sys_out):
+        #test data must be represented in a feature matrix of the same dimension of the training data feature matrix
+        #step 1: reconstruct empty feature matrix using the vocabularies seen at training time
+        train_features=self.create_training_features(expected_feature_types, training_feature_vocab_folder)
+        #step 2: create test data features
+        M=self.feature_extraction()
+        M_features_by_type=M[1]
+        #step 3: map test data features to training data features and populate the empty feature matrix
+        featurematrix=self.map_to_trainingfeatures(train_features, M_features_by_type)
+
+        featurematrix=self.feature_optimize(featurematrix)
+
+        print("Applying pre-trained models to tag data (i.e., testing) :: testing data size:", len(self.raw_data))
         print("test with CPU cores: [%s]" % NUM_CPU)
 
         ######################### SGDClassifier #######################
         if WITH_SGD:
-            ct.tag(NUM_CPU, "sgd", self.task_name, featurematrix)
+            ct.tag(NUM_CPU, "sgd", self.task_name, featurematrix, sys_out)
 
         ######################### Stochastic Logistic Regression#######################
         if WITH_SLR:
-            ct.tag(NUM_CPU, "lr", self.task_name, featurematrix)
+            ct.tag(NUM_CPU, "lr", self.task_name, featurematrix,sys_out)
 
         ######################### Random Forest Classifier #######################
         if WITH_RANDOM_FOREST:
-            ct.tag(NUM_CPU, "rf", self.task_name, featurematrix)
+            ct.tag(NUM_CPU, "rf", self.task_name, featurematrix,sys_out)
 
         ###################  liblinear SVM ##############################
         if WITH_LIBLINEAR_SVM:
-            ct.tag(NUM_CPU, "svm-l", self.task_name, featurematrix)
+            ct.tag(NUM_CPU, "svm-l", self.task_name, featurematrix,sys_out)
         ##################### RBF svm #####################
         if WITH_RBF_SVM:
-            ct.tag(NUM_CPU, "svm-rbf", self.task_name, featurematrix)
+            ct.tag(NUM_CPU, "svm-rbf", self.task_name, featurematrix,sys_out)
         print("complete at {}".format(datetime.datetime.now()))
+
+
+    def feature_extraction(self):
+        tweets = self.raw_data.tweet
+        tweets = [x for x in tweets if type(x) == str]
+        print("FEATURE EXTRACTION AND VECTORIZATION FOR ALL data, insatance={}, {}"
+              .format(len(tweets), datetime.datetime.now()))
+        print("\tbegin feature extraction and vectorization...")
+        tweets_cleaned = [tp.preprocess(x) for x in tweets]
+        M = self.feat_v.transform_inputs(tweets, tweets_cleaned, self.sys_out, "na")
+        print("FEATURE MATRIX dimensions={}".format(M[0].shape))
+        return M
+
+
+    def create_training_features(self, list_of_expected_feature_types, saved_training_feature_vocab):
+        rs={}
+        for ft in list_of_expected_feature_types:
+            file=saved_training_feature_vocab+"/"+ft+".pk"
+            vocab=pickle.load(open(file, "rb" ))
+            rs[ft]=vocab
+        return rs
+
+
+    def map_to_trainingfeatures(self, training_features:{}, testdata_features:{}):
+        num_instances=len(next (iter (testdata_features.values()))[0])
+        new_features=[]
+
+        #for each feature type in train data features
+        for t_key, t_value in training_features.items():
+            print("\t mapping feature type={}, features={}".format(t_key, len(t_value)))
+            features=numpy.zeros((num_instances, len(t_value)))
+            #if feature type exist in test data features
+            if t_key in testdata_features:
+                #for each feature in test data feature of this type
+                testdata_feature = testdata_features[t_key]
+                testdata_feature_vocab=testdata_feature[1]
+                testdata_feature_value=testdata_feature[0]
+                #for each data instance
+                row_index=0
+                for row in testdata_feature_value:
+                    new_row = numpy.zeros(len(t_value))
+                    for vocab, value in zip (testdata_feature_vocab, row): #feature-value pair for each instance in test
+                        #check if that feature exists in train data features of that type
+                        if vocab in t_value:
+                            #if so, se corresponding feature value in the new feature vector
+                            if isinstance(t_value, dict):
+                                vocab_index=t_value[vocab]
+                            else:
+                                vocab_index=t_value.index(vocab)
+                            new_row[vocab_index]=value
+                    features[row_index]= new_row
+                    row_index+=1
+            else:
+                features=numpy.zeros(num_instances, len(t_value))
+            new_features.append(features)
+
+        M = numpy.concatenate(new_features, axis=1)
+        return M
+
+
+    def feature_optimize(self, M):
+        if self.feature_selection:
+            print("FEATURE SELECTION BEGINS, {}".format(datetime.datetime.now()))
+            select = SelectFromModel(LogisticRegression(class_weight='balanced',penalty="l1",C=0.01))
+            M = select.fit_transform(M, self.raw_data['class'])
+            print("REDUCED FEATURE MATRIX dimensions={}".format(M.shape))
+        #if not self.feature_selection:
+        print("APPLYING FEATURE SCALING: [%s]" % SCALING_STRATEGY)
+        if SCALING_STRATEGY == SCALING_STRATEGY_MEAN_STD:
+            M = util.feature_scaling_mean_std(M)
+        elif SCALING_STRATEGY == SCALING_STRATEGY_MIN_MAX:
+            M = util.feature_scaling_min_max(M)
+        else:
+            raise ArithmeticError("SCALING STRATEGY IS NOT SET CORRECTLY!")
+        return M
 
     def saveOutput(self, prediction, model_name):
         filename = os.path.join(os.path.dirname(__file__), "prediction-%s-%s.csv" % (model_name, self.task_name))
@@ -235,5 +282,7 @@ if __name__ == '__main__':
         # classifier.training_data = X_resampled
         # classifier.training_label = y_resampled
 
-        classifier.training()
-        # classifier.testing()
+        #classifier.training()
+        classifier.testing([fe.NGRAM_FEATURES_VOCAB, fe.NGRAM_POS_FEATURES_VOCAB, fe.TWEET_TD_OTHER_FEATURES_VOCAB],
+                           sys.argv[1]+"/features",
+                           sys.argv[1])

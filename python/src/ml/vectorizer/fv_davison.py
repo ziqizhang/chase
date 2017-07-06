@@ -56,18 +56,22 @@ class FeatureVectorizerDavidson(fv.FeatureVectorizer):
 
         """
         # Features group 1: tfidf weighted n-grams
-        tfidf = fe.get_ngram_tfidf(self.ngram_vectorizer, tweets_original, out_folder, flag)[0]
+        tfidf = fe.get_ngram_tfidf(self.ngram_vectorizer, tweets_original, out_folder, flag)
 
         # Features group 2: PoS for ngrams
         # Features group 2: PoS for ngrams
-        pos=fe.get_ngram_pos_tfidf(self.pos_vectorizer, tweets_cleaned, out_folder, flag)[0]
+        pos=fe.get_ngram_pos_tfidf(self.pos_vectorizer, tweets_cleaned, out_folder, flag)
 
         # Features group 3: other features
         print("\tgenerating other feature vectors, {}".format(datetime.datetime.now()))
-        feats = fe.get_oth_features(tweets_original, tweets_cleaned,out_folder)[0]
+        feats = fe.get_oth_features(tweets_original, tweets_cleaned,out_folder)
         print("\t\tcompleted, {}, {}".format(feats[0].shape,datetime.datetime.now()))
 
         # Now concatenate all features in to single sparse matrix
-        M = np.concatenate([tfidf, pos, feats], axis=1)
+        M = np.concatenate([tfidf[0], pos[0], feats[0]], axis=1)
         #print(M.shape)
-        return pd.DataFrame(M)
+        features_by_type={}
+        features_by_type[fe.NGRAM_FEATURES_VOCAB]=tfidf
+        features_by_type[fe.NGRAM_POS_FEATURES_VOCAB]=pos
+        features_by_type[fe.TWEET_TD_OTHER_FEATURES_VOCAB]=feats
+        return [pd.DataFrame(M), features_by_type]
