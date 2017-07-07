@@ -18,8 +18,10 @@ def create_settings(sys_out, data_in):
                      'tdo-fs-scaling-nogs', #identifier to identify scores
                      data_in,
                      fv_davison.FeatureVectorizerDavidson(),#what feature vectorizer to use
-                     True, #use feature selection
-                     False, #do grid search
+                     True, #use feature selection, ONLY VALID FOR TRAINING
+                     False, #do grid search for classifier params
+                     -1, #use pca for dimensionality reduction
+                     False, #grid search on pca
                      sys_out])
     # settings.append(['td_original_noFS', #just a name to identify this experimental setting
     #                   'td_original_noFS',

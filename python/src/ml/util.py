@@ -3,13 +3,16 @@ import pickle
 
 import datetime
 
+from sklearn.cross_validation import train_test_split
 from sklearn.metrics import classification_report
 import os
 import numpy as np
+import pandas as pd
 from sklearn.metrics import precision_recall_fscore_support
 from sklearn.preprocessing import MinMaxScaler
 from sklearn.preprocessing import StandardScaler
 from sklearn.utils.multiclass import unique_labels
+
 
 
 def load_classifier_model(classifier_pickled=None):
@@ -181,3 +184,17 @@ def name_to_class(class_label):
         return "2"#neither
     else:
         return "x"#dont use
+
+
+def output_data_splits(data_file, out_folder):
+    raw_data=pd.read_csv(data_file, sep=',', encoding="utf-8")
+    X_train_data, X_test_data, y_train, y_test = \
+    train_test_split(raw_data, raw_data['class'],
+                             test_size=0.1,
+                             random_state=42)
+    X_train_data.to_csv(out_folder+"/split_train.csv", sep=',', encoding='utf-8')
+    X_test_data.to_csv(out_folder+"/split_test.csv", sep=',', encoding='utf-8')
+
+
+output_data_splits("/home/zqz/Work/hate-speech-and-offensive-language/data/labeled_data.csv",
+                   "/home/zqz/Work/chase/output/data")
