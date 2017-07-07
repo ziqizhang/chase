@@ -80,10 +80,12 @@ def get_misspellings(tweets, cleaned_tweets,out_folder):
 #see 'other_features_' that processes a single tweet, and 'get_oth_features' that calls the former to process all tweets
 def get_specialchars(tweets, cleaned_tweets,out_folder):
     specialchar_feature_matrix=[]
+    for t in tweets:
+        specialchar_feature_matrix.append(len(re.findall('&#[0-9]{4,6};', t))) #Emoji on twitter is handled by &# followed by 4-6 numbers and a ;
     specialchar_feature_vocab="SPECIALCHAR"
     pickle.dump(specialchar_feature_vocab,
                 open(out_folder+"/"+TWEET_SPECIALCHAR_FEATURES_VOCAB+".pk", "wb" ))
-
+    return specialchar_feature_matrix
 
 #todo: return matrix containing a number indicating the extent to which special punctuations are found in the tweets
 #see 'other_features_' that processes a single tweet, and 'get_oth_features' that calls the former to process all tweets
@@ -169,7 +171,8 @@ def get_oth_features(tweets, cleaned_tweets,out_folder):
     each tweet, and returns a numpy array of tweet x features"""
     feats=[]
     count=0
-    specialchars = get_specialpunct(tweets, cleaned_tweets,out_folder)
+    specialpunc = get_specialpunct(tweets, cleaned_tweets,out_folder)
+    specialchars = get_specialchars(tweets, cleaned_tweets,out_folder)
     capitalization = get_capitalization(tweets,cleaned_tweets,out_folder)
     for t, tc in zip(tweets, cleaned_tweets):
         feats.append(other_features_(t, tc))
