@@ -20,7 +20,7 @@ from sklearn.svm import LinearSVC
 from ml import text_preprocess as tp
 from ml.vectorizer import fv_davison as fv
 
-OUT_FOLDER="/home/zqz/Work/chase/output"
+OUT_FOLDER="../../../output"
 
 def predictions(X, model):
     """
@@ -36,7 +36,7 @@ if __name__ == '__main__':
     print ("Loading data to classify...")
 
     #Tweets obtained here: https://github.com/sashaperigo/Trump-Tweets
-    df = pd.read_csv('/home/zqz/Work/hate-speech-and-offensive-language/data/labeled_data.csv', sep=',')
+    df = pd.read_csv('../../../data/labeled_data.csv', sep=',')
     tweets = df.tweet
     tweets = [x for x in tweets if type(x) == str]
     print (len(tweets), " tweets to classify")
