@@ -49,7 +49,18 @@ def get_ngram_pos_tfidf(pos_vectorizer:TfidfVectorizer, tweets, out_folder, flag
 #DictVectorizer should be used, see http://scikit-learn.org/stable/modules/generated/sklearn.feature_extraction.DictVectorizer.html#sklearn.feature_extraction.DictVectorizer
 def get_hashtags_in_tweets(dict_vectorizer: DictVectorizer, tweets, out_folder, flag):
     #pass
-    hashtag_feature_matrix=None
+    hashtag_feature_matrix=[]
+    hashtag_regex = '#[\w\-]+'
+    for t in tweets:
+        while True:
+            try:
+                position = re.search(hashtag_regex, t)
+                #if hashtag_feature_matrix.count
+                hashtag_feature_matrix.append(t[position.start():position.end()])
+                t = t[position.end():]
+            except AttributeError:
+                break
+
     hashtag_feature_vocab=None
     pickle.dump(hashtag_feature_vocab,
                 open(out_folder+"/"+TWEET_HASHTAG_FEATURES_VOCAB+".pk", "wb" ))
