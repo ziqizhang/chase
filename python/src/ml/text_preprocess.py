@@ -17,10 +17,13 @@ def preprocess(text_string):
     giant_url_regex = ('http[s]?://(?:[a-zA-Z]|[0-9]|[$-_@.&+]|'
         '[!*\(\),]|(?:%[0-9a-fA-F][0-9a-fA-F]))+')
     mention_regex = '@[\w\-]+'
+    emoji_regex = '&#[0-9]{4,6};'
     parsed_text = re.sub(space_pattern, ' ', text_string)
     parsed_text = re.sub(giant_url_regex, '', parsed_text)
     parsed_text = re.sub(mention_regex, '', parsed_text)
     parsed_text = re.sub('RT','', parsed_text) #Some RTs have !!!!! in front of them
+    parsed_text = re.sub(emoji_regex,'',parsed_text) #remove emojis from the text
+
     #parsed_text = re.sub('#[\w\-]+', '',parsed_text)
     #parsed_text = parsed_text.code("utf-8", errors='ignore')
     return parsed_text
