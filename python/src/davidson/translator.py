@@ -21,6 +21,40 @@ import string
 #csvfile = "../../../data/annotation/tagfilered_merged.csv"
 #reader = csv.reader(csvfile, delimiter=',', quotechar='"')
 #print(reader)
+
+def translator(file,count):
+    with open(file, 'r',encoding='latin-1') as csvfile:
+        spamreader = csv.reader(csvfile, delimiter=',')
+        for row in spamreader:
+            tweet = row[1]
+            tweet = re.sub(',','',tweet)
+            tweet = re.sub('\n', ' ', tweet)
+            value = row[0].lower()
+            print(value+"-"+row[1])
+            if value =="class":
+                continue
+            if row[0] == '':
+                #csvout.writerow(str(count) + "0" * 4 + "2" + tweet)
+                output.write(str(count) + ",0" * 4 + ",2," + tweet+"\n")
+            elif value[0] == 'u':
+                output.write(str(count) + ",0" * 4 + ",1," + tweet + "\n")
+            elif value[0] == 'r' or value[0] == 'e' or value[0] == 's' or value[0] == 'y' or value[0]=='i':
+                output.write(str(count) + ",0" * 4 + ",0," + tweet + "\n")
+            else:
+                print("-------" + value + tweet)
+            count = count + 1
+        return count
+count = 0
+
+
+with open("/Users/David/spur/chase/output/output.csv", 'w') as output:
+    output.write(",count,hate_speech,offensive_language,neither,class,tweet\n")
+    count = translator("../../../data/annotation/tagfilered_merged.csv", count)
+    count = translator("../../../data/annotation/keywordfilered_merged.csv", count)
+    count = translator("../../../data/annotation/unfilered_merged.csv", count)
+print(count)
+
+'''
 count = 0
 with open("/Users/David/spur/chase/output/output.csv", 'w') as output:
     output.write(",count,hate_speech,offensive_language,neither,class,tweet\n")
@@ -73,3 +107,5 @@ with open("/Users/David/spur/chase/output/output.csv", 'w') as output:
             elif value[0] == 'r' or value[0] == 'e' or value[0] == 's' or value[0] == 'y' or value[0]=='i':
                 output.write(str(count) + ",0" * 4 + ",0," + tweet + "\n")
             count = count + 1
+print(count)
+'''
