@@ -41,7 +41,6 @@ sentiment_analyzer = VS()
 stemmer = PorterStemmer()
 
 
-
 def preprocess(text_string):
     """
     Accepts a text string and replaces:
@@ -179,10 +178,10 @@ def get_feature_array(tweets):
 
 if __name__ == '__main__':
     print("hello world")
-    dataset = pd.read_csv("labeled_data.csv") #currently only a 500 subset
+    dataset = pd.read_csv("../../../data/output.csv") #currently only a 500 subset
     #dataset = pd.read_csv("davidsonxchaseHate.csv", encoding="latin-1")
     #dataset = pd.read_csv("chaseTrain.csv", encoding="latin-1")
-    chaseDataset = pd.read_csv("train1.csv", encoding="latin-1") #This reads chase tweets from a CSV file that are used later
+    chaseDataset = pd.read_csv("../../../data/train1.csv", encoding="latin-1") #This reads chase tweets from a CSV file that are used later
 
 
     #print(dataset.describe())
@@ -190,7 +189,7 @@ if __name__ == '__main__':
     tweets = dataset.tweet #store the tweets in an easier way
     chaseTweets = chaseDataset.tweet
     print(len(tweets), " tweets to classify")
-    train, test, y_train, y_test = train_test_split(dataset.tweet, dataset.hate_speech, test_size=0.5)
+    train, test, y_train, y_test = train_test_split(dataset.tweet, dataset.hate_speech, test_size=0.25)
     #train, test, y_train, y_test = train_test_split(dataset.tweet, dataset.score, test_size=0.25)
     print(len(train), "length of train")
     print(len(test), "length of test")
@@ -281,16 +280,17 @@ if __name__ == '__main__':
                   }
 
     #print(gs_clf.predict(['God is love']))
-    print("Running classification model...")
+    #print("Running classification model...")
     #print("""\t----------------------
     #Predicting tweets
     #----------------------""")
     #for i,t in enumerate(tweets):
         #print(t)
-     #   print(t + " :::::::::: " + class_to_name(y[i]))
+     #   print(t + " :::::::::: " + class_to_name(y[i])
+    inDataset = pd.read_csv("../../../data/labeled_data.csv")
+    # intweets = inDataset.tweet
 
-    #test1 = model.transform(chaseDataset)
-    #prediction = model.predict(test1)
+
     tfidf = vectorizer.fit_transform(chaseTweets).toarray()
     vocab = {v:i for i, v in enumerate(vectorizer.get_feature_names())}
     idf_vals = vectorizer.idf_
@@ -331,12 +331,10 @@ if __name__ == '__main__':
     print("""\t----------------------
     Predicting chase tweets
     ----------------------""")
-    for i, t in enumerate(chaseTweets):
-        # print(t)
-        print(t + " :::::::::: " + class_to_name(y_preds[i]))
-    #while True:
-        #strinput = input()
-        #print(train.target_names[gs_clf.predict([strinput])[0]])  # This line predicts based upon text
-        #print(gs_clf.best_score_)
-
-
+    with open("/Users/David/spur/chase/output/predictions.csv", 'w') as output:
+        output.write("tweet,classification\n")
+        for i, t in enumerate(chaseTweets):
+            # print(t)
+            t = re.sub('\n|,','',t)
+            output.write(t + ',' + class_to_name(y_preds[i]) + '\n')
+            print(t + " :::::::::: " + class_to_name(y_preds[i]))
