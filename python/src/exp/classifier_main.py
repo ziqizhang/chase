@@ -8,9 +8,6 @@ import sys
 import datetime
 import pickle
 
-from sklearn.feature_selection import SelectFromModel
-from sklearn.linear_model import LogisticRegression
-
 from exp import experiment_settings
 from ml.vectorizer import feature_vectorizer as fv
 from ml import classifier_train as cl
@@ -56,10 +53,11 @@ class ChaseClassifier(object):
     def __init__(self, task, identifier,
                  data_file,
                  feat_v: fv.FeatureVectorizer,
-                 feature_selection: bool,
                  cl_gridsearch:bool,
-                 fo_option, #feature optimization option, see create_feature_selector in classifier_trian
-                 fo_gridsearch:bool, #if feature selection is used, whether to do grid search on the selector
+                 dr_option, #feature optimization option, see create_feature_selector in classifier_trian
+                 dr_gridsearch:bool, #if feature selection is used, whether to do grid search on the selector
+                 fs_option,
+                 fs_gridsearch:bool,
                  folder_sysout):
         self.raw_data = numpy.empty
         self.data_file = data_file
@@ -68,17 +66,19 @@ class ChaseClassifier(object):
         self.feat_v = feat_v  # inclusive
         self.sys_out = folder_sysout  # exclusive 16
         self.feature_size = DNN_FEATURE_SIZE
-        self.feature_selection=feature_selection
         self.cl_gridsearch=cl_gridsearch
-        self.fo_option=fo_option
-        self.fo_gridsearch=fo_gridsearch
+        self.dr_option=dr_option
+        self.dr_gridsearch=dr_gridsearch
+        self.fs_option=fs_option
+        self.fs_gridsearch=fs_gridsearch
 
     def load_data(self):
         self.raw_data = pd.read_csv(self.data_file, sep=',', encoding="utf-8")
 
     def training(self):
-        M=self.feature_extraction()[0]
-        M=self.feature_select(M)
+        meta_M=self.feature_extraction()
+        M=meta_M[0]
+        M=self.feature_scale(M)
 
         # split the dataset into two parts, 0.75 for train and 0.25 for testing
         X_train_data, X_test_data, y_train, y_test = \
@@ -104,46 +104,57 @@ class ChaseClassifier(object):
         ######################### SGDClassifier #######################
         if WITH_SGD:
             cl.learn_general(NUM_CPU, N_FOLD_VALIDATION, self.task_name, LOAD_MODEL_FROM_FILE, "sgd",
-                             X_train_data, y_train,
+                             meta_M[1], X_train_data, y_train,
                              X_test_data, y_test, self.identifier, self.sys_out,
-                             self.cl_gridsearch, self.fo_option, self.fo_gridsearch)
+                             self.cl_gridsearch, self.dr_option, self.dr_gridsearch,
+                             self.fs_option,self.fs_gridsearch)
 
         ######################### Stochastic Logistic Regression#######################
         if WITH_SLR:
             cl.learn_general(NUM_CPU, N_FOLD_VALIDATION, self.task_name, LOAD_MODEL_FROM_FILE, "lr",
-                             X_train_data, y_train,
+                             meta_M[1],X_train_data, y_train,
                              X_test_data, y_test, self.identifier, self.sys_out, self.cl_gridsearch
-                             , self.fo_option, self.fo_gridsearch)
+                             , self.dr_option, self.dr_gridsearch,
+                             self.fs_option,self.fs_gridsearch)
 
         ######################### Random Forest Classifier #######################
         if WITH_RANDOM_FOREST:
             cl.learn_general(NUM_CPU, N_FOLD_VALIDATION, self.task_name, LOAD_MODEL_FROM_FILE, "rf",
+                             meta_M[1],
                              X_train_data,
                              y_train,
                              X_test_data, y_test, self.identifier, self.sys_out, self.cl_gridsearch
-                             , self.fo_option, self.fo_gridsearch)
+                             , self.dr_option, self.dr_gridsearch,
+                             self.fs_option,self.fs_gridsearch)
 
         ###################  liblinear SVM ##############################
         if WITH_LIBLINEAR_SVM:
             cl.learn_general(NUM_CPU, N_FOLD_VALIDATION, self.task_name, LOAD_MODEL_FROM_FILE,
-                                    "svm-l", X_train_data,
+                                    "svm-l",
+                             meta_M[1],X_train_data,
                              y_train, X_test_data, y_test, self.identifier, self.sys_out,
-                             self.cl_gridsearch, self.fo_option, self.fo_gridsearch)
+                             self.cl_gridsearch, self.dr_option, self.dr_gridsearch,
+                             self.fs_option,self.fs_gridsearch)
 
         ##################### RBF svm #####################
         if WITH_RBF_SVM:
             cl.learn_general(NUM_CPU, N_FOLD_VALIDATION, self.task_name, LOAD_MODEL_FROM_FILE,
-                                    "svm-rbf", X_train_data,
+                                    "svm-rbf",
+                             meta_M[1],
+                             X_train_data,
                              y_train, X_test_data, y_test, self.identifier, self.sys_out,
-                             self.cl_gridsearch, self.fo_option, self.fo_gridsearch)
+                             self.cl_gridsearch, self.dr_option, self.dr_gridsearch,
+                             self.fs_option,self.fs_gridsearch)
 
         ################# Artificial Neural Network #################
         if WITH_ANN:
             cl.learn_dnn(NUM_CPU, N_FOLD_VALIDATION, self.task_name, LOAD_MODEL_FROM_FILE, "ann",
                          self.feature_size,
+                         meta_M[1],
                          X_train_data,
                          y_train, X_test_data, y_test, self.identifier, self.sys_out,
-                         self.cl_gridsearch, self.fo_option, self.fo_gridsearch)
+                         self.cl_gridsearch, self.dr_option, self.dr_gridsearch,
+                             self.fs_option,self.fs_gridsearch)
 
         print("complete, {}".format(datetime.datetime.now()))
 
@@ -158,7 +169,7 @@ class ChaseClassifier(object):
         #step 3: map test data features to training data features and populate the empty feature matrix
         featurematrix=self.map_to_trainingfeatures(train_features, M_features_by_type)
 
-        featurematrix=self.feature_select(featurematrix)
+        featurematrix=self.feature_scale(featurematrix)
 
         print("Applying pre-trained models to tag data (i.e., testing) :: testing data size:", len(self.raw_data))
         print("test with CPU cores: [%s]" % NUM_CPU)
@@ -242,12 +253,12 @@ class ChaseClassifier(object):
         return M
 
 
-    def feature_select(self, M):
-        if self.feature_selection:
-            print("FEATURE SELECTION BEGINS, {}".format(datetime.datetime.now()))
-            select = SelectFromModel(LogisticRegression(class_weight='balanced',penalty="l1",C=0.01))
-            M = select.fit_transform(M, self.raw_data['class'])
-            print("REDUCED FEATURE MATRIX dimensions={}".format(M.shape))
+    def feature_scale(self, M):
+        # if self.feature_selection:
+        #     print("FEATURE SELECTION BEGINS, {}".format(datetime.datetime.now()))
+        #     select = SelectFromModel(LogisticRegression(class_weight='balanced',penalty="l1",C=0.01))
+        #     M = select.fit_transform(M, self.raw_data['class'])
+        #     print("REDUCED FEATURE MATRIX dimensions={}".format(M.shape))
         #if not self.feature_selection:
         print("APPLYING FEATURE SCALING: [%s]" % SCALING_STRATEGY)
         if SCALING_STRATEGY == SCALING_STRATEGY_MEAN_STD:
@@ -278,7 +289,7 @@ if __name__ == '__main__':
     for ds in settings:
         print("##########\nSTARTING EXPERIMENT SETTING:" + '; '.join(map(str, ds)))
         classifier = ChaseClassifier(ds[0], ds[1], ds[2], ds[3], ds[4],ds[5],ds[6], ds[7],
-                                     ds[8])
+                                     ds[8],ds[9])
         classifier.load_data()
 
         # ============= random sampling =================================

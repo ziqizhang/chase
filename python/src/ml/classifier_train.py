@@ -6,12 +6,17 @@ from keras.models import Sequential
 from keras.wrappers.scikit_learn import KerasClassifier
 from sklearn import svm
 from sklearn.decomposition import PCA
+from sklearn.ensemble import ExtraTreesClassifier
 
 from sklearn.ensemble import RandomForestClassifier
+from sklearn.feature_selection import SelectFromModel
+from sklearn.feature_selection import SelectKBest
 from sklearn.linear_model import LogisticRegression
+from sklearn.linear_model import RandomizedLogisticRegression
 from sklearn.linear_model import SGDClassifier
 from sklearn.model_selection import cross_val_predict
 from sklearn.pipeline import Pipeline
+from sklearn.tree import ExtraTreeClassifier
 
 from ml import util
 from sklearn.model_selection import GridSearchCV
@@ -21,6 +26,7 @@ import numpy as np
 
 PIPELINE_CLASSIFIER_LABEL="classify__"
 PIPELINE_DIM_REDUCER_LABEL="dr__"
+PIPELINE_FEATURE_SELECTION= "fs__"
 
 def create_dimensionality_reducer(option, gridsearch:bool):
     if option==-1:
@@ -39,8 +45,36 @@ def create_dimensionality_reducer(option, gridsearch:bool):
         return reducer, {}
 
 
-def create_classifier(outfolder, model, task, nfold, classifier_gridsearch, featureopt_option,
-                      featureopt_gridsearch, cpus):
+def create_feature_selector(option, gridsearch:bool):
+    if option==-1:
+        #selector=SelectKBest(score_func=chi2, k=200)
+        fs=None
+        params = None
+    elif option==0:
+        #selector=PCA(n_components=2, svd_solver='auto')
+        fs=SelectFromModel(LogisticRegression(class_weight='balanced',penalty="l1",C=0.01))
+        params = {}
+    elif option==1:
+        fs=SelectKBest()
+        params = {PIPELINE_FEATURE_SELECTION+'score_func':['f_classif','mutual_info_classif','chi2',
+                                                           'SelectFpr'],
+                  PIPELINE_FEATURE_SELECTION+'k':[100,250,500,1000,2000]}
+    elif option==2:
+        fs=RandomizedLogisticRegression(n_jobs=-1, random_state=42)
+        params = {PIPELINE_FEATURE_SELECTION+'sample_fraction':[0.3,0.5],
+                  PIPELINE_FEATURE_SELECTION+'selection_threshold':[0.25,0.5]}
+    else:
+        fs=ExtraTreesClassifier(n_jobs=-1, random_state=42)
+        params = {PIPELINE_FEATURE_SELECTION+'max_features':['auto', 100,250,500,1000,2000],
+                  PIPELINE_FEATURE_SELECTION+'selection_threshold':[0.25,0.5]}
+    if gridsearch:
+        return fs, params
+    else:
+        return fs, {}
+
+
+def create_classifier(outfolder, model, task, nfold, classifier_gridsearch, dr_option,
+                      dr_gridsearch, fs_option, fs_gridsearch,cpus):
     classifier = None
     model_file = None
     cl_tuning_params=None
@@ -109,30 +143,32 @@ def create_classifier(outfolder, model, task, nfold, classifier_gridsearch, feat
         classifier = LogisticRegression(random_state=111)
         model_file = subfolder+ "/stochasticLR-%s.m" % task
 
-    dim_reducer=create_dimensionality_reducer(featureopt_option, featureopt_gridsearch)
-    if dim_reducer[0] is None:
-        pipe = Pipeline([
-        ('classify', classifier)])
-        all_params=cl_tuning_params
-    else:
-        pipe = Pipeline([
-        ('dr', dim_reducer[0]),
-        ('classify', classifier)])
-        all_params=[
-            dim_reducer[1],
-            cl_tuning_params]
+    dim_reducer=create_dimensionality_reducer(dr_option, dr_gridsearch)
+    feature_selector=create_feature_selector(fs_option, fs_gridsearch)
+    pipe = []
+    params=[]
+    if feature_selector[0] is not None:
+        pipe.append(('fs', feature_selector[0]))
+        params.append(feature_selector[1])
+    if dim_reducer[0] is not None:
+        pipe.append(('dr', dim_reducer[0]))
+        params.append(dim_reducer[1])
+    pipe.append(('classify', classifier))
+    params.append(cl_tuning_params)
 
-    piped_classifier = GridSearchCV(pipe, param_grid=all_params, cv=nfold,
+    pipeline=Pipeline(pipe)
+    piped_classifier = GridSearchCV(pipeline, param_grid=params, cv=nfold,
                                   n_jobs=cpus)
     return piped_classifier, model_file
 
 
-def learn_general(cpus, nfold, task, load_model, model, X_train, y_train, X_test, y_test,
-                         identifier, outfolder, classifier_gridsearch=True,
-                         featureopt_option=0, featureopt_gridsearch=True):
+def learn_general(cpus, nfold, task, load_model, model, feature_vocbs:dict, X_train, y_train, X_test, y_test,
+                  identifier, outfolder, classifier_gridsearch=True,
+                  dr_option=0, dr_gridsearch=True, fs_option=0, fs_gridsearch=True
+                  ):
 
-    c = create_classifier(outfolder,model, task, nfold, classifier_gridsearch,
-                      featureopt_option, featureopt_gridsearch, cpus)
+    c = create_classifier(outfolder, model, task, nfold, classifier_gridsearch,
+                          dr_option, dr_gridsearch, fs_option, fs_gridsearch,cpus)
     piped_classifier = c[0]
     model_file = c[1]
 
@@ -151,6 +187,12 @@ def learn_general(cpus, nfold, task, load_model, model, X_train, y_train, X_test
         cv_score = piped_classifier.best_score_
         util.save_classifier_model(best_estimator, model_file)
 
+        #selected features for inspection
+        if 'fs' in best_estimator.named_steps.keys():
+            finalFeatureIndices = best_estimator.named_steps["fs"].get_support(indices=True)
+            util.save_selected_features(finalFeatureIndices, feature_vocbs,model_file+".features.csv")
+
+
     if(X_test is not None):
         heldout_predictions_final = best_estimator.predict(X_test)
         util.save_scores(nfold_predictions,y_train, heldout_predictions_final, y_test, model, task,
@@ -160,9 +202,11 @@ def learn_general(cpus, nfold, task, load_model, model, X_train, y_train, X_test
                      identifier, 2,outfolder)
 
 
-def learn_dnn(cpus, nfold, task, load_model, model, input_dim, X_train, y_train, X_test, y_test,
-              identifier,outfolder, gridsearch=True,
-              featureopt_option=0, featureopt_gridsearch=True):
+def learn_dnn(cpus, nfold, task, load_model, model, input_dim,
+              feature_vocbs, X_train, y_train, X_test, y_test,
+              identifier, outfolder, gridsearch=True,
+              dr_option=0, dr_gridsearch=True,
+              fs_option=0, fs_gridsearch=True):
     print("== Perform ANN ...")  # create model
     subfolder=outfolder+"/models"
     try:
@@ -176,18 +220,20 @@ def learn_dnn(cpus, nfold, task, load_model, model, input_dim, X_train, y_train,
     dropout = [0.1, 0.3, 0.5, 0.7]
     param_grid = dict(dropout_rate=dropout, batch_size=batch_size, nb_epoch=epochs)
 
-    dim_reducer=create_dimensionality_reducer(featureopt_option, featureopt_gridsearch)
-    if dim_reducer[0] is None:
-        pipe = Pipeline([
-        ('classify', model)])
-        all_params=param_grid
-    else:
-        pipe = Pipeline([
-        ('reduce_dim', dim_reducer[0]),
-        ('classify', model)])
-        all_params=[dim_reducer[1],param_grid]
+    dim_reducer=create_dimensionality_reducer(dr_option, dr_gridsearch)
+    feature_selector=create_feature_selector(fs_option, fs_gridsearch)
+    pipe = []
+    params=[]
+    if feature_selector[0] is not None:
+        pipe.append(('fs', feature_selector[0]))
+        params.append(feature_selector[1])
+    if dim_reducer[0] is not None:
+        pipe.append(('dr', dim_reducer[0]))
+        params.append(dim_reducer[1])
+    pipe.append(('classify', model))
+    params.append(param_grid)
 
-    piped_classifier =  GridSearchCV(estimator=pipe, param_grid=all_params, n_jobs=cpus,
+    piped_classifier =  GridSearchCV(estimator=pipe, param_grid=params, n_jobs=cpus,
                         cv=nfold)
 
     cv_score_ann = 0
@@ -207,7 +253,12 @@ def learn_dnn(cpus, nfold, task, load_model, model, input_dim, X_train, y_train,
         print("+ best params for {} model are:{}".format(model, best_param_ann))
         best_estimator = piped_classifier.best_estimator_
 
-        # self.save_classifier_model(best_estimator, ann_model_file)
+        #selected features for inspection
+        if 'fs' in best_estimator.named_steps.keys():
+            finalFeatureIndices = best_estimator.named_steps["fs"].get_support(indices=True)
+            util.save_selected_features(finalFeatureIndices, feature_vocbs,ann_model_file+".features")
+
+        util.save_classifier_model(best_estimator, ann_model_file)
 
     print("testing on development set ....")
     if(X_test is not None):

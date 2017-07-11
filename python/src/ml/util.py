@@ -1,4 +1,4 @@
-
+import csv
 import pickle
 
 import datetime
@@ -198,3 +198,34 @@ def output_data_splits(data_file, out_folder):
 
 output_data_splits("/home/zqz/Work/hate-speech-and-offensive-language/data/labeled_data.csv",
                    "/home/zqz/Work/chase/output/data")
+
+
+def save_selected_features(finalFeatureIndices, featureTypes, file):
+    with open(file, 'w', newline='',encoding='utf-8') as csvfile:
+        writer = csv.writer(csvfile, delimiter=',',
+                                quotechar='"', quoting=csv.QUOTE_MINIMAL)
+
+        start=0
+        featureTypesAsDict={}
+        # for item in featureTypes:
+        #     if isinstance(item, tuple):
+        #         featureTypesAsDict[item[0]]=item[1]
+        #     elif isinstance(item, list):
+        #         i = iter(item)
+
+
+        for ft_key, ft_value in featureTypes.items():
+            if isinstance(ft_value[1], dict):
+                feature_lookup = {v: k for k, v in ft_value[1].items()}
+            else:
+                feature_lookup={v: k for v, k in enumerate(ft_value[1])}
+            max=start+len(feature_lookup)
+            for i in finalFeatureIndices:
+                if i< start:
+                    continue
+                if i<max:
+                    feature=feature_lookup[i-start]
+                    writer.writerow([i, ft_key, feature])
+            start=max
+
+    return None

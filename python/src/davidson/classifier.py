@@ -45,7 +45,7 @@ if __name__ == '__main__':
     tweets_cleaned = [tp.preprocess(x) for x in tweets]
 
     fvobj = fv.FeatureVectorizerDavidson()
-    M = fvobj.transform_inputs(tweets, tweets_cleaned, OUT_FOLDER)
+    M = fvobj.transform_inputs(tweets, tweets_cleaned, OUT_FOLDER,'none')
 
 
     X = pd.DataFrame(M)
