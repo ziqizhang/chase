@@ -25,13 +25,11 @@ from ml import feature_extractor as fe
 # Model selection
 WITH_SGD = True
 WITH_SLR = True
-WITH_RANDOM_FOREST = True #this algorithm may not work on very small feature vectors
+WITH_RANDOM_FOREST = False #this algorithm may not work on very small feature vectors
 WITH_LIBLINEAR_SVM = True
-WITH_RBF_SVM = True
+WITH_RBF_SVM = False
 WITH_ANN = False
 
-# Random Forest model(or any tree-based model) do not ncessarily need feature scaling
-SCALING = False
 # feature scaling with bound [0,1] is ncessarily for MNB model
 SCALING_STRATEGY_MIN_MAX = 0
 # MEAN and Standard Deviation scaling is the standard feature scaling method
@@ -257,7 +255,7 @@ class ChaseClassifier(object):
         elif SCALING_STRATEGY == SCALING_STRATEGY_MIN_MAX:
             M = util.feature_scaling_min_max(M)
         else:
-            raise ArithmeticError("SCALING STRATEGY IS NOT SET CORRECTLY!")
+            pass
         return M
 
     def saveOutput(self, prediction, model_name):

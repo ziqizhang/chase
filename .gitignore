@@ -1,6 +1,10 @@
 config/twitter_oauth.txt
 aws/*
 data/*
-output/*
+output/errors/*
+output/features/*
+output/models/*
+output/*.pk
+output/*.pkl
 .idea/*
 *.pyc

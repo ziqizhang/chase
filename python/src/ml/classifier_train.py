@@ -19,6 +19,8 @@ import os
 from time import time
 import numpy as np
 
+PIPELINE_CLASSIFIER_LABEL="classify__"
+PIPELINE_DIM_REDUCER_LABEL="dr__"
 
 def create_dimensionality_reducer(option, gridsearch:bool):
     if option==-1:
@@ -27,8 +29,10 @@ def create_dimensionality_reducer(option, gridsearch:bool):
         params = None
     else:
         #selector=PCA(n_components=2, svd_solver='auto')
-        reducer=PCA(n_components=2, svd_solver='auto')
-        params = {'n_components':[2,3,5], 'svd_solver':['auto']}
+        reducer=PCA(n_components=2, svd_solver='arpack')
+        params = {
+            PIPELINE_DIM_REDUCER_LABEL+'n_components':[2,3,5],
+            PIPELINE_DIM_REDUCER_LABEL+'svd_solver':['auto','arpack']}
     if gridsearch:
         return reducer, params
     else:
@@ -50,18 +54,18 @@ def create_classifier(outfolder, model, task, nfold, classifier_gridsearch, feat
         print("== Random Forest ...{}".format(datetime.datetime.now()))
         classifier = RandomForestClassifier(n_estimators=20, n_jobs=cpus)
         if classifier_gridsearch:
-            cl_tuning_params = {"max_depth": [3, 5, None],
-                             "max_features": [1, 3, 5, 7, 10],
-                             "min_samples_split": [2, 5, 10],
-                             "min_samples_leaf": [1, 3, 10],
-                             "bootstrap": [True, False],
-                             "criterion": ["gini", "entropy"]}
+            cl_tuning_params = {PIPELINE_CLASSIFIER_LABEL+"max_depth": [3, 5, None],
+                             PIPELINE_CLASSIFIER_LABEL+"max_features": [1, 3, 5, 7, 10],
+                             PIPELINE_CLASSIFIER_LABEL+"min_samples_split": [2, 5, 10],
+                             PIPELINE_CLASSIFIER_LABEL+"min_samples_leaf": [1, 3, 10],
+                             PIPELINE_CLASSIFIER_LABEL+"bootstrap": [True, False],
+                             PIPELINE_CLASSIFIER_LABEL+"criterion": ["gini", "entropy"]}
         else:
             cl_tuning_params={}
         model_file = subfolder+ "/random-forest_classifier-%s.m" % task
     if (model == "svm-l"):
         if classifier_gridsearch:
-            cl_tuning_params = {'C': [1e-1, 1e-3, 1e-5, 0.2, 0.5, 1, 1.2, 1.3, 1.5, 1.6, 1.7, 1.8, 2]}
+            cl_tuning_params = {PIPELINE_CLASSIFIER_LABEL+'C': [1e-1, 1e-3, 1e-5, 0.2, 0.5, 1, 1.2, 1.3, 1.5, 1.6, 1.7, 1.8, 2]}
         else:
             cl_tuning_params={}
         print("== SVM, kernel=linear ...{}".format(datetime.datetime.now()))
@@ -70,7 +74,9 @@ def create_classifier(outfolder, model, task, nfold, classifier_gridsearch, feat
 
     if (model == "svm-rbf"):
         if classifier_gridsearch:
-            cl_tuning_params = {'gamma': np.logspace(-9, 3, 3), 'probability': [True], 'C': np.logspace(-2, 10, 3)}
+            cl_tuning_params = {PIPELINE_CLASSIFIER_LABEL+'gamma': np.logspace(-9, 3, 3),
+                                PIPELINE_CLASSIFIER_LABEL+'probability': [True],
+                                PIPELINE_CLASSIFIER_LABEL+'C': np.logspace(-2, 10, 3)}
         else:
             cl_tuning_params={}
         print("== SVM, kernel=rbf ...{}".format(datetime.datetime.now()))
@@ -81,11 +87,11 @@ def create_classifier(outfolder, model, task, nfold, classifier_gridsearch, feat
         print("== SGD ...{}".format(datetime.datetime.now()))
         #DISABLED because grid search takes too long to complete
         if classifier_gridsearch:
-            cl_tuning_params = {"loss": ["log", "modified_huber", 'squared_loss'],
-                      "penalty": ['l2', 'l1'],
-                      "alpha": [0.0001, 0.001, 0.01, 0.03, 0.05, 0.1],
-                      "n_iter": [1000],
-                      "learning_rate": ["optimal"]}
+            cl_tuning_params = {PIPELINE_CLASSIFIER_LABEL+"loss": ["log", "modified_huber", 'squared_loss'],
+                      PIPELINE_CLASSIFIER_LABEL+"penalty": ['l2', 'l1'],
+                      PIPELINE_CLASSIFIER_LABEL+"alpha": [0.0001, 0.001, 0.01, 0.03, 0.05, 0.1],
+                      PIPELINE_CLASSIFIER_LABEL+"n_iter": [1000],
+                      PIPELINE_CLASSIFIER_LABEL+"learning_rate": ["optimal"]}
         else:
             cl_tuning_params={}
         classifier = SGDClassifier(loss='log', penalty='l2', n_jobs=cpus)
@@ -93,10 +99,11 @@ def create_classifier(outfolder, model, task, nfold, classifier_gridsearch, feat
     if (model == "lr"):
         print("== Stochastic Logistic Regression ...{}".format(datetime.datetime.now()))
         if classifier_gridsearch:
-            cl_tuning_params = {"penalty": ['l2'],
-                      "solver": ['liblinear'],
-                      "C": list(np.power(10.0, np.arange(-10, 10))),
-                      "max_iter": [10000]}
+            cl_tuning_params = {
+                PIPELINE_CLASSIFIER_LABEL+"penalty": ['l2'],
+                      PIPELINE_CLASSIFIER_LABEL+"solver": ['liblinear'],
+                      PIPELINE_CLASSIFIER_LABEL+"C": list(np.power(10.0, np.arange(-10, 10))),
+                      PIPELINE_CLASSIFIER_LABEL+"max_iter": [10000]}
         else:
             cl_tuning_params={}
         classifier = LogisticRegression(random_state=111)
@@ -109,9 +116,11 @@ def create_classifier(outfolder, model, task, nfold, classifier_gridsearch, feat
         all_params=cl_tuning_params
     else:
         pipe = Pipeline([
-        ('reduce_dim', dim_reducer[0]),
+        ('dr', dim_reducer[0]),
         ('classify', classifier)])
-        all_params=[dim_reducer[1], cl_tuning_params]
+        all_params=[
+            dim_reducer[1],
+            cl_tuning_params]
 
     piped_classifier = GridSearchCV(pipe, param_grid=all_params, cv=nfold,
                                   n_jobs=cpus)
