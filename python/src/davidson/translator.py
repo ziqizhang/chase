@@ -16,6 +16,7 @@ print(os.getcwd())
 #        print(linedata)
 #    count = count +1
 import csv
+import unicodecsv as csvunicode
 import re
 import string
 #csvfile = "../../../data/annotation/tagfilered_merged.csv"
@@ -23,7 +24,7 @@ import string
 #print(reader)
 
 def translator(file,count):
-    with open(file, 'r',encoding='latin-1') as csvfile:
+    with open(file, 'r') as csvfile:
         spamreader = csv.reader(csvfile, delimiter=',')
         for row in spamreader:
             tweet = row[1]
@@ -37,7 +38,7 @@ def translator(file,count):
                 #csvout.writerow(str(count) + "0" * 4 + "2" + tweet)
                 output.write(str(count) + ",0" * 4 + ",2," + tweet+"\n")
             elif value[0] == 'u':
-                output.write(str(count) + ",0" * 4 + ",1," + tweet + "\n")
+                output.write(str(count) + ",0" * 4 + ",2," + tweet + "\n")
             elif value[0] == 'r' or value[0] == 'e' or value[0] == 's' or value[0] == 'y' or value[0]=='i':
                 output.write(str(count) + ",0" * 4 + ",0," + tweet + "\n")
             else:
@@ -52,7 +53,20 @@ with open("/Users/David/spur/chase/output/output.csv", 'w') as output:
     count = translator("../../../data/annotation/tagfilered_merged.csv", count)
     count = translator("../../../data/annotation/keywordfilered_merged.csv", count)
     count = translator("../../../data/annotation/unfilered_merged.csv", count)
-print(count)
+    with open("../../../data/labeled_data.csv", 'r') as csvfile:
+        spamreader = csv.reader(csvfile,delimiter=',')
+        first = 0
+        for row in spamreader:
+            if first == 0:
+                first = 1
+                continue
+            tweet = row[6]
+            tweet = re.sub(',','',tweet)
+            tweet = re.sub('\n', ' ', tweet)
+            value = row[5].lower()
+            output.write(str(count) + ",0" * 4 + ','+value + ','+ tweet + "\n")
+            count = count + 1
+    print(count)
 
 '''
 count = 0

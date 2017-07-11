@@ -178,7 +178,7 @@ def get_feature_array(tweets):
 
 if __name__ == '__main__':
     print("hello world")
-    dataset = pd.read_csv("../../../data/output.csv") #currently only a 500 subset
+    dataset = pd.read_csv("../../../data/chaseanddavidsons.csv") #currently only a 500 subset
     #dataset = pd.read_csv("davidsonxchaseHate.csv", encoding="latin-1")
     #dataset = pd.read_csv("chaseTrain.csv", encoding="latin-1")
     chaseDataset = pd.read_csv("../../../data/train1.csv", encoding="latin-1") #This reads chase tweets from a CSV file that are used later
@@ -189,7 +189,7 @@ if __name__ == '__main__':
     tweets = dataset.tweet #store the tweets in an easier way
     chaseTweets = chaseDataset.tweet
     print(len(tweets), " tweets to classify")
-    train, test, y_train, y_test = train_test_split(dataset.tweet, dataset.hate_speech, test_size=0.25)
+    train, test, y_train, y_test = train_test_split(dataset.tweet, dataset.hate_speech, test_size=0.25, random_state=4)
     #train, test, y_train, y_test = train_test_split(dataset.tweet, dataset.score, test_size=0.25)
     print(len(train), "length of train")
     print(len(test), "length of test")
@@ -281,16 +281,22 @@ if __name__ == '__main__':
 
     #print(gs_clf.predict(['God is love']))
     #print("Running classification model...")
-    #print("""\t----------------------
-    #Predicting tweets
-    #----------------------""")
-    #for i,t in enumerate(tweets):
-        #print(t)
-     #   print(t + " :::::::::: " + class_to_name(y[i])
-    inDataset = pd.read_csv("../../../data/labeled_data.csv")
+    print("""\t----------------------
+    Predicting tweets
+    ----------------------""")
+    with open("/Users/David/spur/chase/output/predictions.csv", 'w') as output:
+        output.write("tweet,truth,prediction\n")
+        for i,t in enumerate(tweets):
+            #print(t)
+            t = re.sub('\n|,', '', t)
+            output.write(t + ',' + class_to_name(y[i])+','+class_to_name(y_preds[i]) + '\n')
+            print(t + " :::::::::: " + class_to_name(y[i]))
+
+
+    #inDataset = pd.read_csv("../../../data/labeled_data.csv")
     # intweets = inDataset.tweet
 
-
+'''
     tfidf = vectorizer.fit_transform(chaseTweets).toarray()
     vocab = {v:i for i, v in enumerate(vectorizer.get_feature_names())}
     idf_vals = vectorizer.idf_
@@ -338,3 +344,4 @@ if __name__ == '__main__':
             t = re.sub('\n|,','',t)
             output.write(t + ',' + class_to_name(y_preds[i]) + '\n')
             print(t + " :::::::::: " + class_to_name(y_preds[i]))
+'''
