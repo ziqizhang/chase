@@ -9,8 +9,12 @@ from sklearn.decomposition import PCA
 from sklearn.ensemble import ExtraTreesClassifier
 
 from sklearn.ensemble import RandomForestClassifier
+from sklearn.feature_selection import SelectFpr
 from sklearn.feature_selection import SelectFromModel
 from sklearn.feature_selection import SelectKBest
+from sklearn.feature_selection import chi2
+from sklearn.feature_selection import f_classif
+from sklearn.feature_selection import mutual_info_classif
 from sklearn.linear_model import LogisticRegression
 from sklearn.linear_model import RandomizedLogisticRegression
 from sklearn.linear_model import SGDClassifier
@@ -56,17 +60,15 @@ def create_feature_selector(option, gridsearch:bool):
         params = {}
     elif option==1:
         fs=SelectKBest()
-        params = {PIPELINE_FEATURE_SELECTION+'score_func':['f_classif','mutual_info_classif','chi2',
-                                                           'SelectFpr'],
-                  PIPELINE_FEATURE_SELECTION+'k':[100,250,500,1000,2000]}
+        params = {PIPELINE_FEATURE_SELECTION+'score_func':[f_classif,mutual_info_classif],
+                  PIPELINE_FEATURE_SELECTION+'k':[100,250,500,1000]}
     elif option==2:
-        fs=RandomizedLogisticRegression(n_jobs=-1, random_state=42)
+        fs=RandomizedLogisticRegression(n_jobs=1, random_state=42)
         params = {PIPELINE_FEATURE_SELECTION+'sample_fraction':[0.3,0.5],
                   PIPELINE_FEATURE_SELECTION+'selection_threshold':[0.25,0.5]}
     else:
         fs=ExtraTreesClassifier(n_jobs=-1, random_state=42)
-        params = {PIPELINE_FEATURE_SELECTION+'max_features':['auto', 100,250,500,1000,2000],
-                  PIPELINE_FEATURE_SELECTION+'selection_threshold':[0.25,0.5]}
+        params = {PIPELINE_FEATURE_SELECTION+'max_features':['auto', 100,250,500,1000]}
     if gridsearch:
         return fs, params
     else:
