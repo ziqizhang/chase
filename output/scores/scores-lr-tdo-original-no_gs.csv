@@ -1,0 +1,28 @@
+tdo-original-no_gsN-fold results:
+,precision, recall, f1, support
+0,0.41,0.28,0.33,225
+1,0.93,0.93,0.93,2869
+2,0.79,0.89,0.84,623
+avg,0.71,0.70,0.70,3717
+
+Heldout results:
+,precision, recall, f1, support
+0,0.45,0.29,0.36,65
+1,0.95,0.93,0.94,963
+2,0.79,0.94,0.86,212
+avg,0.73,0.72,0.72,1240
+
+tdo-original-no_gsN-fold results:
+,precision, recall, f1, support
+0,0.31,0.17,0.22,225
+1,0.92,0.93,0.92,2869
+2,0.76,0.83,0.79,623
+avg,0.66,0.64,0.64,3717
+
+Heldout results:
+,precision, recall, f1, support
+0,0.32,0.17,0.22,65
+1,0.93,0.93,0.93,963
+2,0.77,0.91,0.83,212
+avg,0.68,0.67,0.66,1240
+

@@ -1,0 +1,14 @@
+tdo-fs=rlr-gs-N-fold results:
+,precision, recall, f1, support
+0,0.32,0.08,0.13,225
+1,0.91,0.93,0.92,2869
+2,0.72,0.85,0.78,623
+avg,0.65,0.62,0.61,3717
+
+Heldout results:
+,precision, recall, f1, support
+0,0.62,0.08,0.14,65
+1,0.93,0.93,0.93,963
+2,0.73,0.93,0.82,212
+avg,0.76,0.64,0.63,1240
+

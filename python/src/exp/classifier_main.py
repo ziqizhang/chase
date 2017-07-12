@@ -8,6 +8,9 @@ import sys
 import datetime
 import pickle
 
+from sklearn.feature_selection import SelectFromModel
+from sklearn.linear_model import LogisticRegression
+
 from exp import experiment_settings
 from ml.vectorizer import feature_vectorizer as fv
 from ml import classifier_train as cl
@@ -267,6 +270,13 @@ class ChaseClassifier(object):
             M = util.feature_scaling_min_max(M)
         else:
             pass
+
+
+        # print("FEATURE SELECTION BEGINS, {}".format(datetime.datetime.now()))
+        # select = SelectFromModel(LogisticRegression(class_weight='balanced',penalty="l1",C=0.01))
+        # M = select.fit_transform(M, self.raw_data['class'])
+        # print("REDUCED FEATURE MATRIX dimensions={}".format(M.shape))
+
         return M
 
     def saveOutput(self, prediction, model_name):
