@@ -181,7 +181,6 @@ def learn_general(cpus, nfold, task, load_model, model, feature_vocbs:dict, X_tr
         best_estimator = util.load_classifier_model(model_file)
     else:
         piped_classifier.fit(X_train, y_train)
-        piped_classifier.transform
         nfold_predictions=cross_val_predict(piped_classifier.best_estimator_, X_train, y_train, cv=nfold)
 
         best_estimator = piped_classifier.best_estimator_
