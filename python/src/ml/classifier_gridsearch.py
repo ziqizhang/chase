@@ -219,7 +219,7 @@ def learn_dnn(cpus, nfold, task, load_model, model, input_dim,
     # define the grid search parameters
     batch_size = [10, 20]
     epochs = [50, 100]
-    dropout = [0.1, 0.3, 0.5, 0.7]
+    dropout = [0.3, 0.5, 0.7]
     param_grid = dict(dropout_rate=dropout, batch_size=batch_size, nb_epoch=epochs)
 
     dim_reducer=create_dimensionality_reducer(dr_option, dr_gridsearch)

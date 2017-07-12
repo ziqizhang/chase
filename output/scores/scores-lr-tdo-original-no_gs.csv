@@ -40,3 +40,17 @@ Heldout results:
 2,0.75,0.96,0.84,212
 avg,0.71,0.67,0.66,1240
 
+tdo-original-no_gsN-fold results:
+,precision, recall, f1, support
+0,0.28,0.16,0.20,225
+1,0.91,0.93,0.92,2869
+2,0.76,0.82,0.79,623
+avg,0.65,0.63,0.64,3717
+
+Heldout results:
+,precision, recall, f1, support
+0,0.36,0.22,0.27,65
+1,0.93,0.92,0.93,963
+2,0.76,0.91,0.83,212
+avg,0.69,0.68,0.68,1240
+
