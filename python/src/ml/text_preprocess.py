@@ -23,6 +23,7 @@ def preprocess(text_string):
     parsed_text = re.sub(mention_regex, '', parsed_text)
     parsed_text = re.sub('RT','', parsed_text) #Some RTs have !!!!! in front of them
     parsed_text = re.sub(emoji_regex,'',parsed_text) #remove emojis from the text
+    parsed_text = re.sub('…','',parsed_text) #Remove the special ending character is truncated
 
     #parsed_text = re.sub('#[\w\-]+', '',parsed_text)
     #parsed_text = parsed_text.code("utf-8", errors='ignore')
@@ -31,5 +32,14 @@ def preprocess(text_string):
 
 #todo: this is based on the above but should allow options to remove hashtags, and special chars
 def preprocess_clean(text_string, remove_hashtags, remove_special_chars):
-    pass
+    # Clean a string down to just text
+
+    parsed_text = preprocess(text_string)
+    parsed_text = parsed_text.lower()
+
+    if remove_hashtags:
+        parsed_text = re.sub('#[\w\-]+', '',parsed_text)
+    if remove_special_chars:
+        parsed_text = re.sub('(\!|\?)+','.',parsed_text) #find one or more of special char in a row, replace with one '.'
+    return parsed_text
 
