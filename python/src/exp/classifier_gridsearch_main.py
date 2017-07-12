@@ -83,8 +83,8 @@ class ChaseGridSearch(object):
             train_test_split(M, self.raw_data['class'],
                              test_size=TEST_SPLIT_PERCENT,
                              random_state=42)
-        X_train_data=util.feature_scale(X_train_data)
-        X_test_data = util.feature_scale(X_test_data)
+        X_train_data=util.feature_scale(X_train_data,SCALING_STRATEGY)
+        X_test_data = util.feature_scale(X_test_data,SCALING_STRATEGY)
         y_train = y_train.astype(int)
         y_test = y_test.astype(int)
 
