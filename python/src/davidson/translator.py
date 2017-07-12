@@ -36,11 +36,11 @@ def translator(file,count):
                 continue
             if row[0] == '':
                 #csvout.writerow(str(count) + "0" * 4 + "2" + tweet)
-                output.write(str(count) + ",0" * 4 + ",2," + tweet+"\n")
-            elif value[0] == 'u':
-                output.write(str(count) + ",0" * 4 + ",2," + tweet + "\n")
+                output.write(str(count) + ",0" * 4 + ",2," + tweet +","+ row[2]+"\n")
+            elif value[0] == 'u'  or value[0]=='x':
+                output.write(str(count) + ",0" * 4 + ",2," + tweet +","+ row[2]+ "\n")
             elif value[0] == 'r' or value[0] == 'e' or value[0] == 's' or value[0] == 'y' or value[0]=='i':
-                output.write(str(count) + ",0" * 4 + ",0," + tweet + "\n")
+                output.write(str(count) + ",0" * 4 + ",0," + tweet +","+ row[2]+"\n")
             else:
                 print("-------" + value + tweet)
             count = count + 1
@@ -49,7 +49,7 @@ count = 0
 
 
 with open("/Users/David/spur/chase/output/output.csv", 'w') as output:
-    output.write(",count,hate_speech,offensive_language,neither,class,tweet\n")
+    output.write(",count,hate_speech,offensive_language,neither,class,tweet,id\n")
     count = translator("../../../data/annotation/tagfilered_merged.csv", count)
     count = translator("../../../data/annotation/keywordfilered_merged.csv", count)
     count = translator("../../../data/annotation/unfilered_merged.csv", count)
