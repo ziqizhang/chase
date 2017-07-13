@@ -8,4 +8,4 @@ output/*.pk
 output/*.pkl
 .idea/*
 *.pyc
-fs/*
+output/fs/*

@@ -230,8 +230,8 @@ def learn_dnn(cpus, nfold, task, load_model, model, input_dim,
         params.append(dim_reducer[1])
     pipe.append(('classify', model))
     params.append(param_grid)
-
-    piped_classifier =  GridSearchCV(estimator=pipe, param_grid=params, n_jobs=cpus,
+    pipeline=Pipeline(pipe)
+    piped_classifier =  GridSearchCV(estimator=pipeline, param_grid=params, n_jobs=cpus,
                         cv=nfold)
 
     cv_score_ann = 0
