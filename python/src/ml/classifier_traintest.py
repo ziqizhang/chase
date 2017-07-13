@@ -1,3 +1,4 @@
+import csv
 import pickle
 
 import numpy
@@ -13,6 +14,8 @@ from ml import util
 
 
 def create_classifier(model, sysout, task, cpus, input_dim):
+    classifier=None
+    model_file=None
     subfolder = sysout + "/models"
     if (model == "rf"):
         classifier = RandomForestClassifier(n_estimators=20, n_jobs=cpus)
@@ -31,40 +34,54 @@ def create_classifier(model, sysout, task, cpus, input_dim):
     if (model == "lr"):
         classifier = LogisticRegression(random_state=111)
         model_file = subfolder + "/stochasticLR-%s.m" % task
-    else:
+    if (model=="ann"):
         classifier = KerasClassifier(build_fn=classifier_gridsearch.create_model(input_dim), verbose=0)
         model_file = subfolder + "/ann-%s.m" % task
 
     return classifier, model_file
 
 
-def transform_test_features(raw_test_data, feature_vectorizer,
-                            expected_feature_types, training_feature_vocab_folder,
+def transform_test_features(data, feature_vectorizer,
+                            training_feature_save,
                             sys_out, feature_selected: bool,
                             scaling_option):
     # test data must be represented in a feature matrix of the same dimension of the training data feature matrix
     # step 1: reconstruct empty feature matrix using the vocabularies seen at training time
-    meta_TEST = util.feature_extraction(raw_test_data.tweet, feature_vectorizer, sys_out)
+    print("\n\nEXTRACTING TEST DATA FEATURS...")
+    meta_TEST = util.feature_extraction(data, feature_vectorizer, sys_out)
     X_test = meta_TEST[0]
     if not feature_selected:
         return X_test
-
-    train_features = create_training_features(expected_feature_types, training_feature_vocab_folder)
+    print("\nFEATURE SELECTION ON TEST DATA...")
+    train_features = create_training_features(training_feature_save)
     # step 2: create test data features
     M_features_by_type = meta_TEST[1]
     # step 3: map test data features to training data features and populate the empty feature matrix
     featurematrix = map_to_trainingfeatures(train_features, M_features_by_type)
-    featurematrix = util.feature_scale(featurematrix, scaling_option)
+    featurematrix = util.feature_scale(scaling_option,featurematrix)
 
     return featurematrix
 
 
-def create_training_features(list_of_expected_feature_types, saved_training_feature_vocab):
-    rs = {}
-    for ft in list_of_expected_feature_types:
-        file = saved_training_feature_vocab + "/" + ft + ".pk"
-        vocab = pickle.load(open(file, "rb"))
-        rs[ft] = vocab
+def create_training_features(saved_training_feature_vocab):
+    rs={}
+    with open(saved_training_feature_vocab, newline='',encoding='utf-8') as csvfile:
+        reader= csv.reader(csvfile, delimiter=',', quotechar='"')
+        for row in reader:
+            featureType=row[1]
+            featureValue=row[2]
+
+            if featureType in rs.keys():
+                rs[featureType].append(featureValue)
+            else:
+                featureValues=[]
+                featureValues.append(featureValue)
+                rs[featureType]=featureValues
+    #
+    # for ft in list_of_expected_feature_types:
+    #     file = saved_training_feature_vocab + "/" + ft + ".pk"
+    #     vocab = pickle.load(open(file, "rb"))
+    #     rs[ft] = vocab
     return rs
 
 

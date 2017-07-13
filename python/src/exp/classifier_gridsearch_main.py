@@ -11,7 +11,7 @@ import numpy
 import pandas as pd
 from sklearn.model_selection import train_test_split
 
-from exp import experiment_settings
+from exp import exp_gridsearch
 from ml import classifier_gridsearch as cl
 from ml import text_preprocess as tp
 from ml import util
@@ -83,8 +83,8 @@ class ChaseGridSearch(object):
             train_test_split(M, self.raw_data['class'],
                              test_size=TEST_SPLIT_PERCENT,
                              random_state=42)
-        X_train_data=util.feature_scale(X_train_data,SCALING_STRATEGY)
-        X_test_data = util.feature_scale(X_test_data,SCALING_STRATEGY)
+        X_train_data=util.feature_scale(SCALING_STRATEGY,X_train_data)
+        X_test_data = util.feature_scale(SCALING_STRATEGY,X_test_data)
         y_train = y_train.astype(int)
         y_test = y_test.astype(int)
 
@@ -160,7 +160,7 @@ class ChaseGridSearch(object):
 
 
 if __name__ == '__main__':
-    settings = experiment_settings.create_settings(sys.argv[1], sys.argv[2])
+    settings = exp_gridsearch.create_settings(sys.argv[1], sys.argv[2])
     for ds in settings:
         print("##########\nSTARTING EXPERIMENT SETTING:" + '; '.join(map(str, ds)))
         classifier = ChaseGridSearch(ds[0], ds[1], ds[2], ds[3], ds[4], ds[5], ds[6], ds[7],

@@ -9,10 +9,8 @@ from sklearn.decomposition import PCA
 from sklearn.ensemble import ExtraTreesClassifier
 
 from sklearn.ensemble import RandomForestClassifier
-from sklearn.feature_selection import SelectFpr
 from sklearn.feature_selection import SelectFromModel
 from sklearn.feature_selection import SelectKBest
-from sklearn.feature_selection import chi2
 from sklearn.feature_selection import f_classif
 from sklearn.feature_selection import mutual_info_classif
 from sklearn.linear_model import LogisticRegression
@@ -20,12 +18,10 @@ from sklearn.linear_model import RandomizedLogisticRegression
 from sklearn.linear_model import SGDClassifier
 from sklearn.model_selection import cross_val_predict
 from sklearn.pipeline import Pipeline
-from sklearn.tree import ExtraTreeClassifier
 
 from ml import util
 from sklearn.model_selection import GridSearchCV
 import os
-from time import time
 import numpy as np
 
 PIPELINE_CLASSIFIER_LABEL="classify__"
@@ -281,7 +277,7 @@ def create_model(input_dim,dropout_rate=0.0):
     model = Sequential()
     model.add(Dense(80,
                     input_dim=input_dim,
-                    init='uniform', activation='relu'))
+                    kernel_initializer='uniform', activation='relu'))
     model.add(Dropout(dropout_rate))
     model.add(Dense(1, init='uniform', activation='sigmoid'))
     # Compile model

@@ -5,3 +5,5 @@ because test set is unseen
 
 - try select more features
 - try experiment on the larger dataset
+- try dnn
+- decide which are the different FS to use
