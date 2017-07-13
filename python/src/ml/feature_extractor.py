@@ -7,6 +7,9 @@ from ml import nlp
 import numpy as np
 import pandas as pd
 import pickle
+import enchant
+from nltk import word_tokenize
+
 
 NGRAM_FEATURES_VOCAB="feature_vocab_ngram"
 NGRAM_POS_FEATURES_VOCAB="feature_vocab_ngram_pos"
@@ -81,11 +84,30 @@ def get_capitalization(tweets, cleaned_tweets,out_folder):
 #todo: return matrix containing a number indicating the extent to which misspellings are found in the tweets
 #see 'other_features_' that processes a single tweet, and 'get_oth_features' that calls the former to process all tweets
 def get_misspellings(tweets, cleaned_tweets,out_folder):
-    mispellings_feature_matrix = None
+    mispellings_feature_matrix = []
+    #import time
+    #start_time = time.time()
+    d = enchant.Dict('en_UK')
+    dus = enchant.Dict('en_US')
+    for tweet in cleaned_tweets:
+        mispellings = 0
+        tweet = re.sub(r'[^a-zA-Z\'\s]', '', tweet)
+        # line = line.title()
+        words = word_tokenize(tweet)
+
+        for word in words:
+            word = word[0].upper() + word[1:]
+            if d.check(word) == False and re.match('\'', word) == None and dus.check(word) == False:
+                #print(word)
+                mispellings = mispellings + 1
+
+
+        mispellings_feature_matrix.append(mispellings)
+    #print("--- %s seconds ---" % (time.time() - start_time))
     caps_feature_vocab="MISSPELLINGS"
     pickle.dump(caps_feature_vocab,
                 open(out_folder+"/"+TWEET_MISSPELLING_FEATURES_VOCAB+".pk", "wb" ))
-
+    return mispellings_feature_matrix
 
 #todo: return matrix containing a number indicating the extent to which special chars are found in the tweets
 #see 'other_features_' that processes a single tweet, and 'get_oth_features' that calls the former to process all tweets
@@ -182,6 +204,7 @@ def get_oth_features(tweets, cleaned_tweets,out_folder):
     each tweet, and returns a numpy array of tweet x features"""
     feats=[]
     count=0
+    mispellings = get_misspellings(tweets, cleaned_tweets, out_folder)
     specialpunc = get_specialpunct(tweets, cleaned_tweets,out_folder)
     specialchars = get_specialchars(tweets, cleaned_tweets,out_folder)
     capitalization = get_capitalization(tweets,cleaned_tweets,out_folder)
