@@ -90,6 +90,7 @@ def get_misspellings(tweets, cleaned_tweets,out_folder):
     d = enchant.Dict('en_UK')
     dus = enchant.Dict('en_US')
     for tweet in cleaned_tweets:
+        totalchar = 0
         mispellings = 0
         tweet = re.sub(r'[^a-zA-Z\'\s]', '', tweet)
         # line = line.title()
@@ -101,8 +102,10 @@ def get_misspellings(tweets, cleaned_tweets,out_folder):
                 #print(word)
                 mispellings = mispellings + 1
 
-
-        mispellings_feature_matrix.append(mispellings)
+        if len(words) != 0:
+            mispellings_feature_matrix.append((mispellings/len(words))*100)
+        else:
+            mispellings_feature_matrix.append(0) #Line with only punctuation
     #print("--- %s seconds ---" % (time.time() - start_time))
     caps_feature_vocab="MISSPELLINGS"
     pickle.dump(caps_feature_vocab,
