@@ -10,12 +10,12 @@ def create_settings(sys_out, data_train, data_test):
     #will take significantly longer time. but possibly better results
 
     settings=[]
-    settings.append(['tdo-original-no_gs', #task name to identify model files
-                     'tdo-original-no_gs', #identifier to identify scores
+    settings.append(['td-original', #task name to identify model files
+                     'td-original', #identifier to identify scores
                      data_train,
                      data_test,
                      fv_davison.FeatureVectorizerDavidson(),#what feature vectorizer to use
-                     0, #fs option
+                     99, #fs option
                      sys_out])
 
 

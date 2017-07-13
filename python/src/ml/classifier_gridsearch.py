@@ -46,7 +46,7 @@ def create_dimensionality_reducer(option, gridsearch:bool):
 
 
 def create_feature_selector(option, gridsearch:bool):
-    if option==-1:
+    if option==99:
         #selector=SelectKBest(score_func=chi2, k=200)
         fs=None
         params = None
@@ -101,7 +101,7 @@ def create_classifier(outfolder, model, task, nfold, classifier_gridsearch, dr_o
         else:
             cl_tuning_params={}
         print("== SVM, kernel=linear ...{}".format(datetime.datetime.now()))
-        classifier = svm.LinearSVC()
+        classifier = svm.LinearSVC(class_weight='balanced',C=0.01, penalty='l2', loss='squared_hinge',multi_class='ovr')
         model_file = subfolder+ "/liblinear-svm-linear-%s.m" % task
 
     if (model == "svm-rbf"):
@@ -279,7 +279,7 @@ def create_model(input_dim,dropout_rate=0.0):
                     input_dim=input_dim,
                     kernel_initializer='uniform', activation='relu'))
     model.add(Dropout(dropout_rate))
-    model.add(Dense(1, init='uniform', activation='sigmoid'))
+    model.add(Dense(1, kernel_initializer='uniform', activation='sigmoid'))
     # Compile model
     model.compile(loss='binary_crossentropy', optimizer='adam', metrics=['accuracy'])
     return model

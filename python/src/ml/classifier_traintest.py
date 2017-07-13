@@ -43,15 +43,13 @@ def create_classifier(model, sysout, task, cpus, input_dim):
 
 def transform_test_features(data, feature_vectorizer,
                             training_feature_save,
-                            sys_out, feature_selected: bool,
+                            sys_out,
                             scaling_option):
     # test data must be represented in a feature matrix of the same dimension of the training data feature matrix
     # step 1: reconstruct empty feature matrix using the vocabularies seen at training time
     print("\n\nEXTRACTING TEST DATA FEATURS...")
     meta_TEST = util.feature_extraction(data, feature_vectorizer, sys_out)
-    X_test = meta_TEST[0]
-    if not feature_selected:
-        return X_test
+
     print("\nFEATURE SELECTION ON TEST DATA...")
     train_features = create_training_features(training_feature_save)
     # step 2: create test data features
@@ -113,6 +111,8 @@ def map_to_trainingfeatures(training_features: {}, testdata_features: {}):
                             vocab_index = t_value.index(vocab)
                         new_row[vocab_index] = value
                 features[row_index] = new_row
+                if(row_index%100==0):
+                    print("(progress: {})".format(row_index))
                 row_index += 1
         else:
             features = numpy.zeros(num_instances, len(t_value))

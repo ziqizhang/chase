@@ -4,7 +4,6 @@
 from __future__ import print_function
 
 import datetime
-import pickle
 import sys
 
 import numpy
@@ -13,12 +12,11 @@ from sklearn.model_selection import train_test_split
 
 from exp import exp_gridsearch
 from ml import classifier_gridsearch as cl
-from ml import text_preprocess as tp
 from ml import util
 from ml.vectorizer import feature_vectorizer as fv
 
 # Model selection
-WITH_SGD = True
+WITH_SGD = False
 WITH_SLR = True
 WITH_RANDOM_FOREST = False #this algorithm may not work on very small feature vectors
 WITH_LIBLINEAR_SVM = True

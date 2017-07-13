@@ -190,9 +190,9 @@ def get_oth_features(tweets, cleaned_tweets,out_folder):
         count+=1
         # if count%100==0:
         #     print("\t {}".format(count))
-    other_features_names = ["FKRA", "FRE","num_syllables", "avg_syl_per_word", "num_chars", "num_chars_total", \
-                        "num_terms", "num_words", "num_unique_words", "vader neg","vader pos","vader neu", "vader compound", \
-                        "num_hashtags", "num_mentions", "num_urls", "is_retweet","capitalizsation"]
+    other_features_names = ["FKRA", "FRE","num_syllables", "num_chars", "num_chars_total",
+                        "num_terms", "num_words", "num_unique_words", "vader compound",
+                            "num_hashtags", "num_mentions"]
     feature_matrix=np.array(feats)
     pickle.dump(other_features_names,
                 open(out_folder+"/"+TWEET_TD_OTHER_FEATURES_VOCAB+".pk", "wb" ))
