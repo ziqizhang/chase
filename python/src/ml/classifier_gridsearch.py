@@ -174,7 +174,7 @@ def create_classifier(outfolder, model, task, nfold, classifier_gridsearch, dr_o
     pipe = []
     params=[]
     if feature_selector[0] is not None:
-        for i, item in feature_selector[0], enumerate(feature_selector[0]):
+        for i, item in enumerate(feature_selector[0]):
             pipe.append(('fs'+str(i), item))
         for item in feature_selector[1]:
             params.append(item)
