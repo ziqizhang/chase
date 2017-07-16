@@ -17,7 +17,7 @@ from ml.vectorizer import feature_vectorizer as fv
 
 # Model selection
 WITH_SGD = False
-WITH_SLR = True
+WITH_SLR = False
 WITH_RANDOM_FOREST = False #this algorithm may not work on very small feature vectors
 WITH_LIBLINEAR_SVM = True
 WITH_RBF_SVM = False

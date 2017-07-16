@@ -12,15 +12,15 @@ def create_settings(sys_out, data_in):
     USE_GRID_SEARCH=False
 
     settings=[]
-    settings.append(['td-original', #task name to identify model files
-                     'td-original', #identifier to identify scores
+    settings.append(['td-original-fs=xt,sfm', #task name to identify model files
+                     'td-original-fs=xt,sfm', #identifier to identify scores
                      data_in,
                      fv_davison.FeatureVectorizerDavidson(),#what feature vectorizer to use
                      False, #do grid search for classifier params
                      -1, #use pca for dimensionality reduction
                      False, #grid search on pca
-                     99, #99 means no fs
-                     False,
+                     3, #99 means no fs
+                     True,
                      sys_out])
     # settings.append(['tdo-scaling-gs', #task name to identify model files
     #                  'tdo-scaling-gs', #identifier to identify scores
