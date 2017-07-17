@@ -127,7 +127,7 @@ class ChaseGridSearch(object):
         ###################  liblinear SVM ##############################
         if WITH_LIBLINEAR_SVM:
             cl.learn_general(NUM_CPU, N_FOLD_VALIDATION, self.task_name, LOAD_MODEL_FROM_FILE,
-                                    "svm-l",
+                                    "svml",
                              meta_M[1],X_train_data,
                              y_train, X_test_data, y_test, self.identifier, self.sys_out,
                              self.cl_gridsearch, self.dr_option, self.dr_gridsearch,
@@ -136,7 +136,7 @@ class ChaseGridSearch(object):
         ##################### RBF svm #####################
         if WITH_RBF_SVM:
             cl.learn_general(NUM_CPU, N_FOLD_VALIDATION, self.task_name, LOAD_MODEL_FROM_FILE,
-                                    "svm-rbf",
+                                    "svmrbf",
                              meta_M[1],
                              X_train_data,
                              y_train, X_test_data, y_test, self.identifier, self.sys_out,

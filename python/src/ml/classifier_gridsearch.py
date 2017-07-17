@@ -61,7 +61,7 @@ def create_feature_selector(option, gridsearch:bool):
         #           PIPELINE_FEATURE_SELECTION+'selection_threshold':[0.25,0.5]}
         logreg = LogisticRegression()
         # Use RFECV to pick best features, using Stratified Kfold
-        fs.append(RFECV(estimator=logreg, step=1000, cv=5, scoring='accuracy'))
+        fs.append(RFECV(estimator=logreg, step=500, cv=5, scoring='accuracy'))
         params.append({})
     elif option==3:
         # Use RFECV to pick best features, using Stratified Kfold
@@ -124,7 +124,7 @@ def create_classifier(outfolder, model, task, nfold, classifier_gridsearch, dr_o
             cl_tuning_params={}
         print("== SVM, kernel=linear ...{}".format(datetime.datetime.now()))
         classifier = svm.LinearSVC(class_weight='balanced',C=0.01, penalty='l2', loss='squared_hinge',multi_class='ovr')
-        model_file = subfolder+ "/liblinear-svm-linear-%s.m" % task
+        model_file = subfolder+ "/svml-%s.m" % task
 
     if (model == "svm-rbf"):
         if classifier_gridsearch:
@@ -135,7 +135,7 @@ def create_classifier(outfolder, model, task, nfold, classifier_gridsearch, dr_o
             cl_tuning_params={}
         print("== SVM, kernel=rbf ...{}".format(datetime.datetime.now()))
         classifier = svm.SVC()
-        model_file = subfolder+  "/liblinear-svm-rbf-%s.m" % task
+        model_file = subfolder+  "/svmrbf-%s.m" % task
 
     if (model == "sgd"):
         print("== SGD ...{}".format(datetime.datetime.now()))

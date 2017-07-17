@@ -12,8 +12,8 @@ def create_settings(sys_out, data_in):
     USE_GRID_SEARCH=False
 
     settings=[]
-    settings.append(['td-original-fs=rfe', #task name to identify model files
-                     'td-original-fs=rfe', #identifier to identify scores
+    settings.append(['td-tdf-rfe', #task name to identify model files
+                     'td-tdf-rfe', #identifier to identify scores
                      data_in,
                      fv_davison.FeatureVectorizerDavidson(),#what feature vectorizer to use
                      False, #do grid search for classifier params

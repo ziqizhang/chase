@@ -28,12 +28,12 @@ def tag(cpus, model, task, test_data,sys_out):
     ###################  liblinear SVM ##############################
     if model=="svm-l":
         print("Using SVM, kernel=linear ...")
-        model_file = sys_out+ "/models/liblinear-svm-linear-%s.m" % task
+        model_file = sys_out+ "/models/svml-%s.m" % task
 
     ##################### RBF svm #####################
     if model=="svm-rbf":
         print("Using SVM, kernel=rbf ....")
-        model_file = sys_out+ "/models/liblinear-svm-rbf-%s.m" % task
+        model_file = sys_out+ "/models/svmrbf-%s.m" % task
 
     best_estimator = util.load_classifier_model(model_file)
     prediction_dev = best_estimator.predict_proba(test_data)
