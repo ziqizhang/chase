@@ -140,13 +140,6 @@ class ChaseClassifier(object):
                            X_test,y_test,
                            self.sys_out, 'svm-rbf', self.task_name)
 
-        ################# Artificial Neural Network #################
-        if WITH_ANN:
-            classifier = ct.create_classifier('ann', self.sys_out, self.task_name, -1, 300)
-            self.traintest(classifier[0], X_train, y_train,
-                           X_test,y_test,
-                           self.sys_out, 'ann', self.task_name)
-
     def transform_test_features(self, scaling_option,
                                 feat_vectorizer,
                                 training_feature_save,

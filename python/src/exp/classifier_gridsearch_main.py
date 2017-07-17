@@ -21,7 +21,6 @@ WITH_SLR = False
 WITH_RANDOM_FOREST = False #this algorithm may not work on very small feature vectors
 WITH_LIBLINEAR_SVM = True
 WITH_RBF_SVM = False
-WITH_ANN = False
 
 # feature scaling with bound [0,1] is ncessarily for MNB model
 SCALING_STRATEGY_MIN_MAX = 0
@@ -142,16 +141,6 @@ class ChaseGridSearch(object):
                              X_train_data,
                              y_train, X_test_data, y_test, self.identifier, self.sys_out,
                              self.cl_gridsearch, self.dr_option, self.dr_gridsearch,
-                             self.fs_option,self.fs_gridsearch)
-
-        ################# Artificial Neural Network #################
-        if WITH_ANN:
-            cl.learn_dnn(NUM_CPU, N_FOLD_VALIDATION, self.task_name, LOAD_MODEL_FROM_FILE, "ann",
-                         self.feature_size,
-                         meta_M[1],
-                         X_train_data,
-                         y_train, X_test_data, y_test, self.identifier, self.sys_out,
-                         self.cl_gridsearch, self.dr_option, self.dr_gridsearch,
                              self.fs_option,self.fs_gridsearch)
 
         print("complete, {}".format(datetime.datetime.now()))
