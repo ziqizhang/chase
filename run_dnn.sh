@@ -1,1 +1,2 @@
-python3 /home/ubuntu/project/chase/python/src/ml/classifier_dnn.py /home/ziqizhang/chase/data/labeled_data_all.csv /home/ziqizhang/chase/output
+export PYTHONPATH=/home/ziqizhang/chase/python/src
+python3 -m ml.classifier_dnn /home/ziqizhang/chase/data/ml/td/labeled_data_all.csv /home/ziqizhang/chase/output
