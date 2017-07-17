@@ -1,3 +1,4 @@
+import logging
 import sys
 
 import datetime
@@ -15,10 +16,15 @@ import pandas as pd
 from ml.vectorizer import fv_davison
 
 INPUT_DIM=500
+logger = logging.getLogger(__name__)
+LOG_DIR=os.getcwd()+"/logs"
+logging.basicConfig(filename=LOG_DIR+'/training.log', level=logging.INFO, filemode='w')
+
 
 def learn_dnn(cpus, nfold, task, load_model,X_train, y_train, X_test, y_test,
               identifier, outfolder):
     print("== Perform ANN ...")  # create model
+    logger.info("== Perform ANN ...")
     subfolder=outfolder+"/models"
     try:
         os.stat(subfolder)
@@ -88,6 +94,7 @@ def create_model(dropout_rate=0.5):
     model.add(Dense(1, activation='sigmoid'))
     model.compile(loss='binary_crossentropy', optimizer='adam', metrics=['accuracy'])
     print("New run started at {}\n{}".format(datetime.datetime.now(),model.summary()))
+    logger.info("New run started at {}\n{}".format(datetime.datetime.now(),model.summary()))
     return model
 
 
