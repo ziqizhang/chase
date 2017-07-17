@@ -1,4 +1,6 @@
 import sys
+
+import datetime
 from keras.layers import Dense, Dropout, Embedding, Conv1D, MaxPooling1D, LSTM
 from keras.models import Sequential
 from sklearn.cross_validation import cross_val_predict, train_test_split
@@ -80,12 +82,12 @@ def create_model(dropout_rate=0.5):
 
     model = Sequential()
     model.add(Embedding(input_dim=11230, output_dim=32, input_length=INPUT_DIM))
-    model.add(Conv1D(filters=32, kernel_size=3, padding='same', activation='relu'))
+    model.add(Conv1D(filters=32, kernel_size=4, padding='same', activation='relu'))
     model.add(MaxPooling1D(pool_size=2))
     model.add(LSTM(100))
     model.add(Dense(1, activation='sigmoid'))
     model.compile(loss='binary_crossentropy', optimizer='adam', metrics=['accuracy'])
-    print(model.summary())
+    print("New run started at {}\n{}".format(datetime.datetime.now(),model.summary()))
     return model
 
 
