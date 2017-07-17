@@ -1,9 +1,9 @@
 config/twitter_oauth.txt
 aws/*
-data/*
+data/solr/*
 output/errors/*
 output/features/*
-output/models/*
+output/models/*.m
 output/*.pk
 output/*.pkl
 .idea/*
