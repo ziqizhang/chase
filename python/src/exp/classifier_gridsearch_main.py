@@ -5,6 +5,7 @@ from __future__ import print_function
 
 import datetime
 import sys
+import os
 
 import numpy
 import pandas as pd
@@ -71,6 +72,8 @@ class ChaseGridSearch(object):
         self.output_scores_per_ds=output_scores_per_ds
 
     def load_data(self):
+        ec.logger.info("loading input data from: {}, exist={}".format(self.data_file,
+                                    os.path.exists(self.data_file)))
         self.raw_data = pd.read_csv(self.data_file, sep=',', encoding="utf-8")
 
     def gridsearch(self):

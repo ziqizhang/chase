@@ -1,0 +1,46 @@
+_tdcb-tdf-kb N-FOLD AVERAGE :
+,precision, recall, f1, support
+0,0.61,0.63,0.62,402
+1,0.94,0.90,0.92,1559
+2,0.89,0.92,0.90,1872
+avg,0.81,0.82,0.81,3833
+
+
+ n-fold for data from c :
+,precision, recall, f1, support
+0,0.66,0.74,0.69,285
+1,0.00,0.00,0.00,0
+2,0.95,0.92,0.93,1521
+avg,0.54,0.55,0.54,1806
+
+
+ n-fold for data from td :
+,precision, recall, f1, support
+0,0.47,0.38,0.42,117
+1,0.95,0.90,0.92,1559
+2,0.69,0.91,0.78,351
+avg,0.70,0.73,0.71,2027
+
+ HELDOUT :
+,precision, recall, f1, support
+0,0.65,0.70,0.67,165
+1,0.96,0.87,0.91,501
+2,0.88,0.93,0.91,612
+avg,0.83,0.83,0.83,1278
+
+
+ n-fold for data from c :
+,precision, recall, f1, support
+0,0.73,0.80,0.76,129
+1,0.00,0.00,0.00,0
+2,0.95,0.92,0.93,499
+avg,0.56,0.57,0.57,628
+
+
+ n-fold for data from td :
+,precision, recall, f1, support
+0,0.34,0.33,0.34,36
+1,0.96,0.87,0.91,501
+2,0.69,0.97,0.81,113
+avg,0.66,0.73,0.69,650
+
