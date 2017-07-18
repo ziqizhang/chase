@@ -54,14 +54,14 @@ def create_feature_selector(option, gridsearch: bool):
     elif option == 1:
         fs=SelectKBest(k=1000, score_func=f_classif)
         params={PIPELINE_FEATURE_SELECTION + 'score_func': [f_classif],
-                       PIPELINE_FEATURE_SELECTION + 'k': [100, 250, 500, 1000,2000]}
+                       PIPELINE_FEATURE_SELECTION + 'k': [100, 250, 500, 1000,1500,2000]}
     elif option == 2:
         # fs=RandomizedLogisticRegression(n_jobs=4, random_state=42)
         # params = {PIPELINE_FEATURE_SELECTION+'sample_fraction':[0.3,0.5],
         #           PIPELINE_FEATURE_SELECTION+'selection_threshold':[0.25,0.5]}
         logreg = LogisticRegression()
         # Use RFECV to pick best features, using Stratified Kfold
-        fs=RFECV(estimator=logreg, step=500, cv=5, scoring='accuracy')
+        fs=RFECV(estimator=logreg, step=250, cv=5, scoring='accuracy')
         params={}
 
     if gridsearch:
