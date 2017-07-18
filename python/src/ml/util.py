@@ -262,7 +262,7 @@ def feature_extraction(data_column, feat_vectorizer, sysout):
     print("FEATURE EXTRACTION AND VECTORIZATION FOR ALL data, insatance={}, {}"
           .format(len(tweets), datetime.datetime.now()))
     print("\tbegin feature extraction and vectorization...")
-    tweets_cleaned = [text_preprocess.preprocess(x) for x in tweets]
+    tweets_cleaned = [text_preprocess.preprocess_clean(x,1,1) for x in tweets]
     M = feat_vectorizer.transform_inputs(tweets, tweets_cleaned, sysout, "na")
     print("FEATURE MATRIX dimensions={}".format(M[0].shape))
     return M
