@@ -236,14 +236,14 @@ def get_oth_features(tweets, cleaned_tweets,out_folder):
     each tweet, and returns a numpy array of tweet x features"""
     feats=[]
     count=0
-    skipgram = get_skipgram(cleaned_tweets, out_folder, 2,2)
-    for line in skipgram:
-        print(line)
-    hashtags = get_hashtags_in_tweets(tweets, out_folder)
-    mispellings = get_misspellings(tweets, cleaned_tweets, out_folder)
-    specialpunc = get_specialpunct(tweets, cleaned_tweets,out_folder)
-    specialchars = get_specialchars(tweets, cleaned_tweets,out_folder)
-    capitalization = get_capitalization(tweets,cleaned_tweets,out_folder)
+    # skipgram = get_skipgram(cleaned_tweets, out_folder, 2,2)
+    # for line in skipgram:
+    #     print(line)
+    # hashtags = get_hashtags_in_tweets(tweets, out_folder)
+    # mispellings = get_misspellings(tweets, cleaned_tweets, out_folder)
+    # specialpunc = get_specialpunct(tweets, cleaned_tweets,out_folder)
+    # specialchars = get_specialchars(tweets, cleaned_tweets,out_folder)
+    # capitalization = get_capitalization(tweets,cleaned_tweets,out_folder)
     for t, tc in zip(tweets, cleaned_tweets):
         feats.append(other_features_(t, tc))
         count+=1

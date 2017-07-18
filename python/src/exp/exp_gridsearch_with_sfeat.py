@@ -4,7 +4,7 @@ from exp.classifier_traintest_main import ChaseClassifier
 from ml.vectorizer import fv_davison
 
 
-def create_settings(sys_out, data_train, data_test):
+def create_settings(sys_out, data_path):
     #sys_out='../../../output' #where the system will save its required files, such as the trained models
     #data_in='../../../data/labeled_data.csv'
     #data_in='/home/zqz/Work/hate-speech-and-offensive-language/data/labeled_data_small.csv'
@@ -15,8 +15,8 @@ def create_settings(sys_out, data_train, data_test):
     settings=[]
     settings.append(['td-tdf-jsf', #task name to identify model files
                      'td-tdf-jsf', #identifier to identify scores
-                     data_train,
-                     data_test,
+                     data_path,
+                     data_path,
                      fv_davison.FeatureVectorizerDavidson(),#what feature vectorizer to use
                      99, #fs option
                      sys_out])
@@ -34,7 +34,7 @@ def create_settings(sys_out, data_train, data_test):
     return settings
 
 
-settings = create_settings(sys.argv[1], sys.argv[2], sys.argv[3])
+settings = create_settings(sys.argv[1], sys.argv[2])
 for ds in settings:
     print("##########\nSTARTING EXPERIMENT SETTING:" + '; '.join(map(str, ds)))
     classifier = ChaseClassifier(ds[0],  # task
