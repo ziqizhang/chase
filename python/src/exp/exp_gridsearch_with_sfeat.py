@@ -45,7 +45,7 @@ for ds in settings:
                                      ds[5],  # fs option
                                      ds[6]  # outfolder
                                      )
-    classifier.gridsearch_with_selectedfeatures(True,
+    classifier.gridsearch_with_selectedfeatures(False,
                                                 "/home/zqz/Work/chase/output/models/td-tdf/svml-td-tdf-kb.m.features.csv",
-                                                "/home/zqz/Work/chase/output/models/td-tdf/svml-td-tdf-sfm.m.features.csv",
-                                                "/home/zqz/Work/chase/output/models/td-tdf/svml-td-tdf-rfe.m.features.csv")
+                                                "/home/zqz/Work/chase/output/models/td-tdf/svml-td-tdf-sfm.m.features.csv")
+                                                #"/home/zqz/Work/chase/output/models/td-tdf/svml-td-tdf-rfe.m.features.csv")

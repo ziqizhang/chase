@@ -180,9 +180,11 @@ class ChaseClassifier(object):
         print("TRANSFORM TRAINING DATA TO PRE-SELECTED FEATURE SPACE")
         X_train_selected = ct.map_to_trainingfeatures(selected_features, M[1], X_train_data.index)
         X_train_selected=util.feature_scale(SCALING_STRATEGY, X_train_selected)
+        print(X_train_selected.shape)
         print("TRANSFORM TESTING DATA TO PRE-SELECTED FEATURE SPACE")
         X_test_selected = ct.map_to_trainingfeatures(selected_features, M[1], X_test_data.index)
         X_test_selected=util.feature_scale(SCALING_STRATEGY, X_test_selected)
+        print(X_test_selected.shape)
 
         ######################### SGDClassifier #######################
         if WITH_SGD:

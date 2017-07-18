@@ -2,6 +2,7 @@ import csv
 import pickle
 
 import datetime
+import random
 
 from sklearn.cross_validation import train_test_split
 from sklearn.metrics import classification_report
@@ -262,7 +263,7 @@ def feature_extraction(data_column, feat_vectorizer, sysout):
     print("FEATURE EXTRACTION AND VECTORIZATION FOR ALL data, insatance={}, {}"
           .format(len(tweets), datetime.datetime.now()))
     print("\tbegin feature extraction and vectorization...")
-    tweets_cleaned = [text_preprocess.preprocess_clean(x,1,1) for x in tweets]
+    tweets_cleaned = [text_preprocess.preprocess_clean(x, 1, 1) for x in tweets]
     M = feat_vectorizer.transform_inputs(tweets, tweets_cleaned, sysout, "na")
     print("FEATURE MATRIX dimensions={}".format(M[0].shape))
     return M
@@ -280,32 +281,110 @@ def read_preselected_features(only_intersection, *files):
                 if (ft in feature_with_values.keys()):
                     feature_with_values[ft].append(value)
                 else:
-                    values=[]
+                    values = []
                     values.append(value)
-                    feature_with_values[ft]=values
+                    feature_with_values[ft] = values
             file_with_features.append(feature_with_values)
 
-    all_fts=set()
+    all_fts = set()
     all_fts.update(file_with_features[0].keys())
     for i in range(1, len(file_with_features)):
-        all_fts=set.intersection(all_fts, file_with_features[i].keys())
+        all_fts = set.intersection(all_fts, file_with_features[i].keys())
 
-
-    selected_features={}
+    selected_features = {}
     for ft in all_fts:
-        selected=[]
+        selected = []
         for file_features in file_with_features:
-            values=file_features[ft]
+            values = file_features[ft]
             selected.append(set(values))
 
         if only_intersection:
-            selected_features[ft]=set.intersection(*selected)
+            selected_features[ft] = set.intersection(*selected)
         else:
-            selected_features[ft]=set.union(*selected)
+            selected_features[ft] = set.union(*selected)
 
     return selected_features
 
 
+def tag_source_file(csv_tdc_a, out_file):
+    with open(out_file, 'w', newline='', encoding='utf-8') as csvfile:
+        writer = csv.writer(csvfile, delimiter=',',
+                            quotechar='"', quoting=csv.QUOTE_MINIMAL)
+
+        with open(csv_tdc_a, newline='') as csvfile:
+            csvreader = csv.reader(csvfile, delimiter=',', quotechar='"')
+            count = 0
+            for row in csvreader:
+                if count == 0:
+                    row.insert(0, "")
+                    writer.writerow(row)
+                    count += 1
+                    continue
+
+                if row[0] == '618':
+                    print()
+
+                if (len(row) > 7):
+                    tweet_id = row[7]
+                else:
+                    row.insert(0, "td")
+                    writer.writerow(row)
+                    continue
+
+                try:
+                    float(tweet_id)
+                except ValueError:
+                    if len(row) > 8:
+                        tweet_id = row[8]
+                    else:
+                        tweet_id = ""
+
+                if len(tweet_id) == 0:
+                    row.insert(0, "td")
+                else:
+                    row.insert(0, "c")
+                writer.writerow(row)
+
+
+def balanced_tdc_mixed(td_2_c_ratio, in_csv, out_csv):
+    random.sample([1, 2, 3, 4, 5], 3)
+    header=None
+    c_rows=[]
+    td_rows=[]
+    with open(in_csv, newline='') as csvfile:
+        csvreader = csv.reader(csvfile, delimiter=',', quotechar='"')
+        count = 0
+        for row in csvreader:
+            if count == 0:
+                header=row
+                count += 1
+                continue
+
+            if row[0] == 'c':
+                c_rows.append(row)
+            else:
+                td_rows.append(row)
+
+    sample_size=int(td_2_c_ratio*len(c_rows))
+    td_rows=random.sample(td_rows, sample_size)
+    with open(out_csv, 'w', newline='', encoding='utf-8') as csvfile:
+        writer = csv.writer(csvfile, delimiter=',',
+                            quotechar='"', quoting=csv.QUOTE_MINIMAL)
+        writer.writerow(header)
+        for row in c_rows:
+            writer.writerow(row)
+        for row in td_rows:
+            writer.writerow(row)
+
+
+
+
+
+# tag_source_file("/home/zqz/Work/chase/data/ml/tdc-a/mixed_all.csv",
+#                 "/home/zqz/Work/chase/data/ml/tdc-a/mixed_all_revised")
+
+balanced_tdc_mixed(1.1, "/home/zqz/Work/chase/data/ml/tdc-a/mixed_all.csv",
+                   "/home/zqz/Work/chase/data/ml/tdc-b/mixed_balance.csv")
 # read_preselected_features(True,"/home/zqz/Work/chase/output/models/td-tdf/svml-td-tdf-kb.m.features.csv",
 #                           "/home/zqz/Work/chase/output/models/td-tdf/svml-td-tdf-sfm.m.features.csv",
 #                           "/home/zqz/Work/chase/output/models/td-tdf/svml-td-tdf-rfe.m.features.csv")
