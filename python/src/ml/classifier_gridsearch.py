@@ -117,7 +117,7 @@ def create_classifier(outfolder, model, task, nfold, classifier_gridsearch, dr_o
         else:
             cl_tuning_params={}
         model_file = subfolder+ "/random-forest_classifier-%s.m" % task
-    if (model == "svm-l"):
+    if (model == "svml"):
         if classifier_gridsearch:
             cl_tuning_params = {PIPELINE_CLASSIFIER_LABEL+'C': [1e-1, 1e-3, 1e-5, 0.2, 0.5, 1, 1.2, 1.3, 1.5, 1.6, 1.7, 1.8, 2]}
         else:
@@ -126,7 +126,7 @@ def create_classifier(outfolder, model, task, nfold, classifier_gridsearch, dr_o
         classifier = svm.LinearSVC(class_weight='balanced',C=0.01, penalty='l2', loss='squared_hinge',multi_class='ovr')
         model_file = subfolder+ "/svml-%s.m" % task
 
-    if (model == "svm-rbf"):
+    if (model == "svmrbf"):
         if classifier_gridsearch:
             cl_tuning_params = {PIPELINE_CLASSIFIER_LABEL+'gamma': np.logspace(-9, 3, 3),
                                 PIPELINE_CLASSIFIER_LABEL+'probability': [True],

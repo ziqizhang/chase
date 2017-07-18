@@ -78,7 +78,7 @@ class ChaseClassifier(object):
             os.mkdir(saved_feature_dir)
         training_feature_save = saved_feature_dir + str(self.fs_option) + ".csv"
 
-        select = cg.create_feature_selector(self.fs_option, False)[0]
+        select = cg.create_feature_selector(self.fs_option, False)[0][0]
         feature_selected = select is not None
         if feature_selected:
             X_train = select.fit_transform(X_train, y_train)
