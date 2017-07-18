@@ -7,8 +7,10 @@ from ml import nlp
 import numpy as np
 import pandas as pd
 import pickle
+import functools
 import enchant
 from nltk import word_tokenize
+from nltk.util import skipgrams
 
 
 
@@ -48,6 +50,16 @@ def get_ngram_pos_tfidf(pos_vectorizer:TfidfVectorizer, tweets, out_folder, flag
     pos_vocab = {v: i for i, v in enumerate(pos_vectorizer.get_feature_names())}
     pickle.dump(pos_vocab, open(out_folder+"/"+NGRAM_POS_FEATURES_VOCAB+".pk", "wb" ))
     return pos, pos_vocab
+
+def get_skipgram(cleaned_tweets, out_folder, nIn, kIn):
+    skipgram_feature_matrix = []
+    skipper = functools.partial(skipgrams, n=nIn, k=kIn)
+
+    for t in cleaned_tweets:
+        tweetTokens = word_tokenize(t)
+        skipgram_feature_matrix.append(list(skipper(tweetTokens)))
+    return skipgram_feature_matrix
+
 
 #todo: return a hashtag matrix indicating the presence of particular hashtags in tweets. input is the list of all tweets
 #DictVectorizer should be used, see http://scikit-learn.org/stable/modules/generated/sklearn.feature_extraction.DictVectorizer.html#sklearn.feature_extraction.DictVectorizer
@@ -224,6 +236,9 @@ def get_oth_features(tweets, cleaned_tweets,out_folder):
     each tweet, and returns a numpy array of tweet x features"""
     feats=[]
     count=0
+    skipgram = get_skipgram(cleaned_tweets, out_folder, 2,2)
+    for line in skipgram:
+        print(line)
     hashtags = get_hashtags_in_tweets(tweets, out_folder)
     mispellings = get_misspellings(tweets, cleaned_tweets, out_folder)
     specialpunc = get_specialpunct(tweets, cleaned_tweets,out_folder)
