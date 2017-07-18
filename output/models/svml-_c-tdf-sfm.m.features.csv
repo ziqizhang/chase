@@ -1,0 +1,16 @@
+66,feature_vocab_ngram,attack
+103,feature_vocab_ngram,banislam
+109,feature_vocab_ngram,banmuslim
+393,feature_vocab_ngram,gay
+524,feature_vocab_ngram,islam
+748,feature_vocab_ngram,nomuslim
+751,feature_vocab_ngram,norefuge
+920,feature_vocab_ngram,refugeesnotwelcom
+1696,feature_vocab_ngram_pos,NN NN
+1946,feature_vocab_ngram_pos,PRP
+2629,feature_vocab_td_other,FKRA
+2630,feature_vocab_td_other,FRE
+2632,feature_vocab_td_other,num_chars
+2633,feature_vocab_td_other,num_chars_total
+2634,feature_vocab_td_other,num_terms
+2638,feature_vocab_td_other,num_hashtags

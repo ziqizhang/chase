@@ -1,0 +1,7 @@
+INFO:util.logger:##########
+STARTING EXPERIMENT SETTING:_c-tdf; _c-tdf; /home/zqz/Work/chase/data/ml/c/labeled_data_all.csv; <ml.vectorizer.fv_davison.FeatureVectorizerDavidson object at 0x7f3a991ffb38>; False; -1; False; 99; False; /home/zqz/Work/chase/output; False
+INFO:util.logger:FEATURE EXTRACTION AND VECTORIZATION FOR ALL data, insatance=2434, 2017-07-18 22:48:54.444326
+INFO:util.logger:	begin feature extraction and vectorization...
+INFO:util.logger:	generating n-gram vectors, 2017-07-18 22:48:54.553592
+INFO:util.logger:		 complete, dim=(2434, 1265), 2017-07-18 22:48:55.635623
+INFO:util.logger:	creating pos tags, 2017-07-18 22:48:55.637657

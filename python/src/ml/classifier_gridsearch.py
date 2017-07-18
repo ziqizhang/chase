@@ -5,7 +5,6 @@ import os
 import numpy as np
 from sklearn import svm
 from sklearn.decomposition import PCA
-from sklearn.ensemble import ExtraTreesClassifier
 from sklearn.ensemble import RandomForestClassifier
 from sklearn.feature_selection import RFECV
 from sklearn.feature_selection import SelectFromModel
@@ -43,56 +42,32 @@ def create_dimensionality_reducer(option, gridsearch: bool):
 
 
 def create_feature_selector(option, gridsearch: bool):
-    fs = []
-    params = []
+    fs=None
+    params=None
     if option == 99:
         # selector=SelectKBest(score_func=chi2, k=200)
-        fs = None
-        params = None
+        return fs, params
     elif option == 0:
         # selector=PCA(n_components=2, svd_solver='auto')
-        fs.append(SelectFromModel(LogisticRegression(class_weight='balanced', penalty="l1", C=0.01)))
-        params.append({})
+        fs=SelectFromModel(LogisticRegression(class_weight='balanced', penalty="l1", C=0.01))
+        params={}
     elif option == 1:
-        fs.append(SelectKBest(k=1000, score_func=f_classif))
-        params.append({PIPELINE_FEATURE_SELECTION + 'score_func': [f_classif],
-                       PIPELINE_FEATURE_SELECTION + 'k': [100, 250, 500, 1000,2000]})
+        fs=SelectKBest(k=1000, score_func=f_classif)
+        params={PIPELINE_FEATURE_SELECTION + 'score_func': [f_classif],
+                       PIPELINE_FEATURE_SELECTION + 'k': [100, 250, 500, 1000,2000]}
     elif option == 2:
         # fs=RandomizedLogisticRegression(n_jobs=4, random_state=42)
         # params = {PIPELINE_FEATURE_SELECTION+'sample_fraction':[0.3,0.5],
         #           PIPELINE_FEATURE_SELECTION+'selection_threshold':[0.25,0.5]}
         logreg = LogisticRegression()
         # Use RFECV to pick best features, using Stratified Kfold
-        fs.append(RFECV(estimator=logreg, step=500, cv=5, scoring='accuracy'))
-        params.append({})
-    elif option == 3:
-        # Use RFECV to pick best features, using Stratified Kfold
-        fs1 = ExtraTreesClassifier(n_jobs=-1, random_state=42)
-        params1 = {'et__max_features': ['auto', 100, 250, 500, 1000]}
-
-        fs2 = SelectFromModel(LogisticRegression(class_weight='balanced', penalty="l1", C=0.01))
-        params2 = {}
-        fs.append(fs1)
-        fs.append(fs2)
-        params.append(params1)
-        params.append(params2)
-    else:
-        # Use RFECV to pick best features, using Stratified Kfold
-        fs1 = ExtraTreesClassifier(n_jobs=-1, random_state=42)
-        params1 = {'et__max_features': ['auto', 100, 250, 500, 1000]}
-
-        fs2 = SelectKBest(k=100, score_func=f_classif)
-        params2 = {PIPELINE_FEATURE_SELECTION + 'score_func': [f_classif],
-                   PIPELINE_FEATURE_SELECTION + 'k': [100, 250, 500, 1000]}
-        fs.append(fs1)
-        fs.append(fs2)
-        params.append(params1)
-        params.append(params2)
+        fs=RFECV(estimator=logreg, step=500, cv=5, scoring='accuracy')
+        params={}
 
     if gridsearch:
         return fs, params
     else:
-        return [fs], [{}]
+        return fs, {}
 
 
 def create_classifier(outfolder, model, task, nfold, classifier_gridsearch, dr_option,
@@ -171,12 +146,9 @@ def create_classifier(outfolder, model, task, nfold, classifier_gridsearch, dr_o
     feature_selector = create_feature_selector(fs_option, fs_gridsearch)
     pipe = []
     params = []
-    if feature_selector[0][0] is not None:
-        if len(feature_selector[0]) == 2:
-            pipe.append(('et', feature_selector[0][0]))
-        pipe.append(('fs', feature_selector[0][len(feature_selector[0]) - 1]))
-        for item in feature_selector[1]:
-            params.append(item)
+    if feature_selector[0] is not None:
+        pipe.append(('fs', feature_selector[0]))
+        params.append(feature_selector[1])
     if dim_reducer[0] is not None:
         pipe.append(('dr', dim_reducer[0]))
         params.append(dim_reducer[1])

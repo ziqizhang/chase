@@ -11,17 +11,17 @@ def create_settings(sys_out, data_in):
     USE_GRID_SEARCH=False
 
     settings=[]
-    # settings.append(['_c-tdf', #task name to identify model files
-    #                  '_c-tdf', #identifier to identify scores
-    #                  data_in,
-    #                  fv_davison.FeatureVectorizerDavidson(),#what feature vectorizer to use
-    #                  False, #do grid search for classifier params
-    #                  -1, #use pca for dimensionality reduction
-    #                  False, #grid search on pca
-    #                  99, #99 means no fs
-    #                  False, #grid search for fs
-    #                  sys_out,
-    #                  False]) #if mixed dataset, set to true to output scores for tweets from each dataset
+    settings.append(['_c-tdf', #task name to identify model files
+                     '_c-tdf', #identifier to identify scores
+                     data_in,
+                     fv_davison.FeatureVectorizerDavidson(),#what feature vectorizer to use
+                     False, #do grid search for classifier params
+                     -1, #use pca for dimensionality reduction
+                     False, #grid search on pca
+                     99, #99 means no fs
+                     False, #grid search for fs
+                     sys_out,
+                     False]) #if mixed dataset, set to true to output scores for tweets from each dataset
     settings.append(['_c-tdf-sfm', #task name to identify model files
                      '_c-tdf-sfm', #identifier to identify scores
                      data_in,
