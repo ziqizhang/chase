@@ -1,6 +1,5 @@
 from ml.vectorizer import fv_davison
 
-
 def create_settings(sys_out, data_train, data_test):
     #sys_out='../../../output' #where the system will save its required files, such as the trained models
     #data_in='../../../data/labeled_data.csv'

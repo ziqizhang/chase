@@ -1,30 +1,26 @@
-import logging
+import datetime
+import os
 import sys
 
-import datetime
-from keras.layers import Dense, Dropout, Embedding, Conv1D, MaxPooling1D, LSTM
-from keras.models import Sequential
-from sklearn.cross_validation import cross_val_predict, train_test_split
-from ml import util
-from sklearn.model_selection import GridSearchCV
-from sklearn.feature_selection import f_classif
-from sklearn.feature_selection import SelectKBest
-from keras.wrappers.scikit_learn import KerasClassifier
-import os
-from exp import classifier_gridsearch_main as cgm
 import pandas as pd
+from keras.layers import Dense, Embedding, Conv1D, MaxPooling1D, LSTM
+from keras.models import Sequential
+from keras.wrappers.scikit_learn import KerasClassifier
+from sklearn.cross_validation import cross_val_predict, train_test_split
+from sklearn.feature_selection import SelectKBest
+from sklearn.feature_selection import f_classif
+from sklearn.model_selection import GridSearchCV
+
+from exp import classifier_gridsearch_main as cgm
+from ml import util
 from ml.vectorizer import fv_davison
+from util import logger as ec
 
-INPUT_DIM=500
-logger = logging.getLogger(__name__)
-LOG_DIR=os.getcwd()+"/logs"
-logging.basicConfig(filename=LOG_DIR+'/training.log', level=logging.INFO, filemode='w')
-
+INPUT_DIM=1000
 
 def learn_dnn(cpus, nfold, task, load_model,X_train, y_train, X_test, y_test,
               identifier, outfolder):
-    print("== Perform ANN ...")  # create model
-    logger.info("== Perform ANN ...")
+    ec.logger.info("== Perform ANN ...")
     subfolder=outfolder+"/models"
     try:
         os.stat(subfolder)
@@ -48,7 +44,7 @@ def learn_dnn(cpus, nfold, task, load_model,X_train, y_train, X_test, y_test,
     nfold_predictions=None
 
     if load_model:
-        print("model is loaded from [%s]" % str(ann_model_file))
+        ec.logger.info("model is loaded from [%s]" % str(ann_model_file))
         best_estimator = util.load_classifier_model(ann_model_file)
     else:
         _classifier.fit(_X_train, y_train)
@@ -56,12 +52,12 @@ def learn_dnn(cpus, nfold, task, load_model,X_train, y_train, X_test, y_test,
 
         cv_score_ann = _classifier.best_score_
         best_param_ann = _classifier.best_params_
-        print("+ best params for {} model are:{}".format(model, best_param_ann))
+        ec.logger.info("+ best params for {} model are:{}".format(model, best_param_ann))
         best_estimator = _classifier.best_estimator_
 
         #util.save_classifier_model(best_estimator, ann_model_file)
 
-    print("testing on development set ....")
+    ec.logger.info("testing on development set ....")
     X_test=None
     if(X_test is not None):
         heldout_predictions_final = best_estimator.predict(X_test)
@@ -93,8 +89,7 @@ def create_model(dropout_rate=0.5):
     model.add(LSTM(100))
     model.add(Dense(1, activation='sigmoid'))
     model.compile(loss='binary_crossentropy', optimizer='adam', metrics=['accuracy'])
-    print("New run started at {}\n{}".format(datetime.datetime.now(),model.summary()))
-    logger.info("New run started at {}\n{}".format(datetime.datetime.now(),model.summary()))
+    ec.logger.info("New run started at {}\n{}".format(datetime.datetime.now(),model.summary()))
     return model
 
 

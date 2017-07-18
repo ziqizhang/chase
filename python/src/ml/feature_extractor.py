@@ -1,18 +1,19 @@
 import datetime
+import functools
+import pickle
+
+import enchant
+import numpy as np
+import pandas as pd
+from nltk import word_tokenize
+from nltk.util import skipgrams
 from sklearn.externals import joblib
 from sklearn.feature_extraction.text import CountVectorizer
 from sklearn.feature_extraction.text import TfidfVectorizer
 from textstat.textstat import *
+
 from ml import nlp
-import numpy as np
-import pandas as pd
-import pickle
-import functools
-import enchant
-from nltk import word_tokenize
-from nltk.util import skipgrams
-
-
+from util import logger as ec
 
 NGRAM_FEATURES_VOCAB="feature_vocab_ngram"
 NGRAM_POS_FEATURES_VOCAB="feature_vocab_ngram_pos"
@@ -29,9 +30,9 @@ TWEET_DEPENDENCY_FEATURES_VOCAB="feature_vocab_dependency"
 #generates tfidf weighted ngram feature as a matrix and the vocabulary
 def get_ngram_tfidf(ngram_vectorizer: TfidfVectorizer, tweets, out_folder, flag):
     joblib.dump(ngram_vectorizer, out_folder + '/'+flag+'_ngram_tfidf.pkl')
-    print("\tgenerating n-gram vectors, {}".format(datetime.datetime.now()))
+    ec.logger.info("\tgenerating n-gram vectors, {}".format(datetime.datetime.now()))
     tfidf = ngram_vectorizer.fit_transform(tweets).toarray()
-    print("\t\t complete, dim={}, {}".format(tfidf.shape,datetime.datetime.now()))
+    ec.logger.info("\t\t complete, dim={}, {}".format(tfidf.shape,datetime.datetime.now()))
     vocab = {v: i for i, v in enumerate(ngram_vectorizer.get_feature_names())}
     idf_vals = ngram_vectorizer.idf_
     idf_dict = {i: idf_vals[i] for i in vocab.values()}  # keys are indices; values are IDF scores
@@ -41,12 +42,12 @@ def get_ngram_tfidf(ngram_vectorizer: TfidfVectorizer, tweets, out_folder, flag)
 
 #generates tfidf weighted PoS of ngrams as a feature matrix and the vocabulary
 def get_ngram_pos_tfidf(pos_vectorizer:TfidfVectorizer, tweets, out_folder, flag):
-    print("\tcreating pos tags, {}".format(datetime.datetime.now()))
+    ec.logger.info("\tcreating pos tags, {}".format(datetime.datetime.now()))
     tweet_tags = nlp.get_pos_tags(tweets)
-    print("\tgenerating pos tag vectors, {}".format(datetime.datetime.now()))
+    ec.logger.info("\tgenerating pos tag vectors, {}".format(datetime.datetime.now()))
     pos = pos_vectorizer.fit_transform(pd.Series(tweet_tags)).toarray()
     joblib.dump(pos_vectorizer, out_folder + '/'+flag+'_pos.pkl')
-    print("\t\tcompleted, dim={}, {}".format(pos.shape,datetime.datetime.now()))
+    ec.logger.info("\t\tcompleted, dim={}, {}".format(pos.shape,datetime.datetime.now()))
     pos_vocab = {v: i for i, v in enumerate(pos_vectorizer.get_feature_names())}
     pickle.dump(pos_vocab, open(out_folder+"/"+NGRAM_POS_FEATURES_VOCAB+".pk", "wb" ))
     return pos, pos_vocab

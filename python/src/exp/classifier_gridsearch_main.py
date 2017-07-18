@@ -10,10 +10,11 @@ import numpy
 import pandas as pd
 from sklearn.model_selection import train_test_split
 
-from exp import exp_gridsearch
+from exp import exp_gridsearch as exp
 from ml import classifier_gridsearch as cl
 from ml import util
 from ml.vectorizer import feature_vectorizer as fv
+from util import logger as ec
 
 # Model selection
 WITH_SGD = False
@@ -142,14 +143,12 @@ class ChaseGridSearch(object):
                              y_train, X_test_data, y_test, self.identifier, self.sys_out,
                              self.cl_gridsearch, self.dr_option, self.dr_gridsearch,
                              self.fs_option,self.fs_gridsearch)
-
-        print("complete, {}".format(datetime.datetime.now()))
-
+        ec.logger.info("complete, {}".format(datetime.datetime.now()))
 
 if __name__ == '__main__':
-    settings = exp_gridsearch.create_settings(sys.argv[1], sys.argv[2])
+    settings = exp.create_settings(sys.argv[1], sys.argv[2])
     for ds in settings:
-        print("##########\nSTARTING EXPERIMENT SETTING:" + '; '.join(map(str, ds)))
+        ec.logger.info("##########\nSTARTING EXPERIMENT SETTING:" + '; '.join(map(str, ds)))
         classifier = ChaseGridSearch(ds[0], ds[1], ds[2], ds[3], ds[4], ds[5], ds[6], ds[7],
                                      ds[8], ds[9])
         classifier.load_data()

@@ -6,6 +6,7 @@ import numpy as np
 import pandas as pd
 from sklearn.feature_extraction.text import TfidfVectorizer
 from ml.vectorizer import feature_vectorizer as fv
+from util import logger
 
 class FeatureVectorizerDavidson(fv.FeatureVectorizer):
     def __init__(self):
@@ -63,9 +64,9 @@ class FeatureVectorizerDavidson(fv.FeatureVectorizer):
         pos=fe.get_ngram_pos_tfidf(self.pos_vectorizer, tweets_cleaned, out_folder, flag)
 
         # Features group 3: other features
-        print("\tgenerating other feature vectors, {}".format(datetime.datetime.now()))
+        logger.logger.info("\tgenerating other feature vectors, {}".format(datetime.datetime.now()))
         feats = fe.get_oth_features(tweets_original, tweets_cleaned,out_folder)
-        print("\t\tcompleted, {}, {}".format(feats[0].shape,datetime.datetime.now()))
+        logger.logger.info("\t\tcompleted, {}, {}".format(feats[0].shape,datetime.datetime.now()))
 
         # Now concatenate all features in to single sparse matrix
         M = np.concatenate([tfidf[0], pos[0], feats[0]], axis=1)

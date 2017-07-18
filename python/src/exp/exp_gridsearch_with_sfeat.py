@@ -2,6 +2,7 @@ import sys
 
 from exp.classifier_traintest_main import ChaseClassifier
 from ml.vectorizer import fv_davison
+from util import logger as ec
 
 
 def create_settings(sys_out, data_path):
@@ -36,7 +37,7 @@ def create_settings(sys_out, data_path):
 
 settings = create_settings(sys.argv[1], sys.argv[2])
 for ds in settings:
-    print("##########\nSTARTING EXPERIMENT SETTING:" + '; '.join(map(str, ds)))
+    ec.logger.info("##########\nSTARTING EXPERIMENT SETTING:" + '; '.join(map(str, ds)))
     classifier = ChaseClassifier(ds[0],  # task
                                  ds[1],  # identifier
                                  ds[2],  # data train

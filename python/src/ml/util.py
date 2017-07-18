@@ -3,10 +3,9 @@ import pickle
 
 import datetime
 import random
-
+import util.logger as logger
 import pandas
 from sklearn.cross_validation import train_test_split
-from sklearn.metrics import classification_report
 import os
 import numpy as np
 import pandas as pd
@@ -67,7 +66,7 @@ def save_scores(nfold_predictions, nfold_truth,
                 heldout_predictions, heldout_truth,
                 model_name, task_name,
                 identifier, digits, outfolder,
-                instance_data_source_tags: pandas.Series = None, accepted_ds_tags:list=None):
+                instance_data_source_tags: pandas.Series = None, accepted_ds_tags: list = None):
     outputFalsePredictions(nfold_predictions, nfold_truth, model_name, task_name, outfolder)
     subfolder = outfolder + "/scores"
     try:
@@ -88,7 +87,7 @@ def save_scores(nfold_predictions, nfold_truth,
     writer.close()
 
 
-def write_scores(predictoins, truth:pandas.Series, digits, writer, instance_dst_column=None,
+def write_scores(predictoins, truth: pandas.Series, digits, writer, instance_dst_column=None,
                  accepted_ds_tags=None):
     labels = unique_labels(truth, predictoins)
     target_names = ['%s' % l for l in labels]
@@ -111,7 +110,7 @@ def write_scores(predictoins, truth:pandas.Series, digits, writer, instance_dst_
             subset_labels = unique_labels(subset_truth, subset_pred)
             target_names = ['%s' % l for l in labels]
             p, r, f1, s = precision_recall_fscore_support(subset_truth, subset_pred,
-                                                  labels=subset_labels)
+                                                          labels=subset_labels)
             line = prepare_score_string(p, r, f1, s, subset_labels, target_names, digits)
             writer.write(line)
 
@@ -124,25 +123,6 @@ def save_classifier_model(model, outfile):
     if model:
         with open(outfile, 'wb') as model_file:
             pickle.dump(model, model_file)
-
-
-def print_eval_report(best_params, cv_score, prediction_dev,
-                      time_predict_dev,
-                      time_train, y_test):
-    print("CV score [%s]; best params: [%s]" %
-          (cv_score, best_params))
-    print("\nTraining time: %fs; "
-          "Prediction time for 'dev': %fs;" %
-          (time_train, time_predict_dev))
-    print("\n %fs fold cross validation score:" % cv_score)
-    print("\n test set result:")
-    print("\n" + classification_report(y_test, prediction_dev))
-
-
-def timestamped_print(msg):
-    ts = str(datetime.datetime.now())
-    print(ts + " :: " + msg)
-
 
 def validate_training_set(training_set):
     """
@@ -264,7 +244,7 @@ def feature_scale(option, M):
     #     M = select.fit_transform(M, self.raw_data['class'])
     #     print("REDUCED FEATURE MATRIX dimensions={}".format(M.shape))
     # if not self.feature_selection:
-    print("APPLYING FEATURE SCALING: [%s]" % option)
+    logger.logger.info("APPLYING FEATURE SCALING: [%s]" % option)
     if option == 0:  # mean std
         M = feature_scaling_mean_std(M)
     elif option == 1:
@@ -283,12 +263,12 @@ def feature_scale(option, M):
 def feature_extraction(data_column, feat_vectorizer, sysout):
     tweets = data_column
     tweets = [x for x in tweets if type(x) == str]
-    print("FEATURE EXTRACTION AND VECTORIZATION FOR ALL data, insatance={}, {}"
+    logger.logger.info("FEATURE EXTRACTION AND VECTORIZATION FOR ALL data, insatance={}, {}"
           .format(len(tweets), datetime.datetime.now()))
-    print("\tbegin feature extraction and vectorization...")
+    logger.logger.info("\tbegin feature extraction and vectorization...")
     tweets_cleaned = [text_preprocess.preprocess_clean(x, 1, 1) for x in tweets]
     M = feat_vectorizer.transform_inputs(tweets, tweets_cleaned, sysout, "na")
-    print("FEATURE MATRIX dimensions={}".format(M[0].shape))
+    logger.logger.info("FEATURE MATRIX dimensions={}".format(M[0].shape))
     return M
 
 
@@ -344,9 +324,6 @@ def tag_source_file(csv_tdc_a, out_file):
                     count += 1
                     continue
 
-                if row[0] == '618':
-                    print()
-
                 if (len(row) > 7):
                     tweet_id = row[7]
                 else:
@@ -398,6 +375,29 @@ def balanced_tdc_mixed(td_2_c_ratio, in_csv, out_csv):
             writer.writerow(row)
         for row in td_rows:
             writer.writerow(row)
+
+
+def separate_tdc(in_csv, out_csv, tag):
+    with open(out_csv, 'w', newline='', encoding='utf-8') as csvfile:
+        writer = csv.writer(csvfile, delimiter=',',
+                            quotechar='"', quoting=csv.QUOTE_MINIMAL)
+
+        with open(in_csv, newline='', encoding='utf-8') as csvfile:
+            csvreader = csv.reader(csvfile, delimiter=',', quotechar='"')
+            count = 0
+            for row in csvreader:
+                if count == 0:
+                    writer.writerow(row)
+                    count += 1
+                    continue
+
+                if row[0] == tag:
+                    writer.writerow(row)
+                else:
+                    continue
+
+# separate_tdc("/home/zqz/Work/chase/data/ml/tdc-a/mixed_all.csv",
+#              "/home/zqz/Work/chase/data/ml/c/labeled_data_all.csv", "c")
 
 # tag_source_file("/home/zqz/Work/chase/data/ml/tdc-a/mixed_all.csv",
 #                 "/home/zqz/Work/chase/data/ml/tdc-a/mixed_all_revised")

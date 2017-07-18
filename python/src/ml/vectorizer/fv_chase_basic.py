@@ -6,6 +6,7 @@ import numpy as np
 import pandas as pd
 from sklearn.feature_extraction.text import TfidfVectorizer
 from ml.vectorizer import feature_vectorizer as fv
+from util import logger as logger
 
 class FeatureVectorizerChaseBasic(fv.FeatureVectorizer):
     def __init__(self):
@@ -62,9 +63,9 @@ class FeatureVectorizerChaseBasic(fv.FeatureVectorizer):
         pos=fe.get_ngram_pos_tfidf(self.pos_vectorizer, tweets_cleaned, out_folder, flag)[0]
 
         # Features group 3: other features
-        print("\tgenerating other feature vectors, {}".format(datetime.datetime.now()))
+        logger.logger.info("\tgenerating other feature vectors, {}".format(datetime.datetime.now()))
         feats = fe.get_oth_features(tweets_original, tweets_cleaned)[0]
-        print("\t\tcompleted, {}, {}".format(feats.shape,datetime.datetime.now()))
+        logger.logger.info("\t\tcompleted, {}, {}".format(feats.shape,datetime.datetime.now()))
 
 
         #####

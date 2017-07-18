@@ -1,9 +1,11 @@
 '''USE THIS FILE TO TRAIN AND EVALUATE A MODEL'''
 import datetime
+import os
+
+import numpy as np
 from sklearn import svm
 from sklearn.decomposition import PCA
 from sklearn.ensemble import ExtraTreesClassifier
-
 from sklearn.ensemble import RandomForestClassifier
 from sklearn.feature_selection import RFECV
 from sklearn.feature_selection import SelectFromModel
@@ -11,13 +13,12 @@ from sklearn.feature_selection import SelectKBest
 from sklearn.feature_selection import f_classif
 from sklearn.linear_model import LogisticRegression
 from sklearn.linear_model import SGDClassifier
+from sklearn.model_selection import GridSearchCV
 from sklearn.model_selection import cross_val_predict
 from sklearn.pipeline import Pipeline
 
 from ml import util
-from sklearn.model_selection import GridSearchCV
-import os
-import numpy as np
+from util import logger as ec
 
 PIPELINE_CLASSIFIER_LABEL = "classify__"
 PIPELINE_DIM_REDUCER_LABEL = "dr__"
@@ -106,7 +107,7 @@ def create_classifier(outfolder, model, task, nfold, classifier_gridsearch, dr_o
         os.mkdir(subfolder)
 
     if (model == "rf"):
-        print("== Random Forest ...{}".format(datetime.datetime.now()))
+        ec.logger.info("== Random Forest ...{}".format(datetime.datetime.now()))
         classifier = RandomForestClassifier(n_estimators=20, n_jobs=cpus)
         if classifier_gridsearch:
             cl_tuning_params = {PIPELINE_CLASSIFIER_LABEL + "max_depth": [3, 5, None],
@@ -124,7 +125,7 @@ def create_classifier(outfolder, model, task, nfold, classifier_gridsearch, dr_o
                 PIPELINE_CLASSIFIER_LABEL + 'C': [1e-1, 1e-3, 1e-5, 0.2, 0.5, 1, 1.2, 1.3, 1.5, 1.6, 1.7, 1.8, 2]}
         else:
             cl_tuning_params = {}
-        print("== SVM, kernel=linear ...{}".format(datetime.datetime.now()))
+        ec.logger.info("== SVM, kernel=linear ...{}".format(datetime.datetime.now()))
         classifier = svm.LinearSVC(class_weight='balanced', C=0.01, penalty='l2', loss='squared_hinge',
                                    multi_class='ovr')
         model_file = subfolder + "/svml-%s.m" % task
@@ -136,12 +137,12 @@ def create_classifier(outfolder, model, task, nfold, classifier_gridsearch, dr_o
                                 PIPELINE_CLASSIFIER_LABEL + 'C': np.logspace(-2, 10, 3)}
         else:
             cl_tuning_params = {}
-        print("== SVM, kernel=rbf ...{}".format(datetime.datetime.now()))
+        ec.logger.info("== SVM, kernel=rbf ...{}".format(datetime.datetime.now()))
         classifier = svm.SVC()
         model_file = subfolder + "/svmrbf-%s.m" % task
 
     if (model == "sgd"):
-        print("== SGD ...{}".format(datetime.datetime.now()))
+        ec.logger.info("== SGD ...{}".format(datetime.datetime.now()))
         # DISABLED because grid search takes too long to complete
         if classifier_gridsearch:
             cl_tuning_params = {PIPELINE_CLASSIFIER_LABEL + "loss": ["log", "modified_huber", 'squared_loss'],
@@ -154,7 +155,7 @@ def create_classifier(outfolder, model, task, nfold, classifier_gridsearch, dr_o
         classifier = SGDClassifier(loss='log', penalty='l2', n_jobs=cpus)
         model_file = subfolder + "/sgd-classifier-%s.m" % task
     if (model == "lr"):
-        print("== Stochastic Logistic Regression ...{}".format(datetime.datetime.now()))
+        ec.logger.info("== Stochastic Logistic Regression ...{}".format(datetime.datetime.now()))
         if classifier_gridsearch:
             cl_tuning_params = {
                 PIPELINE_CLASSIFIER_LABEL + "penalty": ['l2'],
@@ -202,7 +203,7 @@ def learn_general(cpus, nfold, task, load_model, model,
     nfold_predictions = None
 
     if load_model:
-        print("model is loaded from [%s]" % str(model_file))
+        ec.logger.info("model is loaded from [%s]" % str(model_file))
         best_estimator = util.load_classifier_model(model_file)
     else:
         piped_classifier.fit(X_train, y_train)
@@ -210,7 +211,7 @@ def learn_general(cpus, nfold, task, load_model, model,
 
         best_estimator = piped_classifier.best_estimator_
         best_param = piped_classifier.best_params_
-        print("+ best params for {} model are:{}".format(model, best_param))
+        ec.logger.info("+ best params for {} model are:{}".format(model, best_param))
         cv_score = piped_classifier.best_score_
         util.save_classifier_model(best_estimator, model_file)
 

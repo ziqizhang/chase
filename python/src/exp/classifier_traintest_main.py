@@ -4,18 +4,19 @@
 from __future__ import print_function
 
 import datetime
-import sys
 import os
+import sys
 
 import pandas as pd
 from sklearn.cross_validation import train_test_split
 
-from exp import exp_traintest
+from exp import classifier_gridsearch_main as cgm
+from exp import exp_traintest as exp
 from ml import classifier_gridsearch as cg
 from ml import classifier_traintest as ct
 from ml import util
 from ml.vectorizer import feature_vectorizer as fv
-from exp import classifier_gridsearch_main as cgm
+from util import logger as ec
 
 # Model selection
 WITH_SGD = False
@@ -102,7 +103,7 @@ class ChaseClassifier(object):
             util.save_selected_features(feature_idx,
                                         meta_TRAIN[1],
                                         training_feature_save)
-        print("FEATURE SELECTION={}, Shape={}".format(select, X_train.shape))
+        ec.logger.log("FEATURE SELECTION={}, Shape={}".format(select, X_train.shape))
 
         X_test=self.transform_test_features(SCALING_STRATEGY,
                            self.feat_v,
@@ -163,7 +164,7 @@ class ChaseClassifier(object):
 
         y_preds = classifier.predict(X_test)
         util.save_scores(y_preds, y_test, y_preds, y_test, model_name, self.task_name, identifier, 2, sys_out)
-        print("complete, {}".format(datetime.datetime.now()))
+        ec.logger.info("complete, {}".format(datetime.datetime.now()))
 
 
     #will assume that 'train data' passed is the entire data that needs to be further split to train and test
@@ -185,14 +186,14 @@ class ChaseClassifier(object):
             instance_data_source_column=pd.Series(self.raw_train.ds)
             accepted_ds_tags=["c","td"]
 
-        print("TRANSFORM TRAINING DATA TO PRE-SELECTED FEATURE SPACE")
+        ec.logger.info("TRANSFORM TRAINING DATA TO PRE-SELECTED FEATURE SPACE")
         X_train_selected = ct.map_to_trainingfeatures(selected_features, M[1], X_train_data.index)
         X_train_selected=util.feature_scale(SCALING_STRATEGY, X_train_selected)
-        print(X_train_selected.shape)
-        print("TRANSFORM TESTING DATA TO PRE-SELECTED FEATURE SPACE")
+        ec.logger.info(X_train_selected.shape)
+        ec.logger.info("TRANSFORM TESTING DATA TO PRE-SELECTED FEATURE SPACE")
         X_test_selected = ct.map_to_trainingfeatures(selected_features, M[1], X_test_data.index)
         X_test_selected=util.feature_scale(SCALING_STRATEGY, X_test_selected)
-        print(X_test_selected.shape)
+        ec.logger.info(X_test_selected.shape)
 
         ######################### SGDClassifier #######################
         if WITH_SGD:
@@ -243,9 +244,9 @@ class ChaseClassifier(object):
 
 
 if __name__ == '__main__':
-    settings = exp_traintest.create_settings(sys.argv[1], sys.argv[2], sys.argv[3])
+    settings = exp.create_settings(sys.argv[1], sys.argv[2], sys.argv[3])
     for ds in settings:
-        print("##########\nSTARTING EXPERIMENT SETTING:" + '; '.join(map(str, ds)))
+        ec.logger.info("##########\nSTARTING EXPERIMENT SETTING:" + '; '.join(map(str, ds)))
         classifier = ChaseClassifier(ds[0],  # task
                                      ds[1],  # identifier
                                      ds[2],  # data train
