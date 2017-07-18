@@ -53,7 +53,8 @@ class ChaseClassifier(object):
                  data_test,
                  feat_v: fv.FeatureVectorizer,
                  fs_option,
-                 folder_sysout):
+                 folder_sysout,
+                 output_scores_per_ds=False):
         self.data_train = data_train
         self.data_test = data_test
         self.identifier = identifier
@@ -62,6 +63,7 @@ class ChaseClassifier(object):
         self.sys_out = folder_sysout  # exclusive 16
         self.feature_size = DNN_FEATURE_SIZE
         self.fs_option = fs_option
+        self.output_scores_per_ds=output_scores_per_ds
 
     def load_data(self):
         self.raw_train = pd.read_csv(self.data_train, sep=',', encoding="utf-8")
@@ -177,6 +179,12 @@ class ChaseClassifier(object):
         y_train = y_train.astype(int)
         y_test = y_test.astype(int)
 
+        instance_data_source_column=None
+        accepted_ds_tags=None
+        if self.output_scores_per_ds:
+            instance_data_source_column=pd.Series(self.raw_train.ds)
+            accepted_ds_tags=["c","td"]
+
         print("TRANSFORM TRAINING DATA TO PRE-SELECTED FEATURE SPACE")
         X_train_selected = ct.map_to_trainingfeatures(selected_features, M[1], X_train_data.index)
         X_train_selected=util.feature_scale(SCALING_STRATEGY, X_train_selected)
@@ -193,7 +201,7 @@ class ChaseClassifier(object):
                              M[1], X_train_selected, y_train,
                              X_test_selected, y_test, self.identifier, self.sys_out,
                              False, -1, False,
-                             99,False)
+                             99,False, instance_data_source_column, accepted_ds_tags)
 
         ######################### Stochastic Logistic Regression#######################
         if WITH_SLR:
@@ -202,7 +210,7 @@ class ChaseClassifier(object):
                              M[1], X_train_selected, y_train,
                              X_test_selected, y_test, self.identifier, self.sys_out,
                              False, -1, False,
-                             99,False)
+                             99,False, instance_data_source_column, accepted_ds_tags)
 
         ######################### Random Forest Classifier #######################
         if WITH_RANDOM_FOREST:
@@ -211,7 +219,7 @@ class ChaseClassifier(object):
                              M[1], X_train_selected, y_train,
                              X_test_selected, y_test, self.identifier, self.sys_out,
                              False, -1, False,
-                             99,False)
+                             99,False, instance_data_source_column, accepted_ds_tags)
 
         ###################  liblinear SVM ##############################
         if WITH_LIBLINEAR_SVM:
@@ -220,7 +228,8 @@ class ChaseClassifier(object):
                              M[1], X_train_selected, y_train,
                              X_test_selected, y_test, self.identifier, self.sys_out,
                              False, -1, False,
-                             99,False)
+                             99,False,instance_data_source_column, accepted_ds_tags
+                             )
 
         ##################### RBF svm #####################
         if WITH_RBF_SVM:
@@ -229,7 +238,7 @@ class ChaseClassifier(object):
                              M[1], X_train_selected, y_train,
                              X_test_selected, y_test, self.identifier, self.sys_out,
                              False, -1, False,
-                             99,False)
+                             99,False, instance_data_source_column, accepted_ds_tags)
 
 
 

@@ -4,6 +4,7 @@ import pickle
 import datetime
 import random
 
+import pandas
 from sklearn.cross_validation import train_test_split
 from sklearn.metrics import classification_report
 import os
@@ -62,35 +63,57 @@ def prepare_score_string(p, r, f1, s, labels, target_names, digits):
     return string
 
 
-def save_scores(nfold_predictions, x_test, heldout_predictions, y_test, model_name, task_name,
-                identifier, digits, outfolder):
-    outputFalsePredictions(nfold_predictions, x_test, model_name, task_name, outfolder)
+def save_scores(nfold_predictions, nfold_truth,
+                heldout_predictions, heldout_truth,
+                model_name, task_name,
+                identifier, digits, outfolder,
+                instance_data_source_tags: pandas.Series = None, accepted_ds_tags:list=None):
+    outputFalsePredictions(nfold_predictions, nfold_truth, model_name, task_name, outfolder)
     subfolder = outfolder + "/scores"
     try:
         os.stat(subfolder)
     except:
         os.mkdir(subfolder)
-    filename = os.path.join(subfolder, "scores-%s-%s.csv" % (model_name, task_name))
-    file = open(filename, "a+")
-    file.write(identifier)
+    filename = os.path.join(subfolder, "SCORES__%s_%s.csv" % (model_name, task_name))
+    writer = open(filename, "a+")
+    writer.write(identifier)
     if nfold_predictions is not None:
-        file.write("N-fold results:\n")
-        labels = unique_labels(x_test, nfold_predictions)
-        target_names = ['%s' % l for l in labels]
-        p, r, f1, s = precision_recall_fscore_support(x_test, nfold_predictions,
-                                                      labels=labels)
-        line = prepare_score_string(p, r, f1, s, labels, target_names, digits)
-        file.write(line)
+        writer.write(" N-FOLD AVERAGE :\n")
+        write_scores(nfold_predictions, nfold_truth, digits, writer, instance_data_source_tags, accepted_ds_tags)
 
     if (heldout_predictions is not None):
-        file.write("Heldout results:\n")
-        labels = unique_labels(y_test, heldout_predictions)
-        target_names = ['%s' % l for l in labels]
-        p, r, f1, s = precision_recall_fscore_support(y_test, heldout_predictions,
-                                                      labels=labels)
-        line = prepare_score_string(p, r, f1, s, labels, target_names, digits)
-        file.write(line)
-    file.close()
+        writer.write(" HELDOUT :\n")
+        write_scores(heldout_predictions, heldout_truth, digits, writer, instance_data_source_tags, accepted_ds_tags)
+
+    writer.close()
+
+
+def write_scores(predictoins, truth:pandas.Series, digits, writer, instance_dst_column=None,
+                 accepted_ds_tags=None):
+    labels = unique_labels(truth, predictoins)
+    target_names = ['%s' % l for l in labels]
+    p, r, f1, s = precision_recall_fscore_support(truth, predictoins,
+                                                  labels=labels)
+    line = prepare_score_string(p, r, f1, s, labels, target_names, digits)
+    writer.write(line)
+
+    if accepted_ds_tags is not None:
+        for dstag in accepted_ds_tags:
+            writer.write("\n n-fold for data from {} :\n".format(dstag))
+            subset_pred = []
+            subset_truth = []
+            for index, label in zip(truth.index, predictoins):
+                if instance_dst_column[index] == dstag:
+                    subset_pred.append(label)
+            for index, label in zip(truth.index, truth):
+                if instance_dst_column[index] == dstag:
+                    subset_truth.append(label)
+            subset_labels = unique_labels(subset_truth, subset_pred)
+            target_names = ['%s' % l for l in labels]
+            p, r, f1, s = precision_recall_fscore_support(subset_truth, subset_pred,
+                                                  labels=subset_labels)
+            line = prepare_score_string(p, r, f1, s, subset_labels, target_names, digits)
+            writer.write(line)
 
 
 def index_max(values):
@@ -348,15 +371,15 @@ def tag_source_file(csv_tdc_a, out_file):
 
 def balanced_tdc_mixed(td_2_c_ratio, in_csv, out_csv):
     random.sample([1, 2, 3, 4, 5], 3)
-    header=None
-    c_rows=[]
-    td_rows=[]
+    header = None
+    c_rows = []
+    td_rows = []
     with open(in_csv, newline='') as csvfile:
         csvreader = csv.reader(csvfile, delimiter=',', quotechar='"')
         count = 0
         for row in csvreader:
             if count == 0:
-                header=row
+                header = row
                 count += 1
                 continue
 
@@ -365,8 +388,8 @@ def balanced_tdc_mixed(td_2_c_ratio, in_csv, out_csv):
             else:
                 td_rows.append(row)
 
-    sample_size=int(td_2_c_ratio*len(c_rows))
-    td_rows=random.sample(td_rows, sample_size)
+    sample_size = int(td_2_c_ratio * len(c_rows))
+    td_rows = random.sample(td_rows, sample_size)
     with open(out_csv, 'w', newline='', encoding='utf-8') as csvfile:
         writer = csv.writer(csvfile, delimiter=',',
                             quotechar='"', quoting=csv.QUOTE_MINIMAL)
@@ -376,15 +399,12 @@ def balanced_tdc_mixed(td_2_c_ratio, in_csv, out_csv):
         for row in td_rows:
             writer.writerow(row)
 
-
-
-
-
 # tag_source_file("/home/zqz/Work/chase/data/ml/tdc-a/mixed_all.csv",
 #                 "/home/zqz/Work/chase/data/ml/tdc-a/mixed_all_revised")
 
-balanced_tdc_mixed(1.1, "/home/zqz/Work/chase/data/ml/tdc-a/mixed_all.csv",
-                   "/home/zqz/Work/chase/data/ml/tdc-b/mixed_balance.csv")
+# balanced_tdc_mixed(1.1, "/home/zqz/Work/chase/data/ml/tdc-a/mixed_all.csv",
+#                    "/home/zqz/Work/chase/data/ml/tdc-b/mixed_balance.csv")
+
 # read_preselected_features(True,"/home/zqz/Work/chase/output/models/td-tdf/svml-td-tdf-kb.m.features.csv",
 #                           "/home/zqz/Work/chase/output/models/td-tdf/svml-td-tdf-sfm.m.features.csv",
 #                           "/home/zqz/Work/chase/output/models/td-tdf/svml-td-tdf-rfe.m.features.csv")
