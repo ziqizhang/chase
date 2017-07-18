@@ -167,7 +167,7 @@ def create_classifier(outfolder, model, task, nfold, classifier_gridsearch, dr_o
     feature_selector=create_feature_selector(fs_option, fs_gridsearch)
     pipe = []
     params=[]
-    if feature_selector[0] is not None:
+    if feature_selector[0][0] is not None:
         if len(feature_selector[0])==2:
             pipe.append(('et', feature_selector[0][0]))
         pipe.append(('fs', feature_selector[0][len(feature_selector[0])-1]))
@@ -185,7 +185,8 @@ def create_classifier(outfolder, model, task, nfold, classifier_gridsearch, dr_o
     return piped_classifier, model_file
 
 
-def learn_general(cpus, nfold, task, load_model, model, feature_vocbs:dict, X_train, y_train, X_test, y_test,
+def learn_general(cpus, nfold, task, load_model, model,
+                  feature_vocbs:dict, X_train, y_train, X_test, y_test,
                   identifier, outfolder, classifier_gridsearch=True,
                   dr_option=0, dr_gridsearch=True, fs_option=0, fs_gridsearch=True
                   ):

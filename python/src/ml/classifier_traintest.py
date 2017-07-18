@@ -83,39 +83,60 @@ def create_training_features(saved_training_feature_vocab):
     return rs
 
 
-def map_to_trainingfeatures(training_features: {}, testdata_features: {}):
-    num_instances = len(next(iter(testdata_features.values()))[0])
+'''keep_features: a dictionary where key is type of feature, value can be a list of feature values,
+or a dictionary that contains index-feature value pairs.
+from_features: this is the object created by feature_vectorizer. it contains a dictionary where
+key is the feature type, value is a mxn matrix, m is #instances in data, n is feature values for that type
+filter: if we only want to keep certain rows from the mxn matrix from *from_features*, the filter
+should be passed as list of the indices in that matrix'''
+def map_to_trainingfeatures(keep_features: {}, from_features: {},
+                            filter=None):
+    if filter is None:
+        num_instances = len(next(iter(from_features.values()))[0])
+    else:
+        num_instances=len(filter)
+
     new_features = []
 
     # for each feature type in train data features
-    for t_key, t_value in training_features.items():
-        print("\t mapping feature type={}, features={}".format(t_key, len(t_value)))
-        features = numpy.zeros((num_instances, len(t_value)))
+    for t_key, t_value in keep_features.items():
+        t_value_=t_value
+        if isinstance(t_value_, set):
+            t_value_=list(t_value)
+
+        print("\t mapping feature type={}, features={}".format(t_key, len(t_value_)))
+        features = numpy.zeros((num_instances, len(t_value_)))
         # if feature type exist in test data features
-        if t_key in testdata_features:
+        if t_key in from_features:
             # for each feature in test data feature of this type
-            testdata_feature = testdata_features[t_key]
-            testdata_feature_vocab = testdata_feature[1]
-            testdata_feature_value = testdata_feature[0]
+            fromdata_feature = from_features[t_key]
+            fromdata_feature_vocab = fromdata_feature[1]
+            fromdata_feature_value = fromdata_feature[0]
             # for each data instance
-            row_index = 0
-            for row in testdata_feature_value:
-                new_row = numpy.zeros(len(t_value))
-                for vocab, value in zip(testdata_feature_vocab, row):  # feature-value pair for each instance in test
+            from_features_row_index = 0
+            row_index=0
+            for row in fromdata_feature_value:
+                if filter is not None and from_features_row_index not in filter:
+                    from_features_row_index += 1
+                    continue
+
+                new_row = numpy.zeros(len(t_value_))
+                for vocab, value in zip(fromdata_feature_vocab, row):  # feature-value pair for each instance in test
                     # check if that feature exists in train data features of that type
-                    if vocab in t_value:
+                    if vocab in t_value_:
                         # if so, se corresponding feature value in the new feature vector
-                        if isinstance(t_value, dict):
-                            vocab_index = t_value[vocab]
+                        if isinstance(t_value_, dict):
+                            vocab_index = t_value_[vocab]
                         else:
-                            vocab_index = t_value.index(vocab)
+                            vocab_index = t_value_.index(vocab)
                         new_row[vocab_index] = value
                 features[row_index] = new_row
-                if(row_index%100==0):
-                    print("(progress: {})".format(row_index))
-                row_index += 1
+                if(from_features_row_index%100==0):
+                    print("(progress: {})".format(from_features_row_index))
+                from_features_row_index += 1
+                row_index+=1
         else:
-            features = numpy.zeros(num_instances, len(t_value))
+            features = numpy.zeros(num_instances, len(t_value_))
         new_features.append(features)
 
     M = numpy.concatenate(new_features, axis=1)

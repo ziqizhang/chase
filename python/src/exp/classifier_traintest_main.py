@@ -8,15 +8,18 @@ import sys
 import os
 
 import pandas as pd
+from sklearn.cross_validation import train_test_split
+
 from exp import exp_traintest
 from ml import classifier_gridsearch as cg
 from ml import classifier_traintest as ct
 from ml import util
 from ml.vectorizer import feature_vectorizer as fv
+from exp import classifier_gridsearch_main as cgm
 
 # Model selection
-WITH_SGD = True
-WITH_SLR = True
+WITH_SGD = False
+WITH_SLR = False
 WITH_RANDOM_FOREST = False  # this algorithm may not work on very small feature vectors
 WITH_LIBLINEAR_SVM = True
 WITH_RBF_SVM = False
@@ -159,6 +162,73 @@ class ChaseClassifier(object):
         y_preds = classifier.predict(X_test)
         util.save_scores(y_preds, y_test, y_preds, y_test, model_name, self.task_name, identifier, 2, sys_out)
         print("complete, {}".format(datetime.datetime.now()))
+
+
+    #will assume that 'train data' passed is the entire data that needs to be further split to train and test
+    def gridsearch_with_selectedfeatures(self, intersecton_only, *files):
+        selected_features=util.read_preselected_features(intersecton_only, *files)
+        self.load_data()
+        M = util.feature_extraction(self.raw_train.tweet, self.feat_v, self.sys_out)
+        M0 = pd.DataFrame(M[0])
+        X_train_data, X_test_data, y_train, y_test = \
+        train_test_split(M0, self.raw_train['class'],
+                             test_size=cgm.TEST_SPLIT_PERCENT,
+                             random_state=42)
+        y_train = y_train.astype(int)
+        y_test = y_test.astype(int)
+
+        print("TRANSFORM TRAINING DATA TO PRE-SELECTED FEATURE SPACE")
+        X_train_selected = ct.map_to_trainingfeatures(selected_features, M[1], X_train_data.index)
+        X_train_selected=util.feature_scale(SCALING_STRATEGY, X_train_selected)
+        print("TRANSFORM TESTING DATA TO PRE-SELECTED FEATURE SPACE")
+        X_test_selected = ct.map_to_trainingfeatures(selected_features, M[1], X_test_data.index)
+        X_test_selected=util.feature_scale(SCALING_STRATEGY, X_test_selected)
+
+        ######################### SGDClassifier #######################
+        if WITH_SGD:
+            cg.learn_general(cgm.NUM_CPU, cgm.N_FOLD_VALIDATION,
+                             self.task_name, LOAD_MODEL_FROM_FILE, "sgd",
+                             M[1], X_train_selected, y_train,
+                             X_test_selected, y_test, self.identifier, self.sys_out,
+                             False, -1, False,
+                             99,False)
+
+        ######################### Stochastic Logistic Regression#######################
+        if WITH_SLR:
+            cg.learn_general(cgm.NUM_CPU, cgm.N_FOLD_VALIDATION,
+                             self.task_name, LOAD_MODEL_FROM_FILE, "lr",
+                             M[1], X_train_selected, y_train,
+                             X_test_selected, y_test, self.identifier, self.sys_out,
+                             False, -1, False,
+                             99,False)
+
+        ######################### Random Forest Classifier #######################
+        if WITH_RANDOM_FOREST:
+            cg.learn_general(cgm.NUM_CPU, cgm.N_FOLD_VALIDATION,
+                             self.task_name, LOAD_MODEL_FROM_FILE, "rf",
+                             M[1], X_train_selected, y_train,
+                             X_test_selected, y_test, self.identifier, self.sys_out,
+                             False, -1, False,
+                             99,False)
+
+        ###################  liblinear SVM ##############################
+        if WITH_LIBLINEAR_SVM:
+            cg.learn_general(cgm.NUM_CPU, cgm.N_FOLD_VALIDATION,
+                             self.task_name, LOAD_MODEL_FROM_FILE, "svml",
+                             M[1], X_train_selected, y_train,
+                             X_test_selected, y_test, self.identifier, self.sys_out,
+                             False, -1, False,
+                             99,False)
+
+        ##################### RBF svm #####################
+        if WITH_RBF_SVM:
+            cg.learn_general(cgm.NUM_CPU, cgm.N_FOLD_VALIDATION,
+                             self.task_name, LOAD_MODEL_FROM_FILE, "svmrbf",
+                             M[1], X_train_selected, y_train,
+                             X_test_selected, y_test, self.identifier, self.sys_out,
+                             False, -1, False,
+                             99,False)
+
 
 
 if __name__ == '__main__':

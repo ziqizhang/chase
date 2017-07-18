@@ -266,3 +266,46 @@ def feature_extraction(data_column, feat_vectorizer, sysout):
     M = feat_vectorizer.transform_inputs(tweets, tweets_cleaned, sysout, "na")
     print("FEATURE MATRIX dimensions={}".format(M[0].shape))
     return M
+
+
+def read_preselected_features(only_intersection, *files):
+    file_with_features = []
+    for file in files:
+        feature_with_values = {}
+        with open(file, newline='') as csvfile:
+            csvreader = csv.reader(csvfile, delimiter=',', quotechar='"')
+            for row in csvreader:
+                ft = row[1]
+                value = row[2]
+                if (ft in feature_with_values.keys()):
+                    feature_with_values[ft].append(value)
+                else:
+                    values=[]
+                    values.append(value)
+                    feature_with_values[ft]=values
+            file_with_features.append(feature_with_values)
+
+    all_fts=set()
+    all_fts.update(file_with_features[0].keys())
+    for i in range(1, len(file_with_features)):
+        all_fts=set.intersection(all_fts, file_with_features[i].keys())
+
+
+    selected_features={}
+    for ft in all_fts:
+        selected=[]
+        for file_features in file_with_features:
+            values=file_features[ft]
+            selected.append(set(values))
+
+        if only_intersection:
+            selected_features[ft]=set.intersection(*selected)
+        else:
+            selected_features[ft]=set.union(*selected)
+
+    return selected_features
+
+
+# read_preselected_features(True,"/home/zqz/Work/chase/output/models/td-tdf/svml-td-tdf-kb.m.features.csv",
+#                           "/home/zqz/Work/chase/output/models/td-tdf/svml-td-tdf-sfm.m.features.csv",
+#                           "/home/zqz/Work/chase/output/models/td-tdf/svml-td-tdf-rfe.m.features.csv")
