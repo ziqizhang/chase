@@ -54,7 +54,8 @@ class ChaseGridSearch(object):
                  dr_gridsearch:bool, #if feature selection is used, whether to do grid search on the selector
                  fs_option,
                  fs_gridsearch:bool,
-                 folder_sysout):
+                 folder_sysout,
+                 output_scores_per_ds=False):
         self.raw_data = numpy.empty
         self.data_file = data_file
         self.identifier = identifier
@@ -67,6 +68,7 @@ class ChaseGridSearch(object):
         self.dr_gridsearch=dr_gridsearch
         self.fs_option=fs_option
         self.fs_gridsearch=fs_gridsearch
+        self.output_scores_per_ds=output_scores_per_ds
 
     def load_data(self):
         self.raw_data = pd.read_csv(self.data_file, sep=',', encoding="utf-8")
@@ -85,6 +87,12 @@ class ChaseGridSearch(object):
         X_test_data = util.feature_scale(SCALING_STRATEGY,X_test_data)
         y_train = y_train.astype(int)
         y_test = y_test.astype(int)
+
+        instance_data_source_column=None
+        accepted_ds_tags=None
+        if self.output_scores_per_ds:
+            instance_data_source_column=pd.Series(self.raw_data.ds)
+            accepted_ds_tags=["c","td"]
 
         # #if not self.feature_selection:
         # print("APPLYING FEATURE SCALING: [%s]" % SCALING_STRATEGY)
@@ -105,7 +113,8 @@ class ChaseGridSearch(object):
                              meta_M[1], X_train_data, y_train,
                              X_test_data, y_test, self.identifier, self.sys_out,
                              self.cl_gridsearch, self.dr_option, self.dr_gridsearch,
-                             self.fs_option,self.fs_gridsearch)
+                             self.fs_option,self.fs_gridsearch,
+                             instance_data_source_column, accepted_ds_tags)
 
         ######################### Stochastic Logistic Regression#######################
         if WITH_SLR:
@@ -113,7 +122,8 @@ class ChaseGridSearch(object):
                              meta_M[1],X_train_data, y_train,
                              X_test_data, y_test, self.identifier, self.sys_out, self.cl_gridsearch
                              , self.dr_option, self.dr_gridsearch,
-                             self.fs_option,self.fs_gridsearch)
+                             self.fs_option,self.fs_gridsearch,
+                             instance_data_source_column, accepted_ds_tags)
 
         ######################### Random Forest Classifier #######################
         if WITH_RANDOM_FOREST:
@@ -123,7 +133,8 @@ class ChaseGridSearch(object):
                              y_train,
                              X_test_data, y_test, self.identifier, self.sys_out, self.cl_gridsearch
                              , self.dr_option, self.dr_gridsearch,
-                             self.fs_option,self.fs_gridsearch)
+                             self.fs_option,self.fs_gridsearch,
+                             instance_data_source_column, accepted_ds_tags)
 
         ###################  liblinear SVM ##############################
         if WITH_LIBLINEAR_SVM:
@@ -132,7 +143,8 @@ class ChaseGridSearch(object):
                              meta_M[1],X_train_data,
                              y_train, X_test_data, y_test, self.identifier, self.sys_out,
                              self.cl_gridsearch, self.dr_option, self.dr_gridsearch,
-                             self.fs_option,self.fs_gridsearch)
+                             self.fs_option,self.fs_gridsearch,
+                             instance_data_source_column, accepted_ds_tags)
 
         ##################### RBF svm #####################
         if WITH_RBF_SVM:
@@ -142,7 +154,8 @@ class ChaseGridSearch(object):
                              X_train_data,
                              y_train, X_test_data, y_test, self.identifier, self.sys_out,
                              self.cl_gridsearch, self.dr_option, self.dr_gridsearch,
-                             self.fs_option,self.fs_gridsearch)
+                             self.fs_option,self.fs_gridsearch,
+                             instance_data_source_column, accepted_ds_tags)
         ec.logger.info("complete, {}".format(datetime.datetime.now()))
 
 if __name__ == '__main__':
@@ -150,7 +163,7 @@ if __name__ == '__main__':
     for ds in settings:
         ec.logger.info("##########\nSTARTING EXPERIMENT SETTING:" + '; '.join(map(str, ds)))
         classifier = ChaseGridSearch(ds[0], ds[1], ds[2], ds[3], ds[4], ds[5], ds[6], ds[7],
-                                     ds[8], ds[9])
+                                     ds[8], ds[9],ds[10])
         classifier.load_data()
 
         # ============= random sampling =================================

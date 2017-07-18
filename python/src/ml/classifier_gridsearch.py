@@ -56,7 +56,7 @@ def create_feature_selector(option, gridsearch: bool):
     elif option == 1:
         fs.append(SelectKBest(k=1000, score_func=f_classif))
         params.append({PIPELINE_FEATURE_SELECTION + 'score_func': [f_classif],
-                       PIPELINE_FEATURE_SELECTION + 'k': [100, 250, 500, 1000]})
+                       PIPELINE_FEATURE_SELECTION + 'k': [100, 250, 500, 1000,2000]})
     elif option == 2:
         # fs=RandomizedLogisticRegression(n_jobs=4, random_state=42)
         # params = {PIPELINE_FEATURE_SELECTION+'sample_fraction':[0.3,0.5],
