@@ -1,6 +1,6 @@
 import datetime
 from sklearn.externals import joblib
-from sklearn.feature_extraction import DictVectorizer
+from sklearn.feature_extraction.text import CountVectorizer
 from sklearn.feature_extraction.text import TfidfVectorizer
 from textstat.textstat import *
 from ml import nlp
@@ -9,6 +9,7 @@ import pandas as pd
 import pickle
 import enchant
 from nltk import word_tokenize
+
 
 
 NGRAM_FEATURES_VOCAB="feature_vocab_ngram"
@@ -50,13 +51,9 @@ def get_ngram_pos_tfidf(pos_vectorizer:TfidfVectorizer, tweets, out_folder, flag
 
 #todo: return a hashtag matrix indicating the presence of particular hashtags in tweets. input is the list of all tweets
 #DictVectorizer should be used, see http://scikit-learn.org/stable/modules/generated/sklearn.feature_extraction.DictVectorizer.html#sklearn.feature_extraction.DictVectorizer
-def get_hashtags_in_tweets(tweets, out_folder, flag):
-    #pass
-    #hashtag_feature_matrix=[]
-    dict_vectorizer = DictVectorizer(sparse=True)
+def get_hashtags_in_tweets(tweets, out_folder):
     hashtag_dict = {}
     hashtag_regex = '#[\w\-]+'
-    from sklearn.feature_extraction.text import CountVectorizer
 
     count = 0
 
@@ -67,16 +64,9 @@ def get_hashtags_in_tweets(tweets, out_folder, flag):
         while True:
             try:
                 position = re.search(hashtag_regex, t)
-                #if hashtag_feature_matrix.count
-                #hashtag_dict.append(t[position.start():position.end()])
-                #print(dict(['#',t[position.start():position.end()]]))
-                #hashtag_dict.append(dict(['#',t[position.start():position.end()]])) #dict([("age", 25)])
-                #temp[t[position.start():position.end()]] = count
-                #temp[count] = t[position.start():position.end()]
-                if position != None and t[position.start()+1:position.end()] not in hashtag_dict.keys():
-                    #hashtag_dict[count] = t[position.start():position.end()]
-                    #print(count)
-                    hashtag_dict[t[position.start()+1:position.end()]] = count
+                match = t[position.start():position.end()].lower()
+                if position != None and match not in hashtag_dict.keys():
+                    hashtag_dict[match] = count
                     t = t[position.end():]
                     count = count + 1
                 else:
@@ -85,20 +75,11 @@ def get_hashtags_in_tweets(tweets, out_folder, flag):
                 break
             except ValueError:
                 break
-        #if len(temp) != 0:
-        #hashtag_dict.append(temp)
-        #count = count + 1
-    #D = [{'foo': 1, 'bar': 2}, {'foo': 3, 'baz': 1}]
-    print(hashtag_dict)
-    cv = CountVectorizer(vocabulary=hashtag_dict)
+    cv = CountVectorizer(vocabulary=hashtag_dict, token_pattern='\#\w+')
     hashtag_feature_matrix = cv.fit_transform(tweets)
-    print(cv.get_feature_names())
-    #hashtag_feature_matrix = dict_vectorizer.fit_transform(hashtag_dict)
-    print(hashtag_feature_matrix)
-    print(hashtag_feature_matrix.todense())
-    #print(dict_vectorizer.inverse_transform(hashtag_dict))
-    #print(hashtag_feature_matrix)
-    #print(len(hashtag_feature_matrix))
+    #import pandas as pd
+    #pd.set_option('display.max_colwidth', -1)
+    #pd.DataFrame(hashtag_feature_matrix.A, columns=cv.get_feature_names()).to_csv('outputdataframe.csv')
     hashtag_feature_vocab=None
     pickle.dump(hashtag_feature_vocab,
                 open(out_folder+"/"+TWEET_HASHTAG_FEATURES_VOCAB+".pk", "wb" ))
@@ -243,7 +224,7 @@ def get_oth_features(tweets, cleaned_tweets,out_folder):
     each tweet, and returns a numpy array of tweet x features"""
     feats=[]
     count=0
-    hashtags = get_hashtags_in_tweets(tweets, out_folder, 1)
+    hashtags = get_hashtags_in_tweets(tweets, out_folder)
     mispellings = get_misspellings(tweets, cleaned_tweets, out_folder)
     specialpunc = get_specialpunct(tweets, cleaned_tweets,out_folder)
     specialchars = get_specialchars(tweets, cleaned_tweets,out_folder)
