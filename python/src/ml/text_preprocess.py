@@ -36,6 +36,7 @@ def preprocess_clean(text_string, remove_hashtags, remove_special_chars):
     parsed_text = preprocess(text_string)
     parsed_text = parsed_text.lower()
     parsed_text = re.sub("\u0300", '', parsed_text)
+    parsed_text = re.sub("'", '', parsed_text)
     parsed_text = re.sub('|', '', parsed_text)
     parsed_text = re.sub(':', '', parsed_text)
     parsed_text = re.sub(',', '', parsed_text)
