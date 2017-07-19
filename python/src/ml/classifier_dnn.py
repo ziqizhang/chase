@@ -18,8 +18,8 @@ from ml import util
 from ml import nlp
 from ml import text_preprocess as tp
 
-WORD_EMBEDDING_DIM=100
-EMBEDDING_LAYER_MAX_INDEX=900
+WORD_EMBEDDING_DIM_INPUT=100
+WORD_EMBEDDING_DIM_OUTPUT=32
 logger = logging.getLogger(__name__)
 LOG_DIR=os.getcwd()+"/logs"
 logging.basicConfig(filename=LOG_DIR+'/dnn-log.txt', level=logging.INFO, filemode='w')
@@ -54,7 +54,7 @@ def get_dnn_wordembedding_input(tweets, out_folder):
 
 
 def learn_dnn(cpus, nfold, task, load_model,X_train, y_train, X_test, y_test,
-              identifier, outfolder):
+              identifier, outfolder, embedding_layer_max_index):
     logger.info("== Perform ANN ...")
     subfolder=outfolder+"/models"
     try:
@@ -62,13 +62,12 @@ def learn_dnn(cpus, nfold, task, load_model,X_train, y_train, X_test, y_test,
     except:
         os.mkdir(subfolder)
 
-    create_model_with_args=functools.partial(create_model, max_index=EMBEDDING_LAYER_MAX_INDEX)
+    create_model_with_args=functools.partial(create_model, max_index=embedding_layer_max_index)
     model = KerasClassifier(build_fn=create_model_with_args, verbose=0)
     # define the grid search parameters
-    cv_output_dim=[32]
-    batch_size = [50]
-    epochs = [3]
-    param_grid = dict(batch_size=batch_size, nb_epoch=epochs, output_dim=cv_output_dim)
+    batch_size = [50,64,100]
+    epochs = [3,5]
+    param_grid = dict(batch_size=batch_size, nb_epoch=epochs)
 
     _classifier =  GridSearchCV(estimator=model, param_grid=param_grid, n_jobs=cpus,
                         cv=nfold)
@@ -117,7 +116,8 @@ def create_model(max_index=100):
 
 
     model = Sequential()
-    model.add(Embedding(input_dim=max_index, output_dim=32, input_length=WORD_EMBEDDING_DIM))
+    model.add(Embedding(input_dim=max_index, output_dim=WORD_EMBEDDING_DIM_OUTPUT,
+                        input_length=WORD_EMBEDDING_DIM_INPUT))
     model.add(Conv1D(filters=32, kernel_size=4, padding='same', activation='relu'))
     model.add(MaxPooling1D(pool_size=2))
     model.add(LSTM(100))
@@ -129,23 +129,25 @@ def create_model(max_index=100):
 
 def gridsearch(data_file, sys_out):
     raw_data = pd.read_csv(data_file, sep=',', encoding="utf-8")
-    M=get_dnn_wordembedding_input(raw_data.tweet,sys_out)[0]
+    M=get_dnn_wordembedding_input(raw_data.tweet,sys_out)
     #M=self.feature_scale(M)
+    M0=M[0]
 
     # split the dataset into two parts, 0.75 for train and 0.25 for testing
     X_train_data, X_test_data, y_train, y_test = \
-                train_test_split(M, raw_data['class'],
+                train_test_split(M0, raw_data['class'],
                                  test_size=0.25,
                                  random_state=42)
     y_train = y_train.astype(int)
     y_test = y_test.astype(int)
 
-    X_train_data = sequence.pad_sequences(X_train_data, maxlen=WORD_EMBEDDING_DIM)
-    X_test_data = sequence.pad_sequences(X_test_data, maxlen=WORD_EMBEDDING_DIM)
+    X_train_data = sequence.pad_sequences(X_train_data, maxlen=WORD_EMBEDDING_DIM_INPUT)
+    X_test_data = sequence.pad_sequences(X_test_data, maxlen=WORD_EMBEDDING_DIM_INPUT)
 
     learn_dnn(-1, 5, 'td-tdf', False,
                              X_train_data,
-                             y_train, X_test_data, y_test, "dense", sys_out)
+                             y_train, X_test_data, y_test, "dense", sys_out,
+              len(M[1]))
 
 
 
