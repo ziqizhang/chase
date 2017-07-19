@@ -168,7 +168,7 @@ if __name__ == '__main__':
     #example: argv1=out folder, arvg2=input data csv file, arvg3=a label to indicate which
     # dataset and feature vectorizer is used,
     #e.g., 'c-tdf' for chase dataset using td feature; 'c-cbf' for chase dataset and chase basic feature
-    #argv[4] - set to True if using any mixed dataset; otherwise False
+    #argv[4] - set to any non empty string if using any mixed dataset; otherwise False
     #argv[5] - 0 to use td orignal features; 1 to use chase-basic features
 
     fv=None

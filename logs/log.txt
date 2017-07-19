@@ -1,7 +1,12 @@
 INFO:util.logger:
 ##########
-STARTING EXPERIMENT SETTING:_c-cbf; _c-cbf; /home/zqz/Work/chase/data/ml/c/labeled_data_all.csv; <ml.vectorizer.fv_chase_basic.FeatureVectorizerChaseBasic object at 0x7ff662a933c8>; False; -1; False; 99; False; /home/zqz/Work/chase/output; True
+STARTING EXPERIMENT SETTING:_c-cbf; _c-cbf; /home/zqz/Work/chase/data/ml/c/labeled_data_all.csv; <ml.vectorizer.fv_chase_basic.FeatureVectorizerChaseBasic object at 0x7f7eb2ee39e8>; False; -1; False; 99; False; /home/zqz/Work/chase/output; False
 INFO:util.logger:loading input data from: /home/zqz/Work/chase/data/ml/c/labeled_data_all.csv, exist=True
-INFO:util.logger:FEATURE EXTRACTION AND VECTORIZATION FOR ALL data, insatance=2434, 2017-07-19 09:56:54.563025
+INFO:util.logger:FEATURE EXTRACTION AND VECTORIZATION FOR ALL data, insatance=2434, 2017-07-19 10:19:12.156160
 INFO:util.logger:	begin feature extraction and vectorization...
-INFO:util.logger:	generating n-gram vectors, 2017-07-19 09:56:55.216400
+INFO:util.logger:	generating n-gram vectors, 2017-07-19 10:19:12.259676
+INFO:util.logger:		 complete, dim=(2434, 1265), 2017-07-19 10:19:13.299978
+INFO:util.logger:	creating pos tags, 2017-07-19 10:19:13.301998
+INFO:util.logger:	generating pos tag vectors, 2017-07-19 10:19:15.520152
+INFO:util.logger:		completed, dim=(2434, 1364), 2017-07-19 10:19:15.683267
+INFO:util.logger:	generating other feature vectors, 2017-07-19 10:19:15.684633

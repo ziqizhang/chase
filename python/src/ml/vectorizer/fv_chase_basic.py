@@ -71,32 +71,20 @@ class FeatureVectorizerChaseBasic(fv.FeatureVectorizer):
         '''CHASE basic features={}'''
         logger.logger.info("\tgenerating CHASE hashtag feature vectors, {}".format(datetime.datetime.now()))
         c_hashtags=fe.get_hashtags_in_tweets(tweets_original, out_folder)
-        logger.logger.info("\tgenerating CHASE capitalization feature vectors, {}".format(datetime.datetime.now()))
-        c_caps_ratio =fe.get_capitalization(tweets_original, tweets_cleaned, out_folder)
-        logger.logger.info("\tgenerating CHASE misspelling feature vectors, {}".format(datetime.datetime.now()))
-        c_misspelling_ratio =fe.get_misspellings(tweets_original,tweets_cleaned, out_folder)
-        logger.logger.info("\tgenerating CHASE special chars feature vectors, {}".format(datetime.datetime.now()))
-        c_spchars_ratio =fe.get_specialchars(tweets_original,tweets_cleaned, out_folder)
-        logger.logger.info("\tgenerating CHASE special punc feature vectors, {}".format(datetime.datetime.now()))
-        c_sppunc_ratio =fe.get_specialchars(tweets_original,tweets_cleaned, out_folder)
+        logger.logger.info("\tgenerating CHASE other stats feature vectors, {}".format(datetime.datetime.now()))
+        c_stats=fe.get_chase_stats_features(tweets_original, tweets_cleaned, out_folder)
 
 
         logger.logger.info("\t\tcompleted, {}, {}".format(td_otherfeats[0].shape,datetime.datetime.now()))
 
         # Now concatenate all features in to single sparse matrix
         M = np.concatenate([td_tfidf[0], td_pos[0], td_otherfeats[0],
-                            c_hashtags[0],c_caps_ratio[0],
-                            c_misspelling_ratio[0],
-                            c_spchars_ratio[0],
-                            c_sppunc_ratio[0]], axis=1)
+                            c_hashtags[0],c_stats[0]], axis=1)
         #print(M.shape)
         features_by_type={}
         features_by_type[fe.NGRAM_FEATURES_VOCAB]=td_tfidf
         features_by_type[fe.NGRAM_POS_FEATURES_VOCAB]=td_pos
         features_by_type[fe.TWEET_TD_OTHER_FEATURES_VOCAB]=td_otherfeats
         features_by_type[fe.TWEET_HASHTAG_FEATURES_VOCAB]=c_hashtags
-        features_by_type[fe.TWEET_CAPS_FEATURES_VOCAB]=c_caps_ratio
-        features_by_type[fe.TWEET_MISSPELLING_FEATURES_VOCAB]=c_misspelling_ratio
-        features_by_type[fe.TWEET_SPECIALCHAR_FEATURES_VOCAB]=c_spchars_ratio
-        features_by_type[fe.TWEET_SPECIALPUNC_FEATURES_VOCAB]=c_sppunc_ratio
+        features_by_type[fe.TWEET_CHASE_STATS_FEATURES_VOCAB]=c_stats
         return [pd.DataFrame(M), features_by_type]

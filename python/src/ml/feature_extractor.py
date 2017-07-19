@@ -13,26 +13,22 @@ from sklearn.feature_extraction.text import TfidfVectorizer
 from textstat.textstat import *
 
 from ml import nlp
-from util import logger as ec
+from util import logger as log
 
 NGRAM_FEATURES_VOCAB="feature_vocab_ngram"
 NGRAM_POS_FEATURES_VOCAB="feature_vocab_ngram_pos"
 SKIPGRAM_FEATURES_VOCAB="feature_vocab_skipgram"
 SKIPGRAM_POS_FEATURES_VOCAB="feature_vocab_skipgram_pos"
 TWEET_TD_OTHER_FEATURES_VOCAB="feature_vocab_td_other"
-TWEET_HASHTAG_FEATURES_VOCAB="feature_vocab_hashtag"
-TWEET_CAPS_FEATURES_VOCAB="feature_vocab_capitalization"
-TWEET_MISSPELLING_FEATURES_VOCAB="feature_vocab_misspelling"
-TWEET_SPECIALPUNC_FEATURES_VOCAB="feature_vocab_special_punc"
-TWEET_SPECIALCHAR_FEATURES_VOCAB="feature_vocab_special_char"
-TWEET_DEPENDENCY_FEATURES_VOCAB="feature_vocab_dependency"
+TWEET_HASHTAG_FEATURES_VOCAB="feature_vocab_chase_hashtag"
+TWEET_CHASE_STATS_FEATURES_VOCAB="feature_vocab_chase_stats"
 
 #generates tfidf weighted ngram feature as a matrix and the vocabulary
 def get_ngram_tfidf(ngram_vectorizer: TfidfVectorizer, tweets, out_folder, flag):
     joblib.dump(ngram_vectorizer, out_folder + '/'+flag+'_ngram_tfidf.pkl')
-    ec.logger.info("\tgenerating n-gram vectors, {}".format(datetime.datetime.now()))
+    log.logger.info("\tgenerating n-gram vectors, {}".format(datetime.datetime.now()))
     tfidf = ngram_vectorizer.fit_transform(tweets).toarray()
-    ec.logger.info("\t\t complete, dim={}, {}".format(tfidf.shape,datetime.datetime.now()))
+    log.logger.info("\t\t complete, dim={}, {}".format(tfidf.shape, datetime.datetime.now()))
     vocab = {v: i for i, v in enumerate(ngram_vectorizer.get_feature_names())}
     idf_vals = ngram_vectorizer.idf_
     idf_dict = {i: idf_vals[i] for i in vocab.values()}  # keys are indices; values are IDF scores
@@ -42,12 +38,12 @@ def get_ngram_tfidf(ngram_vectorizer: TfidfVectorizer, tweets, out_folder, flag)
 
 #generates tfidf weighted PoS of ngrams as a feature matrix and the vocabulary
 def get_ngram_pos_tfidf(pos_vectorizer:TfidfVectorizer, tweets, out_folder, flag):
-    ec.logger.info("\tcreating pos tags, {}".format(datetime.datetime.now()))
+    log.logger.info("\tcreating pos tags, {}".format(datetime.datetime.now()))
     tweet_tags = nlp.get_pos_tags(tweets)
-    ec.logger.info("\tgenerating pos tag vectors, {}".format(datetime.datetime.now()))
+    log.logger.info("\tgenerating pos tag vectors, {}".format(datetime.datetime.now()))
     pos = pos_vectorizer.fit_transform(pd.Series(tweet_tags)).toarray()
     joblib.dump(pos_vectorizer, out_folder + '/'+flag+'_pos.pkl')
-    ec.logger.info("\t\tcompleted, dim={}, {}".format(pos.shape,datetime.datetime.now()))
+    log.logger.info("\t\tcompleted, dim={}, {}".format(pos.shape, datetime.datetime.now()))
     pos_vocab = {v: i for i, v in enumerate(pos_vectorizer.get_feature_names())}
     pickle.dump(pos_vocab, open(out_folder+"/"+NGRAM_POS_FEATURES_VOCAB+".pk", "wb" ))
     return pos, pos_vocab
@@ -88,14 +84,11 @@ def get_hashtags_in_tweets(tweets, out_folder):
             except ValueError:
                 break
     cv = CountVectorizer(vocabulary=hashtag_dict, token_pattern='\#\w+')
-    hashtag_feature_matrix = cv.fit_transform(tweets)
-    #import pandas as pd
-    #pd.set_option('display.max_colwidth', -1)
-    #pd.DataFrame(hashtag_feature_matrix.A, columns=cv.get_feature_names()).to_csv('outputdataframe.csv')
-    hashtag_feature_vocab=None
-    pickle.dump(hashtag_feature_vocab,
+    hashtag_feature_matrix = cv.fit_transform(tweets).toarray()
+    vocab = {v: i for i, v in enumerate(cv.get_feature_names())}
+    pickle.dump(vocab,
                 open(out_folder+"/"+TWEET_HASHTAG_FEATURES_VOCAB+".pk", "wb" ))
-    return hashtag_feature_matrix, hashtag_dict
+    return hashtag_feature_matrix, vocab
 
 
 #return matrix containing a number indicating the extent to which CAPs are used in the tweets
@@ -105,10 +98,7 @@ def get_capitalization(tweets, cleaned_tweets,out_folder):
         totalChar = sum(1 for c in t if c != ' ')
         numcaps = sum(1 for c in t if c.isupper())
         caps_feature_matrix.append((numcaps/totalChar)*100)
-    caps_feature_vocab="CAPITALIZATION"
-    pickle.dump(caps_feature_vocab,
-                open(out_folder+"/"+TWEET_CAPS_FEATURES_VOCAB+".pk", "wb"))
-    return caps_feature_matrix, [caps_feature_vocab]
+    return caps_feature_matrix
 
 
 #return matrix containing a number indicating the extent to which misspellings are found in the tweets
@@ -136,10 +126,7 @@ def get_misspellings(tweets, cleaned_tweets,out_folder):
         else:
             mispellings_feature_matrix.append(0) #Line with only punctuation
     #print("--- %s seconds ---" % (time.time() - start_time))
-    misspelling_feature_vocab="MISSPELLINGS"
-    pickle.dump(misspelling_feature_vocab,
-                open(out_folder+"/"+TWEET_MISSPELLING_FEATURES_VOCAB+".pk", "wb" ))
-    return mispellings_feature_matrix, [misspelling_feature_vocab]
+    return mispellings_feature_matrix
 
 
 #return matrix containing a number indicating the extent to which special chars are found in the tweets
@@ -147,28 +134,21 @@ def get_specialchars(tweets, cleaned_tweets,out_folder):
     specialchar_feature_matrix=[]
     for t in tweets:
         specialchar_feature_matrix.append(len(re.findall('&#[0-9]{4,6};', t))) #Emoji on twitter is handled by &# followed by 4-6 numbers and a ;
-    specialchar_feature_vocab="SPECIALCHAR"
-    pickle.dump(specialchar_feature_vocab,
-                open(out_folder+"/"+TWEET_SPECIALCHAR_FEATURES_VOCAB+".pk", "wb" ))
-    return specialchar_feature_matrix, [specialchar_feature_vocab]
+    return specialchar_feature_matrix
 
 #return matrix containing a number indicating the extent to which special punctuations are found in the tweets
 def get_specialpunct(tweets, cleaned_tweets,out_folder):
     specialpunc_feature_matrix=[]
     for t in cleaned_tweets:
         specialpunc_feature_matrix.append(len(re.findall('\!|\?', t)))
-    specialpunc_feature_vocab = "SPECIALPUNC"
-    pickle.dump(specialpunc_feature_vocab,
-                open(out_folder+"/"+TWEET_SPECIALPUNC_FEATURES_VOCAB+".pk", "wb" ))
-    return specialpunc_feature_matrix, [specialpunc_feature_vocab]
+    return specialpunc_feature_matrix
 
 
 #todo: this should encode 'we vs them' patterns in tweets but this is the most complicated..
 def get_dependency_feature(tweets, cleaned_tweets,out_folder):
     dependency_feature_matrix=None
     dependency_feature_vocab=None
-    pickle.dump(dependency_feature_vocab,
-                open(out_folder+"/"+TWEET_DEPENDENCY_FEATURES_VOCAB+".pk", "wb" ))
+
 
 
 def other_features_(tweet, cleaned_tweet):
@@ -257,3 +237,29 @@ def get_oth_features(tweets, cleaned_tweets,out_folder):
                 open(out_folder+"/"+TWEET_TD_OTHER_FEATURES_VOCAB+".pk", "wb" ))
 
     return feature_matrix, other_features_names
+
+
+
+def get_chase_stats_features(tweets, cleaned_tweets,out_folder):
+    """Takes a list of tweets, generates features for
+    each tweet, and returns a numpy array of tweet x features"""
+    feats=[]
+    count=0
+    #hashtags = get_hashtags_in_tweets(tweets, out_folder)
+    mispellings = get_misspellings(tweets, cleaned_tweets, out_folder)
+    specialpunc = get_specialpunct(tweets, cleaned_tweets,out_folder)
+    specialchars = get_specialchars(tweets, cleaned_tweets,out_folder)
+    capitalization = get_capitalization(tweets,cleaned_tweets,out_folder)
+    for t, tc in zip(tweets, cleaned_tweets):
+        feats.append(other_features_(t, tc))
+        count+=1
+        # if count%100==0:
+        #     print("\t {}".format(count))
+    feat_names = ["MISSPELLING", "SPECIALPUNC","SPECIALCHAR", "CAPT"]
+    pickle.dump(feat_names,
+                open(out_folder+"/"+TWEET_TD_OTHER_FEATURES_VOCAB+".pk", "wb" ))
+    feature_matrix=np.column_stack((mispellings, specialpunc, specialchars,
+                            capitalization))
+
+
+    return feature_matrix, feat_names
