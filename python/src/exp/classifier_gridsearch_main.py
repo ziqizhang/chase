@@ -31,7 +31,7 @@ WITH_RBF_SVM = False
 SCALING_STRATEGY_MIN_MAX = 0
 # MEAN and Standard Deviation scaling is the standard feature scaling method
 SCALING_STRATEGY_MEAN_STD = 1
-SCALING_STRATEGY = 3
+SCALING_STRATEGY = 0
 
 # DIRECTLY LOAD PRE-TRAINED MODEL FOR PREDICTION
 # ENABLE THIS VARIABLE TO TEST NEW TEST SET WITHOUT TRAINING
@@ -175,7 +175,7 @@ if __name__ == '__main__':
     if sys.argv[5]=='1':
         fv=fv_chase_basic.FeatureVectorizerChaseBasic()
     else:
-        fv=fv_davison.FeatureVectorizerDavidson
+        fv=fv_davison.FeatureVectorizerDavidson()
     settings = exp.create_settings(sys.argv[1], sys.argv[2], sys.argv[3], bool(sys.argv[4]),
                                    fv)
 

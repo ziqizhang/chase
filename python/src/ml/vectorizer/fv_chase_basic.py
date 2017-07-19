@@ -67,6 +67,10 @@ class FeatureVectorizerChaseBasic(fv.FeatureVectorizer):
         logger.logger.info("\tgenerating other feature vectors, {}".format(datetime.datetime.now()))
         td_otherfeats = fe.get_oth_features(tweets_original, tweets_cleaned,out_folder)
 
+        '''CHASE skipgram'''
+        logger.logger.info("\tgenerating CHASE skipgram feature vectors, {}".format(datetime.datetime.now()))
+        c_skipgram=fe.get_skipgram(tweets_original, out_folder, 2,1)
+
 
         '''CHASE basic features={}'''
         logger.logger.info("\tgenerating CHASE hashtag feature vectors, {}".format(datetime.datetime.now()))

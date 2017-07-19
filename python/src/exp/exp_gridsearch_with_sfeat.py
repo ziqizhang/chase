@@ -49,5 +49,5 @@ for ds in settings:
                                  )
     classifier.gridsearch_with_selectedfeatures(False,
                                                 "/home/zqz/Work/chase/output/models/td-tdf/svml-td-tdf-kb.m.features.csv",
-                                                "/home/zqz/Work/chase/output/models/td-tdf/svml-td-tdf-sfm.m.features.csv")
-    # "/home/zqz/Work/chase/output/models/td-tdf/svml-td-tdf-rfe.m.features.csv")
+                                                "/home/zqz/Work/chase/output/models/td-tdf/svml-td-tdf-sfm.m.features.csv",
+                                                "/home/zqz/Work/chase/output/models/td-tdf/svml-td-tdf-rfe.m.features.csv")

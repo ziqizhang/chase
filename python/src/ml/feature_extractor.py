@@ -14,6 +14,8 @@ from textstat.textstat import *
 
 from ml import nlp
 from util import logger as log
+from ml import util
+from ml import text_preprocess as tp
 
 NGRAM_FEATURES_VOCAB="feature_vocab_ngram"
 NGRAM_POS_FEATURES_VOCAB="feature_vocab_ngram_pos"
@@ -22,6 +24,8 @@ SKIPGRAM_POS_FEATURES_VOCAB="feature_vocab_skipgram_pos"
 TWEET_TD_OTHER_FEATURES_VOCAB="feature_vocab_td_other"
 TWEET_HASHTAG_FEATURES_VOCAB="feature_vocab_chase_hashtag"
 TWEET_CHASE_STATS_FEATURES_VOCAB="feature_vocab_chase_stats"
+
+DNN_WORD_VOCAB="dnn_feature_word_vocab"
 
 #generates tfidf weighted ngram feature as a matrix and the vocabulary
 def get_ngram_tfidf(ngram_vectorizer: TfidfVectorizer, tweets, out_folder, flag):
@@ -48,14 +52,35 @@ def get_ngram_pos_tfidf(pos_vectorizer:TfidfVectorizer, tweets, out_folder, flag
     pickle.dump(pos_vocab, open(out_folder+"/"+NGRAM_POS_FEATURES_VOCAB+".pk", "wb" ))
     return pos, pos_vocab
 
-def get_skipgram(cleaned_tweets, out_folder, nIn, kIn):
-    skipgram_feature_matrix = []
-    skipper = functools.partial(skipgrams, n=nIn, k=kIn)
+def get_skipgram(tweets, out_folder, nIn, kIn):
+    skipper = functools.partial(util.skipgrams, n=nIn, k=kIn)
+    vectorizer = TfidfVectorizer(
+            analyzer=skipper,
+            tokenizer=word_tokenize,
+            preprocessor=tp.preprocess,
+            #stop_words=nlp.stopwords,  # We do better when we keep stopwords
+            use_idf=True,
+            smooth_idf=False,
+            norm=None,  # Applies l2 norm smoothing
+            decode_error='replace',
+            max_features=10000,
+            min_df=5,
+            max_df=0.501
+        )
+    # for t in cleaned_tweets:
+    #     tweetTokens = word_tokenize(t)
+    #     skipgram_feature_matrix.append(list(skipper(tweetTokens)))
 
-    for t in cleaned_tweets:
-        tweetTokens = word_tokenize(t)
-        skipgram_feature_matrix.append(list(skipper(tweetTokens)))
-    return skipgram_feature_matrix
+    # Fit the text into the vectorizer.
+    log.logger.info("\tgenerating skip-gram vectors, n={}, k={}, {}".format(nIn, kIn,datetime.datetime.now()))
+    tfidf = vectorizer.fit_transform(tweets).toarray()
+    log.logger.info("\t\t complete, dim={}, {}".format(tfidf.shape, datetime.datetime.now()))
+    vocab = {v: i for i, v in enumerate(vectorizer.get_feature_names())}
+    idf_vals = vectorizer.idf_
+    idf_dict = {i: idf_vals[i] for i in vocab.values()}  # keys are indices; values are IDF scores
+    pickle.dump(vocab, open(out_folder+"/"+SKIPGRAM_FEATURES_VOCAB+".pk", "wb" ))
+    return tfidf, vocab
+
 
 
 
@@ -166,10 +191,10 @@ def other_features_(tweet, cleaned_tweet):
     syllables = textstat.syllable_count(words) #count syllables in words
     num_chars = sum(len(w) for w in words) #num chars in words
     num_chars_total = len(tweet)
-    num_terms = len(tweet.split())
-    num_words = len(words.split())
+    num_terms = len(re.split("\s+",tweet))
+    num_words = len(re.split("\s+",words))
     avg_syl = round(float((syllables+0.001))/float(num_words+0.001),4)
-    num_unique_terms = len(set(words.split()))
+    num_unique_terms = len(set(re.split("\s+",words)))
     ###Modified FK grade, where avg words per sentence is just num words/1
     FKRA = round(float(0.39 * float(num_words)/1.0) + float(11.8 * avg_syl) - 15.59,1)
     ##Modified FRE score, where sentence fixed to 1
@@ -263,3 +288,30 @@ def get_chase_stats_features(tweets, cleaned_tweets,out_folder):
 
 
     return feature_matrix, feat_names
+
+
+def get_dnn_wordembedding_input(tweets, out_folder, flag):
+    word_vectorizer = CountVectorizer(
+            # vectorizer = sklearn.feature_extraction.text.CountVectorizer(
+            tokenizer=nlp.tokenize,
+            preprocessor=tp.preprocess,
+            ngram_range=(1,1),
+            stop_words=nlp.stopwords,  # We do better when we keep stopwords
+            decode_error='replace',
+            max_features=10000,
+            min_df=5,
+            max_df=0.501
+        )
+
+    log.logger.info("\tgenerating word vectors, {}".format(datetime.datetime.now()))
+    counts = word_vectorizer.fit_transform(tweets).toarray()
+    log.logger.info("\t\t complete, dim={}, {}".format(counts.shape, datetime.datetime.now()))
+    vocab = {v: i for i, v in enumerate(word_vectorizer.get_feature_names())}
+    pickle.dump(vocab, open(out_folder+"/"+DNN_WORD_VOCAB+".pk", "wb" ))
+
+    word_embedding_input=[]
+    for tweet in counts:
+        for i in range(0, len(tweet)):
+            if tweet[i]!=0:
+                word_embedding_input.append(i)
+    return word_embedding_input, vocab

@@ -45,17 +45,17 @@ def create_settings(sys_out, data_in, label, scores_per_ds, fvect: fv.FeatureVec
                      True,
                      sys_out,
                      scores_per_ds])
-    settings.append(['{}-rfe'.format(label), #task name to identify model files
-                     '{}-rfe'.format(label), #identifier to identify scores
-                     data_in,
-                     fvect,#what feature vectorizer to use
-                     False, #do grid search for classifier params
-                     -1, #use pca for dimensionality reduction
-                     False, #grid search on pca
-                     2, #99 means no fs
-                     True,
-                     sys_out,
-                     scores_per_ds])
+    # settings.append(['{}-rfe'.format(label), #task name to identify model files
+    #                  '{}-rfe'.format(label), #identifier to identify scores
+    #                  data_in,
+    #                  fvect,#what feature vectorizer to use
+    #                  False, #do grid search for classifier params
+    #                  -1, #use pca for dimensionality reduction
+    #                  False, #grid search on pca
+    #                  2, #99 means no fs
+    #                  True,
+    #                  sys_out,
+    #                  scores_per_ds])
     # settings.append(['tdo-scaling-gs', #task name to identify model files
     #                  'tdo-scaling-gs', #identifier to identify scores
     #                  data_in,
