@@ -15,6 +15,9 @@ from exp import exp_gridsearch as exp
 from ml import classifier_gridsearch as cl
 from ml import util
 from ml.vectorizer import feature_vectorizer as fv
+from ml.vectorizer import fv_chase_basic
+from ml.vectorizer import fv_davison
+
 from util import logger as ec
 
 # Model selection
@@ -162,9 +165,22 @@ class ChaseGridSearch(object):
         ec.logger.info("complete, {}".format(datetime.datetime.now()))
 
 if __name__ == '__main__':
-    settings = exp.create_settings(sys.argv[1], sys.argv[2])
+    #example: argv1=out folder, arvg2=input data csv file, arvg3=a label to indicate which
+    # dataset and feature vectorizer is used,
+    #e.g., 'c-tdf' for chase dataset using td feature; 'c-cbf' for chase dataset and chase basic feature
+    #argv[4] - set to True if using any mixed dataset; otherwise False
+    #argv[5] - 0 to use td orignal features; 1 to use chase-basic features
+
+    fv=None
+    if sys.argv[5]=='1':
+        fv=fv_chase_basic.FeatureVectorizerChaseBasic()
+    else:
+        fv=fv_davison.FeatureVectorizerDavidson
+    settings = exp.create_settings(sys.argv[1], sys.argv[2], sys.argv[3], bool(sys.argv[4]),
+                                   fv)
+
     for ds in settings:
-        ec.logger.info("##########\nSTARTING EXPERIMENT SETTING:" + '; '.join(map(str, ds)))
+        ec.logger.info("\n##########\nSTARTING EXPERIMENT SETTING:" + '; '.join(map(str, ds)))
         classifier = ChaseGridSearch(ds[0], ds[1], ds[2], ds[3], ds[4], ds[5], ds[6], ds[7],
                                      ds[8], ds[9],ds[10])
         classifier.load_data()

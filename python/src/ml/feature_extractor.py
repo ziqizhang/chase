@@ -62,8 +62,7 @@ def get_skipgram(cleaned_tweets, out_folder, nIn, kIn):
     return skipgram_feature_matrix
 
 
-#todo: return a hashtag matrix indicating the presence of particular hashtags in tweets. input is the list of all tweets
-#DictVectorizer should be used, see http://scikit-learn.org/stable/modules/generated/sklearn.feature_extraction.DictVectorizer.html#sklearn.feature_extraction.DictVectorizer
+
 def get_hashtags_in_tweets(tweets, out_folder):
     hashtag_dict = {}
     hashtag_regex = '#[\w\-]+'
@@ -96,11 +95,10 @@ def get_hashtags_in_tweets(tweets, out_folder):
     hashtag_feature_vocab=None
     pickle.dump(hashtag_feature_vocab,
                 open(out_folder+"/"+TWEET_HASHTAG_FEATURES_VOCAB+".pk", "wb" ))
-    return hashtag_feature_matrix
+    return hashtag_feature_matrix, hashtag_dict
 
 
-#todo: return matrix containing a number indicating the extent to which CAPs are used in the tweets
-#see 'other_features_' that processes a single tweet, and 'get_oth_features' that calls the former to process all tweets
+#return matrix containing a number indicating the extent to which CAPs are used in the tweets
 def get_capitalization(tweets, cleaned_tweets,out_folder):
     caps_feature_matrix = []
     for t in tweets:
@@ -110,9 +108,10 @@ def get_capitalization(tweets, cleaned_tweets,out_folder):
     caps_feature_vocab="CAPITALIZATION"
     pickle.dump(caps_feature_vocab,
                 open(out_folder+"/"+TWEET_CAPS_FEATURES_VOCAB+".pk", "wb"))
-    return caps_feature_matrix
-#todo: return matrix containing a number indicating the extent to which misspellings are found in the tweets
-#see 'other_features_' that processes a single tweet, and 'get_oth_features' that calls the former to process all tweets
+    return caps_feature_matrix, [caps_feature_vocab]
+
+
+#return matrix containing a number indicating the extent to which misspellings are found in the tweets
 def get_misspellings(tweets, cleaned_tweets,out_folder):
     mispellings_feature_matrix = []
     #import time
@@ -137,13 +136,13 @@ def get_misspellings(tweets, cleaned_tweets,out_folder):
         else:
             mispellings_feature_matrix.append(0) #Line with only punctuation
     #print("--- %s seconds ---" % (time.time() - start_time))
-    caps_feature_vocab="MISSPELLINGS"
-    pickle.dump(caps_feature_vocab,
+    misspelling_feature_vocab="MISSPELLINGS"
+    pickle.dump(misspelling_feature_vocab,
                 open(out_folder+"/"+TWEET_MISSPELLING_FEATURES_VOCAB+".pk", "wb" ))
-    return mispellings_feature_matrix
+    return mispellings_feature_matrix, [misspelling_feature_vocab]
 
-#todo: return matrix containing a number indicating the extent to which special chars are found in the tweets
-#see 'other_features_' that processes a single tweet, and 'get_oth_features' that calls the former to process all tweets
+
+#return matrix containing a number indicating the extent to which special chars are found in the tweets
 def get_specialchars(tweets, cleaned_tweets,out_folder):
     specialchar_feature_matrix=[]
     for t in tweets:
@@ -151,10 +150,9 @@ def get_specialchars(tweets, cleaned_tweets,out_folder):
     specialchar_feature_vocab="SPECIALCHAR"
     pickle.dump(specialchar_feature_vocab,
                 open(out_folder+"/"+TWEET_SPECIALCHAR_FEATURES_VOCAB+".pk", "wb" ))
-    return specialchar_feature_matrix
+    return specialchar_feature_matrix, [specialchar_feature_vocab]
 
-#todo: return matrix containing a number indicating the extent to which special punctuations are found in the tweets
-#see 'other_features_' that processes a single tweet, and 'get_oth_features' that calls the former to process all tweets
+#return matrix containing a number indicating the extent to which special punctuations are found in the tweets
 def get_specialpunct(tweets, cleaned_tweets,out_folder):
     specialpunc_feature_matrix=[]
     for t in cleaned_tweets:
@@ -162,7 +160,8 @@ def get_specialpunct(tweets, cleaned_tweets,out_folder):
     specialpunc_feature_vocab = "SPECIALPUNC"
     pickle.dump(specialpunc_feature_vocab,
                 open(out_folder+"/"+TWEET_SPECIALPUNC_FEATURES_VOCAB+".pk", "wb" ))
-    return specialpunc_feature_matrix
+    return specialpunc_feature_matrix, [specialpunc_feature_vocab]
+
 
 #todo: this should encode 'we vs them' patterns in tweets but this is the most complicated..
 def get_dependency_feature(tweets, cleaned_tweets,out_folder):

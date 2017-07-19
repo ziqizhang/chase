@@ -42,7 +42,7 @@ class FeatureVectorizerChaseBasic(fv.FeatureVectorizer):
         )
 
     def transform_inputs(self, tweets_original, tweets_cleaned, out_folder, flag):
-        """
+        """"
         This function takes a list of tweets, along with used to
         transform the tweets into the format accepted by the model.
 
@@ -57,25 +57,46 @@ class FeatureVectorizerChaseBasic(fv.FeatureVectorizer):
 
         """
         # Features group 1: tfidf weighted n-grams
-        tfidf = fe.get_ngram_tfidf(self.ngram_vectorizer, tweets_original, out_folder, flag)[0]
+        td_tfidf = fe.get_ngram_tfidf(self.ngram_vectorizer, tweets_original, out_folder, flag)
 
         # Features group 2: PoS for ngrams
-        pos=fe.get_ngram_pos_tfidf(self.pos_vectorizer, tweets_cleaned, out_folder, flag)[0]
+        # Features group 2: PoS for ngrams
+        td_pos=fe.get_ngram_pos_tfidf(self.pos_vectorizer, tweets_cleaned, out_folder, flag)
 
         # Features group 3: other features
         logger.logger.info("\tgenerating other feature vectors, {}".format(datetime.datetime.now()))
-        feats = fe.get_oth_features(tweets_original, tweets_cleaned)[0]
-        logger.logger.info("\t\tcompleted, {}, {}".format(feats.shape,datetime.datetime.now()))
+        td_otherfeats = fe.get_oth_features(tweets_original, tweets_cleaned,out_folder)
 
 
-        #####
-        # calling skeleton functions (to be implemented) to generate more features
-        #####
-        feats_cap = fe.get_capitalizations(tweets_original, tweets_cleaned)
-        feats_hashtag=fe.get_hashtags_in_tweets(None, tweets_original, out_folder, flag)
-        feats_misspelling =fe.get_misspellings(tweets_original, tweets_cleaned)
+        '''CHASE basic features={}'''
+        logger.logger.info("\tgenerating CHASE hashtag feature vectors, {}".format(datetime.datetime.now()))
+        c_hashtags=fe.get_hashtags_in_tweets(tweets_original, out_folder)
+        logger.logger.info("\tgenerating CHASE capitalization feature vectors, {}".format(datetime.datetime.now()))
+        c_caps_ratio =fe.get_capitalization(tweets_original, tweets_cleaned, out_folder)
+        logger.logger.info("\tgenerating CHASE misspelling feature vectors, {}".format(datetime.datetime.now()))
+        c_misspelling_ratio =fe.get_misspellings(tweets_original,tweets_cleaned, out_folder)
+        logger.logger.info("\tgenerating CHASE special chars feature vectors, {}".format(datetime.datetime.now()))
+        c_spchars_ratio =fe.get_specialchars(tweets_original,tweets_cleaned, out_folder)
+        logger.logger.info("\tgenerating CHASE special punc feature vectors, {}".format(datetime.datetime.now()))
+        c_sppunc_ratio =fe.get_specialchars(tweets_original,tweets_cleaned, out_folder)
+
+
+        logger.logger.info("\t\tcompleted, {}, {}".format(td_otherfeats[0].shape,datetime.datetime.now()))
 
         # Now concatenate all features in to single sparse matrix
-        M = np.concatenate([tfidf, pos, feats, feats_cap, feats_hashtag, feats_misspelling], axis=1)
+        M = np.concatenate([td_tfidf[0], td_pos[0], td_otherfeats[0],
+                            c_hashtags[0],c_caps_ratio[0],
+                            c_misspelling_ratio[0],
+                            c_spchars_ratio[0],
+                            c_sppunc_ratio[0]], axis=1)
         #print(M.shape)
-        return pd.DataFrame(M)
+        features_by_type={}
+        features_by_type[fe.NGRAM_FEATURES_VOCAB]=td_tfidf
+        features_by_type[fe.NGRAM_POS_FEATURES_VOCAB]=td_pos
+        features_by_type[fe.TWEET_TD_OTHER_FEATURES_VOCAB]=td_otherfeats
+        features_by_type[fe.TWEET_HASHTAG_FEATURES_VOCAB]=c_hashtags
+        features_by_type[fe.TWEET_CAPS_FEATURES_VOCAB]=c_caps_ratio
+        features_by_type[fe.TWEET_MISSPELLING_FEATURES_VOCAB]=c_misspelling_ratio
+        features_by_type[fe.TWEET_SPECIALCHAR_FEATURES_VOCAB]=c_spchars_ratio
+        features_by_type[fe.TWEET_SPECIALPUNC_FEATURES_VOCAB]=c_sppunc_ratio
+        return [pd.DataFrame(M), features_by_type]
