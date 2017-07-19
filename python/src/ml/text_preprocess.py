@@ -29,7 +29,6 @@ def preprocess(text_string):
     return parsed_text
 
 
-#todo: this is based on the above but should allow options to remove hashtags, and special chars
 def preprocess_clean(text_string, remove_hashtags, remove_special_chars):
     # Clean a string down to just text
 
@@ -46,6 +45,7 @@ def preprocess_clean(text_string, remove_hashtags, remove_special_chars):
     if remove_hashtags:
         parsed_text = re.sub('#[\w\-]+', '',parsed_text)
     if remove_special_chars:
-        parsed_text = re.sub('(\!|\?)+','.',parsed_text) #find one or more of special char in a row, replace with one '.'
+        #parsed_text = re.sub('(\!|\?)+','.',parsed_text) #find one or more of special char in a row, replace with one '.'
+        parsed_text = re.sub('(\!|\?)+','',parsed_text)
     return parsed_text
 

@@ -24,6 +24,10 @@ SKIPGRAM_POS_FEATURES_VOCAB="feature_vocab_skipgram_pos"
 TWEET_TD_OTHER_FEATURES_VOCAB="feature_vocab_td_other"
 TWEET_HASHTAG_FEATURES_VOCAB="feature_vocab_chase_hashtag"
 TWEET_CHASE_STATS_FEATURES_VOCAB="feature_vocab_chase_stats"
+SKIPGRAM22_FEATURES_VOCAB="feature_vocab_2skip_bigram"
+SKIPGRAM32_FEATURES_VOCAB="feature_vocab_2skip_trigram"
+SKIPGRAM22_POS_FEATURES_VOCAB="feature_vocab_pos_2skip_bigram"
+SKIPGRAM32_POS_FEATURES_VOCAB="feature_vocab_pos_2skip_trigram"
 
 DNN_WORD_VOCAB="dnn_feature_word_vocab"
 
