@@ -1,0 +1,26 @@
+_c-tdf-rfe N-FOLD AVERAGE :
+,precision, recall, f1, support
+0,0.64,0.69,0.66,305
+2,0.94,0.92,0.93,1520
+avg,0.79,0.80,0.80,1825
+
+ HELDOUT :
+,precision, recall, f1, support
+0,0.67,0.82,0.74,109
+2,0.96,0.91,0.94,500
+avg,0.82,0.87,0.84,609
+
+_c-tdf-rfe N-FOLD AVERAGE :
+,precision, recall, f1, support
+0,0.37,0.46,0.41,1069
+1,0.95,0.91,0.93,14396
+2,0.80,0.90,0.85,3122
+avg,0.71,0.76,0.73,18587
+
+ HELDOUT :
+,precision, recall, f1, support
+0,0.34,0.46,0.39,361
+1,0.96,0.88,0.92,4794
+2,0.74,0.95,0.83,1041
+avg,0.68,0.76,0.71,6196
+
