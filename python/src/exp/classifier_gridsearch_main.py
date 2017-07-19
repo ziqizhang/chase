@@ -81,7 +81,7 @@ class ChaseGridSearch(object):
         self.raw_data = pd.read_csv(self.data_file, sep=',', encoding="utf-8")
 
     def gridsearch(self):
-        meta_M=util.feature_extraction(self.raw_data.tweet, self.feat_v, self.sys_out)
+        meta_M=util.feature_extraction(self.raw_data.tweet, self.feat_v, self.sys_out,ec.logger)
         M=meta_M[0]
         #M=self.feature_scale(M)
 

@@ -1,4 +1,3 @@
-from ml.vectorizer import fv_davison
 from ml.vectorizer import feature_vectorizer as fv
 
 # each setting can use a different FeatureVectorizer to create different features. this way we can create a batch of experiments to run

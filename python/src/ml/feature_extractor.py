@@ -14,8 +14,6 @@ from textstat.textstat import *
 
 from ml import nlp
 from util import logger as log
-from ml import util
-from ml import text_preprocess as tp
 
 NGRAM_FEATURES_VOCAB="feature_vocab_ngram"
 NGRAM_POS_FEATURES_VOCAB="feature_vocab_ngram_pos"
@@ -297,28 +295,3 @@ def get_chase_stats_features(tweets, cleaned_tweets,out_folder):
     return feature_matrix, feat_names
 
 
-def get_dnn_wordembedding_input(tweets, out_folder, flag):
-    word_vectorizer = CountVectorizer(
-            # vectorizer = sklearn.feature_extraction.text.CountVectorizer(
-            tokenizer=nlp.tokenize,
-            preprocessor=tp.preprocess,
-            ngram_range=(1,1),
-            stop_words=nlp.stopwords,  # We do better when we keep stopwords
-            decode_error='replace',
-            max_features=10000,
-            min_df=5,
-            max_df=0.501
-        )
-
-    log.logger.info("\tgenerating word vectors, {}".format(datetime.datetime.now()))
-    counts = word_vectorizer.fit_transform(tweets).toarray()
-    log.logger.info("\t\t complete, dim={}, {}".format(counts.shape, datetime.datetime.now()))
-    vocab = {v: i for i, v in enumerate(word_vectorizer.get_feature_names())}
-    pickle.dump(vocab, open(out_folder+"/"+DNN_WORD_VOCAB+".pk", "wb" ))
-
-    word_embedding_input=[]
-    for tweet in counts:
-        for i in range(0, len(tweet)):
-            if tweet[i]!=0:
-                word_embedding_input.append(i)
-    return word_embedding_input, vocab

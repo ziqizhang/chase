@@ -72,7 +72,7 @@ class ChaseClassifier(object):
 
     def train_test(self):
         self.load_data()
-        meta_TRAIN = util.feature_extraction(self.raw_train.tweet, self.feat_v, self.sys_out)
+        meta_TRAIN = util.feature_extraction(self.raw_train.tweet, self.feat_v, self.sys_out, ec.logger)
         X_train = meta_TRAIN[0]
         X_train = util.feature_scale(SCALING_STRATEGY, X_train)
         y_train = self.raw_train['class'].astype(int)
@@ -171,7 +171,7 @@ class ChaseClassifier(object):
     def gridsearch_with_selectedfeatures(self, intersecton_only, *files):
         selected_features=util.read_preselected_features(intersecton_only, *files)
         self.load_data()
-        M = util.feature_extraction(self.raw_train.tweet, self.feat_v, self.sys_out)
+        M = util.feature_extraction(self.raw_train.tweet, self.feat_v, self.sys_out,ec.logger)
         M0 = pd.DataFrame(M[0])
         X_train_data, X_test_data, y_train, y_test = \
         train_test_split(M0, self.raw_train['class'],

@@ -3,7 +3,6 @@ import pickle
 
 import datetime
 import random
-import util.logger as logger
 import pandas
 from sklearn.cross_validation import train_test_split
 import os
@@ -15,7 +14,6 @@ from sklearn.preprocessing import StandardScaler
 from sklearn.utils.multiclass import unique_labels
 
 from ml import text_preprocess
-from itertools import chain, combinations
 
 
 def load_classifier_model(classifier_pickled=None):
@@ -245,7 +243,7 @@ def feature_scale(option, M):
     #     M = select.fit_transform(M, self.raw_data['class'])
     #     print("REDUCED FEATURE MATRIX dimensions={}".format(M.shape))
     # if not self.feature_selection:
-    logger.logger.info("APPLYING FEATURE SCALING: [%s]" % option)
+    #logger.logger.info("APPLYING FEATURE SCALING: [%s]" % option)
     if option == 0:  # mean std
         M = feature_scaling_mean_std(M)
     elif option == 1:
@@ -261,15 +259,15 @@ def feature_scale(option, M):
     return M
 
 
-def feature_extraction(data_column, feat_vectorizer, sysout):
+def feature_extraction(data_column, feat_vectorizer, sysout, logger):
     tweets = data_column
     tweets = [x for x in tweets if type(x) == str]
-    logger.logger.info("FEATURE EXTRACTION AND VECTORIZATION FOR ALL data, insatance={}, {}"
+    logger.info("FEATURE EXTRACTION AND VECTORIZATION FOR ALL data, insatance={}, {}"
           .format(len(tweets), datetime.datetime.now()))
-    logger.logger.info("\tbegin feature extraction and vectorization...")
+    logger.info("\tbegin feature extraction and vectorization...")
     tweets_cleaned = [text_preprocess.preprocess_clean(x, 1, 1) for x in tweets]
     M = feat_vectorizer.transform_inputs(tweets, tweets_cleaned, sysout, "na")
-    logger.logger.info("FEATURE MATRIX dimensions={}".format(M[0].shape))
+    logger.info("FEATURE MATRIX dimensions={}".format(M[0].shape))
     return M
 
 

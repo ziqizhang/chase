@@ -3,24 +3,53 @@ import os
 import sys
 
 import pandas as pd
+import pickle
 from keras.layers import Dense, Embedding, Conv1D, MaxPooling1D, LSTM
 from keras.models import Sequential
 from keras.wrappers.scikit_learn import KerasClassifier
 from sklearn.cross_validation import cross_val_predict, train_test_split
+from sklearn.feature_extraction.text import CountVectorizer
 from sklearn.feature_selection import SelectKBest
 from sklearn.feature_selection import f_classif
 from sklearn.model_selection import GridSearchCV
 
-from exp import classifier_gridsearch_main as cgm
 from ml import util
-from ml.vectorizer import fv_davison
-from util import logger as ec
+#from util import logger
+from ml import nlp
+from ml import text_preprocess as tp
+
 
 INPUT_DIM=1000
+def get_dnn_wordembedding_input(tweets, out_folder):
+    word_vectorizer = CountVectorizer(
+            # vectorizer = sklearn.feature_extraction.text.CountVectorizer(
+            tokenizer=nlp.tokenize,
+            preprocessor=tp.preprocess,
+            ngram_range=(1,1),
+            stop_words=nlp.stopwords,  # We do better when we keep stopwords
+            decode_error='replace',
+            max_features=10000,
+            min_df=5,
+            max_df=0.501
+        )
+
+    #logger.logger.info("\tgenerating word vectors, {}".format(datetime.datetime.now()))
+    counts = word_vectorizer.fit_transform(tweets).toarray()
+    #logger.logger.info("\t\t complete, dim={}, {}".format(counts.shape, datetime.datetime.now()))
+    vocab = {v: i for i, v in enumerate(word_vectorizer.get_feature_names())}
+    pickle.dump(vocab, open(out_folder+"/"+"DNN_WORD_EMBEDDING"+".pk", "wb" ))
+
+    word_embedding_input=[]
+    for tweet in counts:
+        for i in range(0, len(tweet)):
+            if tweet[i]!=0:
+                word_embedding_input.append(i)
+    return word_embedding_input, vocab
+
 
 def learn_dnn(cpus, nfold, task, load_model,X_train, y_train, X_test, y_test,
               identifier, outfolder):
-    ec.logger.info("== Perform ANN ...")
+    #logger.logger.info("== Perform ANN ...")
     subfolder=outfolder+"/models"
     try:
         os.stat(subfolder)
@@ -44,7 +73,7 @@ def learn_dnn(cpus, nfold, task, load_model,X_train, y_train, X_test, y_test,
     nfold_predictions=None
 
     if load_model:
-        ec.logger.info("model is loaded from [%s]" % str(ann_model_file))
+        #logger.logger.info("model is loaded from [%s]" % str(ann_model_file))
         best_estimator = util.load_classifier_model(ann_model_file)
     else:
         _classifier.fit(_X_train, y_train)
@@ -52,12 +81,12 @@ def learn_dnn(cpus, nfold, task, load_model,X_train, y_train, X_test, y_test,
 
         cv_score_ann = _classifier.best_score_
         best_param_ann = _classifier.best_params_
-        ec.logger.info("+ best params for {} model are:{}".format(model, best_param_ann))
+        #logger.logger.info("+ best params for {} model are:{}".format(model, best_param_ann))
         best_estimator = _classifier.best_estimator_
 
         #util.save_classifier_model(best_estimator, ann_model_file)
 
-    ec.logger.info("testing on development set ....")
+    #logger.logger.info("testing on development set ....")
     X_test=None
     if(X_test is not None):
         heldout_predictions_final = best_estimator.predict(X_test)
@@ -83,37 +112,37 @@ def create_model(dropout_rate=0.5):
 
 
     model = Sequential()
-    model.add(Embedding(input_dim=11230, output_dim=32, input_length=INPUT_DIM))
+    model.add(Embedding(input_dim=11230, output_dim=32, input_length=500))
     model.add(Conv1D(filters=32, kernel_size=4, padding='same', activation='relu'))
     model.add(MaxPooling1D(pool_size=2))
     model.add(LSTM(100))
     model.add(Dense(1, activation='sigmoid'))
     model.compile(loss='binary_crossentropy', optimizer='adam', metrics=['accuracy'])
-    ec.logger.info("New run started at {}\n{}".format(datetime.datetime.now(),model.summary()))
+    #logger.logger.info("New run started at {}\n{}".format(datetime.datetime.now(),model.summary()))
     return model
 
 
-def gridsearch(data_file, feat_vectorizer, sys_out):
+def gridsearch(data_file, sys_out):
     raw_data = pd.read_csv(data_file, sep=',', encoding="utf-8")
-    meta_M=util.feature_extraction(raw_data.tweet, feat_vectorizer, sys_out)
-    M=meta_M[0]
+    M=get_dnn_wordembedding_input(raw_data.tweet,sys_out)
     #M=self.feature_scale(M)
 
     # split the dataset into two parts, 0.75 for train and 0.25 for testing
     X_train_data, X_test_data, y_train, y_test = \
                 train_test_split(M, raw_data['class'],
-                                 test_size=cgm.TEST_SPLIT_PERCENT,
+                                 test_size=0.25,
                                  random_state=42)
-    X_train_data=util.feature_scale(cgm.SCALING_STRATEGY,X_train_data)
-    X_test_data = util.feature_scale(cgm.SCALING_STRATEGY,X_test_data)
+    X_train_data=util.feature_scale(0,X_train_data)
+    X_test_data = util.feature_scale(0,X_test_data)
     y_train = y_train.astype(int)
     y_test = y_test.astype(int)
 
 
-    learn_dnn(-1, cgm.N_FOLD_VALIDATION, 'td-original', cgm.LOAD_MODEL_FROM_FILE,
+    learn_dnn(-1, 5, 'td-tdf', False,
                              X_train_data,
                              y_train, X_test_data, y_test, "dense", sys_out)
 
 
 
-gridsearch(sys.argv[1], fv_davison.FeatureVectorizerDavidson(), sys.argv[2])
+gridsearch(sys.argv[1],
+           sys.argv[2])

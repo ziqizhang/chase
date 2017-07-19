@@ -47,7 +47,7 @@ def transform_test_features(data, feature_vectorizer,
     # test data must be represented in a feature matrix of the same dimension of the training data feature matrix
     # step 1: reconstruct empty feature matrix using the vocabularies seen at training time
     ec.logger.info("\n\nEXTRACTING TEST DATA FEATURS...")
-    meta_TEST = util.feature_extraction(data, feature_vectorizer, sys_out)
+    meta_TEST = util.feature_extraction(data, feature_vectorizer, sys_out, ec.logger)
 
     ec.logger.info("\nFEATURE SELECTION ON TEST DATA...")
     train_features = create_training_features(training_feature_save)
