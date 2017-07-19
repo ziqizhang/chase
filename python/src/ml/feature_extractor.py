@@ -53,11 +53,14 @@ def get_ngram_pos_tfidf(pos_vectorizer:TfidfVectorizer, tweets, out_folder, flag
     return pos, pos_vocab
 
 def get_skipgram(tweets, out_folder, nIn, kIn):
-    skipper = functools.partial(util.skipgrams, n=nIn, k=kIn)
+    #tokenization and preprocess (if not yet done) must be done here. when analyzer receives
+    #a callable, it will not perform tokenization, see documentation
+    tweet_tokenized=[]
+    for t in tweets:
+        tweet_tokenized.append(nlp.tokenize(t))
+    skipper = functools.partial(skipgrams, n=nIn, k=kIn)
     vectorizer = TfidfVectorizer(
             analyzer=skipper,
-            tokenizer=word_tokenize,
-            preprocessor=tp.preprocess,
             #stop_words=nlp.stopwords,  # We do better when we keep stopwords
             use_idf=True,
             smooth_idf=False,
@@ -73,7 +76,7 @@ def get_skipgram(tweets, out_folder, nIn, kIn):
 
     # Fit the text into the vectorizer.
     log.logger.info("\tgenerating skip-gram vectors, n={}, k={}, {}".format(nIn, kIn,datetime.datetime.now()))
-    tfidf = vectorizer.fit_transform(tweets).toarray()
+    tfidf = vectorizer.fit_transform(tweet_tokenized).toarray()
     log.logger.info("\t\t complete, dim={}, {}".format(tfidf.shape, datetime.datetime.now()))
     vocab = {v: i for i, v in enumerate(vectorizer.get_feature_names())}
     idf_vals = vectorizer.idf_
@@ -191,10 +194,10 @@ def other_features_(tweet, cleaned_tweet):
     syllables = textstat.syllable_count(words) #count syllables in words
     num_chars = sum(len(w) for w in words) #num chars in words
     num_chars_total = len(tweet)
-    num_terms = len(re.split("\s+",tweet))
-    num_words = len(re.split("\s+",words))
+    num_terms = len(tweet.split())
+    num_words = len(words.split())
     avg_syl = round(float((syllables+0.001))/float(num_words+0.001),4)
-    num_unique_terms = len(set(re.split("\s+",words)))
+    num_unique_terms = len(set(words.split()))
     ###Modified FK grade, where avg words per sentence is just num words/1
     FKRA = round(float(0.39 * float(num_words)/1.0) + float(11.8 * avg_syl) - 15.59,1)
     ##Modified FRE score, where sentence fixed to 1

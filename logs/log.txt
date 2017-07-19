@@ -1,14 +1,16 @@
 INFO:util.logger:
 ##########
-STARTING EXPERIMENT SETTING:_tdcb-tdf; _tdcb-tdf; /home/zqz/Work/chase/data/ml/c/labeled_data_all.csv; <ml.vectorizer.fv_chase_basic.FeatureVectorizerChaseBasic object at 0x7ff0940200f0>; False; -1; False; 99; False; /home/zqz/Work/chase/output; False
+STARTING EXPERIMENT SETTING:_tdcb-tdf; _tdcb-tdf; /home/zqz/Work/chase/data/ml/c/labeled_data_all.csv; <ml.vectorizer.fv_chase_basic.FeatureVectorizerChaseBasic object at 0x7f861378e390>; False; -1; False; 99; False; /home/zqz/Work/chase/output; False
 INFO:util.logger:loading input data from: /home/zqz/Work/chase/data/ml/c/labeled_data_all.csv, exist=True
-INFO:util.logger:FEATURE EXTRACTION AND VECTORIZATION FOR ALL data, insatance=2434, 2017-07-19 14:08:43.078583
+INFO:util.logger:FEATURE EXTRACTION AND VECTORIZATION FOR ALL data, insatance=2434, 2017-07-19 14:36:19.630027
 INFO:util.logger:	begin feature extraction and vectorization...
-INFO:util.logger:	generating n-gram vectors, 2017-07-19 14:08:43.554042
-INFO:util.logger:		 complete, dim=(2434, 1265), 2017-07-19 14:08:47.869240
-INFO:util.logger:	creating pos tags, 2017-07-19 14:08:47.872146
-INFO:util.logger:	generating pos tag vectors, 2017-07-19 14:08:56.799629
-INFO:util.logger:		completed, dim=(2434, 1364), 2017-07-19 14:08:57.488049
-INFO:util.logger:	generating other feature vectors, 2017-07-19 14:08:57.489791
-INFO:util.logger:	generating CHASE skipgram feature vectors, 2017-07-19 14:09:01.120050
-INFO:util.logger:	generating skip-gram vectors, n=2, k=1, 2017-07-19 14:11:51.716572
+INFO:util.logger:	generating n-gram vectors, 2017-07-19 14:36:20.163813
+INFO:util.logger:		 complete, dim=(2434, 1265), 2017-07-19 14:36:24.396570
+INFO:util.logger:	creating pos tags, 2017-07-19 14:36:24.399407
+INFO:util.logger:	generating pos tag vectors, 2017-07-19 14:36:32.393686
+INFO:util.logger:		completed, dim=(2434, 1364), 2017-07-19 14:36:33.066812
+INFO:util.logger:	generating other feature vectors, 2017-07-19 14:36:33.068456
+INFO:util.logger:	generating CHASE skipgram feature vectors, 2017-07-19 14:36:36.613326
+INFO:util.logger:	generating skip-gram vectors, n=2, k=1, 2017-07-19 14:37:23.379848
+INFO:util.logger:		 complete, dim=(2434, 1373), 2017-07-19 14:37:24.083610
+INFO:util.logger:	generating CHASE hashtag feature vectors, 2017-07-19 14:38:32.791332
