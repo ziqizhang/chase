@@ -1,135 +1,16 @@
-51,feature_vocab_ngram_pos,CC JJ VBP
-126,feature_vocab_ngram_pos,CC VB
-127,feature_vocab_ngram_pos,CC VB CC
-130,feature_vocab_ngram_pos,CC VB JJ
-180,feature_vocab_ngram_pos,CC VBP VBN
-251,feature_vocab_ngram_pos,CD VBD
-278,feature_vocab_ngram_pos,DT IN DT
-357,feature_vocab_ngram_pos,DT NNS PRP
-417,feature_vocab_ngram_pos,DT VBD NNS
-513,feature_vocab_ngram_pos,IN CD JJ
-536,feature_vocab_ngram_pos,IN EX
-894,feature_vocab_ngram_pos,JJ RB PRP
-1011,feature_vocab_ngram_pos,JJR IN NN
-1048,feature_vocab_ngram_pos,JJS IN NN
-1210,feature_vocab_ngram_pos,NN JJ TO
-1254,feature_vocab_ngram_pos,NN NN VBP
-1332,feature_vocab_ngram_pos,NN RBS
-1408,feature_vocab_ngram_pos,NN VBG VBD
-1433,feature_vocab_ngram_pos,NN VBP IN
-1444,feature_vocab_ngram_pos,NN VBP VBD
-1450,feature_vocab_ngram_pos,NN VBP WRB
-1470,feature_vocab_ngram_pos,NN VBZ WP
-1499,feature_vocab_ngram_pos,NN WRB NN
-1525,feature_vocab_ngram_pos,NNS CC VBP
-1561,feature_vocab_ngram_pos,NNS JJ CC
-1820,feature_vocab_ngram_pos,PRP IN
-2000,feature_vocab_ngram_pos,PRP VBD VBN
-2002,feature_vocab_ngram_pos,PRP VBD WRB
-2040,feature_vocab_ngram_pos,PRP VBP RB
-2081,feature_vocab_ngram_pos,PRP WRB TO
-2084,feature_vocab_ngram_pos,RB CC DT
-2168,feature_vocab_ngram_pos,RB NN VB
-2246,feature_vocab_ngram_pos,RB VB NNS
-2332,feature_vocab_ngram_pos,RB VBZ RP
-2379,feature_vocab_ngram_pos,RBR RB
-2599,feature_vocab_ngram_pos,VB DT PRP
-2620,feature_vocab_ngram_pos,VB IN RP
-2770,feature_vocab_ngram_pos,VB VBG CC
-2801,feature_vocab_ngram_pos,VB VBP NN
-2809,feature_vocab_ngram_pos,VB VBZ JJ
-2823,feature_vocab_ngram_pos,VB WRB DT
-2857,feature_vocab_ngram_pos,VBD IN CD
-2909,feature_vocab_ngram_pos,VBD NN WP
-2914,feature_vocab_ngram_pos,VBD NNS JJ
-3126,feature_vocab_ngram_pos,VBG PRP CC
-3275,feature_vocab_ngram_pos,VBN NNS VBP
-3298,feature_vocab_ngram_pos,VBN RB PRP
-3317,feature_vocab_ngram_pos,VBN TO NN
-3319,feature_vocab_ngram_pos,VBN TO PRP
-3323,feature_vocab_ngram_pos,VBN VB JJ
-3357,feature_vocab_ngram_pos,VBN WRB PRP
-3398,feature_vocab_ngram_pos,VBP IN JJR
-3485,feature_vocab_ngram_pos,VBP PRP JJR
-3553,feature_vocab_ngram_pos,VBP VB TO
-3587,feature_vocab_ngram_pos,VBP VBN NN
-3787,feature_vocab_ngram_pos,VBZ RP TO
-3816,feature_vocab_ngram_pos,VBZ VBG RP
-3986,feature_vocab_ngram_pos,WP VBP NNS
-4026,feature_vocab_ngram_pos,WRB JJ JJ
-4094,feature_vocab_ngram_pos,WRB VBN
-4108,feature_vocab_ngram_pos,WRB VBZ PRP
-4114,feature_vocab_ngram,abl
-4164,feature_vocab_ngram,agre
-4236,feature_vocab_ngram,amen
-4249,feature_vocab_ngram,amp hi
-4290,feature_vocab_ngram,annoy bitch
-4303,feature_vocab_ngram,anti
-4306,feature_vocab_ngram,anybodi
-4385,feature_vocab_ngram,ass lol
-4391,feature_vocab_ngram,ass nigga bitch
-4393,feature_vocab_ngram,ass nigga joe
-4400,feature_vocab_ngram,ass way
-4571,feature_vocab_ngram,belong
-4651,feature_vocab_ngram,bitch actin
-4899,feature_vocab_ngram,bitch said
-4986,feature_vocab_ngram,bitch wild
-5000,feature_vocab_ngram,bitchin
-5004,feature_vocab_ngram,bitti
-5022,feature_vocab_ngram,blanket
-5024,feature_vocab_ngram,blaxican
-5093,feature_vocab_ngram,boutta
-5095,feature_vocab_ngram,bow wow
-5146,feature_vocab_ngram,broke ass
-5427,feature_vocab_ngram,co
-5475,feature_vocab_ngram,comin
-5481,feature_vocab_ngram,commun
-5558,feature_vocab_ngram,crap
-5560,feature_vocab_ngram,crave
-5581,feature_vocab_ngram,crimin
-5620,feature_vocab_ngram,curv
-5694,feature_vocab_ngram,day day
-5758,feature_vocab_ngram,deserv
-5790,feature_vocab_ngram,differ bitch
-5838,feature_vocab_ngram,dog hous
-5943,feature_vocab_ngram,earlier
-5989,feature_vocab_ngram,els
-5991,feature_vocab_ngram,emabiggestfan
-6049,feature_vocab_ngram,everi bitch
-6155,feature_vocab_ngram,fat hoe
-6290,feature_vocab_ngram,foot
-6300,feature_vocab_ngram,form
-6391,feature_vocab_ngram,fuck hoe
-6435,feature_vocab_ngram,fuck would
-6501,feature_vocab_ngram,georg
-6518,feature_vocab_ngram,get drunk
-6736,feature_vocab_ngram,gossip
-6772,feature_vocab_ngram,got noth
-6779,feature_vocab_ngram,got thi
-6811,feature_vocab_ngram,graham cracker
-6821,feature_vocab_ngram,greas
-6823,feature_vocab_ngram,great day
-6831,feature_vocab_ngram,grill
-6901,feature_vocab_ngram,harass
-6991,feature_vocab_ngram,hick
-7022,feature_vocab_ngram,ho get
-7065,feature_vocab_ngram,hoe fuck
-7074,feature_vocab_ngram,hoe gone
-7652,feature_vocab_ngram,leftov
-8191,feature_vocab_ngram,miss call
-8296,feature_vocab_ngram,nail
-8306,feature_vocab_ngram,nasti
-9094,feature_vocab_ngram,quad
-9644,feature_vocab_ngram,skin bitch
-10424,feature_vocab_ngram,trash nigga
-11178,feature_vocab_ngram,yr old
-11179,feature_vocab_ngram,yu
-11180,feature_vocab_ngram,yuh
-11181,feature_vocab_ngram,yung
-11182,feature_vocab_ngram,yup
-11183,feature_vocab_ngram,z
-11184,feature_vocab_ngram,zebra
-11185,feature_vocab_ngram,zero
-11186,feature_vocab_ngram,zimmerman
-11187,feature_vocab_ngram,zone
-11188,feature_vocab_ngram,zoo
+66,feature_vocab_ngram,attack
+103,feature_vocab_ngram,banislam
+109,feature_vocab_ngram,banmuslim
+393,feature_vocab_ngram,gay
+524,feature_vocab_ngram,islam
+748,feature_vocab_ngram,nomuslim
+751,feature_vocab_ngram,norefuge
+920,feature_vocab_ngram,refugeesnotwelcom
+1696,feature_vocab_ngram_pos,NN NN
+1946,feature_vocab_ngram_pos,PRP
+2629,feature_vocab_td_other,FKRA
+2630,feature_vocab_td_other,FRE
+2632,feature_vocab_td_other,num_chars
+2633,feature_vocab_td_other,num_chars_total
+2634,feature_vocab_td_other,num_terms
+2638,feature_vocab_td_other,num_hashtags

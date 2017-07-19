@@ -1,126 +1,72 @@
 INFO:util.logger:##########
-<<<<<<< HEAD
-STARTING EXPERIMENT SETTING:_tdca-tdf; _tdca-tdf; /home/zqz/Work/chase/data/ml/tdc-a/labeled_data_all.csv; <ml.vectorizer.fv_davison.FeatureVectorizerDavidson object at 0x7fbebc390b38>; False; -1; False; 99; False; /home/zqz/Work/chase/output; True
-INFO:util.logger:loading input data from: /home/zqz/Work/chase/data/ml/tdc-a/labeled_data_all.csv, exist=True
-INFO:util.logger:FEATURE EXTRACTION AND VECTORIZATION FOR ALL data, insatance=27213, 2017-07-18 23:55:13.773537
+STARTING EXPERIMENT SETTING:_c-tdf; _c-tdf; /home/zqz/Work/chase/data/ml/c/labeled_data_all.csv; <ml.vectorizer.fv_davison.FeatureVectorizerDavidson object at 0x7f44d47f0b38>; False; -1; False; 99; False; /home/zqz/Work/chase/output; False
+INFO:util.logger:loading input data from: /home/zqz/Work/chase/data/ml/c/labeled_data_all.csv, exist=True
+INFO:util.logger:FEATURE EXTRACTION AND VECTORIZATION FOR ALL data, insatance=2434, 2017-07-19 08:46:32.777741
 INFO:util.logger:	begin feature extraction and vectorization...
-INFO:util.logger:	generating n-gram vectors, 2017-07-18 23:55:14.778529
-INFO:util.logger:		 complete, dim=(27213, 8010), 2017-07-18 23:55:24.787862
-INFO:util.logger:	creating pos tags, 2017-07-18 23:55:24.798049
-INFO:util.logger:	generating pos tag vectors, 2017-07-18 23:55:47.034022
-INFO:util.logger:		completed, dim=(27213, 4246), 2017-07-18 23:55:48.255668
-INFO:util.logger:	generating other feature vectors, 2017-07-18 23:55:48.260027
-INFO:util.logger:		completed, (27213, 11), 2017-07-18 23:55:57.822964
-INFO:util.logger:FEATURE MATRIX dimensions=(27213, 12267)
+INFO:util.logger:	generating n-gram vectors, 2017-07-19 08:46:32.892963
+INFO:util.logger:		 complete, dim=(2434, 1265), 2017-07-19 08:46:33.961152
+INFO:util.logger:	creating pos tags, 2017-07-19 08:46:33.963036
+INFO:util.logger:	generating pos tag vectors, 2017-07-19 08:46:36.131998
+INFO:util.logger:		completed, dim=(2434, 1364), 2017-07-19 08:46:36.301103
+INFO:util.logger:	generating other feature vectors, 2017-07-19 08:46:36.302299
+INFO:util.logger:		completed, (2434, 11), 2017-07-19 08:46:37.357879
+INFO:util.logger:FEATURE MATRIX dimensions=(2434, 2640)
 INFO:util.logger:APPLYING FEATURE SCALING: [3]
 INFO:util.logger:APPLYING FEATURE SCALING: [3]
-INFO:util.logger:== SVM, kernel=linear ...2017-07-18 23:55:58.913977
+INFO:util.logger:== SVM, kernel=linear ...2017-07-19 08:46:37.414912
 INFO:util.logger:+ best params for svml model are:{}
-INFO:util.logger:complete, 2017-07-19 00:01:21.478266
+INFO:util.logger:complete, 2017-07-19 08:46:39.559421
 INFO:util.logger:##########
-STARTING EXPERIMENT SETTING:_tdca-tdf-sfm; _tdca-tdf-sfm; /home/zqz/Work/chase/data/ml/tdc-a/labeled_data_all.csv; <ml.vectorizer.fv_davison.FeatureVectorizerDavidson object at 0x7fbeb01ab3c8>; False; -1; False; 0; False; /home/zqz/Work/chase/output; True
-INFO:util.logger:loading input data from: /home/zqz/Work/chase/data/ml/tdc-a/labeled_data_all.csv, exist=True
-INFO:util.logger:FEATURE EXTRACTION AND VECTORIZATION FOR ALL data, insatance=27213, 2017-07-19 00:01:38.121619
+STARTING EXPERIMENT SETTING:_c-tdf-sfm; _c-tdf-sfm; /home/zqz/Work/chase/data/ml/c/labeled_data_all.csv; <ml.vectorizer.fv_davison.FeatureVectorizerDavidson object at 0x7f44b193ac88>; False; -1; False; 0; False; /home/zqz/Work/chase/output; False
+INFO:util.logger:loading input data from: /home/zqz/Work/chase/data/ml/c/labeled_data_all.csv, exist=True
+INFO:util.logger:FEATURE EXTRACTION AND VECTORIZATION FOR ALL data, insatance=2434, 2017-07-19 08:46:39.570096
 INFO:util.logger:	begin feature extraction and vectorization...
-INFO:util.logger:	generating n-gram vectors, 2017-07-19 00:01:39.942703
-INFO:util.logger:		 complete, dim=(27213, 8010), 2017-07-19 00:01:52.737852
-INFO:util.logger:	creating pos tags, 2017-07-19 00:01:52.906338
-INFO:util.logger:	generating pos tag vectors, 2017-07-19 00:03:17.071844
-INFO:util.logger:		completed, dim=(27213, 4246), 2017-07-19 00:03:18.417906
-INFO:util.logger:	generating other feature vectors, 2017-07-19 00:03:18.422140
-INFO:util.logger:		completed, (27213, 11), 2017-07-19 00:03:28.315789
-INFO:util.logger:FEATURE MATRIX dimensions=(27213, 12267)
+INFO:util.logger:	generating n-gram vectors, 2017-07-19 08:46:39.731364
+INFO:util.logger:		 complete, dim=(2434, 1265), 2017-07-19 08:46:40.766773
+INFO:util.logger:	creating pos tags, 2017-07-19 08:46:40.768799
+INFO:util.logger:	generating pos tag vectors, 2017-07-19 08:46:42.899086
+INFO:util.logger:		completed, dim=(2434, 1364), 2017-07-19 08:46:43.061910
+INFO:util.logger:	generating other feature vectors, 2017-07-19 08:46:43.063196
+INFO:util.logger:		completed, (2434, 11), 2017-07-19 08:46:44.073520
+INFO:util.logger:FEATURE MATRIX dimensions=(2434, 2640)
 INFO:util.logger:APPLYING FEATURE SCALING: [3]
 INFO:util.logger:APPLYING FEATURE SCALING: [3]
-INFO:util.logger:== SVM, kernel=linear ...2017-07-19 00:03:29.844013
+INFO:util.logger:== SVM, kernel=linear ...2017-07-19 08:46:44.097305
 INFO:util.logger:+ best params for svml model are:{}
-INFO:util.logger:complete, 2017-07-19 00:09:55.968997
+INFO:util.logger:complete, 2017-07-19 08:46:46.857427
 INFO:util.logger:##########
-STARTING EXPERIMENT SETTING:_tdca-tdf-kb; _tdca-tdf-kb; /home/zqz/Work/chase/data/ml/tdc-a/labeled_data_all.csv; <ml.vectorizer.fv_davison.FeatureVectorizerDavidson object at 0x7fbe9834f860>; False; -1; False; 1; True; /home/zqz/Work/chase/output; True
-INFO:util.logger:loading input data from: /home/zqz/Work/chase/data/ml/tdc-a/labeled_data_all.csv, exist=True
-INFO:util.logger:FEATURE EXTRACTION AND VECTORIZATION FOR ALL data, insatance=27213, 2017-07-19 00:10:00.437826
+STARTING EXPERIMENT SETTING:_c-tdf-kb; _c-tdf-kb; /home/zqz/Work/chase/data/ml/c/labeled_data_all.csv; <ml.vectorizer.fv_davison.FeatureVectorizerDavidson object at 0x7f44b07b9518>; False; -1; False; 1; True; /home/zqz/Work/chase/output; False
+INFO:util.logger:loading input data from: /home/zqz/Work/chase/data/ml/c/labeled_data_all.csv, exist=True
+INFO:util.logger:FEATURE EXTRACTION AND VECTORIZATION FOR ALL data, insatance=2434, 2017-07-19 08:46:46.865964
 INFO:util.logger:	begin feature extraction and vectorization...
-INFO:util.logger:	generating n-gram vectors, 2017-07-19 00:10:02.136682
-INFO:util.logger:		 complete, dim=(27213, 8010), 2017-07-19 00:10:15.045613
-INFO:util.logger:	creating pos tags, 2017-07-19 00:10:15.075997
-INFO:util.logger:	generating pos tag vectors, 2017-07-19 00:10:51.040294
-INFO:util.logger:		completed, dim=(27213, 4246), 2017-07-19 00:10:52.263378
-INFO:util.logger:	generating other feature vectors, 2017-07-19 00:10:52.290827
-INFO:util.logger:		completed, (27213, 11), 2017-07-19 00:11:01.965100
-INFO:util.logger:FEATURE MATRIX dimensions=(27213, 12267)
+INFO:util.logger:	generating n-gram vectors, 2017-07-19 08:46:46.992037
+INFO:util.logger:		 complete, dim=(2434, 1265), 2017-07-19 08:46:48.201905
+INFO:util.logger:	creating pos tags, 2017-07-19 08:46:48.203945
+INFO:util.logger:	generating pos tag vectors, 2017-07-19 08:46:50.514310
+INFO:util.logger:		completed, dim=(2434, 1364), 2017-07-19 08:46:50.686923
+INFO:util.logger:	generating other feature vectors, 2017-07-19 08:46:50.688170
+INFO:util.logger:		completed, (2434, 11), 2017-07-19 08:46:51.861854
+INFO:util.logger:FEATURE MATRIX dimensions=(2434, 2640)
 INFO:util.logger:APPLYING FEATURE SCALING: [3]
 INFO:util.logger:APPLYING FEATURE SCALING: [3]
-INFO:util.logger:== SVM, kernel=linear ...2017-07-19 00:11:03.030840
-=======
-STARTING EXPERIMENT SETTING:_c-tdf; _c-tdf; /home/ziqizhang/chase/data/ml/td/labeled_data_all.csv; <ml.vectorizer.fv_davison.FeatureVectorizerDavidson object at 0x7f0545bf5d30>; False; -1; False; 99; False; /home/ziqizhang/chase/output; False
-INFO:util.logger:loading input data from: /home/ziqizhang/chase/data/ml/td/labeled_data_all.csv, exist=True
-INFO:util.logger:FEATURE EXTRACTION AND VECTORIZATION FOR ALL data, insatance=24783, 2017-07-18 22:23:00.158887
+INFO:util.logger:== SVM, kernel=linear ...2017-07-19 08:46:51.891588
+INFO:util.logger:+ best params for svml model are:{'fs__k': 1000, 'fs__score_func': <function f_classif at 0x7f44b470f8c8>}
+INFO:util.logger:complete, 2017-07-19 08:46:58.746903
+INFO:util.logger:##########
+STARTING EXPERIMENT SETTING:_c-tdf-rfe; _c-tdf-rfe; /home/zqz/Work/chase/data/ml/c/labeled_data_all.csv; <ml.vectorizer.fv_davison.FeatureVectorizerDavidson object at 0x7f44b0788470>; False; -1; False; 2; True; /home/zqz/Work/chase/output; False
+INFO:util.logger:loading input data from: /home/zqz/Work/chase/data/ml/c/labeled_data_all.csv, exist=True
+INFO:util.logger:FEATURE EXTRACTION AND VECTORIZATION FOR ALL data, insatance=2434, 2017-07-19 08:46:58.756109
 INFO:util.logger:	begin feature extraction and vectorization...
-INFO:util.logger:	generating n-gram vectors, 2017-07-18 22:23:02.530050
-INFO:util.logger:		 complete, dim=(24783, 7077), 2017-07-18 22:23:26.826948
-INFO:util.logger:	creating pos tags, 2017-07-18 22:23:26.857435
-INFO:util.logger:	generating pos tag vectors, 2017-07-18 22:24:28.625075
-INFO:util.logger:		completed, dim=(24783, 4101), 2017-07-18 22:24:31.649105
-INFO:util.logger:	generating other feature vectors, 2017-07-18 22:24:31.665203
-INFO:util.logger:		completed, (24783, 11), 2017-07-18 22:24:53.781855
-INFO:util.logger:FEATURE MATRIX dimensions=(24783, 11189)
+INFO:util.logger:	generating n-gram vectors, 2017-07-19 08:46:58.860886
+INFO:util.logger:		 complete, dim=(2434, 1265), 2017-07-19 08:46:59.989363
+INFO:util.logger:	creating pos tags, 2017-07-19 08:46:59.992464
+INFO:util.logger:	generating pos tag vectors, 2017-07-19 08:47:02.504349
+INFO:util.logger:		completed, dim=(2434, 1364), 2017-07-19 08:47:02.665498
+INFO:util.logger:	generating other feature vectors, 2017-07-19 08:47:02.666876
+INFO:util.logger:		completed, (2434, 11), 2017-07-19 08:47:03.767612
+INFO:util.logger:FEATURE MATRIX dimensions=(2434, 2640)
 INFO:util.logger:APPLYING FEATURE SCALING: [3]
 INFO:util.logger:APPLYING FEATURE SCALING: [3]
-INFO:util.logger:== SVM, kernel=linear ...2017-07-18 22:24:57.365901
+INFO:util.logger:== SVM, kernel=linear ...2017-07-19 08:47:03.796179
 INFO:util.logger:+ best params for svml model are:{}
-INFO:util.logger:complete, 2017-07-18 22:27:33.651162
-INFO:util.logger:##########
-STARTING EXPERIMENT SETTING:_c-tdf-sfm; _c-tdf-sfm; /home/ziqizhang/chase/data/ml/td/labeled_data_all.csv; <ml.vectorizer.fv_davison.FeatureVectorizerDavidson object at 0x7f0525a3a080>; False; -1; False; 0; False; /home/ziqizhang/chase/output; False
-INFO:util.logger:loading input data from: /home/ziqizhang/chase/data/ml/td/labeled_data_all.csv, exist=True
-INFO:util.logger:FEATURE EXTRACTION AND VECTORIZATION FOR ALL data, insatance=24783, 2017-07-18 22:27:33.751911
-INFO:util.logger:	begin feature extraction and vectorization...
-INFO:util.logger:	generating n-gram vectors, 2017-07-18 22:27:36.599226
-INFO:util.logger:		 complete, dim=(24783, 7077), 2017-07-18 22:28:00.216693
-INFO:util.logger:	creating pos tags, 2017-07-18 22:28:00.238533
-INFO:util.logger:	generating pos tag vectors, 2017-07-18 22:29:01.418335
-INFO:util.logger:		completed, dim=(24783, 4101), 2017-07-18 22:29:04.808846
-INFO:util.logger:	generating other feature vectors, 2017-07-18 22:29:04.826403
-INFO:util.logger:		completed, (24783, 11), 2017-07-18 22:29:26.762589
-INFO:util.logger:FEATURE MATRIX dimensions=(24783, 11189)
-INFO:util.logger:APPLYING FEATURE SCALING: [3]
-INFO:util.logger:APPLYING FEATURE SCALING: [3]
-INFO:util.logger:== SVM, kernel=linear ...2017-07-18 22:29:30.444039
-INFO:util.logger:+ best params for svml model are:{}
-INFO:util.logger:complete, 2017-07-18 22:33:57.053603
-INFO:util.logger:##########
-STARTING EXPERIMENT SETTING:_c-tdf-kb; _c-tdf-kb; /home/ziqizhang/chase/data/ml/td/labeled_data_all.csv; <ml.vectorizer.fv_davison.FeatureVectorizerDavidson object at 0x7f05248f4668>; False; -1; False; 1; True; /home/ziqizhang/chase/output; False
-INFO:util.logger:loading input data from: /home/ziqizhang/chase/data/ml/td/labeled_data_all.csv, exist=True
-INFO:util.logger:FEATURE EXTRACTION AND VECTORIZATION FOR ALL data, insatance=24783, 2017-07-18 22:33:57.193589
-INFO:util.logger:	begin feature extraction and vectorization...
-INFO:util.logger:	generating n-gram vectors, 2017-07-18 22:33:59.525380
-INFO:util.logger:		 complete, dim=(24783, 7077), 2017-07-18 22:34:21.530359
-INFO:util.logger:	creating pos tags, 2017-07-18 22:34:21.560636
-INFO:util.logger:	generating pos tag vectors, 2017-07-18 22:35:25.104564
-INFO:util.logger:		completed, dim=(24783, 4101), 2017-07-18 22:35:28.397577
-INFO:util.logger:	generating other feature vectors, 2017-07-18 22:35:28.409005
-INFO:util.logger:		completed, (24783, 11), 2017-07-18 22:35:50.866707
-INFO:util.logger:FEATURE MATRIX dimensions=(24783, 11189)
-INFO:util.logger:APPLYING FEATURE SCALING: [3]
-INFO:util.logger:APPLYING FEATURE SCALING: [3]
-INFO:util.logger:== SVM, kernel=linear ...2017-07-18 22:35:54.450209
-INFO:util.logger:+ best params for svml model are:{'fs__score_func': <function f_classif at 0x7f0527aa3c80>, 'fs__k': 1500}
-INFO:util.logger:complete, 2017-07-18 22:43:06.214701
-INFO:util.logger:##########
-STARTING EXPERIMENT SETTING:_c-tdf-rfe; _c-tdf-rfe; /home/ziqizhang/chase/data/ml/td/labeled_data_all.csv; <ml.vectorizer.fv_davison.FeatureVectorizerDavidson object at 0x7f05248be9b0>; False; -1; False; 2; True; /home/ziqizhang/chase/output; False
-INFO:util.logger:loading input data from: /home/ziqizhang/chase/data/ml/td/labeled_data_all.csv, exist=True
-INFO:util.logger:FEATURE EXTRACTION AND VECTORIZATION FOR ALL data, insatance=24783, 2017-07-18 22:43:06.345077
-INFO:util.logger:	begin feature extraction and vectorization...
-INFO:util.logger:	generating n-gram vectors, 2017-07-18 22:43:08.813353
-INFO:util.logger:		 complete, dim=(24783, 7077), 2017-07-18 22:43:31.315150
-INFO:util.logger:	creating pos tags, 2017-07-18 22:43:31.342857
-INFO:util.logger:	generating pos tag vectors, 2017-07-18 22:44:33.346553
-INFO:util.logger:		completed, dim=(24783, 4101), 2017-07-18 22:44:36.252184
-INFO:util.logger:	generating other feature vectors, 2017-07-18 22:44:36.263732
-INFO:util.logger:		completed, (24783, 11), 2017-07-18 22:44:57.709854
-INFO:util.logger:FEATURE MATRIX dimensions=(24783, 11189)
-INFO:util.logger:APPLYING FEATURE SCALING: [3]
-INFO:util.logger:APPLYING FEATURE SCALING: [3]
-INFO:util.logger:== SVM, kernel=linear ...2017-07-18 22:45:01.344244
-INFO:util.logger:+ best params for svml model are:{}
-INFO:util.logger:complete, 2017-07-19 02:18:30.495472
->>>>>>> eea709235a21d1fdcde64a76c2e502e865a42076
+INFO:util.logger:complete, 2017-07-19 08:47:37.773859

@@ -11,8 +11,8 @@ def create_settings(sys_out, data_in):
     USE_GRID_SEARCH=False
 
     settings=[]
-    settings.append(['_tdca-tdf', #task name to identify model files
-                     '_tdca-tdf', #identifier to identify scores
+    settings.append(['_c-tdf', #task name to identify model files
+                     '_c-tdf', #identifier to identify scores
                      data_in,
                      fv_davison.FeatureVectorizerDavidson(),#what feature vectorizer to use
                      False, #do grid search for classifier params
@@ -21,9 +21,9 @@ def create_settings(sys_out, data_in):
                      99, #99 means no fs
                      False, #grid search for fs
                      sys_out,
-                     True]) #if mixed dataset, set to true to output scores for tweets from each dataset
-    settings.append(['_tdca-tdf-sfm', #task name to identify model files
-                     '_tdca-tdf-sfm', #identifier to identify scores
+                     False]) #if mixed dataset, set to true to output scores for tweets from each dataset
+    settings.append(['_c-tdf-sfm', #task name to identify model files
+                     '_c-tdf-sfm', #identifier to identify scores
                      data_in,
                      fv_davison.FeatureVectorizerDavidson(),#what feature vectorizer to use
                      False, #do grid search for classifier params
@@ -32,9 +32,9 @@ def create_settings(sys_out, data_in):
                      0, #99 means no fs
                      False,
                      sys_out,
-                     True])
-    settings.append(['_tdca-tdf-kb', #task name to identify model files
-                     '_tdca-tdf-kb', #identifier to identify scores
+                     False])
+    settings.append(['_c-tdf-kb', #task name to identify model files
+                     '_c-tdf-kb', #identifier to identify scores
                      data_in,
                      fv_davison.FeatureVectorizerDavidson(),#what feature vectorizer to use
                      False, #do grid search for classifier params
@@ -43,9 +43,9 @@ def create_settings(sys_out, data_in):
                      1, #99 means no fs
                      True,
                      sys_out,
-                     True])
-    settings.append(['_tdca-tdf-rfe', #task name to identify model files
-                     '_tdca-tdf-rfe', #identifier to identify scores
+                     False])
+    settings.append(['_c-tdf-rfe', #task name to identify model files
+                     '_c-tdf-rfe', #identifier to identify scores
                      data_in,
                      fv_davison.FeatureVectorizerDavidson(),#what feature vectorizer to use
                      False, #do grid search for classifier params
@@ -54,7 +54,7 @@ def create_settings(sys_out, data_in):
                      2, #99 means no fs
                      True,
                      sys_out,
-                     True])
+                     False])
     # settings.append(['tdo-scaling-gs', #task name to identify model files
     #                  'tdo-scaling-gs', #identifier to identify scores
     #                  data_in,
