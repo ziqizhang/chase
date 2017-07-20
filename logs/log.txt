@@ -1,0 +1,20 @@
+<<<<<<< HEAD
+=======
+INFO:util.logger:
+##########
+STARTING EXPERIMENT SETTING:_td-tdf-kb; _td-tdf-kb; /home/ziqizhang/chase/data/ml/td/labeled_data_all.csv; <ml.vectorizer.fv_davison.FeatureVectorizerDavidson object at 0x7f7a3d6c7400>; False; -1; False; 1; True; /home/ziqizhang/chase/output; False
+INFO:util.logger:loading input data from: /home/ziqizhang/chase/data/ml/td/labeled_data_all.csv, exist=True
+INFO:util.logger:FEATURE EXTRACTION AND VECTORIZATION FOR ALL data, insatance=24783, 2017-07-19 22:32:55.534691
+INFO:util.logger:	begin feature extraction and vectorization...
+INFO:util.logger:	generating n-gram vectors, 2017-07-19 22:32:58.058278
+INFO:util.logger:		 complete, dim=(24783, 7077), 2017-07-19 22:33:21.497787
+INFO:util.logger:	creating pos tags, 2017-07-19 22:33:21.528157
+INFO:util.logger:	generating pos tag vectors, 2017-07-19 22:34:27.900101
+INFO:util.logger:		completed, dim=(24783, 4101), 2017-07-19 22:34:31.619310
+INFO:util.logger:	generating other feature vectors, 2017-07-19 22:34:31.637646
+INFO:util.logger:		completed, (24783, 11), 2017-07-19 22:34:54.971665
+INFO:util.logger:FEATURE MATRIX dimensions=(24783, 11189)
+INFO:util.logger:== SVM, kernel=linear ...2017-07-19 22:35:10.789388
+INFO:util.logger:+ best params for svml model are:{'fs__k': 250, 'fs__score_func': <function f_classif at 0x7f7a21b10840>}
+INFO:util.logger:complete, 2017-07-19 23:09:21.334533
+>>>>>>> c2e55d093ebb899b1497c46fa7883f321e39610a
