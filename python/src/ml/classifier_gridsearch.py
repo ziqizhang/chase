@@ -179,6 +179,13 @@ def learn_general(cpus, nfold, task, load_model, model,
     print(X_.shape)
     print("### end \n\n\n")
 
+    print("### test kb...")
+    fs=SelectKBest(k=1000, score_func=f_classif)
+    X_=fs.fit_transform(X_train, y_train)
+    print(np.count_nonzero(X_))
+    print(X_.shape)
+    print("### end \n\n\n")
+
     nfold_predictions = None
 
     if load_model:
