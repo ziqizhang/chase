@@ -9,7 +9,6 @@ import datetime
 import tweepy
 from SolrClient import SolrClient
 from tweepy import OAuthHandler
-from tweepy import Stream
 from tweepy.streaming import StreamListener
 from geopy.geocoders import Nominatim
 
