@@ -172,19 +172,19 @@ def learn_general(cpus, nfold, task, load_model, model,
     piped_classifier = c[0]
     model_file = c[1]
 
-    print("### test sfm...")
-    fs=SelectFromModel(LogisticRegression(class_weight='balanced', penalty="l1", C=0.01))
-    X_=fs.fit_transform(X_train, y_train)
-    print(np.count_nonzero(X_))
-    print(X_.shape)
-    print("### end \n\n\n")
-
-    print("### test kb...")
-    fs=SelectKBest(k=1000, score_func=f_classif)
-    X_=fs.fit_transform(X_train, y_train)
-    print(np.count_nonzero(X_))
-    print(X_.shape)
-    print("### end \n\n\n")
+    # print("### test sfm...")
+    # fs=SelectFromModel(LogisticRegression(class_weight='balanced', penalty="l1", C=0.01))
+    # X_=fs.fit_transform(X_train, y_train)
+    # print(np.count_nonzero(X_))
+    # print(X_.shape)
+    # print("### end \n\n\n")
+    #
+    # print("### test kb...")
+    # fs=SelectKBest(k=1000, score_func=f_classif)
+    # X_=fs.fit_transform(X_train, y_train)
+    # print(np.count_nonzero(X_))
+    # print(X_.shape)
+    # print("### end \n\n\n")
 
     nfold_predictions = None
 
