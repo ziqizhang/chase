@@ -1,5 +1,6 @@
 INFO:util.logger:
 ##########
+<<<<<<< HEAD
 STARTING EXPERIMENT SETTING:_td-tdf-sfm; _td-tdf-sfm; /home/ziqizhang/chase/data/ml/td/labeled_data_all.csv; <ml.vectorizer.fv_davison.FeatureVectorizerDavidson object at 0x7faed1c6e438>; False; -1; False; 0; False; /home/ziqizhang/chase/output; False
 INFO:util.logger:loading input data from: /home/ziqizhang/chase/data/ml/td/labeled_data_all.csv, exist=True
 INFO:util.logger:FEATURE EXTRACTION AND VECTORIZATION FOR ALL data, insatance=24783, 2017-07-20 07:02:13.428221
@@ -13,3 +14,18 @@ INFO:util.logger:	generating other feature vectors, 2017-07-20 07:03:45.893189
 INFO:util.logger:		completed, (24783, 11), 2017-07-20 07:04:07.640893
 INFO:util.logger:FEATURE MATRIX dimensions=(24783, 11189)
 INFO:util.logger:== SVM, kernel=linear ...2017-07-20 07:04:22.838959
+=======
+STARTING EXPERIMENT SETTING:_td-tdf-sfm; _td-tdf-sfm; /home/zqz/Work/chase/data/ml/td/labeled_data_all.csv; <ml.vectorizer.fv_davison.FeatureVectorizerDavidson object at 0x7f2daf2aeba8>; False; -1; False; 0; False; /home/zqz/Work/chase/output; False
+INFO:util.logger:loading input data from: /home/zqz/Work/chase/data/ml/td/labeled_data_all.csv, exist=True
+INFO:util.logger:FEATURE EXTRACTION AND VECTORIZATION FOR ALL data, insatance=24783, 2017-07-20 08:46:47.123748
+INFO:util.logger:	begin feature extraction and vectorization...
+INFO:util.logger:	generating n-gram vectors, 2017-07-20 08:46:48.072971
+INFO:util.logger:		 complete, dim=(24783, 7077), 2017-07-20 08:46:58.179332
+INFO:util.logger:	creating pos tags, 2017-07-20 08:46:58.192197
+INFO:util.logger:	generating pos tag vectors, 2017-07-20 08:47:22.793457
+INFO:util.logger:		completed, dim=(24783, 4101), 2017-07-20 08:47:24.022036
+INFO:util.logger:	generating other feature vectors, 2017-07-20 08:47:24.026668
+INFO:util.logger:		completed, (24783, 11), 2017-07-20 08:47:33.327615
+INFO:util.logger:FEATURE MATRIX dimensions=(24783, 11189)
+INFO:util.logger:== SVM, kernel=linear ...2017-07-20 08:47:43.005636
+>>>>>>> 5af4336f54a7897abb34184642a8d446a402aed8
