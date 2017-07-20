@@ -63,7 +63,7 @@ class FeatureVectorizerChaseOther(fv.FeatureVectorizer):
 
         # Features group 2: PoS for ngrams
         # Features group 2: PoS for ngrams
-        td_pos=fe.get_ngram_pos_tfidf(self.pos_vectorizer, tweets_cleaned, out_folder, flag)
+        #td_pos=fe.get_ngram_pos_tfidf(self.pos_vectorizer, tweets_cleaned, out_folder, flag)
 
         # Features group 3: other features
         logger.logger.info("\tgenerating other feature vectors, {}".format(datetime.datetime.now()))
@@ -88,14 +88,14 @@ class FeatureVectorizerChaseOther(fv.FeatureVectorizer):
         logger.logger.info("\t\tcompleted, {}, {}".format(c_stats[0].shape,datetime.datetime.now()))
 
         # Now concatenate all features in to single sparse matrix
-        M = np.concatenate([td_tfidf[0], td_pos[0],
+        M = np.concatenate([td_tfidf[0], #td_pos[0],
                             c_bigram_pos[0], c_trigram_pos[0],
                             td_otherfeats[0],
                             c_hashtags[0],c_stats[0]], axis=1)
         #print(M.shape)
         features_by_type={}
         features_by_type[fe.NGRAM_FEATURES_VOCAB]=td_tfidf
-        features_by_type[fe.NGRAM_POS_FEATURES_VOCAB]=td_pos
+        #features_by_type[fe.NGRAM_POS_FEATURES_VOCAB]=td_pos
         features_by_type[fe.SKIPGRAM22_POS_FEATURES_VOCAB]=c_bigram_pos
         features_by_type[fe.SKIPGRAM32_POS_FEATURES_VOCAB]=c_trigram_pos
         features_by_type[fe.TWEET_TD_OTHER_FEATURES_VOCAB]=td_otherfeats

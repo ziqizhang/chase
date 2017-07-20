@@ -25,18 +25,6 @@ def create_settings(sys_out, data_in, label, scores_per_ds, fvect: fv.FeatureVec
                          False, #grid search for fs
                          sys_out,
                          scores_per_ds]) #if mixed dataset, set to true to output scores for tweets from each dataset
-    if "sfm" in fs_options:
-        settings.append(['{}-sfm'.format(label), #task name to identify model files
-                         '{}-sfm'.format(label), #identifier to identify scores
-                         data_in,
-                         fvect,#what feature vectorizer to use
-                         False, #do grid search for classifier params
-                         -1, #use pca for dimensionality reduction
-                         False, #grid search on pca
-                         0, #99 means no fs
-                         False,
-                         sys_out,
-                         scores_per_ds])
     if "kb" in fs_options:
         settings.append(['{}-kb'.format(label), #task name to identify model files
                          '{}-kb'.format(label), #identifier to identify scores
@@ -47,6 +35,18 @@ def create_settings(sys_out, data_in, label, scores_per_ds, fvect: fv.FeatureVec
                          False, #grid search on pca
                          1, #99 means no fs
                          True,
+                         sys_out,
+                         scores_per_ds])
+    if "sfm" in fs_options:
+        settings.append(['{}-sfm'.format(label), #task name to identify model files
+                         '{}-sfm'.format(label), #identifier to identify scores
+                         data_in,
+                         fvect,#what feature vectorizer to use
+                         False, #do grid search for classifier params
+                         -1, #use pca for dimensionality reduction
+                         False, #grid search on pca
+                         0, #99 means no fs
+                         False,
                          sys_out,
                          scores_per_ds])
     # settings.append(['{}-rfe'.format(label), #task name to identify model files
