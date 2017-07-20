@@ -238,8 +238,10 @@ def saveOutput(prediction, model_name, task, outfolder):
 
 
 def feature_scale(option, M):
-    if np.isnan(M).any():
-        print("input matrix has NaN values")
+    print("feature scaling, first perform sanity check...")
+    if M.isnull().values.any():
+        print("input matrix has NaN values, replace with 0")
+        M.fillna(0)
 
     # if self.feature_selection:
     #     print("FEATURE SELECTION BEGINS, {}".format(datetime.datetime.now()))
@@ -250,16 +252,18 @@ def feature_scale(option, M):
     # logger.logger.info("APPLYING FEATURE SCALING: [%s]" % option)
     if option == 0:  # mean std
         M = feature_scaling_mean_std(M)
-        if np.isnan(M).any():
-            print("scaled matrix has NaN values")
-        return np.nan_to_num(M)
+        if M.isnull().values.any():
+            print("scaled matrix has NaN values, replace with 0")
+            M.fillna(0)
+        return M
     elif option == 1:
         M = feature_scaling_min_max(M)
-        if np.isnan(M).any():
-            print("scaled matrix has NaN values")
-        return np.nan_to_num(M)
+        if M.isnull().values.any():
+            print("scaled matrix has NaN values, replace with 0")
+            M.fillna(0)
+        return M
     else:
-        pass
+        return M
 
     # print("FEATURE SELECTION BEGINS, {}".format(datetime.datetime.now()))
     # select = SelectFromModel(LogisticRegression(class_weight='balanced',penalty="l1",C=0.01))
