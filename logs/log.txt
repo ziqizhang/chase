@@ -1,15 +1,75 @@
 INFO:util.logger:
 ##########
-STARTING EXPERIMENT SETTING:_td-tdf-sfm; _td-tdf-sfm; /home/zqz/Work/chase/data/ml/td/labeled_data_all.csv; <ml.vectorizer.fv_davison.FeatureVectorizerDavidson object at 0x7f2daf2aeba8>; False; -1; False; 0; False; /home/zqz/Work/chase/output; False
-INFO:util.logger:loading input data from: /home/zqz/Work/chase/data/ml/td/labeled_data_all.csv, exist=True
-INFO:util.logger:FEATURE EXTRACTION AND VECTORIZATION FOR ALL data, insatance=24783, 2017-07-20 08:46:47.123748
+STARTING EXPERIMENT SETTING:_tdcb-cskp.o; _tdcb-cskp.o; /home/zqz/Work/chase/data/ml/tdc-b/labeled_data_all.csv; <ml.vectorizer.fv_chase_other.FeatureVectorizerChaseOther object at 0x7fa5aba28b38>; False; -1; False; 99; False; /home/zqz/Work/chase/output; True
+INFO:util.logger:loading input data from: /home/zqz/Work/chase/data/ml/tdc-b/labeled_data_all.csv, exist=True
+INFO:util.logger:FEATURE EXTRACTION AND VECTORIZATION FOR ALL data, insatance=5111, 2017-07-20 09:01:03.202974
 INFO:util.logger:	begin feature extraction and vectorization...
-INFO:util.logger:	generating n-gram vectors, 2017-07-20 08:46:48.072971
-INFO:util.logger:		 complete, dim=(24783, 7077), 2017-07-20 08:46:58.179332
-INFO:util.logger:	creating pos tags, 2017-07-20 08:46:58.192197
-INFO:util.logger:	generating pos tag vectors, 2017-07-20 08:47:22.793457
-INFO:util.logger:		completed, dim=(24783, 4101), 2017-07-20 08:47:24.022036
-INFO:util.logger:	generating other feature vectors, 2017-07-20 08:47:24.026668
-INFO:util.logger:		completed, (24783, 11), 2017-07-20 08:47:33.327615
-INFO:util.logger:FEATURE MATRIX dimensions=(24783, 11189)
-INFO:util.logger:== SVM, kernel=linear ...2017-07-20 08:47:43.005636
+INFO:util.logger:	generating n-gram vectors, 2017-07-20 09:01:03.447891
+INFO:util.logger:		 complete, dim=(5111, 2006), 2017-07-20 09:01:05.682642
+INFO:util.logger:	creating pos tags, 2017-07-20 09:01:05.703173
+INFO:util.logger:	generating pos tag vectors, 2017-07-20 09:01:10.574452
+INFO:util.logger:		completed, dim=(5111, 2043), 2017-07-20 09:01:10.866123
+INFO:util.logger:	generating other feature vectors, 2017-07-20 09:01:10.867969
+INFO:util.logger:	generating CHASE 2 skip bigram pos feature vectors, 2017-07-20 09:01:17.091613
+INFO:util.logger:	generating skip-gram vectors, n=2, k=2, 2017-07-20 09:01:17.645375
+INFO:util.logger:		 complete, dim=(5111, 470), 2017-07-20 09:01:17.839682
+INFO:util.logger:	generating CHASE 2 skip trigram pos feature vectors, 2017-07-20 09:01:17.856176
+INFO:util.logger:	generating skip-gram vectors, n=3, k=2, 2017-07-20 09:01:18.399770
+INFO:util.logger:		 complete, dim=(5111, 3862), 2017-07-20 09:01:18.731718
+INFO:util.logger:	generating CHASE hashtag feature vectors, 2017-07-20 09:01:18.738808
+INFO:util.logger:	generating CHASE other stats feature vectors, 2017-07-20 09:01:18.776828
+INFO:util.logger:		completed, (5111, 4), 2017-07-20 09:01:22.636450
+INFO:util.logger:FEATURE MATRIX dimensions=(5111, 9170)
+INFO:util.logger:== SVM, kernel=linear ...2017-07-20 09:01:23.498123
+INFO:util.logger:+ best params for svml model are:{}
+INFO:util.logger:complete, 2017-07-20 09:24:14.919299
+INFO:util.logger:
+##########
+STARTING EXPERIMENT SETTING:_tdcb-cskp.o-sfm; _tdcb-cskp.o-sfm; /home/zqz/Work/chase/data/ml/tdc-b/labeled_data_all.csv; <ml.vectorizer.fv_chase_other.FeatureVectorizerChaseOther object at 0x7fa5aba28b38>; False; -1; False; 0; False; /home/zqz/Work/chase/output; True
+INFO:util.logger:loading input data from: /home/zqz/Work/chase/data/ml/tdc-b/labeled_data_all.csv, exist=True
+INFO:util.logger:FEATURE EXTRACTION AND VECTORIZATION FOR ALL data, insatance=5111, 2017-07-20 09:24:14.934935
+INFO:util.logger:	begin feature extraction and vectorization...
+INFO:util.logger:	generating n-gram vectors, 2017-07-20 09:24:15.593599
+INFO:util.logger:		 complete, dim=(5111, 2006), 2017-07-20 09:24:17.623674
+INFO:util.logger:	creating pos tags, 2017-07-20 09:24:17.626626
+INFO:util.logger:	generating pos tag vectors, 2017-07-20 09:24:21.989848
+INFO:util.logger:		completed, dim=(5111, 2043), 2017-07-20 09:24:22.291805
+INFO:util.logger:	generating other feature vectors, 2017-07-20 09:24:22.293922
+INFO:util.logger:	generating CHASE 2 skip bigram pos feature vectors, 2017-07-20 09:24:28.638825
+INFO:util.logger:	generating skip-gram vectors, n=2, k=2, 2017-07-20 09:24:29.195469
+INFO:util.logger:		 complete, dim=(5111, 470), 2017-07-20 09:24:29.389127
+INFO:util.logger:	generating CHASE 2 skip trigram pos feature vectors, 2017-07-20 09:24:29.391620
+INFO:util.logger:	generating skip-gram vectors, n=3, k=2, 2017-07-20 09:24:29.951152
+INFO:util.logger:		 complete, dim=(5111, 3862), 2017-07-20 09:24:30.309320
+INFO:util.logger:	generating CHASE hashtag feature vectors, 2017-07-20 09:24:30.316434
+INFO:util.logger:	generating CHASE other stats feature vectors, 2017-07-20 09:24:30.356343
+INFO:util.logger:		completed, (5111, 4), 2017-07-20 09:24:34.021354
+INFO:util.logger:FEATURE MATRIX dimensions=(5111, 9170)
+INFO:util.logger:== SVM, kernel=linear ...2017-07-20 09:24:34.753974
+INFO:util.logger:+ best params for svml model are:{}
+INFO:util.logger:complete, 2017-07-20 09:25:36.393239
+INFO:util.logger:
+##########
+STARTING EXPERIMENT SETTING:_tdcb-cskp.o-kb; _tdcb-cskp.o-kb; /home/zqz/Work/chase/data/ml/tdc-b/labeled_data_all.csv; <ml.vectorizer.fv_chase_other.FeatureVectorizerChaseOther object at 0x7fa5aba28b38>; False; -1; False; 1; True; /home/zqz/Work/chase/output; True
+INFO:util.logger:loading input data from: /home/zqz/Work/chase/data/ml/tdc-b/labeled_data_all.csv, exist=True
+INFO:util.logger:FEATURE EXTRACTION AND VECTORIZATION FOR ALL data, insatance=5111, 2017-07-20 09:25:36.408039
+INFO:util.logger:	begin feature extraction and vectorization...
+INFO:util.logger:	generating n-gram vectors, 2017-07-20 09:25:37.058500
+INFO:util.logger:		 complete, dim=(5111, 2006), 2017-07-20 09:25:39.182639
+INFO:util.logger:	creating pos tags, 2017-07-20 09:25:39.185518
+INFO:util.logger:	generating pos tag vectors, 2017-07-20 09:25:43.522469
+INFO:util.logger:		completed, dim=(5111, 2043), 2017-07-20 09:25:43.817395
+INFO:util.logger:	generating other feature vectors, 2017-07-20 09:25:43.819295
+INFO:util.logger:	generating CHASE 2 skip bigram pos feature vectors, 2017-07-20 09:25:50.113888
+INFO:util.logger:	generating skip-gram vectors, n=2, k=2, 2017-07-20 09:25:50.679707
+INFO:util.logger:		 complete, dim=(5111, 470), 2017-07-20 09:25:50.873941
+INFO:util.logger:	generating CHASE 2 skip trigram pos feature vectors, 2017-07-20 09:25:50.876490
+INFO:util.logger:	generating skip-gram vectors, n=3, k=2, 2017-07-20 09:25:51.435242
+INFO:util.logger:		 complete, dim=(5111, 3862), 2017-07-20 09:25:51.786251
+INFO:util.logger:	generating CHASE hashtag feature vectors, 2017-07-20 09:25:51.793593
+INFO:util.logger:	generating CHASE other stats feature vectors, 2017-07-20 09:25:51.834677
+INFO:util.logger:		completed, (5111, 4), 2017-07-20 09:25:55.525212
+INFO:util.logger:FEATURE MATRIX dimensions=(5111, 9170)
+INFO:util.logger:== SVM, kernel=linear ...2017-07-20 09:25:56.270748
+INFO:util.logger:+ best params for svml model are:{'fs__k': 250, 'fs__score_func': <function f_classif at 0x7fa59f821840>}
+INFO:util.logger:complete, 2017-07-20 09:28:36.668754
