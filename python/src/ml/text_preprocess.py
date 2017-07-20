@@ -2,6 +2,8 @@ import re
 import enchant
 import splitter
 
+d = enchant.Dict('en_UK')
+dus = enchant.Dict('en_US')
 
 #This is the original preprocess method from Davidson
 def preprocess(text_string):
@@ -50,12 +52,10 @@ def preprocess_clean(text_string, remove_hashtags, remove_special_chars):
     return parsed_text
 
 def strip_hashtags(text):
-    d = enchant.Dict('en_UK')
-    dus = enchant.Dict('en_US')
+    text = preprocess_clean(text,0,1)
     hashtags = re.findall('#[\w\-]+', text)
     for tag in hashtags:
         cleantag = tag[1:]
-        print(tag)
         if d.check(cleantag) or dus.check(cleantag):
             text = re.sub(tag,cleantag,text)
             pass
@@ -63,6 +63,6 @@ def strip_hashtags(text):
             hashtagSplit = ""
             for word in splitter.split(cleantag.lower(),'en_US'):
                 hashtagSplit = hashtagSplit + word + " "
-            print(hashtagSplit)
             text = re.sub(tag,hashtagSplit,text)
+    print(text)
     return text
