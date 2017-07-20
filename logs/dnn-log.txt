@@ -1,57 +1,57 @@
-INFO:__main__:	generating word vectors, 2017-07-20 11:29:25.373024
-INFO:__main__:		 complete, dim=(4957, 1147), 2017-07-20 11:29:26.922876
+INFO:__main__:	generating word vectors, 2017-07-20 17:06:26.423577
+INFO:__main__:		 complete, dim=(4957, 1147), 2017-07-20 17:06:28.081752
 INFO:__main__:== Perform ANN ...
-INFO:__main__:New run started at 2017-07-20 11:29:29.352810
+INFO:__main__:New run started at 2017-07-20 17:06:31.546292
 None
-INFO:__main__:New run started at 2017-07-20 11:29:29.472228
+INFO:__main__:New run started at 2017-07-20 17:06:31.655362
 None
-INFO:__main__:New run started at 2017-07-20 11:29:29.483068
+INFO:__main__:New run started at 2017-07-20 17:06:31.810627
 None
-INFO:__main__:New run started at 2017-07-20 11:29:29.685414
+INFO:__main__:New run started at 2017-07-20 17:06:31.959047
 None
-INFO:__main__:New run started at 2017-07-20 11:35:10.410762
+INFO:__main__:New run started at 2017-07-20 17:13:22.234438
 None
-INFO:__main__:New run started at 2017-07-20 11:35:11.326039
+INFO:__main__:New run started at 2017-07-20 17:13:26.260985
 None
-INFO:__main__:New run started at 2017-07-20 11:35:11.421838
+INFO:__main__:New run started at 2017-07-20 17:13:27.474951
 None
-INFO:__main__:New run started at 2017-07-20 11:35:12.538790
+INFO:__main__:New run started at 2017-07-20 17:13:28.884246
 None
-INFO:__main__:New run started at 2017-07-20 11:40:53.544049
+INFO:__main__:New run started at 2017-07-20 17:19:47.940374
 None
-INFO:__main__:New run started at 2017-07-20 11:40:55.011977
+INFO:__main__:New run started at 2017-07-20 17:19:52.166932
 None
-INFO:__main__:New run started at 2017-07-20 11:40:55.952277
+INFO:__main__:New run started at 2017-07-20 17:19:55.739332
 None
-INFO:__main__:New run started at 2017-07-20 11:40:56.878910
+INFO:__main__:New run started at 2017-07-20 17:19:57.382762
 None
-INFO:__main__:New run started at 2017-07-20 11:46:23.935392
+INFO:__main__:New run started at 2017-07-20 17:25:54.235433
 None
-INFO:__main__:New run started at 2017-07-20 11:46:25.403145
+INFO:__main__:New run started at 2017-07-20 17:25:56.544621
 None
-INFO:__main__:New run started at 2017-07-20 11:47:08.724015
+INFO:__main__:New run started at 2017-07-20 17:26:07.606586
 None
-INFO:__main__:New run started at 2017-07-20 11:47:09.123127
+INFO:__main__:New run started at 2017-07-20 17:26:17.016227
 None
-INFO:__main__:New run started at 2017-07-20 11:52:10.440339
+INFO:__main__:New run started at 2017-07-20 17:32:29.066282
 None
-INFO:__main__:New run started at 2017-07-20 11:52:12.740521
+INFO:__main__:New run started at 2017-07-20 17:32:29.125828
 None
-INFO:__main__:New run started at 2017-07-20 11:53:03.175547
+INFO:__main__:New run started at 2017-07-20 17:32:43.724168
 None
-INFO:__main__:New run started at 2017-07-20 11:53:03.904585
+INFO:__main__:New run started at 2017-07-20 17:32:54.721784
 None
-INFO:__main__:New run started at 2017-07-20 11:58:34.494148
+INFO:__main__:New run started at 2017-07-20 17:39:11.460250
 None
-INFO:__main__:New run started at 2017-07-20 12:00:27.289833
+INFO:__main__:New run started at 2017-07-20 17:41:15.511217
 None
-INFO:__main__:New run started at 2017-07-20 12:01:58.310901
+INFO:__main__:New run started at 2017-07-20 17:43:04.001022
 None
-INFO:__main__:New run started at 2017-07-20 12:03:28.975685
+INFO:__main__:New run started at 2017-07-20 17:44:53.755198
 None
-INFO:__main__:New run started at 2017-07-20 12:05:00.028329
+INFO:__main__:New run started at 2017-07-20 17:46:33.815685
 None
-INFO:__main__:New run started at 2017-07-20 12:06:31.358694
+INFO:__main__:New run started at 2017-07-20 17:48:17.363582
 None
-INFO:__main__:+ best params for <keras.wrappers.scikit_learn.KerasClassifier object at 0x7f6a687904e0> model are:{'batch_size': 100, 'nb_epoch': 3}
+INFO:__main__:+ best params for <keras.wrappers.scikit_learn.KerasClassifier object at 0x7f173afbe518> model are:{'batch_size': 100, 'nb_epoch': 3}
 INFO:__main__:testing on development set ....
