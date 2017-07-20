@@ -88,7 +88,6 @@ def get_skipgram(tweets, out_folder, nIn, kIn):
 
 
 
-
 def get_hashtags_in_tweets(tweets, out_folder):
     hashtag_dict = {}
     hashtag_regex = '#[\w\-]+'

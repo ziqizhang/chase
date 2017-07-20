@@ -123,6 +123,7 @@ def save_classifier_model(model, outfile):
         with open(outfile, 'wb') as model_file:
             pickle.dump(model, model_file)
 
+
 def validate_training_set(training_set):
     """
     validate training data set (i.e., X) before scaling, PCA, etc.
@@ -237,17 +238,26 @@ def saveOutput(prediction, model_name, task, outfolder):
 
 
 def feature_scale(option, M):
+    if np.isnan(M).any():
+        print("input matrix has NaN values")
+
     # if self.feature_selection:
     #     print("FEATURE SELECTION BEGINS, {}".format(datetime.datetime.now()))
     #     select = SelectFromModel(LogisticRegression(class_weight='balanced',penalty="l1",C=0.01))
     #     M = select.fit_transform(M, self.raw_data['class'])
     #     print("REDUCED FEATURE MATRIX dimensions={}".format(M.shape))
     # if not self.feature_selection:
-    #logger.logger.info("APPLYING FEATURE SCALING: [%s]" % option)
+    # logger.logger.info("APPLYING FEATURE SCALING: [%s]" % option)
     if option == 0:  # mean std
         M = feature_scaling_mean_std(M)
+        if np.isnan(M).any():
+            print("scaled matrix has NaN values")
+        return np.nan_to_num(M)
     elif option == 1:
         M = feature_scaling_min_max(M)
+        if np.isnan(M).any():
+            print("scaled matrix has NaN values")
+        return np.nan_to_num(M)
     else:
         pass
 
@@ -263,7 +273,7 @@ def feature_extraction(data_column, feat_vectorizer, sysout, logger):
     tweets = data_column
     tweets = [x for x in tweets if type(x) == str]
     logger.info("FEATURE EXTRACTION AND VECTORIZATION FOR ALL data, insatance={}, {}"
-          .format(len(tweets), datetime.datetime.now()))
+                .format(len(tweets), datetime.datetime.now()))
     logger.info("\tbegin feature extraction and vectorization...")
     tweets_cleaned = [text_preprocess.preprocess_clean(x, 1, 1) for x in tweets]
     M = feat_vectorizer.transform_inputs(tweets, tweets_cleaned, sysout, "na")
@@ -394,8 +404,6 @@ def separate_tdc(in_csv, out_csv, tag):
                     writer.writerow(row)
                 else:
                     continue
-
-
 
 # separate_tdc("/home/zqz/Work/chase/data/ml/tdc-a/mixed_all.csv",
 #              "/home/zqz/Work/chase/data/ml/c/labeled_data_all.csv", "c")
