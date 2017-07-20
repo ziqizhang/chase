@@ -6,7 +6,7 @@ import sys
 import functools
 import pandas as pd
 import pickle
-from keras.layers import Dense, Embedding, Conv1D, MaxPooling1D, LSTM
+from keras.layers import Dense, Embedding, Conv1D, MaxPooling1D, LSTM, Dropout
 from keras.models import Sequential
 from keras.wrappers.scikit_learn import KerasClassifier
 from sklearn.cross_validation import cross_val_predict, train_test_split
@@ -58,24 +58,31 @@ def get_dnn_wordembedding_input(tweets, out_folder):
 
 def create_model(max_index=100):
     # create model
-    # model = Sequential()
-    # model.add(Dense(500, input_dim=1000, activation='relu'))
-    # model.add(Dropout(dropout_rate))
+    model = Sequential()
+    # model.add(Embedding(input_dim=max_index, output_dim=WORD_EMBEDDING_DIM_OUTPUT,
+    #                      input_length=WORD_EMBEDDING_DIM_INPUT))
+    # model.add(Dense(200, input_dim=WORD_EMBEDDING_DIM_OUTPUT, activation='relu'))
+    # model.add(Dropout(0.5))
     # model.add(Dense(1, activation='sigmoid'))
     # # Compile model
     # model.compile(loss='binary_crossentropy', optimizer='adam', metrics=['accuracy'])
 
-
     model = Sequential()
     model.add(Embedding(input_dim=max_index, output_dim=WORD_EMBEDDING_DIM_OUTPUT,
                         input_length=WORD_EMBEDDING_DIM_INPUT))
-    model.add(Conv1D(filters=100, kernel_size=4, padding='same', activation='relu'))
-    model.add(MaxPooling1D(pool_size=2))
-    model.add(Conv1D(filters=30, kernel_size=4, padding='same', activation='relu'))
-    model.add(MaxPooling1D(pool_size=2))
     model.add(LSTM(100, activation='tanh'))
     model.add(Dense(1, activation='sigmoid'))
     model.compile(loss='binary_crossentropy', optimizer='adam', metrics=['accuracy'])
+
+    # model = Sequential()
+    # model.add(Embedding(input_dim=max_index, output_dim=WORD_EMBEDDING_DIM_OUTPUT,
+    #                     input_length=WORD_EMBEDDING_DIM_INPUT))
+    # model.add(Conv1D(filters=100, kernel_size=4, padding='same', activation='relu'))
+    # model.add(MaxPooling1D(pool_size=2))
+    # model.add(LSTM(100, activation='tanh'))
+    # model.add(Dense(1, activation='sigmoid'))
+    # model.compile(loss='binary_crossentropy', optimizer='adam', metrics=['accuracy'])
+    #
     logger.info("New run started at {}\n{}".format(datetime.datetime.now(), model.summary()))
     return model
 
