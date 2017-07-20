@@ -254,12 +254,12 @@ def feature_scale(option, M):
         M = feature_scaling_mean_std(M)
         if np.isnan(M).any():
             print("scaled matrix has NaN values, replace with 0")
-        return np.nan_to_num(M)
+        M= np.nan_to_num(M)
     elif option == 1:
         M = feature_scaling_min_max(M)
         if np.isnan(M).any():
             print("scaled matrix has NaN values, replace with 0")
-        return np.nan_to_num(M)
+        M= np.nan_to_num(M)
     else:
         pass
 
