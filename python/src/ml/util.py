@@ -252,24 +252,22 @@ def feature_scale(option, M):
     # logger.logger.info("APPLYING FEATURE SCALING: [%s]" % option)
     if option == 0:  # mean std
         M = feature_scaling_mean_std(M)
-        if M.isnull().values.any():
+        if np.isnan(M).any():
             print("scaled matrix has NaN values, replace with 0")
-            M.fillna(0)
-        return M
+        return np.nan_to_num(M)
     elif option == 1:
         M = feature_scaling_min_max(M)
-        if M.isnull().values.any():
+        if np.isnan(M).any():
             print("scaled matrix has NaN values, replace with 0")
-            M.fillna(0)
-        return M
+        return np.nan_to_num(M)
     else:
-        return M
+        pass
 
     # print("FEATURE SELECTION BEGINS, {}".format(datetime.datetime.now()))
     # select = SelectFromModel(LogisticRegression(class_weight='balanced',penalty="l1",C=0.01))
     # M = select.fit_transform(M, self.raw_data['class'])
     # print("REDUCED FEATURE MATRIX dimensions={}".format(M.shape))
-
+    print("feature scaling done")
     return M
 
 
