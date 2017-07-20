@@ -16,6 +16,7 @@ from ml import classifier_gridsearch as cl
 from ml import util
 from ml.vectorizer import feature_vectorizer as fv
 from ml.vectorizer import fv_chase_basic
+from ml.vectorizer import fv_chase_other
 from ml.vectorizer import fv_chase_skipgram
 from ml.vectorizer import fv_davison
 
@@ -177,10 +178,14 @@ if __name__ == '__main__':
         fv=fv_chase_basic.FeatureVectorizerChaseBasic()
     elif sys.argv[5]=='2':
         fv=fv_chase_skipgram.FeatureVectorizerChaseSkipgram()
+    elif sys.argv[5]=='3':
+        fv=fv_chase_other.FeatureVectorizerChaseOther()
     else:
         fv=fv_davison.FeatureVectorizerDavidson()
+
+    fs_options=sys.argv[6].split(",")
     settings = exp.create_settings(sys.argv[1], sys.argv[2], sys.argv[3], bool(sys.argv[4]),
-                                   fv)
+                                   fv,fs_options)
 
     for ds in settings:
         ec.logger.info("\n##########\nSTARTING EXPERIMENT SETTING:" + '; '.join(map(str, ds)))

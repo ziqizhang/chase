@@ -1,7 +1,9 @@
+
 from ml.vectorizer import feature_vectorizer as fv
 
 # each setting can use a different FeatureVectorizer to create different features. this way we can create a batch of experiments to run
-def create_settings(sys_out, data_in, label, scores_per_ds, fvect: fv.FeatureVectorizer):
+def create_settings(sys_out, data_in, label, scores_per_ds, fvect: fv.FeatureVectorizer,
+                    fs_options):
     #sys_out='../../../output' #where the system will save its required files, such as the trained models
     #data_in='../../../data/labeled_data.csv'
     #data_in='/home/zqz/Work/hate-speech-and-offensive-language/data/labeled_data_small.csv'
@@ -11,39 +13,42 @@ def create_settings(sys_out, data_in, label, scores_per_ds, fvect: fv.FeatureVec
     USE_GRID_SEARCH=False
 
     settings=[]
-    # settings.append([label, #task name to identify model files
-    #                  label, #identifier to identify scores
-    #                  data_in,
-    #                  fvect,#what feature vectorizer to use
-    #                  False, #do grid search for classifier params
-    #                  -1, #use pca for dimensionality reduction
-    #                  False, #grid search on pca
-    #                  99, #99 means no fs
-    #                  False, #grid search for fs
-    #                  sys_out,
-    #                  scores_per_ds]) #if mixed dataset, set to true to output scores for tweets from each dataset
-    # settings.append(['{}-sfm'.format(label), #task name to identify model files
-    #                  '{}-sfm'.format(label), #identifier to identify scores
-    #                  data_in,
-    #                  fvect,#what feature vectorizer to use
-    #                  False, #do grid search for classifier params
-    #                  -1, #use pca for dimensionality reduction
-    #                  False, #grid search on pca
-    #                  0, #99 means no fs
-    #                  False,
-    #                  sys_out,
-    #                  scores_per_ds])
-    settings.append(['{}-kb'.format(label), #task name to identify model files
-                     '{}-kb'.format(label), #identifier to identify scores
-                     data_in,
-                     fvect,#what feature vectorizer to use
-                     False, #do grid search for classifier params
-                     -1, #use pca for dimensionality reduction
-                     False, #grid search on pca
-                     1, #99 means no fs
-                     True,
-                     sys_out,
-                     scores_per_ds])
+    if "none" in fs_options:
+        settings.append([label, #task name to identify model files
+                         label, #identifier to identify scores
+                         data_in,
+                         fvect,#what feature vectorizer to use
+                         False, #do grid search for classifier params
+                         -1, #use pca for dimensionality reduction
+                         False, #grid search on pca
+                         99, #99 means no fs
+                         False, #grid search for fs
+                         sys_out,
+                         scores_per_ds]) #if mixed dataset, set to true to output scores for tweets from each dataset
+    if "sfm" in fs_options:
+        settings.append(['{}-sfm'.format(label), #task name to identify model files
+                         '{}-sfm'.format(label), #identifier to identify scores
+                         data_in,
+                         fvect,#what feature vectorizer to use
+                         False, #do grid search for classifier params
+                         -1, #use pca for dimensionality reduction
+                         False, #grid search on pca
+                         0, #99 means no fs
+                         False,
+                         sys_out,
+                         scores_per_ds])
+    if "kb" in fs_options:
+        settings.append(['{}-kb'.format(label), #task name to identify model files
+                         '{}-kb'.format(label), #identifier to identify scores
+                         data_in,
+                         fvect,#what feature vectorizer to use
+                         False, #do grid search for classifier params
+                         -1, #use pca for dimensionality reduction
+                         False, #grid search on pca
+                         1, #99 means no fs
+                         True,
+                         sys_out,
+                         scores_per_ds])
     # settings.append(['{}-rfe'.format(label), #task name to identify model files
     #                  '{}-rfe'.format(label), #identifier to identify scores
     #                  data_in,

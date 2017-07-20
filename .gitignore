@@ -9,3 +9,5 @@ output/*.pkl
 .idea/*
 *.pyc
 output/fs/*
+*.log
+
