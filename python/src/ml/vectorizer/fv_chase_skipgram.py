@@ -61,7 +61,7 @@ class FeatureVectorizerChaseSkipgram(fv.FeatureVectorizer):
         unigram_tfidf = fe.get_ngram_tfidf(self.unigram_vectorizer, tweets_original, out_folder, flag)
 
         # Features group 2: PoS for ngrams
-        unigram_pos=fe.get_ngram_pos_tfidf(self.unigram_pos_vectorizer, tweets_cleaned, out_folder, flag)
+        #unigram_pos=fe.get_ngram_pos_tfidf(self.unigram_pos_vectorizer, tweets_cleaned, out_folder, flag)
 
         # Features group 3: other features
         logger.logger.info("\tgenerating other feature vectors, {}".format(datetime.datetime.now()))
@@ -90,7 +90,7 @@ class FeatureVectorizerChaseSkipgram(fv.FeatureVectorizer):
         logger.logger.info("\t\tcompleted, {}, {}".format(c_stats[0].shape,datetime.datetime.now()))
 
         # Now concatenate all features in to single sparse matrix
-        M = np.concatenate([unigram_tfidf[0], unigram_pos[0],
+        M = np.concatenate([unigram_tfidf[0], #unigram_pos[0],
                             c_skipgram_22[0], c_skipgram_32[0],
                             c_bigram_pos[0], c_trigram_pos[0],
                             td_otherfeats[0],
@@ -98,7 +98,7 @@ class FeatureVectorizerChaseSkipgram(fv.FeatureVectorizer):
         #print(M.shape)
         features_by_type={}
         features_by_type[fe.NGRAM_FEATURES_VOCAB]=unigram_tfidf
-        features_by_type[fe.NGRAM_POS_FEATURES_VOCAB]=unigram_pos
+        #features_by_type[fe.NGRAM_POS_FEATURES_VOCAB]=unigram_pos
         features_by_type[fe.SKIPGRAM22_FEATURES_VOCAB]=c_skipgram_22
         features_by_type[fe.SKIPGRAM22_POS_FEATURES_VOCAB]=c_bigram_pos
         features_by_type[fe.SKIPGRAM32_FEATURES_VOCAB]=c_skipgram_32
