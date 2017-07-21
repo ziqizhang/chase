@@ -4,6 +4,11 @@ import splitter
 
 d = enchant.Dict('en_UK')
 dus = enchant.Dict('en_US')
+space_pattern = '\s+'
+giant_url_regex = ('http[s]?://(?:[a-zA-Z]|[0-9]|[$-_@.&+]|'
+        '[!*\(\),]|(?:%[0-9a-fA-F][0-9a-fA-F]))+')
+mention_regex = '@[\w\-]+'
+emoji_regex = '&#[0-9]{4,6};'
 
 #This is the original preprocess method from Davidson
 def preprocess(text_string):
@@ -16,11 +21,6 @@ def preprocess(text_string):
     This allows us to get standardized counts of urls and mentions
     Without caring about specific people mentioned
     """
-    space_pattern = '\s+'
-    giant_url_regex = ('http[s]?://(?:[a-zA-Z]|[0-9]|[$-_@.&+]|'
-        '[!*\(\),]|(?:%[0-9a-fA-F][0-9a-fA-F]))+')
-    mention_regex = '@[\w\-]+'
-    emoji_regex = '&#[0-9]{4,6};'
     parsed_text = re.sub(space_pattern, ' ', text_string)
     parsed_text = re.sub(giant_url_regex, '', parsed_text)
     parsed_text = re.sub(mention_regex, '', parsed_text)
@@ -34,6 +34,7 @@ def preprocess(text_string):
 
 def preprocess_clean(text_string, remove_hashtags=True, remove_special_chars=True):
     # Clean a string down to just text
+    text_string=preprocess(text_string)
 
     parsed_text = preprocess(text_string)
     parsed_text = parsed_text.lower()
@@ -52,7 +53,7 @@ def preprocess_clean(text_string, remove_hashtags=True, remove_special_chars=Tru
     return parsed_text
 
 def strip_hashtags(text):
-    text = preprocess_clean(text,0,1)
+    text = preprocess_clean(text,False,True)
     hashtags = re.findall('#[\w\-]+', text)
     for tag in hashtags:
         cleantag = tag[1:]

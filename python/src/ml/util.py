@@ -279,8 +279,8 @@ def feature_extraction(data_column, feat_vectorizer, sysout, logger):
     logger.info("FEATURE EXTRACTION AND VECTORIZATION FOR ALL data, insatance={}, {}"
                 .format(len(tweets), datetime.datetime.now()))
     logger.info("\tbegin feature extraction and vectorization...")
+    tweets_cleaned = [text_preprocess.strip_hashtags(x) for x in tweets]
     #tweets_cleaned = [text_preprocess.preprocess_clean(x, True, True) for x in tweets]
-    tweets_cleaned = [text_preprocess.preprocess_clean(x, True, True) for x in tweets]
     M = feat_vectorizer.transform_inputs(tweets, tweets_cleaned, sysout, "na")
     logger.info("FEATURE MATRIX dimensions={}".format(M[0].shape))
     return M
@@ -410,8 +410,8 @@ def separate_tdc(in_csv, out_csv, tag):
                 else:
                     continue
 
-# separate_tdc("/home/zqz/Work/chase/data/ml/tdc-a/mixed_all.csv",
-#              "/home/zqz/Work/chase/data/ml/c/labeled_data_all.csv", "c")
+# separate_tdc("/home/zqz/Work/chase/data/ml/tdc-b/labeled_data_all.csv",
+#               "/home/zqz/Work/chase/data/ml/tdsmall/labeled_data_all.csv", "td")
 
 # tag_source_file("/home/zqz/Work/chase/data/ml/tdc-a/mixed_all.csv",
 #                 "/home/zqz/Work/chase/data/ml/tdc-a/mixed_all_revised")

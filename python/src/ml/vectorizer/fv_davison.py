@@ -65,7 +65,7 @@ class FeatureVectorizerDavidson(fv.FeatureVectorizer):
 
         # Features group 3: other features
         logger.logger.info("\tgenerating other feature vectors, {}".format(datetime.datetime.now()))
-        feats = fe.get_oth_features(tweets_original, tweets_cleaned,out_folder)
+        feats = fe.get_oth_features(tweets_cleaned, tweets_cleaned,out_folder)
         logger.logger.info("\t\tcompleted, {}, {}".format(feats[0].shape,datetime.datetime.now()))
 
         # Now concatenate all features in to single sparse matrix

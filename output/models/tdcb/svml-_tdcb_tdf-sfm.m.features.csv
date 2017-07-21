@@ -1,0 +1,105 @@
+24,feature_vocab_ngram,agre
+84,feature_vocab_ngram,ass nigga
+88,feature_vocab_ngram,attack
+131,feature_vocab_ngram,ban
+133,feature_vocab_ngram,ban islam
+137,feature_vocab_ngram,banislam
+143,feature_vocab_ngram,banmuslim
+165,feature_vocab_ngram,beaner
+190,feature_vocab_ngram,bitch
+228,feature_vocab_ngram,black
+281,feature_vocab_ngram,burn
+299,feature_vocab_ngram,canceldaca
+319,feature_vocab_ngram,celebr
+334,feature_vocab_ngram,children
+366,feature_vocab_ngram,complain
+374,feature_vocab_ngram,constitut
+394,feature_vocab_ngram,cracker
+408,feature_vocab_ngram,cult
+410,feature_vocab_ngram,cunt
+447,feature_vocab_ngram,demand
+453,feature_vocab_ngram,deport
+454,feature_vocab_ngram,deportallmuslim
+455,feature_vocab_ngram,deportilleg
+460,feature_vocab_ngram,destroyislam
+467,feature_vocab_ngram,disabl
+544,feature_vocab_ngram,evil
+565,feature_vocab_ngram,fag
+566,feature_vocab_ngram,faggot
+639,feature_vocab_ngram,fuck
+647,feature_vocab_ngram,fuckislam
+661,feature_vocab_ngram,gay
+694,feature_vocab_ngram,globalist
+754,feature_vocab_ngram,health
+781,feature_vocab_ngram,hoe
+794,feature_vocab_ngram,homophob
+810,feature_vocab_ngram,hungari
+821,feature_vocab_ngram,idiot
+833,feature_vocab_ngram,immedi
+865,feature_vocab_ngram,islam
+944,feature_vocab_ngram,lame
+970,feature_vocab_ngram,lesbian
+974,feature_vocab_ngram,lesson
+992,feature_vocab_ngram,like fuck
+1087,feature_vocab_ngram,mexicopay
+1140,feature_vocab_ngram,muslim
+1183,feature_vocab_ngram,nicca
+1185,feature_vocab_ngram,nig
+1186,feature_vocab_ngram,nigga
+1190,feature_vocab_ngram,niggah
+1192,feature_vocab_ngram,nigger
+1193,feature_vocab_ngram,nigguh
+1202,feature_vocab_ngram,nomuslim
+1206,feature_vocab_ngram,norefuge
+1217,feature_vocab_ngram,nothin
+1282,feature_vocab_ngram,peac
+1345,feature_vocab_ngram,preach
+1371,feature_vocab_ngram,prosecutehillari
+1383,feature_vocab_ngram,pussi
+1393,feature_vocab_ngram,queer
+1403,feature_vocab_ngram,racist
+1446,feature_vocab_ngram,refuge
+1447,feature_vocab_ngram,refugeesnotwelcom
+1472,feature_vocab_ngram,retard
+1510,feature_vocab_ngram,safe
+1569,feature_vocab_ngram,shut
+1571,feature_vocab_ngram,shut fuck
+1643,feature_vocab_ngram,stfu
+1658,feature_vocab_ngram,stupid
+1718,feature_vocab_ngram,terror
+1793,feature_vocab_ngram,tranni
+1850,feature_vocab_ngram,usa
+1852,feature_vocab_ngram,usual
+1944,feature_vocab_ngram,white trash
+1959,feature_vocab_ngram,wonder
+1968,feature_vocab_ngram,wors
+2107,feature_vocab_ngram_pos,CD JJR
+2108,feature_vocab_ngram_pos,CD JJR NN
+2191,feature_vocab_ngram_pos,DT PRP DT
+2195,feature_vocab_ngram_pos,DT PRP VBP
+2471,feature_vocab_ngram_pos,JJ RB JJ
+2555,feature_vocab_ngram_pos,JJS NN RB
+2606,feature_vocab_ngram_pos,NN DT VBN
+2613,feature_vocab_ngram_pos,NN IN
+2678,feature_vocab_ngram_pos,NN NNS DT
+2792,feature_vocab_ngram_pos,NN VBN RB
+2809,feature_vocab_ngram_pos,NN VBP VBZ
+2813,feature_vocab_ngram_pos,NN VBZ DT
+2925,feature_vocab_ngram_pos,NNS RB JJ
+3400,feature_vocab_ngram_pos,TO VB WP
+3409,feature_vocab_ngram_pos,VB CD NN
+3443,feature_vocab_ngram_pos,VB NN DT
+3521,feature_vocab_ngram_pos,VB VBG PRP
+3525,feature_vocab_ngram_pos,VB VBN IN
+3681,feature_vocab_ngram_pos,VBG PRP VB
+3753,feature_vocab_ngram_pos,VBN VBP
+3806,feature_vocab_ngram_pos,VBP NN VBZ
+3856,feature_vocab_ngram_pos,VBP TO PRP
+3889,feature_vocab_ngram_pos,VBP VBN RP
+3894,feature_vocab_ngram_pos,VBP VBP IN
+3912,feature_vocab_ngram_pos,VBZ DT
+3923,feature_vocab_ngram_pos,VBZ JJ
+3955,feature_vocab_ngram_pos,VBZ PRP DT
+3972,feature_vocab_ngram_pos,VBZ RBR
+4115,feature_vocab_td_other,num_syllables
+4121,feature_vocab_td_other,vader compound

@@ -58,7 +58,7 @@ class FeatureVectorizerChaseSkipgram(fv.FeatureVectorizer):
 
         """
         # Features group 1: tfidf weighted n-grams
-        unigram_tfidf = fe.get_ngram_tfidf(self.unigram_vectorizer, tweets_original, out_folder, flag)
+        unigram_tfidf = fe.get_ngram_tfidf(self.unigram_vectorizer, tweets_cleaned, out_folder, flag)
 
         # Features group 2: PoS for ngrams
         #unigram_pos=fe.get_ngram_pos_tfidf(self.unigram_pos_vectorizer, tweets_cleaned, out_folder, flag)
