@@ -428,5 +428,5 @@ def separate_tdc(in_csv, out_csv, tag):
 #     load_word2vec_format('/home/zqz/Work/data/GoogleNews-vectors-negative300.bin.gz', binary=True)
 # print("loaded")
 
-output_data_splits("/home/zqz/Work/chase/data/ml/tdc-a/labeled_data_all.csv"
-                   ,"/home/zqz/Work/chase/data/ml/tdc-a")
+# output_data_splits("/home/zqz/Work/chase/data/ml/tdc-a/labeled_data_all.csv"
+#                    ,"/home/zqz/Work/chase/data/ml/tdc-a")
