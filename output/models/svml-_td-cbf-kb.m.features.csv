@@ -1,0 +1,500 @@
+3,feature_vocab_ngram_pos,CC CD
+27,feature_vocab_ngram_pos,CC JJ DT
+31,feature_vocab_ngram_pos,CC JJ NN
+38,feature_vocab_ngram_pos,CC JJ VBG
+63,feature_vocab_ngram_pos,CC NN VBZ
+80,feature_vocab_ngram_pos,CC PDT
+126,feature_vocab_ngram_pos,CC VB TO
+127,feature_vocab_ngram_pos,CC VB VB
+128,feature_vocab_ngram_pos,CC VB VBD
+153,feature_vocab_ngram_pos,CC VBG RB
+156,feature_vocab_ngram_pos,CC VBN
+163,feature_vocab_ngram_pos,CC VBP NN
+172,feature_vocab_ngram_pos,CC VBZ CD
+203,feature_vocab_ngram_pos,CD IN PRP
+237,feature_vocab_ngram_pos,CD TO VB
+239,feature_vocab_ngram_pos,CD VB RB
+241,feature_vocab_ngram_pos,CD VBD NN
+251,feature_vocab_ngram_pos,DT CC PRP
+255,feature_vocab_ngram_pos,DT CD
+278,feature_vocab_ngram_pos,DT JJ FW
+294,feature_vocab_ngram_pos,DT JJ VBZ
+302,feature_vocab_ngram_pos,DT JJS CC
+340,feature_vocab_ngram_pos,DT NNS DT
+357,feature_vocab_ngram_pos,DT NNS WP
+359,feature_vocab_ngram_pos,DT PRP
+376,feature_vocab_ngram_pos,DT RB PRP
+417,feature_vocab_ngram_pos,DT VBN IN
+418,feature_vocab_ngram_pos,DT VBN NN
+468,feature_vocab_ngram_pos,EX VBP NNS
+469,feature_vocab_ngram_pos,EX VBZ
+470,feature_vocab_ngram_pos,EX VBZ DT
+505,feature_vocab_ngram_pos,IN DT
+513,feature_vocab_ngram_pos,IN DT NN
+515,feature_vocab_ngram_pos,IN DT PRP
+516,feature_vocab_ngram_pos,IN DT RB
+517,feature_vocab_ngram_pos,IN DT RBS
+519,feature_vocab_ngram_pos,IN DT VBG
+520,feature_vocab_ngram_pos,IN DT VBN
+521,feature_vocab_ngram_pos,IN DT VBP
+522,feature_vocab_ngram_pos,IN DT VBZ
+536,feature_vocab_ngram_pos,IN IN NN
+551,feature_vocab_ngram_pos,IN JJ RB
+643,feature_vocab_ngram_pos,IN PRP VBN
+658,feature_vocab_ngram_pos,IN RB VB
+703,feature_vocab_ngram_pos,IN VBN TO
+894,feature_vocab_ngram_pos,JJ RP
+900,feature_vocab_ngram_pos,JJ TO RB
+929,feature_vocab_ngram_pos,JJ VBG DT
+932,feature_vocab_ngram_pos,JJ VBG NN
+953,feature_vocab_ngram_pos,JJ VBP JJ
+959,feature_vocab_ngram_pos,JJ VBP RB
+967,feature_vocab_ngram_pos,JJ VBP VBZ
+974,feature_vocab_ngram_pos,JJ VBZ JJ
+1011,feature_vocab_ngram_pos,JJR NN NN
+1039,feature_vocab_ngram_pos,JJS IN PRP
+1046,feature_vocab_ngram_pos,JJS NN JJ
+1048,feature_vocab_ngram_pos,JJS NN NNS
+1120,feature_vocab_ngram_pos,NN CC JJ
+1152,feature_vocab_ngram_pos,NN DT VBG
+1173,feature_vocab_ngram_pos,NN IN NN
+1205,feature_vocab_ngram_pos,NN JJ VBZ
+1210,feature_vocab_ngram_pos,NN JJS
+1211,feature_vocab_ngram_pos,NN JJS IN
+1212,feature_vocab_ngram_pos,NN JJS NN
+1214,feature_vocab_ngram_pos,NN MD CC
+1215,feature_vocab_ngram_pos,NN MD IN
+1216,feature_vocab_ngram_pos,NN MD PRP
+1218,feature_vocab_ngram_pos,NN MD VB
+1219,feature_vocab_ngram_pos,NN NN
+1220,feature_vocab_ngram_pos,NN NN CC
+1254,feature_vocab_ngram_pos,NN NNS JJ
+1271,feature_vocab_ngram_pos,NN NNS WRB
+1275,feature_vocab_ngram_pos,NN PRP CC
+1276,feature_vocab_ngram_pos,NN PRP DT
+1282,feature_vocab_ngram_pos,NN PRP NNS
+1285,feature_vocab_ngram_pos,NN PRP RP
+1286,feature_vocab_ngram_pos,NN PRP TO
+1289,feature_vocab_ngram_pos,NN PRP VBG
+1290,feature_vocab_ngram_pos,NN PRP VBN
+1293,feature_vocab_ngram_pos,NN PRP WRB
+1324,feature_vocab_ngram_pos,NN RP CC
+1332,feature_vocab_ngram_pos,NN RP VB
+1333,feature_vocab_ngram_pos,NN RP VBG
+1334,feature_vocab_ngram_pos,NN TO
+1335,feature_vocab_ngram_pos,NN TO CC
+1336,feature_vocab_ngram_pos,NN TO DT
+1338,feature_vocab_ngram_pos,NN TO NN
+1404,feature_vocab_ngram_pos,NN VBN DT
+1408,feature_vocab_ngram_pos,NN VBN NNS
+1409,feature_vocab_ngram_pos,NN VBN PRP
+1444,feature_vocab_ngram_pos,NN VBZ IN
+1453,feature_vocab_ngram_pos,NN VBZ TO
+1470,feature_vocab_ngram_pos,NN WDT VBD
+1471,feature_vocab_ngram_pos,NN WDT VBP
+1475,feature_vocab_ngram_pos,NN WP IN
+1499,feature_vocab_ngram_pos,NNP RB
+1561,feature_vocab_ngram_pos,NNS JJ VBZ
+1579,feature_vocab_ngram_pos,NNS NN RB
+1600,feature_vocab_ngram_pos,NNS NNS WP
+1615,feature_vocab_ngram_pos,NNS PRP VB
+1631,feature_vocab_ngram_pos,NNS RB VB
+1640,feature_vocab_ngram_pos,NNS RBR IN
+1641,feature_vocab_ngram_pos,NNS RBR JJ
+1663,feature_vocab_ngram_pos,NNS VB PRP
+1697,feature_vocab_ngram_pos,NNS VBG VBN
+1767,feature_vocab_ngram_pos,NNS WRB PRP
+1801,feature_vocab_ngram_pos,PRP DT PRP
+1820,feature_vocab_ngram_pos,PRP IN RB
+1826,feature_vocab_ngram_pos,PRP IN WP
+1827,feature_vocab_ngram_pos,PRP IN WRB
+1828,feature_vocab_ngram_pos,PRP JJ
+1829,feature_vocab_ngram_pos,PRP JJ CC
+1860,feature_vocab_ngram_pos,PRP NN
+1867,feature_vocab_ngram_pos,PRP NN NNS
+1960,feature_vocab_ngram_pos,PRP VB NN
+2000,feature_vocab_ngram_pos,PRP VBG RB
+2002,feature_vocab_ngram_pos,PRP VBG TO
+2003,feature_vocab_ngram_pos,PRP VBG VB
+2006,feature_vocab_ngram_pos,PRP VBN
+2010,feature_vocab_ngram_pos,PRP VBN NN
+2011,feature_vocab_ngram_pos,PRP VBN PRP
+2028,feature_vocab_ngram_pos,PRP VBP PRP
+2033,feature_vocab_ngram_pos,PRP VBP VBD
+2040,feature_vocab_ngram_pos,PRP VBZ
+2057,feature_vocab_ngram_pos,PRP VBZ WP
+2084,feature_vocab_ngram_pos,RB CC VBZ
+2101,feature_vocab_ngram_pos,RB IN
+2131,feature_vocab_ngram_pos,RB JJ VBD
+2132,feature_vocab_ngram_pos,RB JJ VBG
+2154,feature_vocab_ngram_pos,RB NN RB
+2158,feature_vocab_ngram_pos,RB NN VBD
+2163,feature_vocab_ngram_pos,RB NN WRB
+2168,feature_vocab_ngram_pos,RB NNS MD
+2194,feature_vocab_ngram_pos,RB PRP VBZ
+2208,feature_vocab_ngram_pos,RB RB VBD
+2246,feature_vocab_ngram_pos,RB VB WRB
+2253,feature_vocab_ngram_pos,RB VBD NNS
+2267,feature_vocab_ngram_pos,RB VBG NN
+2270,feature_vocab_ngram_pos,RB VBG RB
+2294,feature_vocab_ngram_pos,RB VBP CD
+2295,feature_vocab_ngram_pos,RB VBP DT
+2306,feature_vocab_ngram_pos,RB VBP VBD
+2332,feature_vocab_ngram_pos,RB WP
+2334,feature_vocab_ngram_pos,RB WP NN
+2344,feature_vocab_ngram_pos,RB WRB PRP
+2345,feature_vocab_ngram_pos,RB WRB VBP
+2356,feature_vocab_ngram_pos,RBR IN RB
+2366,feature_vocab_ngram_pos,RBR NNS IN
+2379,feature_vocab_ngram_pos,RBS IN
+2409,feature_vocab_ngram_pos,RP JJ IN
+2463,feature_vocab_ngram_pos,RP TO PRP
+2470,feature_vocab_ngram_pos,RP VBG IN
+2480,feature_vocab_ngram_pos,RP WRB JJ
+2485,feature_vocab_ngram_pos,TO CD
+2508,feature_vocab_ngram_pos,TO NN RB
+2620,feature_vocab_ngram_pos,VB JJ NNS
+2621,feature_vocab_ngram_pos,VB JJ PRP
+2626,feature_vocab_ngram_pos,VB JJ VBG
+2692,feature_vocab_ngram_pos,VB PRP TO
+2694,feature_vocab_ngram_pos,VB PRP VBD
+2702,feature_vocab_ngram_pos,VB RB CC
+2703,feature_vocab_ngram_pos,VB RB DT
+2710,feature_vocab_ngram_pos,VB RB RP
+2714,feature_vocab_ngram_pos,VB RB VBG
+2741,feature_vocab_ngram_pos,VB VB JJ
+2742,feature_vocab_ngram_pos,VB VB NN
+2770,feature_vocab_ngram_pos,VB VBG VBN
+2801,feature_vocab_ngram_pos,VB WP DT
+2811,feature_vocab_ngram_pos,VB WRB
+2857,feature_vocab_ngram_pos,VBD IN VBN
+2879,feature_vocab_ngram_pos,VBD NN CC
+2891,feature_vocab_ngram_pos,VBD NN VB
+2896,feature_vocab_ngram_pos,VBD NN VBZ
+2909,feature_vocab_ngram_pos,VBD NNS TO
+2914,feature_vocab_ngram_pos,VBD NNS VBP
+3059,feature_vocab_ngram_pos,VBG JJ
+3090,feature_vocab_ngram_pos,VBG NN VBG
+3121,feature_vocab_ngram_pos,VBG PRP NNS
+3126,feature_vocab_ngram_pos,VBG PRP VB
+3129,feature_vocab_ngram_pos,VBG PRP VBP
+3147,feature_vocab_ngram_pos,VBG RP CC
+3148,feature_vocab_ngram_pos,VBG RP DT
+3216,feature_vocab_ngram_pos,VBN IN IN
+3228,feature_vocab_ngram_pos,VBN JJ DT
+3263,feature_vocab_ngram_pos,VBN NNS VBD
+3270,feature_vocab_ngram_pos,VBN PRP JJ
+3275,feature_vocab_ngram_pos,VBN PRP TO
+3279,feature_vocab_ngram_pos,VBN PRP VBP
+3280,feature_vocab_ngram_pos,VBN PRP VBZ
+3316,feature_vocab_ngram_pos,VBN VBD DT
+3317,feature_vocab_ngram_pos,VBN VBD JJ
+3319,feature_vocab_ngram_pos,VBN VBD NNS
+3323,feature_vocab_ngram_pos,VBN VBG IN
+3357,feature_vocab_ngram_pos,VBP CD IN
+3398,feature_vocab_ngram_pos,VBP IN VBZ
+3400,feature_vocab_ngram_pos,VBP JJ
+3516,feature_vocab_ngram_pos,VBP RP NNS
+3522,feature_vocab_ngram_pos,VBP RP WRB
+3587,feature_vocab_ngram_pos,VBP VBP
+3595,feature_vocab_ngram_pos,VBP VBP RB
+3596,feature_vocab_ngram_pos,VBP VBP RP
+3611,feature_vocab_ngram_pos,VBP VBZ VB
+3612,feature_vocab_ngram_pos,VBP VBZ VBG
+3666,feature_vocab_ngram_pos,VBZ IN JJR
+3682,feature_vocab_ngram_pos,VBZ JJ TO
+3685,feature_vocab_ngram_pos,VBZ JJ VBG
+3711,feature_vocab_ngram_pos,VBZ NN WP
+3804,feature_vocab_ngram_pos,VBZ VBG RB
+3820,feature_vocab_ngram_pos,VBZ VBN VBN
+3835,feature_vocab_ngram_pos,VBZ WP
+3841,feature_vocab_ngram_pos,VBZ WRB DT
+3948,feature_vocab_ngram_pos,WP RB JJ
+3949,feature_vocab_ngram_pos,WP RB VBD
+3965,feature_vocab_ngram_pos,WP VBD RP
+3966,feature_vocab_ngram_pos,WP VBD TO
+3969,feature_vocab_ngram_pos,WP VBG
+3972,feature_vocab_ngram_pos,WP VBP IN
+3973,feature_vocab_ngram_pos,WP VBP JJ
+3974,feature_vocab_ngram_pos,WP VBP NN
+3986,feature_vocab_ngram_pos,WP VBZ JJ
+4038,feature_vocab_ngram_pos,WRB NN VB
+4088,feature_vocab_ngram_pos,WRB VBP NNS
+4094,feature_vocab_ngram_pos,WRB VBZ IN
+4095,feature_vocab_ngram_pos,WRB VBZ JJ
+4108,feature_vocab_td_other,num_unique_words
+4114,feature_vocab_chase_stats,SPECIALCHAR
+4129,feature_vocab_ngram,accident
+4147,feature_vocab_ngram,ad
+4164,feature_vocab_ngram,afterward
+4170,feature_vocab_ngram,ah bitch
+4198,feature_vocab_ngram,alabama
+4266,feature_vocab_ngram,amp u
+4276,feature_vocab_ngram,android iphon ipad
+4277,feature_vocab_ngram,angel
+4306,feature_vocab_ngram,anthoni
+4324,feature_vocab_ngram,appear
+4385,feature_vocab_ngram,ass got
+4393,feature_vocab_ngram,ass nicca
+4394,feature_vocab_ngram,ass nigga
+4396,feature_vocab_ngram,ass nigga get
+4397,feature_vocab_ngram,ass nigga joe
+4409,feature_vocab_ngram,assum
+4459,feature_vocab_ngram,bacc
+4460,feature_vocab_ngram,back
+4533,feature_vocab_ngram,beaner
+4547,feature_vocab_ngram,becam
+4548,feature_vocab_ngram,becaus
+4556,feature_vocab_ngram,becaus nigga
+4559,feature_vocab_ngram,bed
+4560,feature_vocab_ngram,bee
+4567,feature_vocab_ngram,beg
+4571,feature_vocab_ngram,bein
+4573,feature_vocab_ngram,bell
+4574,feature_vocab_ngram,belli
+4575,feature_vocab_ngram,belong
+4577,feature_vocab_ngram,ben
+4578,feature_vocab_ngram,bench
+4579,feature_vocab_ngram,bend
+4620,feature_vocab_ngram,biggest bitch
+4621,feature_vocab_ngram,biggest faggot
+4622,feature_vocab_ngram,biggest hoe
+4651,feature_vocab_ngram,bit
+4655,feature_vocab_ngram,bitch actin
+4671,feature_vocab_ngram,bitch babi
+4703,feature_vocab_ngram,bitch come
+4707,feature_vocab_ngram,bitch corni
+4717,feature_vocab_ngram,bitch dead
+4720,feature_vocab_ngram,bitch die
+4726,feature_vocab_ngram,bitch dress
+4727,feature_vocab_ngram,bitch drive
+4728,feature_vocab_ngram,bitch dude
+4735,feature_vocab_ngram,bitch everi
+4736,feature_vocab_ngram,bitch everyth
+4772,feature_vocab_ngram,bitch gonna steal
+4773,feature_vocab_ngram,bitch good
+4774,feature_vocab_ngram,bitch got
+4818,feature_vocab_ngram,bitch life
+4893,feature_vocab_ngram,bitch pussi
+4899,feature_vocab_ngram,bitch respect
+4986,feature_vocab_ngram,bitch went
+5000,feature_vocab_ngram,bitch year
+5004,feature_vocab_ngram,bitchin
+5018,feature_vocab_ngram,black women
+5022,feature_vocab_ngram,blah blah
+5033,feature_vocab_ngram,blew high
+5034,feature_vocab_ngram,blind
+5089,feature_vocab_ngram,bound
+5091,feature_vocab_ngram,bout bitch
+5093,feature_vocab_ngram,bout hoe
+5095,feature_vocab_ngram,bout shit
+5106,feature_vocab_ngram,boy pussi
+5129,feature_vocab_ngram,brian
+5146,feature_vocab_ngram,bro lol
+5164,feature_vocab_ngram,browni
+5166,feature_vocab_ngram,bruh lol
+5212,feature_vocab_ngram,c mon
+5213,feature_vocab_ngram,ca
+5240,feature_vocab_ngram,callin
+5276,feature_vocab_ngram,carl
+5324,feature_vocab_ngram,charger
+5325,feature_vocab_ngram,charl
+5388,feature_vocab_ngram,chubbi
+5419,feature_vocab_ngram,close
+5421,feature_vocab_ngram,closet
+5425,feature_vocab_ngram,club
+5427,feature_vocab_ngram,clue left
+5488,feature_vocab_ngram,compet
+5540,feature_vocab_ngram,could
+5545,feature_vocab_ngram,could say
+5556,feature_vocab_ngram,coward
+5557,feature_vocab_ngram,cowboy
+5558,feature_vocab_ngram,crack
+5560,feature_vocab_ngram,cracker
+5561,feature_vocab_ngram,cramp
+5562,feature_vocab_ngram,crap
+5620,feature_vocab_ngram,cure
+5621,feature_vocab_ngram,curl
+5672,feature_vocab_ngram,daniel
+5673,feature_vocab_ngram,danni
+5694,feature_vocab_ngram,dawg
+5708,feature_vocab_ngram,de
+5716,feature_vocab_ngram,debat
+5721,feature_vocab_ngram,deck
+5758,feature_vocab_ngram,describ
+5807,feature_vocab_ngram,dirti bitch
+5827,feature_vocab_ngram,dm
+5835,feature_vocab_ngram,doe
+5838,feature_vocab_ngram,doe thi bitch
+5845,feature_vocab_ngram,doll
+5881,feature_vocab_ngram,downtown
+5935,feature_vocab_ngram,dwight
+5940,feature_vocab_ngram,eagl
+5955,feature_vocab_ngram,eat ass
+5983,feature_vocab_ngram,elect
+5989,feature_vocab_ngram,eli
+5996,feature_vocab_ngram,email
+6049,feature_vocab_ngram,ever want
+6051,feature_vocab_ngram,everi bad
+6063,feature_vocab_ngram,everi week
+6114,feature_vocab_ngram,fact trippin
+6245,feature_vocab_ngram,flag
+6258,feature_vocab_ngram,fli bitch
+6270,feature_vocab_ngram,florida
+6271,feature_vocab_ngram,flow
+6272,feature_vocab_ngram,flower
+6273,feature_vocab_ngram,floyd
+6274,feature_vocab_ngram,flu
+6290,feature_vocab_ngram,food outsid
+6300,feature_vocab_ngram,forev
+6306,feature_vocab_ngram,forreal
+6309,feature_vocab_ngram,foul
+6313,feature_vocab_ngram,fox news
+6409,feature_vocab_ngram,fuck niggah
+6435,feature_vocab_ngram,fuck w
+6473,feature_vocab_ngram,fw
+6501,feature_vocab_ngram,gener
+6518,feature_vocab_ngram,get caught
+6519,feature_vocab_ngram,get cheat
+6576,feature_vocab_ngram,get u
+6582,feature_vocab_ngram,get yo
+6595,feature_vocab_ngram,ghost
+6596,feature_vocab_ngram,giant
+6635,feature_vocab_ngram,give hoe
+6639,feature_vocab_ngram,give two
+6640,feature_vocab_ngram,give u
+6703,feature_vocab_ngram,gone hoe
+6730,feature_vocab_ngram,good weed bad
+6736,feature_vocab_ngram,gook
+6768,feature_vocab_ngram,got mani
+6772,feature_vocab_ngram,got nerv
+6811,feature_vocab_ngram,grab
+6818,feature_vocab_ngram,grand open
+6819,feature_vocab_ngram,grand open top
+6821,feature_vocab_ngram,grandpa
+6823,feature_vocab_ngram,grass
+6831,feature_vocab_ngram,greet
+6848,feature_vocab_ngram,gtfo
+6849,feature_vocab_ngram,gtfoh
+6869,feature_vocab_ngram,ha bitch
+6913,feature_vocab_ngram,hart
+6914,feature_vocab_ngram,harvard
+6968,feature_vocab_ngram,help
+6984,feature_vocab_ngram,hi head
+6990,feature_vocab_ngram,hi shit
+6991,feature_vocab_ngram,hi side
+6993,feature_vocab_ngram,hi wife
+6994,feature_vocab_ngram,hi word
+6995,feature_vocab_ngram,hick
+6996,feature_vocab_ngram,hide
+6998,feature_vocab_ngram,high bitch
+7022,feature_vocab_ngram,hmm
+7024,feature_vocab_ngram,hmu
+7025,feature_vocab_ngram,ho
+7033,feature_vocab_ngram,hoe aint loyal
+7035,feature_vocab_ngram,hoe amp
+7058,feature_vocab_ngram,hoe dont
+7072,feature_vocab_ngram,hoe get slay
+7102,feature_vocab_ngram,hoe like nigga
+7351,feature_vocab_ngram,instagram
+7582,feature_vocab_ngram,knowledg
+7587,feature_vocab_ngram,kush
+7618,feature_vocab_ngram,last time
+7625,feature_vocab_ngram,latest
+7650,feature_vocab_ngram,lebron
+7652,feature_vocab_ngram,lee
+7693,feature_vocab_ngram,life
+7701,feature_vocab_ngram,lighter
+7721,feature_vocab_ngram,like damn
+7817,feature_vocab_ngram,lip
+7859,feature_vocab_ngram,lmfaoooo
+7886,feature_vocab_ngram,lolol
+7891,feature_vocab_ngram,lone hoe
+7909,feature_vocab_ngram,look like trash
+7915,feature_vocab_ngram,lookin ass bitch
+7919,feature_vocab_ngram,lord
+7921,feature_vocab_ngram,lose
+8108,feature_vocab_ngram,mcm
+8117,feature_vocab_ngram,meant
+8118,feature_vocab_ngram,meanwhil
+8144,feature_vocab_ngram,mexico
+8187,feature_vocab_ngram,minor
+8239,feature_vocab_ngram,moon
+8250,feature_vocab_ngram,motherfuck
+8308,feature_vocab_ngram,nappi head
+8321,feature_vocab_ngram,nb
+8327,feature_vocab_ngram,nearli
+8351,feature_vocab_ngram,neg
+8483,feature_vocab_ngram,nigga take
+8517,feature_vocab_ngram,night
+8522,feature_vocab_ngram,nikki
+8533,feature_vocab_ngram,nobodi want
+8608,feature_vocab_ngram,old
+8611,feature_vocab_ngram,old hoe
+8626,feature_vocab_ngram,one bitch
+8631,feature_vocab_ngram,one girl
+8632,feature_vocab_ngram,one good
+8647,feature_vocab_ngram,onli
+8653,feature_vocab_ngram,onli like
+8728,feature_vocab_ngram,pant
+8733,feature_vocab_ngram,papoos
+8734,feature_vocab_ngram,parasit
+8777,feature_vocab_ngram,peopl need
+8937,feature_vocab_ngram,pressur
+9094,feature_vocab_ngram,put ya
+9103,feature_vocab_ngram,queer folk
+9109,feature_vocab_ngram,quit pussi
+9378,feature_vocab_ngram,sampl
+9559,feature_vocab_ngram,shit like thi
+9606,feature_vocab_ngram,shyt
+9835,feature_vocab_ngram,stab
+10273,feature_vocab_ngram,think bitch
+10289,feature_vocab_ngram,third
+10424,feature_vocab_ngram,trash fuck
+10544,feature_vocab_ngram,tyler
+10545,feature_vocab_ngram,type
+10546,feature_vocab_ngram,type bad
+10564,feature_vocab_ngram,u even
+10608,feature_vocab_ngram,u tri
+10711,feature_vocab_ngram,vote
+10750,feature_vocab_ngram,wa thi
+10787,feature_vocab_ngram,wanna go
+10832,feature_vocab_ngram,watch bitch
+10885,feature_vocab_ngram,westsid
+10971,feature_vocab_ngram,wink
+11180,feature_vocab_ngram,youtub
+11181,feature_vocab_ngram,yr
+11182,feature_vocab_ngram,yr old
+11183,feature_vocab_ngram,yu
+11185,feature_vocab_ngram,yung
+11186,feature_vocab_ngram,yup
+11187,feature_vocab_ngram,z
+11188,feature_vocab_ngram,zebra
+11200,feature_vocab_chase_hashtag,#earlychristmas
+11252,feature_vocab_chase_hashtag,#246
+11268,feature_vocab_chase_hashtag,#betawards
+11269,feature_vocab_chase_hashtag,#2013taughtme
+11317,feature_vocab_chase_hashtag,#allahs
+11351,feature_vocab_chase_hashtag,#honestyhour
+11354,feature_vocab_chase_hashtag,#istandwithrand
+11360,feature_vocab_chase_hashtag,#ifwedate
+11361,feature_vocab_chase_hashtag,#inmiddleschool
+11363,feature_vocab_chase_hashtag,#iowa
+11386,feature_vocab_chase_hashtag,#oomef
+11389,feature_vocab_chase_hashtag,#pacernation
+11465,feature_vocab_chase_hashtag,#trashed
+11491,feature_vocab_chase_hashtag,#milesthompson
+11506,feature_vocab_chase_hashtag,#anal
+11508,feature_vocab_chase_hashtag,#putabirdonit
+11557,feature_vocab_chase_hashtag,#top10qbs
+11654,feature_vocab_chase_hashtag,#don
+11852,feature_vocab_chase_hashtag,#disfigure
+11992,feature_vocab_chase_hashtag,#foodie-ish
+12412,feature_vocab_chase_hashtag,#bored
+12413,feature_vocab_chase_hashtag,#299
+12514,feature_vocab_chase_hashtag,#dumbto
+12675,feature_vocab_chase_hashtag,#istandwithisr
+12676,feature_vocab_chase_hashtag,#turnipforwhat
+13149,feature_vocab_chase_hashtag,#longlive
+13151,feature_vocab_chase_hashtag,#detroitgirls
+13152,feature_vocab_chase_hashtag,#lifechanging
