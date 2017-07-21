@@ -3,6 +3,8 @@ import pickle
 
 import datetime
 import random
+
+import gensim
 import pandas
 from sklearn.cross_validation import train_test_split
 import os
@@ -419,3 +421,8 @@ def separate_tdc(in_csv, out_csv, tag):
 # read_preselected_features(True,"/home/zqz/Work/chase/output/models/td-tdf/svml-td-tdf-kb.m.features.csv",
 #                           "/home/zqz/Work/chase/output/models/td-tdf/svml-td-tdf-sfm.m.features.csv",
 #                           "/home/zqz/Work/chase/output/models/td-tdf/svml-td-tdf-rfe.m.features.csv")
+
+
+# model = gensim.models.KeyedVectors.\
+#     load_word2vec_format('/home/zqz/Work/data/GoogleNews-vectors-negative300.bin.gz', binary=True)
+# print("loaded")

@@ -1,0 +1,12 @@
+_c_cskip.o-sfm N-FOLD AVERAGE :
+,precision, recall, f1, support
+0,0.62,0.82,0.71,305
+2,0.96,0.90,0.93,1520
+avg,0.79,0.86,0.82,1825
+
+ HELDOUT :
+,precision, recall, f1, support
+0,0.62,0.91,0.74,109
+2,0.98,0.88,0.93,500
+avg,0.80,0.89,0.83,609
+

@@ -1,0 +1,20 @@
+100,feature_vocab_ngram,ban islam
+103,feature_vocab_ngram,banislam
+276,feature_vocab_ngram,destroyislam
+321,feature_vocab_ngram,evil
+500,feature_vocab_ngram,immedi
+524,feature_vocab_ngram,islam
+748,feature_vocab_ngram,nomuslim
+751,feature_vocab_ngram,norefuge
+851,feature_vocab_ngram,preach
+920,feature_vocab_ngram,refugeesnotwelcom
+2035,feature_vocab_ngram_pos,PRP VBP VB
+2638,feature_vocab_td_other,num_hashtags
+2644,feature_vocab_chase_hashtag,#norefugees
+2648,feature_vocab_chase_hashtag,#refugeesnotwelcome
+2649,feature_vocab_chase_hashtag,#banmuslims
+2659,feature_vocab_chase_hashtag,#banislam
+2675,feature_vocab_chase_hashtag,#destroyislam
+2686,feature_vocab_chase_hashtag,#nomuslims
+2706,feature_vocab_chase_hashtag,#deportallmuslims
+3121,feature_vocab_chase_stats,CAPT

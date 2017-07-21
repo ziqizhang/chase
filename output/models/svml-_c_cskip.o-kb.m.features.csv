@@ -1,0 +1,100 @@
+28,feature_vocab_ngram,allow
+37,feature_vocab_ngram,america
+66,feature_vocab_ngram,attack
+100,feature_vocab_ngram,ban islam
+103,feature_vocab_ngram,banislam
+104,feature_vocab_ngram,banislam banmuslim
+105,feature_vocab_ngram,banislam banmuslim bansharia
+107,feature_vocab_ngram,banislam bansharialaw
+108,feature_vocab_ngram,banislam deportallmuslim
+109,feature_vocab_ngram,banmuslim
+110,feature_vocab_ngram,banmuslim banislam
+111,feature_vocab_ngram,banmuslim bansharia
+112,feature_vocab_ngram,banmuslim bansharialaw
+116,feature_vocab_ngram,bansharia
+117,feature_vocab_ngram,bansharialaw
+144,feature_vocab_ngram,black
+207,feature_vocab_ngram,citizen
+227,feature_vocab_ngram,constitut
+235,feature_vocab_ngram,countri
+246,feature_vocab_ngram,cult
+264,feature_vocab_ngram,deathcult
+270,feature_vocab_ngram,deport
+271,feature_vocab_ngram,deportallmuslim
+272,feature_vocab_ngram,deportilleg
+276,feature_vocab_ngram,destroyislam
+359,feature_vocab_ngram,finsburi
+360,feature_vocab_ngram,finsburi park
+385,feature_vocab_ngram,fuckislam
+393,feature_vocab_ngram,gay
+412,feature_vocab_ngram,globalist
+481,feature_vocab_ngram,http
+491,feature_vocab_ngram,idiot
+500,feature_vocab_ngram,immedi
+524,feature_vocab_ngram,islam
+535,feature_vocab_ngram,islamiscanc
+538,feature_vocab_ngram,islamistheproblem
+598,feature_vocab_ngram,lesbian
+602,feature_vocab_ngram,lesson
+603,feature_vocab_ngram,lesson islam
+644,feature_vocab_ngram,maga
+728,feature_vocab_ngram,muslimban
+748,feature_vocab_ngram,nomuslim
+751,feature_vocab_ngram,norefuge
+757,feature_vocab_ngram,nosharia
+787,feature_vocab_ngram,park
+805,feature_vocab_ngram,peac
+808,feature_vocab_ngram,pedophil
+907,feature_vocab_ngram,rapefuge
+919,feature_vocab_ngram,refuge
+920,feature_vocab_ngram,refugeesnotwelcom
+921,feature_vocab_ngram,refugeeweek
+967,feature_vocab_ngram,safe
+1044,feature_vocab_ngram,stopimportingislam
+1045,feature_vocab_ngram,stopislam
+1097,feature_vocab_ngram,thi
+1114,feature_vocab_ngram,today
+1115,feature_vocab_ngram,today lesson
+1116,feature_vocab_ngram,today lesson islam
+1160,feature_vocab_ngram,usa
+1205,feature_vocab_ngram,want thi
+1217,feature_vocab_ngram,western
+1242,feature_vocab_ngram,world peac
+1394,feature_vocab_ngram_pos,DT VBZ
+1433,feature_vocab_ngram_pos,IN JJ
+1544,feature_vocab_ngram_pos,JJ NN NN
+1666,feature_vocab_ngram_pos,NN IN
+1696,feature_vocab_ngram_pos,NN NN
+1702,feature_vocab_ngram_pos,NN NN NN
+1767,feature_vocab_ngram_pos,NN VBD
+1946,feature_vocab_ngram_pos,PRP
+1970,feature_vocab_ngram_pos,PRP MD
+1986,feature_vocab_ngram_pos,PRP NNS
+1990,feature_vocab_ngram_pos,PRP NNS TO
+2025,feature_vocab_ngram_pos,PRP VBP
+2104,feature_vocab_ngram_pos,RB VB
+2200,feature_vocab_ngram_pos,VB
+2638,feature_vocab_td_other,num_hashtags
+2644,feature_vocab_chase_hashtag,#norefugees
+2645,feature_vocab_chase_hashtag,#deportillegals
+2647,feature_vocab_chase_hashtag,#refugeeweek
+2648,feature_vocab_chase_hashtag,#refugeesnotwelcome
+2649,feature_vocab_chase_hashtag,#banmuslims
+2650,feature_vocab_chase_hashtag,#deport
+2652,feature_vocab_chase_hashtag,#refugeeswelcome
+2659,feature_vocab_chase_hashtag,#banislam
+2661,feature_vocab_chase_hashtag,#stopislam
+2665,feature_vocab_chase_hashtag,#bansharialaw
+2666,feature_vocab_chase_hashtag,#maga
+2675,feature_vocab_chase_hashtag,#destroyislam
+2676,feature_vocab_chase_hashtag,#islamistheproblem
+2678,feature_vocab_chase_hashtag,#stopimportingislam
+2686,feature_vocab_chase_hashtag,#nomuslims
+2689,feature_vocab_chase_hashtag,#nosharia
+2706,feature_vocab_chase_hashtag,#deportallmuslims
+2708,feature_vocab_chase_hashtag,#muslimban
+2712,feature_vocab_chase_hashtag,#bansharia
+2734,feature_vocab_chase_hashtag,#terrorists
+2747,feature_vocab_chase_hashtag,#banmosques
+2833,feature_vocab_chase_hashtag,#fuckislam
+3121,feature_vocab_chase_stats,CAPT

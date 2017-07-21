@@ -14,6 +14,7 @@ from textstat.textstat import *
 
 from ml import nlp
 from util import logger as log
+import sys
 
 NGRAM_FEATURES_VOCAB="feature_vocab_ngram"
 NGRAM_POS_FEATURES_VOCAB="feature_vocab_ngram_pos"
@@ -26,8 +27,11 @@ SKIPGRAM22_FEATURES_VOCAB="feature_vocab_2skip_bigram"
 SKIPGRAM32_FEATURES_VOCAB="feature_vocab_2skip_trigram"
 SKIPGRAM22_POS_FEATURES_VOCAB="feature_vocab_pos_2skip_bigram"
 SKIPGRAM32_POS_FEATURES_VOCAB="feature_vocab_pos_2skip_trigram"
+SKIPGRAM_OTHERING="feature_skipgram_othering"
 
 DNN_WORD_VOCAB="dnn_feature_word_vocab"
+
+skipgram_label={}
 
 #generates tfidf weighted ngram feature as a matrix and the vocabulary
 def get_ngram_tfidf(ngram_vectorizer: TfidfVectorizer, tweets, out_folder, flag):
@@ -171,6 +175,48 @@ def get_specialpunct(tweets, cleaned_tweets,out_folder):
     for t in cleaned_tweets:
         specialpunc_feature_matrix.append(len(re.findall('\!|\?', t)))
     return specialpunc_feature_matrix
+
+
+def get_othering_from_skipgram(tweet_skipgram_matrix, skipgram_vocab):
+    features=[]
+    inv_map = {v: k for k, v in skipgram_vocab.items()}
+    for tweet in tweet_skipgram_matrix:
+        feat=[]
+        found=False
+        for i in range(0, len(tweet)):
+            if tweet[i]!=0:
+                l = label_skipgram(inv_map[i])
+                if l>0:
+                    feat.append(1)
+                    found=True
+                    break
+        if not found:
+            feat.append(0)
+        features.append(feat)
+    return features, [SKIPGRAM_OTHERING]
+
+
+def label_skipgram(words):
+    if words in skipgram_label:
+        return skipgram_label[words]
+    occurrence_we=sys.maxsize
+    for we in ["we","us","our","ourselves","ours"]:
+        if we in words:
+            index=words.index(we)
+            if index<occurrence_we:
+                occurrence_we=index
+    occurrence_they=sys.maxsize
+    for them in ["they","them","their","theirs","themselves"]:
+        if them in words:
+            index=words.index(them)
+            if index<occurrence_they:
+                occurrence_they=index
+    label=0
+    if occurrence_we<sys.maxsize and occurrence_they<sys.maxsize and \
+                            abs(occurrence_we-occurrence_they)>1:
+        label= 1
+    skipgram_label[words]=label
+    return label
 
 
 #todo: this should encode 'we vs them' patterns in tweets but this is the most complicated..

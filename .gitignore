@@ -11,4 +11,4 @@ output/*.pkl
 *.pyc
 output/fs/*
 logs/*
-
+job_iceberg*

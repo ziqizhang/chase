@@ -70,8 +70,8 @@ def create_model(max_index=100):
     model = Sequential()
     model.add(Embedding(input_dim=max_index, output_dim=WORD_EMBEDDING_DIM_OUTPUT,
                         input_length=WORD_EMBEDDING_DIM_INPUT))
-    model.add(LSTM(100, activation='tanh'))
-    model.add(Dense(1, activation='sigmoid'))
+    model.add(LSTM(100, activation='tanh', dropout=0.3))
+    model.add(Dense(1, activation='softmax'))
     model.compile(loss='binary_crossentropy', optimizer='adam', metrics=['accuracy'])
 
     # model = Sequential()
