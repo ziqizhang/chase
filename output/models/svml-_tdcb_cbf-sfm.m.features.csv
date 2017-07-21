@@ -1,0 +1,126 @@
+24,feature_vocab_ngram,agre
+84,feature_vocab_ngram,ass nigga
+88,feature_vocab_ngram,attack
+131,feature_vocab_ngram,ban
+133,feature_vocab_ngram,ban islam
+137,feature_vocab_ngram,banislam
+143,feature_vocab_ngram,banmuslim
+165,feature_vocab_ngram,beaner
+190,feature_vocab_ngram,bitch
+228,feature_vocab_ngram,black
+281,feature_vocab_ngram,burn
+300,feature_vocab_ngram,cancelirand
+301,feature_vocab_ngram,cancelirand canceldaca
+319,feature_vocab_ngram,celebr
+334,feature_vocab_ngram,children
+366,feature_vocab_ngram,complain
+374,feature_vocab_ngram,constitut
+394,feature_vocab_ngram,cracker
+408,feature_vocab_ngram,cult
+410,feature_vocab_ngram,cunt
+447,feature_vocab_ngram,demand
+453,feature_vocab_ngram,deport
+455,feature_vocab_ngram,deportilleg
+460,feature_vocab_ngram,destroyislam
+544,feature_vocab_ngram,evil
+565,feature_vocab_ngram,fag
+566,feature_vocab_ngram,faggot
+639,feature_vocab_ngram,fuck
+647,feature_vocab_ngram,fuckislam
+661,feature_vocab_ngram,gay
+694,feature_vocab_ngram,globalist
+781,feature_vocab_ngram,hoe
+794,feature_vocab_ngram,homophob
+810,feature_vocab_ngram,hungari
+821,feature_vocab_ngram,idiot
+833,feature_vocab_ngram,immedi
+865,feature_vocab_ngram,islam
+876,feature_vocab_ngram,islamiscanc
+944,feature_vocab_ngram,lame
+970,feature_vocab_ngram,lesbian
+974,feature_vocab_ngram,lesson
+992,feature_vocab_ngram,like fuck
+1078,feature_vocab_ngram,mental health
+1087,feature_vocab_ngram,mexicopay
+1140,feature_vocab_ngram,muslim
+1183,feature_vocab_ngram,nicca
+1185,feature_vocab_ngram,nig
+1186,feature_vocab_ngram,nigga
+1190,feature_vocab_ngram,niggah
+1192,feature_vocab_ngram,nigger
+1193,feature_vocab_ngram,nigguh
+1202,feature_vocab_ngram,nomuslim
+1206,feature_vocab_ngram,norefuge
+1217,feature_vocab_ngram,nothin
+1282,feature_vocab_ngram,peac
+1345,feature_vocab_ngram,preach
+1372,feature_vocab_ngram,prosecutehillari mexicopay
+1383,feature_vocab_ngram,pussi
+1403,feature_vocab_ngram,racist
+1446,feature_vocab_ngram,refuge
+1447,feature_vocab_ngram,refugeesnotwelcom
+1472,feature_vocab_ngram,retard
+1510,feature_vocab_ngram,safe
+1526,feature_vocab_ngram,schoolchoic
+1569,feature_vocab_ngram,shut
+1571,feature_vocab_ngram,shut fuck
+1638,feature_vocab_ngram,stayoutofsyria
+1639,feature_vocab_ngram,stayoutofsyria banmuslim
+1648,feature_vocab_ngram,stopislam
+1718,feature_vocab_ngram,terror
+1793,feature_vocab_ngram,tranni
+1824,feature_vocab_ngram,twin
+1850,feature_vocab_ngram,usa
+1852,feature_vocab_ngram,usual
+1944,feature_vocab_ngram,white trash
+1959,feature_vocab_ngram,wonder
+1968,feature_vocab_ngram,wors
+2105,feature_vocab_ngram_pos,CD JJR NN
+2188,feature_vocab_ngram_pos,DT PRP VBP
+2457,feature_vocab_ngram_pos,JJ RB JJ
+2586,feature_vocab_ngram_pos,NN DT VBN
+2614,feature_vocab_ngram_pos,NN JJ RB
+2765,feature_vocab_ngram_pos,NN VBN RB
+2781,feature_vocab_ngram_pos,NN VBP VBZ
+2785,feature_vocab_ngram_pos,NN VBZ DT
+3113,feature_vocab_ngram_pos,PRP VBP RB
+3360,feature_vocab_ngram_pos,TO VB WP
+3477,feature_vocab_ngram_pos,VB VBG PRP
+3482,feature_vocab_ngram_pos,VB VBN IN
+3629,feature_vocab_ngram_pos,VBG PRP VB
+3700,feature_vocab_ngram_pos,VBN VBP
+3837,feature_vocab_ngram_pos,VBP VBP IN
+3857,feature_vocab_ngram_pos,VBZ DT JJS
+3892,feature_vocab_ngram_pos,VBZ PRP DT
+4051,feature_vocab_td_other,num_syllables
+4053,feature_vocab_td_other,num_chars_total
+4058,feature_vocab_td_other,num_hashtags
+4064,feature_vocab_chase_hashtag,#norefugees
+4065,feature_vocab_chase_hashtag,#deportillegals
+4068,feature_vocab_chase_hashtag,#refugeesnotwelcome
+4069,feature_vocab_chase_hashtag,#banmuslims
+4079,feature_vocab_chase_hashtag,#banislam
+4081,feature_vocab_chase_hashtag,#stopislam
+4095,feature_vocab_chase_hashtag,#destroyislam
+4106,feature_vocab_chase_hashtag,#nomuslims
+4121,feature_vocab_chase_hashtag,#france
+4125,feature_vocab_chase_hashtag,#drivethemout
+4126,feature_vocab_chase_hashtag,#deportallmuslims
+4162,feature_vocab_chase_hashtag,#nojews
+4169,feature_vocab_chase_hashtag,#prosecutehillary
+4170,feature_vocab_chase_hashtag,#mexicopays
+4172,feature_vocab_chase_hashtag,#stayoutofsyria
+4253,feature_vocab_chase_hashtag,#fuckislam
+4295,feature_vocab_chase_hashtag,#israel
+4375,feature_vocab_chase_hashtag,#wahhabi
+4696,feature_vocab_chase_hashtag,#ferguson
+4705,feature_vocab_chase_hashtag,#hypocrite
+4707,feature_vocab_chase_hashtag,#193
+4733,feature_vocab_chase_hashtag,#stupid
+4734,feature_vocab_chase_hashtag,#cousintoucher
+4735,feature_vocab_chase_hashtag,#honkie
+4736,feature_vocab_chase_hashtag,#whitetrash
+4737,feature_vocab_chase_hashtag,#blonde
+4793,feature_vocab_chase_hashtag,#stupidbitches
+4835,feature_vocab_chase_stats,SPECIALCHAR
+4836,feature_vocab_chase_stats,CAPT

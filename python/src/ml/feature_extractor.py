@@ -321,7 +321,7 @@ def get_chase_stats_features(tweets, cleaned_tweets,out_folder):
     feats=[]
     count=0
     #hashtags = get_hashtags_in_tweets(tweets, out_folder)
-    mispellings = get_misspellings(tweets, cleaned_tweets, out_folder)
+    #mispellings = get_misspellings(tweets, cleaned_tweets, out_folder)
     specialpunc = get_specialpunct(tweets, cleaned_tweets,out_folder)
     specialchars = get_specialchars(tweets, cleaned_tweets,out_folder)
     capitalization = get_capitalization(tweets,cleaned_tweets,out_folder)
@@ -330,10 +330,10 @@ def get_chase_stats_features(tweets, cleaned_tweets,out_folder):
         count+=1
         # if count%100==0:
         #     print("\t {}".format(count))
-    feat_names = ["MISSPELLING", "SPECIALPUNC","SPECIALCHAR", "CAPT"]
+    feat_names = ["SPECIALPUNC","SPECIALCHAR", "CAPT"]
     pickle.dump(feat_names,
                 open(out_folder+"/"+TWEET_TD_OTHER_FEATURES_VOCAB+".pk", "wb" ))
-    feature_matrix=np.column_stack((mispellings, specialpunc, specialchars,
+    feature_matrix=np.column_stack((specialpunc, specialchars,
                             capitalization))
 
 

@@ -32,7 +32,7 @@ def preprocess(text_string):
     return parsed_text
 
 
-def preprocess_clean(text_string, remove_hashtags, remove_special_chars):
+def preprocess_clean(text_string, remove_hashtags=True, remove_special_chars=True):
     # Clean a string down to just text
 
     parsed_text = preprocess(text_string)
@@ -64,5 +64,5 @@ def strip_hashtags(text):
             for word in splitter.split(cleantag.lower(),'en_US'):
                 hashtagSplit = hashtagSplit + word + " "
             text = re.sub(tag,hashtagSplit,text)
-    print(text)
+    #print(text)
     return text
