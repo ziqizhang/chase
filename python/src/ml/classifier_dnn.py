@@ -4,6 +4,10 @@ import os
 import sys
 
 import functools
+from random import randint
+
+import gensim
+import numpy
 import pandas as pd
 import pickle
 from keras.layers import Dense, Embedding, Conv1D, MaxPooling1D, LSTM, Dropout
@@ -25,10 +29,10 @@ LOG_DIR = os.getcwd() + "/logs"
 logging.basicConfig(filename=LOG_DIR + '/dnn-log.txt', level=logging.INFO, filemode='w')
 
 
-def get_dnn_wordembedding_input(tweets, out_folder):
+def get_word_vocab(tweets, out_folder, normalize):
     word_vectorizer = CountVectorizer(
         # vectorizer = sklearn.feature_extraction.text.CountVectorizer(
-        tokenizer=nlp.tokenize,
+        tokenizer=functools.partial(nlp.tokenize, stem_or_lemma=normalize),
         preprocessor=tp.preprocess,
         ngram_range=(1, 1),
         stop_words=nlp.stopwords,  # We do better when we keep stopwords
@@ -56,7 +60,7 @@ def get_dnn_wordembedding_input(tweets, out_folder):
 
 
 
-def create_model(max_index=100):
+def create_model(max_index=100, wemb_matrix=None):
     # create model
     model = Sequential()
     # model.add(Embedding(input_dim=max_index, output_dim=WORD_EMBEDDING_DIM_OUTPUT,
@@ -67,9 +71,20 @@ def create_model(max_index=100):
     # # Compile model
     # model.compile(loss='binary_crossentropy', optimizer='adam', metrics=['accuracy'])
 
+
+    '''A model that uses word embeddings'''
+    if wemb_matrix is None:
+        embedding_layer=Embedding(input_dim=max_index, output_dim=WORD_EMBEDDING_DIM_OUTPUT,
+                        input_length=WORD_EMBEDDING_DIM_INPUT)
+    else:
+        # load pre-trained word embeddings into an Embedding layer
+        # note that we set trainable = False so as to keep the embeddings fixed
+        embedding_layer = Embedding(input_dim=max_index, output_dim=len(wemb_matrix[0]),
+                            weights=[wemb_matrix],
+                            input_length=WORD_EMBEDDING_DIM_INPUT,
+                            trainable=False)
     model = Sequential()
-    model.add(Embedding(input_dim=max_index, output_dim=WORD_EMBEDDING_DIM_OUTPUT,
-                        input_length=WORD_EMBEDDING_DIM_INPUT))
+    model.add(embedding_layer)
     model.add(Dropout(0.2))
     model.add(LSTM(100))
     model.add(Dropout(0.2))
@@ -89,8 +104,34 @@ def create_model(max_index=100):
     return model
 
 
+
+def pretrained_embedding(word_vocab:dict, embedding_model_file, expected_emb_dim, randomize_strategy):
+    logger.info("loading pre-trained embedding model... {}".format(datetime.datetime.now()))
+    model=gensim.models.KeyedVectors.\
+        load_word2vec_format(embedding_model_file, binary=True)
+    logger.info("loading complete. {}".format(datetime.datetime.now()))
+
+    matrix = []
+    for word, i in word_vocab.items():
+        vec=model.wv[word]
+        if vec is None:
+            if randomize_strategy==0: #set to all zeros
+                vec=numpy.zeros(expected_emb_dim)
+            elif randomize_strategy==1: #randomly set values following a continuous uniform distribution
+                vec=numpy.random.random_sample(expected_emb_dim)
+            else:#randomly take a vector from the model
+                max = len(model.wv.vocab.keys())-1
+                index = randint(0,max)
+                vec=model.index2word[index]
+        matrix.append(vec)
+
+    model=None
+    return matrix
+
+
+
 def learn_dnn(cpus, nfold, task, load_model, X_train, y_train, X_test, y_test,
-              identifier, outfolder, embedding_layer_max_index,
+              identifier, outfolder, embedding_layer_max_index, pretrained_embedding_matrix=None,
               instance_data_source_tags=None, accepted_ds_tags: list = None):
     logger.info("== Perform ANN ...")
     subfolder = outfolder + "/models"
@@ -99,7 +140,8 @@ def learn_dnn(cpus, nfold, task, load_model, X_train, y_train, X_test, y_test,
     except:
         os.mkdir(subfolder)
 
-    create_model_with_args = functools.partial(create_model, max_index=embedding_layer_max_index)
+    create_model_with_args = \
+        functools.partial(create_model, max_index=embedding_layer_max_index, wemb_matrix=pretrained_embedding_matrix)
     model = KerasClassifier(build_fn=create_model_with_args, verbose=0)
     # define the grid search parameters
     batch_size = [50, 100]
@@ -144,11 +186,15 @@ def learn_dnn(cpus, nfold, task, load_model, X_train, y_train, X_test, y_test,
 
 
 
-def gridsearch(data_file, sys_out, output_scores_per_ds):
+def gridsearch(data_file, sys_out, output_scores_per_ds, word_normalize, pretrained_embedding_file=None, expected_embedding_dim=None):
     raw_data = pd.read_csv(data_file, sep=',', encoding="utf-8")
-    M = get_dnn_wordembedding_input(raw_data.tweet, sys_out)
+    M = get_word_vocab(raw_data.tweet, sys_out, word_normalize)
     # M=self.feature_scale(M)
     M0 = M[0]
+
+    pretrained_word_matrix=None
+    if pretrained_embedding_file is not None:
+        pretrained_word_matrix=pretrained_embedding(M[1], pretrained_embedding_file, expected_embedding_dim)
 
     # split the dataset into two parts, 0.75 for train and 0.25 for testing
     X_train_data, X_test_data, y_train, y_test = \
@@ -169,8 +215,24 @@ def gridsearch(data_file, sys_out, output_scores_per_ds):
 
     learn_dnn(-1, 5, 'td-tdf', False,
               X_train_data,
-              y_train, X_test_data, y_test, "dense", sys_out,
+              y_train, X_test_data, y_test, "dense", sys_out,pretrained_word_matrix,
               len(M[1]), instance_data_source_column, accepted_ds_tags)
 
+
+
+
+
+##############################################
+##############################################
+pretrained_embedding_file=None
+expected_embedding_dim=None
+
+if len(sys.argv)>4:
+    pretrained_embedding_file=sys.argv[5]
+    expected_embedding_dim=sys.argv[6]
+
 gridsearch(sys.argv[1],
-           sys.argv[2], sys.argv[3])
+           sys.argv[2], sys.argv[3],
+           int(sys.argv[4]), #0-stem words; 1-lemmatize words; other-do nothing
+           pretrained_embedding_file,
+           expected_embedding_dim) #0-learn

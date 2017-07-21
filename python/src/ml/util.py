@@ -187,7 +187,7 @@ def output_data_splits(data_file, out_folder):
     raw_data = pd.read_csv(data_file, sep=',', encoding="utf-8")
     X_train_data, X_test_data, y_train, y_test = \
         train_test_split(raw_data, raw_data['class'],
-                         test_size=0.2,
+                         test_size=0.5,
                          random_state=42)
     X_train_data.to_csv(out_folder + "/split_train.csv", sep=',', encoding='utf-8')
     X_test_data.to_csv(out_folder + "/split_test.csv", sep=',', encoding='utf-8')
@@ -427,3 +427,6 @@ def separate_tdc(in_csv, out_csv, tag):
 # model = gensim.models.KeyedVectors.\
 #     load_word2vec_format('/home/zqz/Work/data/GoogleNews-vectors-negative300.bin.gz', binary=True)
 # print("loaded")
+
+output_data_splits("/home/zqz/Work/chase/data/ml/tdc-a/labeled_data_all.csv"
+                   ,"/home/zqz/Work/chase/data/ml/tdc-a")
