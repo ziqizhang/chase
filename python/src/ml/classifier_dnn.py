@@ -22,7 +22,7 @@ from ml import util
 from ml import nlp
 from ml import text_preprocess as tp
 
-WORD_EMBEDDING_DIM_INPUT = 100
+MAX_SEQUENCE_LENGTH = 100
 WORD_EMBEDDING_DIM_OUTPUT = 50
 logger = logging.getLogger(__name__)
 LOG_DIR = os.getcwd() + "/logs"
@@ -75,14 +75,14 @@ def create_model(max_index=100, wemb_matrix=None):
     '''A model that uses word embeddings'''
     if wemb_matrix is None:
         embedding_layer=Embedding(input_dim=max_index, output_dim=WORD_EMBEDDING_DIM_OUTPUT,
-                        input_length=WORD_EMBEDDING_DIM_INPUT)
+                                  input_length=MAX_SEQUENCE_LENGTH)
     else:
         # load pre-trained word embeddings into an Embedding layer
         # note that we set trainable = False so as to keep the embeddings fixed
         embedding_layer = Embedding(input_dim=max_index, output_dim=len(wemb_matrix[0]),
-                            weights=[wemb_matrix],
-                            input_length=WORD_EMBEDDING_DIM_INPUT,
-                            trainable=False)
+                                    weights=[wemb_matrix],
+                                    input_length=MAX_SEQUENCE_LENGTH,
+                                    trainable=False)
     model = Sequential()
     model.add(embedding_layer)
     model.add(Dropout(0.2))
@@ -111,21 +111,29 @@ def pretrained_embedding(word_vocab:dict, embedding_model_file, expected_emb_dim
         load_word2vec_format(embedding_model_file, binary=True)
     logger.info("loading complete. {}".format(datetime.datetime.now()))
 
-    matrix = []
+    matrix = numpy.zeros((len(word_vocab), expected_emb_dim))
+    count=0
+    random=0
     for word, i in word_vocab.items():
-        vec=model.wv[word]
-        if vec is None:
-            if randomize_strategy==0: #set to all zeros
-                vec=numpy.zeros(expected_emb_dim)
-            elif randomize_strategy==1: #randomly set values following a continuous uniform distribution
+        if word in model.wv.vocab.keys():
+            vec=model.wv[word]
+            matrix[i]=vec
+        else:
+            random+=1
+            if randomize_strategy==1: #randomly set values following a continuous uniform distribution
                 vec=numpy.random.random_sample(expected_emb_dim)
-            else:#randomly take a vector from the model
+                matrix[i]=vec
+            elif randomize_strategy==2:#randomly take a vector from the model
                 max = len(model.wv.vocab.keys())-1
                 index = randint(0,max)
-                vec=model.index2word[index]
-        matrix.append(vec)
-
+                word=model.index2word[index]
+                vec=model.wv[word]
+                matrix[i]=vec
+        count+=1
+        if count%100==0:
+            print(count)
     model=None
+    print("randomized={}".format(random))
     return matrix
 
 
@@ -141,7 +149,8 @@ def learn_dnn(cpus, nfold, task, load_model, X_train, y_train, X_test, y_test,
         os.mkdir(subfolder)
 
     create_model_with_args = \
-        functools.partial(create_model, max_index=embedding_layer_max_index, wemb_matrix=pretrained_embedding_matrix)
+        functools.partial(create_model, max_index=embedding_layer_max_index,
+                          wemb_matrix=pretrained_embedding_matrix)
     model = KerasClassifier(build_fn=create_model_with_args, verbose=0)
     # define the grid search parameters
     batch_size = [50, 100]
@@ -186,7 +195,9 @@ def learn_dnn(cpus, nfold, task, load_model, X_train, y_train, X_test, y_test,
 
 
 
-def gridsearch(data_file, sys_out, output_scores_per_ds, word_normalize, pretrained_embedding_file=None, expected_embedding_dim=None):
+def gridsearch(data_file, sys_out, output_scores_per_ds, word_normalize,
+               randomize_strategy,
+               pretrained_embedding_file=None, expected_embedding_dim=None):
     raw_data = pd.read_csv(data_file, sep=',', encoding="utf-8")
     M = get_word_vocab(raw_data.tweet, sys_out, word_normalize)
     # M=self.feature_scale(M)
@@ -194,7 +205,8 @@ def gridsearch(data_file, sys_out, output_scores_per_ds, word_normalize, pretrai
 
     pretrained_word_matrix=None
     if pretrained_embedding_file is not None:
-        pretrained_word_matrix=pretrained_embedding(M[1], pretrained_embedding_file, expected_embedding_dim)
+        pretrained_word_matrix=pretrained_embedding(M[1], pretrained_embedding_file, expected_embedding_dim,
+                                                    randomize_strategy)
 
     # split the dataset into two parts, 0.75 for train and 0.25 for testing
     X_train_data, X_test_data, y_train, y_test = \
@@ -204,8 +216,8 @@ def gridsearch(data_file, sys_out, output_scores_per_ds, word_normalize, pretrai
     y_train = y_train.astype(int)
     y_test = y_test.astype(int)
 
-    X_train_data = sequence.pad_sequences(X_train_data, maxlen=WORD_EMBEDDING_DIM_INPUT)
-    X_test_data = sequence.pad_sequences(X_test_data, maxlen=WORD_EMBEDDING_DIM_INPUT)
+    X_train_data = sequence.pad_sequences(X_train_data, maxlen=MAX_SEQUENCE_LENGTH)
+    X_test_data = sequence.pad_sequences(X_test_data, maxlen=MAX_SEQUENCE_LENGTH)
 
     instance_data_source_column = None
     accepted_ds_tags = None
@@ -215,8 +227,9 @@ def gridsearch(data_file, sys_out, output_scores_per_ds, word_normalize, pretrai
 
     learn_dnn(-1, 5, 'td-tdf', False,
               X_train_data,
-              y_train, X_test_data, y_test, "dense", sys_out,pretrained_word_matrix,
-              len(M[1]), instance_data_source_column, accepted_ds_tags)
+              y_train, X_test_data, y_test, "dense", sys_out,
+              len(M[1]), pretrained_word_matrix,
+              instance_data_source_column, accepted_ds_tags)
 
 
 
@@ -225,14 +238,18 @@ def gridsearch(data_file, sys_out, output_scores_per_ds, word_normalize, pretrai
 ##############################################
 ##############################################
 pretrained_embedding_file=None
-expected_embedding_dim=None
+expected_embedding_dim=-1
 
-if len(sys.argv)>4:
-    pretrained_embedding_file=sys.argv[5]
-    expected_embedding_dim=sys.argv[6]
+if len(sys.argv)>6:
+    pretrained_embedding_file=sys.argv[6]
+    expected_embedding_dim=sys.argv[7]
 
 gridsearch(sys.argv[1],
            sys.argv[2], sys.argv[3],
            int(sys.argv[4]), #0-stem words; 1-lemmatize words; other-do nothing
+           int(sys.argv[5]), #0-oov has 0 vector; 1-oov is randomised ; 2-oov uses a random vector from the model
            pretrained_embedding_file,
-           expected_embedding_dim) #0-learn
+           int(expected_embedding_dim)) #0-learn
+
+# /home/zqz/Work/data/GoogleNews-vectors-negative300.bin.gz
+# 300
