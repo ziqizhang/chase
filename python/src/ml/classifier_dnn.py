@@ -4,10 +4,16 @@ import os
 import sys
 
 import functools
-import random as rand
-
 import gensim
 import numpy
+import numpy as np
+import random as rn
+import tensorflow as tf
+tf.set_random_seed(42)
+os.environ['PYTHONHASHSEED'] = '0'
+np.random.seed(42)
+rn.seed(42)
+
 import pandas as pd
 import pickle
 from keras.layers import Dense, Embedding, Conv1D, MaxPooling1D, LSTM, Dropout
@@ -22,8 +28,8 @@ from ml import util
 from ml import nlp
 from ml import text_preprocess as tp
 
-MAX_SEQUENCE_LENGTH = 100
-WORD_EMBEDDING_DIM_OUTPUT = 50
+MAX_SEQUENCE_LENGTH = 100 #maximum # of words allowed in a tweet
+WORD_EMBEDDING_DIM_OUTPUT = 300
 logger = logging.getLogger(__name__)
 LOG_DIR = os.getcwd() + "/logs"
 logging.basicConfig(filename=LOG_DIR + '/dnn-log.txt', level=logging.INFO, filemode='w')
@@ -113,8 +119,6 @@ def pretrained_embedding(word_vocab: dict, embedding_model, expected_emb_dim, ra
     matrix = numpy.zeros((len(word_vocab), expected_emb_dim))
     count = 0
     random = 0
-    rand.seed(42)
-    numpy.random.seed(42)
     for word, i in word_vocab.items():
         if word in model.wv.vocab.keys():
             vec = model.wv[word]
@@ -126,7 +130,7 @@ def pretrained_embedding(word_vocab: dict, embedding_model, expected_emb_dim, ra
                 matrix[i] = vec
             elif randomize_strategy == 2:  # randomly take a vector from the model
                 max = len(model.wv.vocab.keys()) - 1
-                index = rand.randint(0, max)
+                index = rn.randint(0, max)
                 word = model.index2word[index]
                 vec = model.wv[word]
                 matrix[i] = vec
@@ -138,7 +142,7 @@ def pretrained_embedding(word_vocab: dict, embedding_model, expected_emb_dim, ra
     return matrix
 
 
-def learn_dnn(label, cpus, nfold, task, load_model, X_train, y_train, X_test, y_test,
+def learn_dnn(label, cpus, nfold, task, X_train, y_train, X_test, y_test,
               identifier, outfolder, embedding_layer_max_index, model_=0, pretrained_embedding_matrix=None,
               instance_data_source_tags=None, accepted_ds_tags: list = None):
     print("== Perform ANN ...")
@@ -155,31 +159,21 @@ def learn_dnn(label, cpus, nfold, task, load_model, X_train, y_train, X_test, y_
     model = KerasClassifier(build_fn=create_model_with_args, verbose=0)
     # define the grid search parameters
     batch_size = [100]
-    epochs = [5]
+    epochs = [10]
     param_grid = dict(batch_size=batch_size, nb_epoch=epochs)
 
     _classifier = GridSearchCV(estimator=model, param_grid=param_grid, n_jobs=cpus,
                                cv=nfold)
 
-    cv_score_ann = 0
-    best_param_ann = []
-    ann_model_file = os.path.join(subfolder, "ann-%s.m" % task)
-    nfold_predictions = None
+    print("fitting model...")
+    _classifier.fit(X_train, y_train)
+    nfold_predictions = cross_val_predict(_classifier.best_estimator_, X_train, y_train, cv=nfold)
 
-    if load_model:
-        logger.info("model is loaded from [%s]" % str(ann_model_file))
-        best_estimator = util.load_classifier_model(ann_model_file)
-    else:
-        print("fitting model...")
-        _classifier.fit(X_train, y_train)
-        nfold_predictions = cross_val_predict(_classifier.best_estimator_, X_train, y_train, cv=nfold)
+    best_param_ann = _classifier.best_params_
+    logger.info("+ best params for {} model are:{}".format(model, best_param_ann))
+    best_estimator = _classifier.best_estimator_
 
-        cv_score_ann = _classifier.best_score_
-        best_param_ann = _classifier.best_params_
-        logger.info("+ best params for {} model are:{}".format(model, best_param_ann))
-        best_estimator = _classifier.best_estimator_
-
-        # util.save_classifier_model(best_estimator, ann_model_file)
+    # util.save_classifier_model(best_estimator, ann_model_file)
 
     logger.info("testing on development set ....")
     if (X_test is not None):
@@ -196,7 +190,7 @@ def learn_dnn(label, cpus, nfold, task, load_model, X_train, y_train, X_test, y_
         #                       time_ann_train, y_test)
 
 
-def gridsearch(label, data_file, sys_out, output_scores_per_ds, word_normalize,
+def gridsearch(label, data_label, data_file, sys_out, output_scores_per_ds, word_normalize,
                randomize_strategy, model_=0,
                pretrained_embedding_model=None, expected_embedding_dim=None):
     raw_data = pd.read_csv(data_file, sep=',', encoding="utf-8")
@@ -226,7 +220,7 @@ def gridsearch(label, data_file, sys_out, output_scores_per_ds, word_normalize,
         instance_data_source_column = pd.Series(raw_data.ds)
         accepted_ds_tags = ["c", "td"]
 
-    learn_dnn(label, -1, 5, 'td-tdf', False,
+    learn_dnn(label, -1, 5, data_label,
               X_train_data,
               y_train, X_test_data, y_test, "dense", sys_out,
               len(M[1]), model_, pretrained_word_matrix,
@@ -234,16 +228,15 @@ def gridsearch(label, data_file, sys_out, output_scores_per_ds, word_normalize,
     print("complete {}".format(datetime.datetime.now()))
 
 
-
 ##############################################
 ##############################################
-def create_settings(indata, outdir, print_result_per_ds,
+def create_settings(indata, outdir, datalabel, print_result_per_ds,
                     pretrained_embedding_file=None,
                     expected_embedding_dim=-1):
     settings = []
-    model=None
+    model = None
     if pretrained_embedding_file is not None:
-        model=gensim.models.KeyedVectors. \
+        model = gensim.models.KeyedVectors. \
             load_word2vec_format(pretrained_embedding_file, binary=True)
 
     # params = ['lstm_lemma_oov=0_', indata, outdir, print_result_per_ds,
@@ -266,8 +259,8 @@ def create_settings(indata, outdir, print_result_per_ds,
     #           1, 1, model, expected_embedding_dim, 1]
     # settings.append(params)
 
-    params = ['conv_lemma_oov=randemb_', indata, outdir, print_result_per_ds,
-              1, 2, model, expected_embedding_dim, 1]
+    params = ['conv_lemma_oov=randemb_', datalabel, indata, outdir, print_result_per_ds,
+              0, 2, model, expected_embedding_dim, 0]
     settings.append(params)
 
     return settings
@@ -277,30 +270,32 @@ pretrained_embedding_file = None
 expected_embedding_dim = -1
 model_option = 0
 
-if len(sys.argv) > 4:
-    pretrained_embedding_file = sys.argv[4]
-    expected_embedding_dim = sys.argv[5]
+if len(sys.argv) > 5:
+    pretrained_embedding_file = sys.argv[5]
+    expected_embedding_dim = sys.argv[6]
 
-    settings = create_settings(sys.argv[1],  # in data
-                               sys.argv[2],  # output)
-                               sys.argv[3],  # print results per ds
-                               pretrained_embedding_file,
-                               int(expected_embedding_dim))
+settings = create_settings(sys.argv[1],  # in data
+                           sys.argv[2],  # output)
+                           sys.argv[3],  # data label
+                           sys.argv[4],  # print results per ds
+                           pretrained_embedding_file,
+                           int(expected_embedding_dim))
 
-    print("total settings = {}, time = {}".format(len(settings), datetime.datetime.now()))
+print("total settings = {}, time = {}".format(len(settings), datetime.datetime.now()))
 
-    for set in settings:
-        print("setting = {}, time = {}".format(str(set), datetime.datetime.now()))
-        gridsearch(set[0],  # label for output files
-                   set[1],  # in data
-                   set[2],  # output
-                   set[3],  # print results per ds
-                   set[4],  # 0-stem words; 1-lemmatize words; other-do nothing
-                   set[5],  # 0-oov has 0 vector; 1-oov is randomised ; 2-oov uses a random vector from the model
-                   set[8],
-                   set[6],  # pretrained model, if any
-                   set[7]  # pretrained embedding dim
-                   )  # which dnn model to use
+for set in settings:
+    print("setting = {}, time = {}".format(str(set), datetime.datetime.now()))
+    gridsearch(set[0],  # label for output files
+               set[1],  # data label
+               set[2],  # in data
+               set[3],  # output
+               set[4],  # print results per ds
+               set[5],  # 0-stem words; 1-lemmatize words; other-do nothing
+               set[6],  # 0-oov has 0 vector; 1-oov is randomised ; 2-oov uses a random vector from the model
+               set[9],  # which dnn model to use
+               set[7],  # pretrained model, if any
+               set[8]  # pretrained embedding dim
+               )
 
 # /home/zqz/Work/data/GoogleNews-vectors-negative300.bin.gz
 # 300

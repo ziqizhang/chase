@@ -1,1 +1,18 @@
-INFO:gensim.models.keyedvectors:loading projection weights from /home/zqz/Work/data/GoogleNews-vectors-negative300.bin.gz
+INFO:__main__:	generating word vectors, 2017-07-23 23:38:04.232612
+INFO:__main__:		 complete, dim=(2677, 733), 2017-07-23 23:38:05.913545
+INFO:__main__:New run started at 2017-07-23 23:38:07.982160
+None
+INFO:__main__:New run started at 2017-07-23 23:38:07.983726
+None
+INFO:__main__:New run started at 2017-07-23 23:38:08.391782
+None
+INFO:__main__:New run started at 2017-07-23 23:38:08.393385
+None
+INFO:__main__:New run started at 2017-07-23 23:38:08.433855
+None
+INFO:__main__:New run started at 2017-07-23 23:38:08.436763
+None
+INFO:__main__:New run started at 2017-07-23 23:38:08.713546
+None
+INFO:__main__:New run started at 2017-07-23 23:38:08.715548
+None

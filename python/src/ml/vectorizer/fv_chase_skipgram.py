@@ -16,6 +16,7 @@ class FeatureVectorizerChaseSkipgram(fv.FeatureVectorizer):
         self.unigram_vectorizer = TfidfVectorizer(
             # vectorizer = sklearn.feature_extraction.text.CountVectorizer(
             analyzer='word',
+            tokenizer=nlp.tokenize,
             preprocessor=tp.preprocess,
             stop_words=nlp.stopwords,  # We do better when we keep stopwords
             use_idf=True,
