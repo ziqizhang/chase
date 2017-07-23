@@ -1,0 +1,44 @@
+50,feature_vocab_ngram,beaner
+55,feature_vocab_ngram,believ
+64,feature_vocab_ngram,bitch
+152,feature_vocab_ngram,coon
+157,feature_vocab_ngram,cracker
+209,feature_vocab_ngram,dyke
+231,feature_vocab_ngram,f
+233,feature_vocab_ngram,fag
+234,feature_vocab_ngram,faggot
+268,feature_vocab_ngram,fuckin
+276,feature_vocab_ngram,gay
+316,feature_vocab_ngram,head
+328,feature_vocab_ngram,hoe
+368,feature_vocab_ngram,jump
+373,feature_vocab_ngram,kill
+437,feature_vocab_ngram,may
+443,feature_vocab_ngram,mexican
+482,feature_vocab_ngram,nigga bitch
+486,feature_vocab_ngram,niggah
+488,feature_vocab_ngram,nigger
+549,feature_vocab_ngram,queer
+553,feature_vocab_ngram,racist
+570,feature_vocab_ngram,retard
+639,feature_vocab_ngram,stfu
+644,feature_vocab_ngram,stupid
+695,feature_vocab_ngram,tranni
+731,feature_vocab_ngram,wake
+736,feature_vocab_ngram,wassup
+753,feature_vocab_ngram,white
+761,feature_vocab_ngram,wit
+988,feature_vocab_ngram_pos,IN PRP VBG
+1053,feature_vocab_ngram_pos,JJ NN VBP
+1091,feature_vocab_ngram_pos,JJ VB PRP
+1166,feature_vocab_ngram_pos,NN DT VBZ
+1231,feature_vocab_ngram_pos,NN PRP JJ
+1297,feature_vocab_ngram_pos,NN VBN IN
+1313,feature_vocab_ngram_pos,NN VBP VBN
+1384,feature_vocab_ngram_pos,NNS RB JJ
+1548,feature_vocab_ngram_pos,PRP VBP VBZ
+1634,feature_vocab_ngram_pos,RB VBG PRP
+1659,feature_vocab_ngram_pos,RBR
+1774,feature_vocab_ngram_pos,VB RP PRP
+1990,feature_vocab_ngram_pos,VBP RB VBP
+2087,feature_vocab_ngram_pos,WP RB

@@ -1,0 +1,500 @@
+27,feature_vocab_ngram,Eur
+31,feature_vocab_ngram,Islam
+37,feature_vocab_ngram,Muslim
+71,feature_vocab_ngram,aint
+118,feature_vocab_ngram,ass
+121,feature_vocab_ngram,attack
+127,feature_vocab_ngram,aw
+141,feature_vocab_ngram,ban
+143,feature_vocab_ngram,bani
+145,feature_vocab_ngram,bans
+173,feature_vocab_ngram,bitch
+174,feature_vocab_ngram,bitches
+175,feature_vocab_ngram,black
+256,feature_vocab_ngram,children
+263,feature_vocab_ngram,citizens
+291,feature_vocab_ngram,constitution
+301,feature_vocab_ngram,country
+311,feature_vocab_ngram,crime
+317,feature_vocab_ngram,cult
+354,feature_vocab_ngram,deport
+357,feature_vocab_ngram,destroy
+359,feature_vocab_ngram,dick
+422,feature_vocab_ngram,evil
+445,feature_vocab_ngram,faggot
+479,feature_vocab_ngram,finsbury
+509,feature_vocab_ngram,fuck
+524,feature_vocab_ngram,gay
+553,feature_vocab_ngram,got
+585,feature_vocab_ngram,hate
+592,feature_vocab_ngram,health
+613,feature_vocab_ngram,hoe
+614,feature_vocab_ngram,hoes
+652,feature_vocab_ngram,im
+659,feature_vocab_ngram,importing
+673,feature_vocab_ngram,isl
+674,feature_vocab_ngram,islam
+675,feature_vocab_ngram,islamic
+711,feature_vocab_ngram,kill
+748,feature_vocab_ngram,lesbian
+750,feature_vocab_ngram,lesson
+762,feature_vocab_ngram,like
+778,feature_vocab_ngram,lol
+779,feature_vocab_ngram,london
+827,feature_vocab_ngram,men
+829,feature_vocab_ngram,mental
+864,feature_vocab_ngram,mosque
+865,feature_vocab_ngram,mosques
+880,feature_vocab_ngram,muslim
+881,feature_vocab_ngram,muslims
+906,feature_vocab_ngram,nigga
+909,feature_vocab_ngram,niggas
+911,feature_vocab_ngram,nigger
+912,feature_vocab_ngram,niggers
+959,feature_vocab_ngram,park
+968,feature_vocab_ngram,peace
+970,feature_vocab_ngram,pedophile
+971,feature_vocab_ngram,people
+1000,feature_vocab_ngram,police
+1025,feature_vocab_ngram,problem
+1042,feature_vocab_ngram,pussy
+1081,feature_vocab_ngram,refugee
+1082,feature_vocab_ngram,refugees
+1087,feature_vocab_ngram,religion
+1105,feature_vocab_ngram,rial
+1164,feature_vocab_ngram,sharia
+1167,feature_vocab_ngram,shit
+1191,feature_vocab_ngram,slam
+1245,feature_vocab_ngram,stop
+1289,feature_vocab_ngram,teen
+1295,feature_vocab_ngram,terror
+1296,feature_vocab_ngram,terrorism
+1297,feature_vocab_ngram,terrorist
+1333,feature_vocab_ngram,todays
+1387,feature_vocab_ngram,us
+1388,feature_vocab_ngram,usa
+1393,feature_vocab_ngram,van
+1396,feature_vocab_ngram,via
+1444,feature_vocab_ngram,welcome
+1448,feature_vocab_ngram,western
+1500,feature_vocab_ngram,yo
+1531,feature_vocab_2skip_bigram,"('a', 'bitch')"
+1578,feature_vocab_2skip_bigram,"('a', 'hoe')"
+1610,feature_vocab_2skip_bigram,"('a', 'muslim')"
+1616,feature_vocab_2skip_bigram,"('a', 'nigger')"
+1775,feature_vocab_2skip_bigram,"('all', 'muslim')"
+1780,feature_vocab_2skip_bigram,"('all', 's')"
+1798,feature_vocab_2skip_bigram,"('am', 'all')"
+1801,feature_vocab_2skip_bigram,"('am', 'cancer')"
+1804,feature_vocab_2skip_bigram,"('am', 'is')"
+1806,feature_vocab_2skip_bigram,"('am', 'islam')"
+1809,feature_vocab_2skip_bigram,"('am', 'stop')"
+1909,feature_vocab_2skip_bigram,"('and', 'refuge')"
+2081,feature_vocab_2skip_bigram,"('attack', 'muslim')"
+2114,feature_vocab_2skip_bigram,"('bad', 'bitch')"
+2119,feature_vocab_2skip_bigram,"('ban', 'aw')"
+2120,feature_vocab_2skip_bigram,"('ban', 'ban')"
+2121,feature_vocab_2skip_bigram,"('ban', 'bani')"
+2123,feature_vocab_2skip_bigram,"('ban', 'ha')"
+2126,feature_vocab_2skip_bigram,"('ban', 'islam')"
+2129,feature_vocab_2skip_bigram,"('ban', 'muslim')"
+2130,feature_vocab_2skip_bigram,"('ban', 'no')"
+2131,feature_vocab_2skip_bigram,"('ban', 'now')"
+2133,feature_vocab_2skip_bigram,"('ban', 'refuge')"
+2134,feature_vocab_2skip_bigram,"('ban', 'rial')"
+2136,feature_vocab_2skip_bigram,"('ban', 's')"
+2138,feature_vocab_2skip_bigram,"('ban', 'sharia')"
+2145,feature_vocab_2skip_bigram,"('bani', 'all')"
+2146,feature_vocab_2skip_bigram,"('bani', 'ban')"
+2147,feature_vocab_2skip_bigram,"('bani', 'deport')"
+2150,feature_vocab_2skip_bigram,"('bani', 'muslim')"
+2151,feature_vocab_2skip_bigram,"('bani', 'no')"
+2153,feature_vocab_2skip_bigram,"('bani', 'sharia')"
+2154,feature_vocab_2skip_bigram,"('bani', 'slam')"
+2173,feature_vocab_2skip_bigram,"('be', 'bitch')"
+2247,feature_vocab_2skip_bigram,"('bitch', 'a')"
+2253,feature_vocab_2skip_bigram,"('bitch', 'and')"
+2274,feature_vocab_2skip_bigram,"('bitch', 'get')"
+2283,feature_vocab_2skip_bigram,"('bitch', 'i')"
+2292,feature_vocab_2skip_bigram,"('bitch', 'like')"
+2299,feature_vocab_2skip_bigram,"('bitch', 'me')"
+2305,feature_vocab_2skip_bigram,"('bitch', 'nigga')"
+2329,feature_vocab_2skip_bigram,"('bitch', 'that')"
+2330,feature_vocab_2skip_bigram,"('bitch', 'the')"
+2338,feature_vocab_2skip_bigram,"('bitch', 'to')"
+2357,feature_vocab_2skip_bigram,"('bitch', 'you')"
+2480,feature_vocab_2skip_bigram,"('cancer', 'not')"
+2481,feature_vocab_2skip_bigram,"('cancer', 'refuge')"
+2482,feature_vocab_2skip_bigram,"('cancer', 'welcom')"
+2503,feature_vocab_2skip_bigram,"('close', 'all')"
+2504,feature_vocab_2skip_bigram,"('close', 'mosqu')"
+2524,feature_vocab_2skip_bigram,"('countri', 'ban')"
+2551,feature_vocab_2skip_bigram,"('death', 'cult')"
+2553,feature_vocab_2skip_bigram,"('deport', 'all')"
+2554,feature_vocab_2skip_bigram,"('deport', 'illeg')"
+2555,feature_vocab_2skip_bigram,"('deport', 'muslim')"
+2556,feature_vocab_2skip_bigram,"('deport', 's')"
+2557,feature_vocab_2skip_bigram,"('destroy', 'am')"
+2558,feature_vocab_2skip_bigram,"('destroy', 'isl')"
+2573,feature_vocab_2skip_bigram,"('do', 'not')"
+2622,feature_vocab_2skip_bigram,"('dont', 'u')"
+2656,feature_vocab_2skip_bigram,"('evil', 'not')"
+2683,feature_vocab_2skip_bigram,"('finsburi', 'attack')"
+2686,feature_vocab_2skip_bigram,"('finsburi', 'park')"
+2767,feature_vocab_2skip_bigram,"('fuck', 'am')"
+2770,feature_vocab_2skip_bigram,"('fuck', 'bitch')"
+2779,feature_vocab_2skip_bigram,"('fuck', 'isl')"
+2935,feature_vocab_2skip_bigram,"('ha', 'aw')"
+2943,feature_vocab_2skip_bigram,"('ha', 'rial')"
+2965,feature_vocab_2skip_bigram,"('hate', 'crime')"
+3162,feature_vocab_2skip_bigram,"('i', 'bitch')"
+3359,feature_vocab_2skip_bigram,"('import', 'am')"
+3360,feature_vocab_2skip_bigram,"('import', 'isl')"
+3452,feature_vocab_2skip_bigram,"('in', 'usa')"
+3498,feature_vocab_2skip_bigram,"('is', 'cancer')"
+3501,feature_vocab_2skip_bigram,"('is', 'evil')"
+3529,feature_vocab_2skip_bigram,"('is', 'not')"
+3538,feature_vocab_2skip_bigram,"('is', 'problem')"
+3541,feature_vocab_2skip_bigram,"('is', 'refuge')"
+3554,feature_vocab_2skip_bigram,"('is', 'the')"
+3576,feature_vocab_2skip_bigram,"('isl', 'all')"
+3577,feature_vocab_2skip_bigram,"('isl', 'am')"
+3579,feature_vocab_2skip_bigram,"('isl', 'is')"
+3580,feature_vocab_2skip_bigram,"('isl', 'islam')"
+3582,feature_vocab_2skip_bigram,"('islam', 'a')"
+3589,feature_vocab_2skip_bigram,"('islam', 'cancer')"
+3590,feature_vocab_2skip_bigram,"('islam', 'evil')"
+3597,feature_vocab_2skip_bigram,"('islam', 'is')"
+3606,feature_vocab_2skip_bigram,"('islam', 'problem')"
+3607,feature_vocab_2skip_bigram,"('islam', 'refuge')"
+3612,feature_vocab_2skip_bigram,"('islam', 'the')"
+3673,feature_vocab_2skip_bigram,"('it', 'refuge')"
+3799,feature_vocab_2skip_bigram,"('lesson', 'islam')"
+3800,feature_vocab_2skip_bigram,"('lesson', 'on')"
+3825,feature_vocab_2skip_bigram,"('like', 'bitch')"
+4014,feature_vocab_2skip_bigram,"('mental', 'health')"
+4066,feature_vocab_2skip_bigram,"('muslim', 'are')"
+4070,feature_vocab_2skip_bigram,"('muslim', 'ban')"
+4071,feature_vocab_2skip_bigram,"('muslim', 'bani')"
+4085,feature_vocab_2skip_bigram,"('muslim', 'ha')"
+4102,feature_vocab_2skip_bigram,"('muslim', 'muslim')"
+4110,feature_vocab_2skip_bigram,"('muslim', 'refuge')"
+4111,feature_vocab_2skip_bigram,"('muslim', 's')"
+4114,feature_vocab_2skip_bigram,"('muslim', 'sharia')"
+4115,feature_vocab_2skip_bigram,"('muslim', 'slam')"
+4142,feature_vocab_2skip_bigram,"('my', 'bitch')"
+4270,feature_vocab_2skip_bigram,"('no', 'more')"
+4271,feature_vocab_2skip_bigram,"('no', 'muslim')"
+4277,feature_vocab_2skip_bigram,"('no', 'refuge')"
+4278,feature_vocab_2skip_bigram,"('no', 's')"
+4341,feature_vocab_2skip_bigram,"('not', 'welcom')"
+4373,feature_vocab_2skip_bigram,"('of', 'bani')"
+4383,feature_vocab_2skip_bigram,"('of', 'eur')"
+4476,feature_vocab_2skip_bigram,"('on', 'islam')"
+4579,feature_vocab_2skip_bigram,"('own', 'countri')"
+4582,feature_vocab_2skip_bigram,"('park', 'attack')"
+4666,feature_vocab_2skip_bigram,"('problem', 'stop')"
+4728,feature_vocab_2skip_bigram,"('refuge', 'deport')"
+4729,feature_vocab_2skip_bigram,"('refuge', 'do')"
+4731,feature_vocab_2skip_bigram,"('refuge', 'more')"
+4733,feature_vocab_2skip_bigram,"('refuge', 'no')"
+4734,feature_vocab_2skip_bigram,"('refuge', 'not')"
+4735,feature_vocab_2skip_bigram,"('refuge', 'refuge')"
+4739,feature_vocab_2skip_bigram,"('refuge', 'we')"
+4741,feature_vocab_2skip_bigram,"('refuge', 'welcom')"
+4745,feature_vocab_2skip_bigram,"('religion', 'of')"
+4746,feature_vocab_2skip_bigram,"('religion', 'peac')"
+4751,feature_vocab_2skip_bigram,"('rial', 'aw')"
+4780,feature_vocab_2skip_bigram,"('s', 'all')"
+4783,feature_vocab_2skip_bigram,"('s', 'ban')"
+4784,feature_vocab_2skip_bigram,"('s', 'bani')"
+4787,feature_vocab_2skip_bigram,"('s', 'death')"
+4790,feature_vocab_2skip_bigram,"('s', 'ha')"
+4794,feature_vocab_2skip_bigram,"('s', 'islam')"
+4796,feature_vocab_2skip_bigram,"('s', 'muslim')"
+4799,feature_vocab_2skip_bigram,"('s', 'refuge')"
+4800,feature_vocab_2skip_bigram,"('s', 'rial')"
+4802,feature_vocab_2skip_bigram,"('s', 'sharia')"
+4804,feature_vocab_2skip_bigram,"('s', 'the')"
+4855,feature_vocab_2skip_bigram,"('sharia', 'is')"
+4912,feature_vocab_2skip_bigram,"('slam', 'ban')"
+4913,feature_vocab_2skip_bigram,"('slam', 'deport')"
+4917,feature_vocab_2skip_bigram,"('slam', 'muslim')"
+4918,feature_vocab_2skip_bigram,"('slam', 'no')"
+4919,feature_vocab_2skip_bigram,"('slam', 'refuge')"
+4921,feature_vocab_2skip_bigram,"('slam', 's')"
+4922,feature_vocab_2skip_bigram,"('slam', 'sharia')"
+4992,feature_vocab_2skip_bigram,"('stop', 'am')"
+4997,feature_vocab_2skip_bigram,"('stop', 'import')"
+4998,feature_vocab_2skip_bigram,"('stop', 'isl')"
+5121,feature_vocab_2skip_bigram,"('that', 'bitch')"
+5200,feature_vocab_2skip_bigram,"('the', 'attack')"
+5205,feature_vocab_2skip_bigram,"('the', 'bani')"
+5211,feature_vocab_2skip_bigram,"('the', 'bitch')"
+5252,feature_vocab_2skip_bigram,"('the', 'hoe')"
+5286,feature_vocab_2skip_bigram,"('the', 'muslim')"
+5307,feature_vocab_2skip_bigram,"('the', 'peac')"
+5311,feature_vocab_2skip_bigram,"('the', 'problem')"
+5318,feature_vocab_2skip_bigram,"('the', 'refuge')"
+5328,feature_vocab_2skip_bigram,"('the', 'slam')"
+5382,feature_vocab_2skip_bigram,"('their', 'countri')"
+5387,feature_vocab_2skip_bigram,"('them', 'all')"
+5422,feature_vocab_2skip_bigram,"('these', 'bitch')"
+5423,feature_vocab_2skip_bigram,"('these', 'hoe')"
+5476,feature_vocab_2skip_bigram,"('thi', 'bitch')"
+5562,feature_vocab_2skip_bigram,"('to', 'ban')"
+5567,feature_vocab_2skip_bigram,"('to', 'bitch')"
+5701,feature_vocab_2skip_bigram,"('today', 'islam')"
+5702,feature_vocab_2skip_bigram,"('today', 'lesson')"
+5703,feature_vocab_2skip_bigram,"('today', 'on')"
+6014,feature_vocab_2skip_bigram,"('white', 'trash')"
+6148,feature_vocab_2skip_bigram,"('you', 'bitch')"
+6248,feature_vocab_2skip_bigram,"('your', 'bitch')"
+6380,feature_vocab_pos_2skip_bigram,"('jj', 'cc')"
+6388,feature_vocab_pos_2skip_bigram,"('jj', 'md')"
+6389,feature_vocab_pos_2skip_bigram,"('jj', 'nnp')"
+6390,feature_vocab_pos_2skip_bigram,"('jj', 'pdt')"
+6392,feature_vocab_pos_2skip_bigram,"('jj', 'rb')"
+6393,feature_vocab_pos_2skip_bigram,"('jj', 'rbr')"
+6394,feature_vocab_pos_2skip_bigram,"('jj', 'rp')"
+6510,feature_vocab_pos_2skip_bigram,"('rb', 'vbp')"
+6513,feature_vocab_pos_2skip_bigram,"('rb', 'wp')"
+6514,feature_vocab_pos_2skip_bigram,"('rb', 'wrb')"
+6515,feature_vocab_pos_2skip_bigram,"('rbr', 'cc')"
+6516,feature_vocab_pos_2skip_bigram,"('rbr', 'dt')"
+6518,feature_vocab_pos_2skip_bigram,"('rbr', 'jj')"
+6521,feature_vocab_pos_2skip_bigram,"('rbr', 'rb')"
+6522,feature_vocab_pos_2skip_bigram,"('rbr', 'to')"
+6524,feature_vocab_pos_2skip_bigram,"('rbr', 'vbp')"
+6526,feature_vocab_pos_2skip_bigram,"('rp', 'dt')"
+6527,feature_vocab_pos_2skip_bigram,"('rp', 'in')"
+6528,feature_vocab_pos_2skip_bigram,"('rp', 'jj')"
+6529,feature_vocab_pos_2skip_bigram,"('rp', 'nn')"
+6531,feature_vocab_pos_2skip_bigram,"('rp', 'rb')"
+6532,feature_vocab_pos_2skip_bigram,"('rp', 'to')"
+6537,feature_vocab_pos_2skip_bigram,"('rp', 'vbp')"
+6541,feature_vocab_pos_2skip_bigram,"('to', 'cc')"
+6542,feature_vocab_pos_2skip_bigram,"('to', 'cd')"
+6544,feature_vocab_pos_2skip_bigram,"('to', 'ex')"
+6546,feature_vocab_pos_2skip_bigram,"('to', 'jj')"
+6547,feature_vocab_pos_2skip_bigram,"('to', 'jjr')"
+6550,feature_vocab_pos_2skip_bigram,"('to', 'pdt')"
+6551,feature_vocab_pos_2skip_bigram,"('to', 'prp')"
+6558,feature_vocab_pos_2skip_bigram,"('to', 'vbn')"
+6560,feature_vocab_pos_2skip_bigram,"('to', 'vbz')"
+6563,feature_vocab_pos_2skip_bigram,"('uh', 'jj')"
+6564,feature_vocab_pos_2skip_bigram,"('uh', 'nn')"
+6565,feature_vocab_pos_2skip_bigram,"('vb', 'cc')"
+6566,feature_vocab_pos_2skip_bigram,"('vb', 'cd')"
+6569,feature_vocab_pos_2skip_bigram,"('vb', 'in')"
+6570,feature_vocab_pos_2skip_bigram,"('vb', 'jj')"
+6574,feature_vocab_pos_2skip_bigram,"('vb', 'pdt')"
+6575,feature_vocab_pos_2skip_bigram,"('vb', 'prp')"
+6579,feature_vocab_pos_2skip_bigram,"('vb', 'to')"
+6580,feature_vocab_pos_2skip_bigram,"('vb', 'vb')"
+6581,feature_vocab_pos_2skip_bigram,"('vb', 'vbd')"
+6583,feature_vocab_pos_2skip_bigram,"('vb', 'vbn')"
+6584,feature_vocab_pos_2skip_bigram,"('vb', 'vbp')"
+6659,feature_vocab_pos_2skip_bigram,"('vbp', 'dt')"
+6660,feature_vocab_pos_2skip_bigram,"('vbp', 'ex')"
+6661,feature_vocab_pos_2skip_bigram,"('vbp', 'in')"
+6690,feature_vocab_pos_2skip_bigram,"('vbz', 'nn')"
+6691,feature_vocab_pos_2skip_bigram,"('vbz', 'pdt')"
+6692,feature_vocab_pos_2skip_bigram,"('vbz', 'prp')"
+6693,feature_vocab_pos_2skip_bigram,"('vbz', 'rb')"
+6727,feature_vocab_pos_2skip_bigram,"('wp', 'prp')"
+6766,feature_vocab_2skip_trigram,"('a', 'bitch', 'but')"
+6790,feature_vocab_2skip_trigram,"('a', 'is', 'a')"
+6934,feature_vocab_2skip_trigram,"('at', 'mm', 'in')"
+6959,feature_vocab_2skip_trigram,"('attack', 'of', 'boss')"
+6993,feature_vocab_2skip_trigram,"('ban', 'ha', 'aw')"
+7006,feature_vocab_2skip_trigram,"('ban', 'muslim', 's')"
+7007,feature_vocab_2skip_trigram,"('ban', 'muslim', 'school')"
+7008,feature_vocab_2skip_trigram,"('ban', 'muslim', 'sharia')"
+7019,feature_vocab_2skip_trigram,"('ban', 's', 'bani')"
+7021,feature_vocab_2skip_trigram,"('ban', 's', 'ha')"
+7022,feature_vocab_2skip_trigram,"('ban', 's', 'is')"
+7025,feature_vocab_2skip_trigram,"('ban', 's', 'refuge')"
+7027,feature_vocab_2skip_trigram,"('ban', 's', 'sharia')"
+7032,feature_vocab_2skip_trigram,"('ban', 'sharia', 'muslim')"
+7034,feature_vocab_2skip_trigram,"('ban', 'wing', 'extremist')"
+7035,feature_vocab_2skip_trigram,"('bani', 'all', 'muslim')"
+7037,feature_vocab_2skip_trigram,"('bani', 'ban', 'muslim')"
+7040,feature_vocab_2skip_trigram,"('bani', 'ban', 's')"
+7042,feature_vocab_2skip_trigram,"('bani', 'deport', 'all')"
+7043,feature_vocab_2skip_trigram,"('bani', 'deport', 'muslim')"
+7044,feature_vocab_2skip_trigram,"('bani', 'ha', 'rial')"
+7047,feature_vocab_2skip_trigram,"('bani', 'no', 'refuge')"
+7048,feature_vocab_2skip_trigram,"('bani', 'slam', 'a')"
+7050,feature_vocab_2skip_trigram,"('bani', 'slam', 'am')"
+7051,feature_vocab_2skip_trigram,"('bani', 'slam', 'ban')"
+7052,feature_vocab_2skip_trigram,"('bani', 'slam', 'deport')"
+7053,feature_vocab_2skip_trigram,"('bani', 'slam', 'ha')"
+7054,feature_vocab_2skip_trigram,"('bani', 'slam', 'isl')"
+7055,feature_vocab_2skip_trigram,"('bani', 'slam', 'mag')"
+7056,feature_vocab_2skip_trigram,"('bani', 'slam', 'muslim')"
+7058,feature_vocab_2skip_trigram,"('bani', 'slam', 'refuge')"
+7061,feature_vocab_2skip_trigram,"('bani', 'slam', 'sharia')"
+7067,feature_vocab_2skip_trigram,"('bbc', 'finsburi', 'park')"
+7078,feature_vocab_2skip_trigram,"('bear', 'in', 'includ')"
+7140,feature_vocab_2skip_trigram,"('case', 'attack', 'identifi')"
+7201,feature_vocab_2skip_trigram,"('finsburi', 'attack', 'terrorist')"
+7204,feature_vocab_2skip_trigram,"('finsburi', 'park', 'attack')"
+7206,feature_vocab_2skip_trigram,"('finsburi', 'park', 'for')"
+7208,feature_vocab_2skip_trigram,"('finsburi', 'park', 'london')"
+7216,feature_vocab_2skip_trigram,"('finsburi', 'park', 'terror')"
+7225,feature_vocab_2skip_trigram,"('for', 'ban', 'muslim')"
+7236,feature_vocab_2skip_trigram,"('for', 'the', 'of')"
+7238,feature_vocab_2skip_trigram,"('free', 'men', 'run')"
+7239,feature_vocab_2skip_trigram,"('free', 'rn', 'men')"
+7242,feature_vocab_2skip_trigram,"('fuck', 'bitch', 'get')"
+7243,feature_vocab_2skip_trigram,"('fuck', 'isl', 'am')"
+7244,feature_vocab_2skip_trigram,"('fuck', 'that', 'bitch')"
+7246,feature_vocab_2skip_trigram,"('full', 'out', 'of')"
+7247,feature_vocab_2skip_trigram,"('full', 'repeal', 'of')"
+7249,feature_vocab_2skip_trigram,"('full', 'repeal', 'stay')"
+7250,feature_vocab_2skip_trigram,"('full', 'stay', 'of')"
+7252,feature_vocab_2skip_trigram,"('germani', 'case', 'attack')"
+7254,feature_vocab_2skip_trigram,"('germani', 'immigr', 'attack')"
+7293,feature_vocab_2skip_trigram,"('held', 'over', 'post')"
+7296,feature_vocab_2skip_trigram,"('hill', 'ar', 'y')"
+7298,feature_vocab_2skip_trigram,"('hill', 'y', 'mexico')"
+7300,feature_vocab_2skip_trigram,"('hire', 'boss', 'facebook')"
+7332,feature_vocab_2skip_trigram,"('i', 'feel', 'like')"
+7335,feature_vocab_2skip_trigram,"('i', 'give', 'fuck')"
+7414,feature_vocab_2skip_trigram,"('in', 'a', 'rage')"
+7480,feature_vocab_2skip_trigram,"('is', 'attack', 'on')"
+7519,feature_vocab_2skip_trigram,"('isl', 'is', 'cancer')"
+7522,feature_vocab_2skip_trigram,"('islam', 'a', 'threat')"
+7529,feature_vocab_2skip_trigram,"('islam', 'is', 'danger')"
+7562,feature_vocab_2skip_trigram,"('isol', 'inhuman', 'islam')"
+7563,feature_vocab_2skip_trigram,"('isol', 'inhuman', 'valu')"
+7564,feature_vocab_2skip_trigram,"('isol', 'inhuman', 'violat')"
+7565,feature_vocab_2skip_trigram,"('isol', 'islam', 'valu')"
+7570,feature_vocab_2skip_trigram,"('it', 'a', 'hate')"
+7571,feature_vocab_2skip_trigram,"('it', 'a', 'muslim')"
+7572,feature_vocab_2skip_trigram,"('it', 'ban', 'muslim')"
+7574,feature_vocab_2skip_trigram,"('it', 'how', 'the')"
+7575,feature_vocab_2skip_trigram,"('it', 'in', 'the')"
+7608,feature_vocab_2skip_trigram,"('labour', 'mp', 'call')"
+7609,feature_vocab_2skip_trigram,"('labour', 'mp', 'for')"
+7611,feature_vocab_2skip_trigram,"('led', 'attack', 'muslim')"
+7613,feature_vocab_2skip_trigram,"('led', 'bat', 'muslim')"
+7616,feature_vocab_2skip_trigram,"('led', 'to', 'muslim')"
+7617,feature_vocab_2skip_trigram,"('lesson', 'on', 'islam')"
+7618,feature_vocab_2skip_trigram,"('like', 'a', 'bitch')"
+7619,feature_vocab_2skip_trigram,"('like', 'that', 'bitch')"
+7620,feature_vocab_2skip_trigram,"('london', 'bridg', 'attack')"
+7625,feature_vocab_2skip_trigram,"('london', 'show', 'after')"
+7626,feature_vocab_2skip_trigram,"('london', 'show', 'solidar')"
+7627,feature_vocab_2skip_trigram,"('london', 'solidar', 'after')"
+7629,feature_vocab_2skip_trigram,"('look', 'at', 'the')"
+7654,feature_vocab_2skip_trigram,"('mental', 'health', 'i')"
+7655,feature_vocab_2skip_trigram,"('mental', 'health', 'problem')"
+7656,feature_vocab_2skip_trigram,"('mexico', 'full', 'repeal')"
+7719,feature_vocab_2skip_trigram,"('muslim', 's', 'death')"
+7754,feature_vocab_2skip_trigram,"('my', 'mental', 'health')"
+7799,feature_vocab_2skip_trigram,"('not', 'support', 'valu')"
+7820,feature_vocab_2skip_trigram,"('of', 'islam', 'terror')"
+7827,feature_vocab_2skip_trigram,"('of', 'syria', 'muslim')"
+7828,feature_vocab_2skip_trigram,"('of', 'syria', 's')"
+7829,feature_vocab_2skip_trigram,"('of', 'terror', 'old')"
+8011,feature_vocab_2skip_trigram,"('repeal', 'stay', 'out')"
+8036,feature_vocab_2skip_trigram,"('rose', 'ramadan', 'worshipp')"
+8037,feature_vocab_2skip_trigram,"('run', 'shoe', 'black')"
+8060,feature_vocab_2skip_trigram,"('say', 'turkey', 'presid')"
+8061,feature_vocab_2skip_trigram,"('say', 'turkey', 'recep')"
+8076,feature_vocab_2skip_trigram,"('show', 'after', 'van')"
+8111,feature_vocab_2skip_trigram,"('solidar', 'van', 'attack')"
+8118,feature_vocab_2skip_trigram,"('son', 'of', 'bitch')"
+8126,feature_vocab_2skip_trigram,"('stay', 'out', 'ban')"
+8127,feature_vocab_2skip_trigram,"('stay', 'out', 'of')"
+8128,feature_vocab_2skip_trigram,"('stay', 'out', 'syria')"
+8150,feature_vocab_2skip_trigram,"('syria', 'ban', 'muslim')"
+8313,feature_vocab_2skip_trigram,"('trump', 'no', 'refuge')"
+8317,feature_vocab_2skip_trigram,"('trump', 'travel', 'ban')"
+8337,feature_vocab_2skip_trigram,"('valu', 'say', 'recep')"
+8340,feature_vocab_2skip_trigram,"('valu', 'turkey', 'recep')"
+8353,feature_vocab_2skip_trigram,"('violat', 'islam', 'say')"
+8359,feature_vocab_2skip_trigram,"('wa', 'a', 'road')"
+8362,feature_vocab_2skip_trigram,"('wa', 'in', 'road')"
+8365,feature_vocab_2skip_trigram,"('wa', 'kill', 'road')"
+8368,feature_vocab_2skip_trigram,"('wakeup', 'ame', 'a')"
+8724,feature_vocab_pos_2skip_trigram,"('dt', 'jj', 'nn')"
+8874,feature_vocab_pos_2skip_trigram,"('dt', 'vbp', 'nn')"
+8890,feature_vocab_pos_2skip_trigram,"('dt', 'vbz', 'jj')"
+9005,feature_vocab_pos_2skip_trigram,"('in', 'in', 'jj')"
+9007,feature_vocab_pos_2skip_trigram,"('in', 'in', 'nn')"
+9023,feature_vocab_pos_2skip_trigram,"('in', 'jj', 'in')"
+9024,feature_vocab_pos_2skip_trigram,"('in', 'jj', 'jj')"
+9027,feature_vocab_pos_2skip_trigram,"('in', 'jj', 'nn')"
+9056,feature_vocab_pos_2skip_trigram,"('in', 'nn', 'in')"
+9057,feature_vocab_pos_2skip_trigram,"('in', 'nn', 'jj')"
+9060,feature_vocab_pos_2skip_trigram,"('in', 'nn', 'nn')"
+9274,feature_vocab_pos_2skip_trigram,"('jj', 'in', 'jj')"
+9276,feature_vocab_pos_2skip_trigram,"('jj', 'in', 'nn')"
+9296,feature_vocab_pos_2skip_trigram,"('jj', 'jj', 'nn')"
+9323,feature_vocab_pos_2skip_trigram,"('jj', 'nn', 'dt')"
+9326,feature_vocab_pos_2skip_trigram,"('jj', 'nn', 'in')"
+9327,feature_vocab_pos_2skip_trigram,"('jj', 'nn', 'jj')"
+9330,feature_vocab_pos_2skip_trigram,"('jj', 'nn', 'nn')"
+9342,feature_vocab_pos_2skip_trigram,"('jj', 'nn', 'vbp')"
+9343,feature_vocab_pos_2skip_trigram,"('jj', 'nn', 'vbz')"
+9479,feature_vocab_pos_2skip_trigram,"('jj', 'vbz', 'dt')"
+9684,feature_vocab_pos_2skip_trigram,"('nn', 'dt', 'vbp')"
+9701,feature_vocab_pos_2skip_trigram,"('nn', 'in', 'in')"
+9702,feature_vocab_pos_2skip_trigram,"('nn', 'in', 'jj')"
+9705,feature_vocab_pos_2skip_trigram,"('nn', 'in', 'nn')"
+9727,feature_vocab_pos_2skip_trigram,"('nn', 'jj', 'jj')"
+9730,feature_vocab_pos_2skip_trigram,"('nn', 'jj', 'nn')"
+9770,feature_vocab_pos_2skip_trigram,"('nn', 'nn', 'dt')"
+9773,feature_vocab_pos_2skip_trigram,"('nn', 'nn', 'in')"
+9774,feature_vocab_pos_2skip_trigram,"('nn', 'nn', 'jj')"
+9787,feature_vocab_pos_2skip_trigram,"('nn', 'nn', 'vbn')"
+9789,feature_vocab_pos_2skip_trigram,"('nn', 'nn', 'vbz')"
+9940,feature_vocab_pos_2skip_trigram,"('nn', 'vbg', 'vbp')"
+9945,feature_vocab_pos_2skip_trigram,"('nn', 'vbn', 'in')"
+9948,feature_vocab_pos_2skip_trigram,"('nn', 'vbn', 'nn')"
+9964,feature_vocab_pos_2skip_trigram,"('nn', 'vbp', 'jj')"
+9967,feature_vocab_pos_2skip_trigram,"('nn', 'vbp', 'nn')"
+9986,feature_vocab_pos_2skip_trigram,"('nn', 'vbz', 'dt')"
+9987,feature_vocab_pos_2skip_trigram,"('nn', 'vbz', 'in')"
+9988,feature_vocab_pos_2skip_trigram,"('nn', 'vbz', 'jj')"
+9991,feature_vocab_pos_2skip_trigram,"('nn', 'vbz', 'nn')"
+10172,feature_vocab_pos_2skip_trigram,"('prp', 'nn', 'nn')"
+10972,feature_vocab_pos_2skip_trigram,"('vb', 'prp', 'nn')"
+11512,feature_vocab_pos_2skip_trigram,"('vbn', 'nn', 'in')"
+11659,feature_vocab_pos_2skip_trigram,"('vbp', 'jj', 'dt')"
+11663,feature_vocab_pos_2skip_trigram,"('vbp', 'jj', 'nn')"
+11688,feature_vocab_pos_2skip_trigram,"('vbp', 'nn', 'jj')"
+11691,feature_vocab_pos_2skip_trigram,"('vbp', 'nn', 'nn')"
+11702,feature_vocab_pos_2skip_trigram,"('vbp', 'nn', 'vbz')"
+11880,feature_vocab_pos_2skip_trigram,"('vbz', 'dt', 'nn')"
+11916,feature_vocab_pos_2skip_trigram,"('vbz', 'jj', 'nn')"
+11938,feature_vocab_pos_2skip_trigram,"('vbz', 'nn', 'nn')"
+11940,feature_vocab_pos_2skip_trigram,"('vbz', 'nn', 'rb')"
+12363,feature_vocab_td_other,num_syllables
+12364,feature_vocab_td_other,num_chars
+12365,feature_vocab_td_other,num_chars_total
+12366,feature_vocab_td_other,num_terms
+12367,feature_vocab_td_other,num_words
+12368,feature_vocab_td_other,num_unique_words
+12369,feature_vocab_td_other,vader compound
+12370,feature_vocab_td_other,num_hashtags
+12376,feature_vocab_chase_hashtag,#norefugees
+12380,feature_vocab_chase_hashtag,#refugeesnotwelcome
+12381,feature_vocab_chase_hashtag,#banmuslims
+12382,feature_vocab_chase_hashtag,#deport
+12391,feature_vocab_chase_hashtag,#banislam
+12393,feature_vocab_chase_hashtag,#stopislam
+12397,feature_vocab_chase_hashtag,#bansharialaw
+12407,feature_vocab_chase_hashtag,#destroyislam
+12408,feature_vocab_chase_hashtag,#islamistheproblem
+12410,feature_vocab_chase_hashtag,#stopimportingislam
+12418,feature_vocab_chase_hashtag,#nomuslims
+12438,feature_vocab_chase_hashtag,#deportallmuslims
+12444,feature_vocab_chase_hashtag,#bansharia
+12464,feature_vocab_chase_hashtag,#islam
+12565,feature_vocab_chase_hashtag,#fuckislam
+13147,feature_vocab_chase_stats,SPECIALCHAR
+13148,feature_vocab_chase_stats,CAPT

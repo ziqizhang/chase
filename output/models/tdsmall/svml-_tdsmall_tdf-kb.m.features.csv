@@ -1,0 +1,100 @@
+12,feature_vocab_ngram,al
+34,feature_vocab_ngram,ass
+59,feature_vocab_ngram,beaner
+71,feature_vocab_ngram,bird
+74,feature_vocab_ngram,bitch
+130,feature_vocab_ngram,browni
+153,feature_vocab_ngram,charli
+154,feature_vocab_ngram,charli sheen
+166,feature_vocab_ngram,color
+171,feature_vocab_ngram,coon
+177,feature_vocab_ngram,cracker
+236,feature_vocab_ngram,dyke
+243,feature_vocab_ngram,elect
+260,feature_vocab_ngram,eye
+263,feature_vocab_ngram,fag
+264,feature_vocab_ngram,faggot
+268,feature_vocab_ngram,fan
+287,feature_vocab_ngram,fish
+295,feature_vocab_ngram,found
+300,feature_vocab_ngram,fuck
+306,feature_vocab_ngram,fuckin
+310,feature_vocab_ngram,fuzzi
+315,feature_vocab_ngram,gay
+322,feature_vocab_ngram,giant
+359,feature_vocab_ngram,head
+370,feature_vocab_ngram,hillbilli
+373,feature_vocab_ngram,hoe
+412,feature_vocab_ngram,jeter
+413,feature_vocab_ngram,jihadi
+423,feature_vocab_ngram,kill
+453,feature_vocab_ngram,like
+492,feature_vocab_ngram,may
+499,feature_vocab_ngram,mexican
+514,feature_vocab_ngram,monkey
+535,feature_vocab_ngram,news
+540,feature_vocab_ngram,nigga
+547,feature_vocab_ngram,nigger
+557,feature_vocab_ngram,obama
+570,feature_vocab_ngram,oreo
+574,feature_vocab_ngram,park
+593,feature_vocab_ngram,playoff
+596,feature_vocab_ngram,pollo
+607,feature_vocab_ngram,pussi
+614,feature_vocab_ngram,queer
+615,feature_vocab_ngram,quit
+618,feature_vocab_ngram,racist
+621,feature_vocab_ngram,rate
+630,feature_vocab_ngram,red
+637,feature_vocab_ngram,retard
+667,feature_vocab_ngram,sheen
+668,feature_vocab_ngram,shit
+675,feature_vocab_ngram,shut
+682,feature_vocab_ngram,sinc
+691,feature_vocab_ngram,slope
+721,feature_vocab_ngram,stori
+724,feature_vocab_ngram,stupid
+749,feature_vocab_ngram,th
+753,feature_vocab_ngram,thi bitch
+781,feature_vocab_ngram,trash
+809,feature_vocab_ngram,via
+831,feature_vocab_ngram,wear
+842,feature_vocab_ngram,white
+844,feature_vocab_ngram,white trash
+873,feature_vocab_ngram,yanke
+878,feature_vocab_ngram,yellow
+887,feature_vocab_ngram,zebra
+888,feature_vocab_ngram_pos,CC
+900,feature_vocab_ngram_pos,CC NN
+990,feature_vocab_ngram_pos,DT NNS CC
+1164,feature_vocab_ngram_pos,JJ NN VBZ
+1229,feature_vocab_ngram_pos,JJ VBP VBN
+1232,feature_vocab_ngram_pos,JJ VBZ
+1247,feature_vocab_ngram_pos,JJS JJ NN
+1312,feature_vocab_ngram_pos,NN JJ VBZ
+1449,feature_vocab_ngram_pos,NN VBZ
+1452,feature_vocab_ngram_pos,NN VBZ JJ
+1461,feature_vocab_ngram_pos,NN VBZ VBN
+1478,feature_vocab_ngram_pos,NNP NN
+1479,feature_vocab_ngram_pos,NNS CC
+1482,feature_vocab_ngram_pos,NNS CC NN
+1506,feature_vocab_ngram_pos,NNS NN
+1508,feature_vocab_ngram_pos,NNS NN NN
+1511,feature_vocab_ngram_pos,NNS NNS
+1522,feature_vocab_ngram_pos,NNS RB JJ
+1775,feature_vocab_ngram_pos,RB VBD PRP
+1783,feature_vocab_ngram_pos,RB VBG PRP
+1830,feature_vocab_ngram_pos,RP NNS
+1932,feature_vocab_ngram_pos,VB RP PRP
+2130,feature_vocab_ngram_pos,VBP NN VBZ
+2161,feature_vocab_ngram_pos,VBP RB VBG
+2163,feature_vocab_ngram_pos,VBP RB VBP
+2201,feature_vocab_ngram_pos,VBZ
+2213,feature_vocab_ngram_pos,VBZ JJ
+2247,feature_vocab_ngram_pos,VBZ VBN
+2305,feature_vocab_td_other,FKRA
+2306,feature_vocab_td_other,FRE
+2307,feature_vocab_td_other,num_syllables
+2308,feature_vocab_td_other,num_chars
+2309,feature_vocab_td_other,num_chars_total
+2313,feature_vocab_td_other,vader compound

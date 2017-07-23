@@ -1,0 +1,61 @@
+32,feature_vocab_ngram,ass nigga
+54,feature_vocab_ngram,beaner
+66,feature_vocab_ngram,bird
+69,feature_vocab_ngram,bitch
+125,feature_vocab_ngram,browni
+145,feature_vocab_ngram,charli
+162,feature_vocab_ngram,coon
+167,feature_vocab_ngram,cracker
+216,feature_vocab_ngram,dyke
+242,feature_vocab_ngram,fag
+243,feature_vocab_ngram,faggot
+247,feature_vocab_ngram,fan
+278,feature_vocab_ngram,fuck
+284,feature_vocab_ngram,fuckin
+288,feature_vocab_ngram,fuzzi
+291,feature_vocab_ngram,gay
+334,feature_vocab_ngram,head
+348,feature_vocab_ngram,hoe
+383,feature_vocab_ngram,jihadi
+387,feature_vocab_ngram,jump
+393,feature_vocab_ngram,kill
+434,feature_vocab_ngram,lmaooo
+458,feature_vocab_ngram,may
+465,feature_vocab_ngram,mexican
+507,feature_vocab_ngram,nigga bitch
+510,feature_vocab_ngram,niggah
+512,feature_vocab_ngram,nigger
+535,feature_vocab_ngram,oreo
+547,feature_vocab_ngram,person
+573,feature_vocab_ngram,pussi
+580,feature_vocab_ngram,queer
+584,feature_vocab_ngram,racist
+603,feature_vocab_ngram,retard
+634,feature_vocab_ngram,shit like
+636,feature_vocab_ngram,shoot
+638,feature_vocab_ngram,shut
+640,feature_vocab_ngram,shut fuck
+687,feature_vocab_ngram,stupid
+743,feature_vocab_ngram,tranni
+744,feature_vocab_ngram,trash
+801,feature_vocab_ngram,white
+828,feature_vocab_ngram,yanke
+833,feature_vocab_ngram,yellow
+1014,feature_vocab_ngram_pos,IN NN NNS
+1046,feature_vocab_ngram_pos,IN PRP VBG
+1102,feature_vocab_ngram_pos,JJ NN CC
+1158,feature_vocab_ngram_pos,JJ VB PRP
+1182,feature_vocab_ngram_pos,JJ VBP VBN
+1214,feature_vocab_ngram_pos,MD VB NN
+1240,feature_vocab_ngram_pos,NN DT VBZ
+1374,feature_vocab_ngram_pos,NN VBG NN
+1399,feature_vocab_ngram_pos,NN VBP VBN
+1432,feature_vocab_ngram_pos,NNS CC
+1475,feature_vocab_ngram_pos,NNS RB JJ
+1762,feature_vocab_ngram_pos,RBR
+1885,feature_vocab_ngram_pos,VB RP PRP
+2083,feature_vocab_ngram_pos,VBP NN VBZ
+2116,feature_vocab_ngram_pos,VBP RB VBP
+2224,feature_vocab_ngram_pos,WP RB
+2259,feature_vocab_td_other,FRE
+2266,feature_vocab_td_other,vader compound

@@ -410,6 +410,30 @@ def separate_tdc(in_csv, out_csv, tag):
                 else:
                     continue
 
+
+def remove_offensive_label(in_file, out_file):
+    with open(out_file, 'w', newline='', encoding='utf-8') as csvfile:
+        writer = csv.writer(csvfile, delimiter=',',
+                            quotechar='"', quoting=csv.QUOTE_MINIMAL)
+
+        with open(in_file, newline='', encoding='utf-8') as csvfile:
+            csvreader = csv.reader(csvfile, delimiter=',', quotechar='"')
+            count = 0
+            for row in csvreader:
+                if count == 0:
+                    writer.writerow(row)
+                    count += 1
+                    continue
+
+                if row[6] == "1":
+                    row[6]="2"
+
+                writer.writerow(row)
+
+
+# remove_offensive_label("/home/zqz/Work/chase/data/ml/tdsmall/labeled_data_all.csv",
+#                        "/home/zqz/Work/chase/data/ml/tdsmall/labeled_data_all_2.csv")
+
 # separate_tdc("/home/zqz/Work/chase/data/ml/tdc-b/labeled_data_all.csv",
 #               "/home/zqz/Work/chase/data/ml/tdsmall/labeled_data_all.csv", "td")
 

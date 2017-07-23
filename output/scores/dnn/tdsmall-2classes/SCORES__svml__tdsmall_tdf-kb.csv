@@ -1,0 +1,12 @@
+_tdsmall_tdf-kb N-FOLD AVERAGE :
+,precision, recall, f1, support
+0,0.21,0.44,0.29,115
+2,0.96,0.90,0.93,1892
+avg,0.59,0.67,0.61,2007
+
+ HELDOUT :
+,precision, recall, f1, support
+0,0.20,0.34,0.25,38
+2,0.96,0.92,0.94,632
+avg,0.58,0.63,0.60,670
+
