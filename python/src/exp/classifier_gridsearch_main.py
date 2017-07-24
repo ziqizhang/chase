@@ -175,19 +175,25 @@ if __name__ == '__main__':
     #argv[5] - 0 to use td orignal features; 1 to use chase-basic features
 
     fv=None
-    if sys.argv[5]=='1':
+    if sys.argv[2]=='1':
         fv=fv_chase_basic.FeatureVectorizerChaseBasic()
-    elif sys.argv[5]=='2':
+    elif sys.argv[2]=='2':
         fv=fv_chase_skipgram.FeatureVectorizerChaseSkipgram()
-    elif sys.argv[5]=='3':
+    elif sys.argv[2]=='3':
         fv=fv_chase_skipgram_pos_only.FeatureVectorizerChaseOther()
-    elif sys.argv[5]=='4':
+    elif sys.argv[2]=='4':
         fv=fv_chase_basic_othering.FeatureVectorizerChaseBasicOthering()
     else:
         fv=fv_davison.FeatureVectorizerDavidson()
 
-    fs_options=sys.argv[6].split(",")
-    settings = exp.create_settings(sys.argv[1], sys.argv[2], sys.argv[3], bool(sys.argv[4]),
+    fs_options=sys.argv[4].split(",")
+
+    label_and_data=sys.argv[5].split(",")
+
+    settings=[]
+    for lad in label_and_data:
+        l_d = lad.split("=")
+        settings = exp.create_settings(sys.argv[1], l_d[0], l_d[1], bool(sys.argv[1]),
                                    fv,fs_options)
 
     for ds in settings:

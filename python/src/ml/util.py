@@ -184,13 +184,26 @@ def name_to_class(class_label):
 
 
 def output_data_splits(data_file, out_folder):
+    # raw_data = pd.read_csv(data_file, sep=',', encoding="utf-8")
+    # X_train_data, X_test_data, y_train, y_test = \
+    #     train_test_split(raw_data, raw_data['class'],
+    #                      test_size=0.5,
+    #                      random_state=42)
+    # X_train_data.to_csv(out_folder + "/split_train.csv", sep=',', encoding='utf-8')
+    # X_test_data.to_csv(out_folder + "/split_test.csv", sep=',', encoding='utf-8')
     raw_data = pd.read_csv(data_file, sep=',', encoding="utf-8")
     X_train_data, X_test_data, y_train, y_test = \
         train_test_split(raw_data, raw_data['class'],
-                         test_size=0.5,
+                         test_size=0.33,
                          random_state=42)
-    X_train_data.to_csv(out_folder + "/split_train.csv", sep=',', encoding='utf-8')
-    X_test_data.to_csv(out_folder + "/split_test.csv", sep=',', encoding='utf-8')
+    X_train_1, X_test_1, y_train1, y_test1 = \
+        train_test_split(X_train_data, X_train_data['class'],
+                         test_size=0.50,
+                         random_state=42)
+    X_test_data.to_csv(out_folder + "/part1.csv", sep=',', encoding='utf-8')
+    X_train_1.to_csv(out_folder + "/part2.csv", sep=',', encoding='utf-8')
+    X_test_1.to_csv(out_folder + "/part3.csv", sep=',', encoding='utf-8')
+
 
 
 def save_selected_features(finalFeatureIndices, featureTypes, file):
@@ -431,8 +444,8 @@ def remove_offensive_label(in_file, out_file):
                 writer.writerow(row)
 
 
-# remove_offensive_label("/home/zqz/Work/chase/data/ml/tdsmall/labeled_data_all.csv",
-#                        "/home/zqz/Work/chase/data/ml/tdsmall/labeled_data_all_2.csv")
+# remove_offensive_label("/home/zqz/Work/chase/data/ml/tdc-a/labeled_data_all.csv",
+#                        "/home/zqz/Work/chase/data/ml/tdc-a/labeled_data_all_2.csv")
 
 # separate_tdc("/home/zqz/Work/chase/data/ml/tdc-b/labeled_data_all.csv",
 #               "/home/zqz/Work/chase/data/ml/tdsmall/labeled_data_all.csv", "td")
@@ -454,3 +467,6 @@ def remove_offensive_label(in_file, out_file):
 
 # output_data_splits("/home/zqz/Work/chase/data/ml/tdc-a/labeled_data_all.csv"
 #                    ,"/home/zqz/Work/chase/data/ml/tdc-a")
+
+# output_data_splits("/home/zqz/Work/chase/data/ml/td/labeled_data_all_2.csv"
+#                     ,"/home/zqz/Work/chase/data/ml/td")
