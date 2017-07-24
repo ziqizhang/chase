@@ -1,0 +1,24 @@
+68,feature_vocab_ngram,ban
+195,feature_vocab_ngram,deport
+198,feature_vocab_ngram,destroy
+403,feature_vocab_ngram,isl
+618,feature_vocab_ngram,preach
+669,feature_vocab_ngram,refuge
+1265,feature_vocab_2skip_bigram,"('ban', 'muslim')"
+1290,feature_vocab_2skip_bigram,"('bani', 'slam')"
+1478,feature_vocab_2skip_bigram,"('evil', 'not')"
+1708,feature_vocab_2skip_bigram,"('i', 'hate')"
+1779,feature_vocab_2skip_bigram,"('in', 'america')"
+1866,feature_vocab_2skip_bigram,"('is', 'evil')"
+1917,feature_vocab_2skip_bigram,"('isl', 'is')"
+1920,feature_vocab_2skip_bigram,"('islam', 'a')"
+1935,feature_vocab_2skip_bigram,"('islam', 'is')"
+2080,feature_vocab_2skip_bigram,"('london', 'is')"
+2212,feature_vocab_2skip_bigram,"('muslim', 's')"
+2324,feature_vocab_2skip_bigram,"('not', 'welcom')"
+4907,feature_vocab_2skip_trigram,"('slam', 'ha', 'rial')"
+4989,feature_vocab_2skip_trigram,"('the', 'attack', 'finsburi')"
+6229,feature_vocab_pos_2skip_trigram,"('nn', 'rb', 'vb')"
+6500,feature_vocab_pos_2skip_trigram,"('prp', 'nn', 'prp')"
+7567,feature_vocab_pos_2skip_trigram,"('vbp', 'jj', 'dt')"
+8074,feature_vocab_td_other,num_hashtags

@@ -180,7 +180,7 @@ if __name__ == '__main__':
     elif sys.argv[3]=='2':
         fv=fv_chase_skipgram.FeatureVectorizerChaseSkipgram()
     elif sys.argv[3]=='3':
-        fv=fv_chase_skipgram_pos_only.FeatureVectorizerChaseOther()
+        fv=fv_chase_skipgram_pos_only.FeatureVectorizerChaseSkipPoSOnly()
     elif sys.argv[3]=='4':
         fv=fv_chase_basic_othering.FeatureVectorizerChaseBasicOthering()
     else:

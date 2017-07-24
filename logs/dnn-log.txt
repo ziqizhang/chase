@@ -1,48 +1,18 @@
-INFO:__main__:	generating word vectors, 2017-07-23 23:59:19.770828
-INFO:__main__:		 complete, dim=(2677, 733), 2017-07-23 23:59:21.076794
-INFO:__main__:New run started at 2017-07-23 23:59:22.710478
+INFO:__main__:	generating word vectors, 2017-07-24 15:45:51.548849
+INFO:__main__:		 complete, dim=(2677, 733), 2017-07-24 15:45:52.863667
+INFO:__main__:New run started at 2017-07-24 15:45:54.749248
 None
-INFO:__main__:New run started at 2017-07-23 23:59:22.711705
+INFO:__main__:New run started at 2017-07-24 15:45:54.750549
 None
-INFO:__main__:New run started at 2017-07-23 23:59:22.724046
+INFO:__main__:New run started at 2017-07-24 15:45:54.783708
 None
-INFO:__main__:New run started at 2017-07-23 23:59:22.725425
+INFO:__main__:New run started at 2017-07-24 15:45:54.784258
 None
-INFO:__main__:New run started at 2017-07-23 23:59:22.987518
+INFO:__main__:New run started at 2017-07-24 15:45:54.784980
 None
-INFO:__main__:New run started at 2017-07-23 23:59:22.988900
+INFO:__main__:New run started at 2017-07-24 15:45:54.785489
 None
-INFO:__main__:New run started at 2017-07-23 23:59:23.212975
+INFO:__main__:New run started at 2017-07-24 15:45:55.051531
 None
-INFO:__main__:New run started at 2017-07-23 23:59:23.214311
+INFO:__main__:New run started at 2017-07-24 15:45:55.053438
 None
-INFO:__main__:New run started at 2017-07-24 00:03:03.034084
-None
-INFO:__main__:New run started at 2017-07-24 00:03:03.035331
-None
-INFO:__main__:New run started at 2017-07-24 00:04:04.782146
-None
-INFO:__main__:New run started at 2017-07-24 00:04:04.782863
-None
-INFO:__main__:New run started at 2017-07-24 00:05:13.923985
-None
-INFO:__main__:New run started at 2017-07-24 00:05:13.924676
-None
-INFO:__main__:New run started at 2017-07-24 00:06:12.378398
-None
-INFO:__main__:New run started at 2017-07-24 00:06:12.378998
-None
-INFO:__main__:New run started at 2017-07-24 00:07:13.379667
-None
-INFO:__main__:New run started at 2017-07-24 00:07:13.380340
-None
-INFO:__main__:New run started at 2017-07-24 00:08:12.347476
-None
-INFO:__main__:New run started at 2017-07-24 00:08:12.348179
-None
-INFO:__main__:New run started at 2017-07-24 00:09:13.641838
-None
-INFO:__main__:New run started at 2017-07-24 00:09:13.642435
-None
-INFO:__main__:+ best params for <keras.wrappers.scikit_learn.KerasClassifier object at 0x7fe6c9677fd0> model are:{'batch_size': 100, 'nb_epoch': 10}
-INFO:__main__:testing on development set ....

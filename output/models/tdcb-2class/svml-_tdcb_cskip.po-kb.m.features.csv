@@ -1,0 +1,100 @@
+131,feature_vocab_ngram,aw
+147,feature_vocab_ngram,ban
+150,feature_vocab_ngram,ban ha
+151,feature_vocab_ngram,ban ha rial
+153,feature_vocab_ngram,ban muslim
+154,feature_vocab_ngram,ban muslim ban
+162,feature_vocab_ngram,ban sharia
+164,feature_vocab_ngram,bani
+165,feature_vocab_ngram,bani slam
+166,feature_vocab_ngram,bani slam ban
+209,feature_vocab_ngram,bitch
+385,feature_vocab_ngram,close mosqu
+412,feature_vocab_ngram,constitut
+449,feature_vocab_ngram,cult
+482,feature_vocab_ngram,death cult
+496,feature_vocab_ngram,deport
+498,feature_vocab_ngram,deport muslim
+503,feature_vocab_ngram,destroy
+504,feature_vocab_ngram,destroy isl
+609,feature_vocab_ngram,evil
+635,feature_vocab_ngram,faggot
+715,feature_vocab_ngram,fuck isl
+804,feature_vocab_ngram,ha rial
+805,feature_vocab_ngram,ha rial aw
+936,feature_vocab_ngram,import isl
+965,feature_vocab_ngram,isl
+968,feature_vocab_ngram,isl islam
+970,feature_vocab_ngram,islam
+971,feature_vocab_ngram,islam cancer
+979,feature_vocab_ngram,islam problem
+1089,feature_vocab_ngram,lesson
+1090,feature_vocab_ngram,lesson islam
+1263,feature_vocab_ngram,muslim
+1265,feature_vocab_ngram,muslim ban
+1266,feature_vocab_ngram,muslim ban ha
+1268,feature_vocab_ngram,muslim ban sharia
+1281,feature_vocab_ngram,muslim refuge
+1330,feature_vocab_ngram,nigger
+1427,feature_vocab_ngram,peac
+1602,feature_vocab_ngram,refuge
+1609,feature_vocab_ngram,refuge welcom
+1618,feature_vocab_ngram,religion
+1642,feature_vocab_ngram,rial
+1643,feature_vocab_ngram,rial aw
+1723,feature_vocab_ngram,sharia
+1756,feature_vocab_ngram,slam
+1757,feature_vocab_ngram,slam ban
+1759,feature_vocab_ngram,slam ban muslim
+1760,feature_vocab_ngram,slam ban sharia
+1829,feature_vocab_ngram,stop
+1830,feature_vocab_ngram,stop import
+1831,feature_vocab_ngram,stop import isl
+1832,feature_vocab_ngram,stop isl
+1965,feature_vocab_ngram,today lesson
+1966,feature_vocab_ngram,today lesson islam
+2045,feature_vocab_ngram,usa
+2127,feature_vocab_ngram,welcom
+2383,feature_vocab_pos_2skip_bigram,"('nn', 'vbp')"
+2384,feature_vocab_pos_2skip_bigram,"('nn', 'vbz')"
+2593,feature_vocab_pos_2skip_bigram,"('vbp', 'jj')"
+2596,feature_vocab_pos_2skip_bigram,"('vbp', 'nn')"
+2609,feature_vocab_pos_2skip_bigram,"('vbp', 'vbz')"
+2615,feature_vocab_pos_2skip_bigram,"('vbz', 'dt')"
+2618,feature_vocab_pos_2skip_bigram,"('vbz', 'jj')"
+2621,feature_vocab_pos_2skip_bigram,"('vbz', 'nn')"
+3586,feature_vocab_pos_2skip_trigram,"('jj', 'nn', 'nn')"
+3940,feature_vocab_pos_2skip_trigram,"('nn', 'dt', 'vbp')"
+3986,feature_vocab_pos_2skip_trigram,"('nn', 'jj', 'nn')"
+4026,feature_vocab_pos_2skip_trigram,"('nn', 'nn', 'dt')"
+4045,feature_vocab_pos_2skip_trigram,"('nn', 'nn', 'vbz')"
+4220,feature_vocab_pos_2skip_trigram,"('nn', 'vbp', 'jj')"
+4223,feature_vocab_pos_2skip_trigram,"('nn', 'vbp', 'nn')"
+4242,feature_vocab_pos_2skip_trigram,"('nn', 'vbz', 'dt')"
+4244,feature_vocab_pos_2skip_trigram,"('nn', 'vbz', 'jj')"
+4247,feature_vocab_pos_2skip_trigram,"('nn', 'vbz', 'nn')"
+5919,feature_vocab_pos_2skip_trigram,"('vbp', 'jj', 'nn')"
+5944,feature_vocab_pos_2skip_trigram,"('vbp', 'nn', 'jj')"
+5947,feature_vocab_pos_2skip_trigram,"('vbp', 'nn', 'nn')"
+6136,feature_vocab_pos_2skip_trigram,"('vbz', 'dt', 'nn')"
+6172,feature_vocab_pos_2skip_trigram,"('vbz', 'jj', 'nn')"
+6619,feature_vocab_td_other,num_syllables
+6620,feature_vocab_td_other,num_chars
+6621,feature_vocab_td_other,num_chars_total
+6623,feature_vocab_td_other,num_words
+6624,feature_vocab_td_other,num_unique_words
+6626,feature_vocab_td_other,num_hashtags
+6632,feature_vocab_chase_hashtag,#norefugees
+6636,feature_vocab_chase_hashtag,#refugeesnotwelcome
+6637,feature_vocab_chase_hashtag,#banmuslims
+6647,feature_vocab_chase_hashtag,#banislam
+6649,feature_vocab_chase_hashtag,#stopislam
+6653,feature_vocab_chase_hashtag,#bansharialaw
+6663,feature_vocab_chase_hashtag,#destroyislam
+6664,feature_vocab_chase_hashtag,#islamistheproblem
+6666,feature_vocab_chase_hashtag,#stopimportingislam
+6674,feature_vocab_chase_hashtag,#nomuslims
+6694,feature_vocab_chase_hashtag,#deportallmuslims
+6700,feature_vocab_chase_hashtag,#bansharia
+6821,feature_vocab_chase_hashtag,#fuckislam
+7404,feature_vocab_chase_stats,CAPT

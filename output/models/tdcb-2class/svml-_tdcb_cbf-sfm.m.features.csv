@@ -7,7 +7,8 @@
 164,feature_vocab_ngram,bani
 165,feature_vocab_ngram,bani slam
 183,feature_vocab_ngram,beaner
-204,feature_vocab_ngram,bill
+353,feature_vocab_ngram,celebr
+369,feature_vocab_ngram,children
 404,feature_vocab_ngram,complain
 405,feature_vocab_ngram,complet
 412,feature_vocab_ngram,constitut
@@ -22,24 +23,19 @@
 635,feature_vocab_ngram,faggot
 711,feature_vocab_ngram,fuck
 715,feature_vocab_ngram,fuck isl
-769,feature_vocab_ngram,global
-867,feature_vocab_ngram,hoe
+719,feature_vocab_ngram,fuckin
 880,feature_vocab_ngram,homophob
-898,feature_vocab_ngram,hungari
 929,feature_vocab_ngram,immedi
 965,feature_vocab_ngram,isl
 970,feature_vocab_ngram,islam
-1001,feature_vocab_ngram,jew
 1059,feature_vocab_ngram,lame
 1108,feature_vocab_ngram,like fuck
-1230,feature_vocab_ngram,mo
 1263,feature_vocab_ngram,muslim
 1322,feature_vocab_ngram,nig
 1330,feature_vocab_ngram,nigger
-1363,feature_vocab_ngram,offici
+1351,feature_vocab_ngram,nothin
 1427,feature_vocab_ngram,peac
 1494,feature_vocab_ngram,preach
-1543,feature_vocab_ngram,queer
 1554,feature_vocab_ngram,racist
 1602,feature_vocab_ngram,refuge
 1609,feature_vocab_ngram,refuge welcom
@@ -49,31 +45,26 @@
 1741,feature_vocab_ngram,shut
 1743,feature_vocab_ngram,shut fuck
 1826,feature_vocab_ngram,stfu
+1842,feature_vocab_ngram,stupid
 1844,feature_vocab_ngram,stupid bitch
+1950,feature_vocab_ngram,threat
 1987,feature_vocab_ngram,tranni
-2026,feature_vocab_ngram,u know
 2047,feature_vocab_ngram,usual
 2088,feature_vocab_ngram,wa gay
+2131,feature_vocab_ngram,western
 2143,feature_vocab_ngram,white trash
 2157,feature_vocab_ngram,wonder
 2167,feature_vocab_ngram,wors
 2310,feature_vocab_ngram_pos,CD JJR
 2311,feature_vocab_ngram_pos,CD JJR NN
-2319,feature_vocab_ngram_pos,DT CC
 2398,feature_vocab_ngram_pos,DT PRP VBP
 2476,feature_vocab_ngram_pos,IN JJ PRP
-2508,feature_vocab_ngram_pos,IN NNS DT
-2620,feature_vocab_ngram_pos,JJ NN CC
 2674,feature_vocab_ngram_pos,JJ RB JJ
 2758,feature_vocab_ngram_pos,JJS NN RB
 2809,feature_vocab_ngram_pos,NN DT VBN
-2881,feature_vocab_ngram_pos,NN NNS DT
 2995,feature_vocab_ngram_pos,NN VBN RB
 3012,feature_vocab_ngram_pos,NN VBP VBZ
-3016,feature_vocab_ngram_pos,NN VBZ DT
-3547,feature_vocab_ngram_pos,RP JJ NN
 3603,feature_vocab_ngram_pos,TO VB WP
-3612,feature_vocab_ngram_pos,VB CD NN
 3646,feature_vocab_ngram_pos,VB NN DT
 3724,feature_vocab_ngram_pos,VB VBG PRP
 3884,feature_vocab_ngram_pos,VBG PRP VB
@@ -84,3 +75,21 @@
 4158,feature_vocab_ngram_pos,VBZ PRP DT
 4175,feature_vocab_ngram_pos,VBZ RBR
 4225,feature_vocab_ngram_pos,WDT VBP JJ
+4331,feature_vocab_chase_hashtag,#norefugees
+4335,feature_vocab_chase_hashtag,#refugeesnotwelcome
+4336,feature_vocab_chase_hashtag,#banmuslims
+4346,feature_vocab_chase_hashtag,#banislam
+4362,feature_vocab_chase_hashtag,#destroyislam
+4373,feature_vocab_chase_hashtag,#nomuslims
+4392,feature_vocab_chase_hashtag,#drivethemout
+4429,feature_vocab_chase_hashtag,#nojews
+4444,feature_vocab_chase_hashtag,#foxnewsspecialists
+4491,feature_vocab_chase_hashtag,#borders
+4510,feature_vocab_chase_hashtag,#fightback
+4520,feature_vocab_chase_hashtag,#fuckislam
+4562,feature_vocab_chase_hashtag,#israel
+4642,feature_vocab_chase_hashtag,#wahhabi
+4963,feature_vocab_chase_hashtag,#ferguson
+4974,feature_vocab_chase_hashtag,#193
+5060,feature_vocab_chase_hashtag,#stupidbitches
+5103,feature_vocab_chase_stats,CAPT

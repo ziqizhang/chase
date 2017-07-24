@@ -1,0 +1,100 @@
+59,feature_vocab_ngram,beaner
+74,feature_vocab_ngram,bitch
+122,feature_vocab_ngram,boy
+171,feature_vocab_ngram,coon
+177,feature_vocab_ngram,cracker
+236,feature_vocab_ngram,dyke
+263,feature_vocab_ngram,fag
+264,feature_vocab_ngram,faggot
+268,feature_vocab_ngram,fan
+295,feature_vocab_ngram,found
+306,feature_vocab_ngram,fuckin
+315,feature_vocab_ngram,gay
+359,feature_vocab_ngram,head
+373,feature_vocab_ngram,hoe
+423,feature_vocab_ngram,kill
+492,feature_vocab_ngram,may
+499,feature_vocab_ngram,mexican
+547,feature_vocab_ngram,nigger
+582,feature_vocab_ngram,person
+614,feature_vocab_ngram,queer
+615,feature_vocab_ngram,quit
+618,feature_vocab_ngram,racist
+637,feature_vocab_ngram,retard
+675,feature_vocab_ngram,shut
+677,feature_vocab_ngram,shut fuck
+682,feature_vocab_ngram,sinc
+715,feature_vocab_ngram,state
+718,feature_vocab_ngram,stfu
+724,feature_vocab_ngram,stupid
+726,feature_vocab_ngram,stupid bitch
+842,feature_vocab_ngram,white
+844,feature_vocab_ngram,white trash
+978,feature_vocab_pos_2skip_bigram,"('jj', 'rbr')"
+1183,feature_vocab_pos_2skip_bigram,"('vbg', 'vbd')"
+1341,feature_vocab_pos_2skip_trigram,"('cc', 'nn', 'vbg')"
+1470,feature_vocab_pos_2skip_trigram,"('dt', 'in', 'cc')"
+1702,feature_vocab_pos_2skip_trigram,"('in', 'jj', 'cc')"
+1721,feature_vocab_pos_2skip_trigram,"('in', 'jjr', 'nn')"
+1857,feature_vocab_pos_2skip_trigram,"('in', 'wp', 'nn')"
+1905,feature_vocab_pos_2skip_trigram,"('jj', 'in', 'vbd')"
+1942,feature_vocab_pos_2skip_trigram,"('jj', 'nn', 'rbr')"
+2052,feature_vocab_pos_2skip_trigram,"('jj', 'vbp', 'vbn')"
+2054,feature_vocab_pos_2skip_trigram,"('jj', 'vbp', 'vbz')"
+2093,feature_vocab_pos_2skip_trigram,"('jjr', 'jj', 'nn')"
+2097,feature_vocab_pos_2skip_trigram,"('jjr', 'nn', 'nn')"
+2100,feature_vocab_pos_2skip_trigram,"('jjr', 'nn', 'vbp')"
+2114,feature_vocab_pos_2skip_trigram,"('md', 'nn', 'in')"
+2162,feature_vocab_pos_2skip_trigram,"('nn', 'cc', 'vbg')"
+2333,feature_vocab_pos_2skip_trigram,"('nn', 'rp', 'nn')"
+2468,feature_vocab_pos_2skip_trigram,"('nn', 'wdt', 'md')"
+2481,feature_vocab_pos_2skip_trigram,"('nn', 'wp', 'jj')"
+2698,feature_vocab_pos_2skip_trigram,"('prp', 'vbg', 'vbd')"
+2932,feature_vocab_pos_2skip_trigram,"('rb', 'vbp', 'vbg')"
+2986,feature_vocab_pos_2skip_trigram,"('rp', 'nn', 'cc')"
+3000,feature_vocab_pos_2skip_trigram,"('rp', 'prp', 'jj')"
+3030,feature_vocab_pos_2skip_trigram,"('to', 'in', 'prp')"
+3055,feature_vocab_pos_2skip_trigram,"('to', 'nn', 'vbz')"
+3070,feature_vocab_pos_2skip_trigram,"('to', 'rb', 'dt')"
+3097,feature_vocab_pos_2skip_trigram,"('to', 'vb', 'vbz')"
+3164,feature_vocab_pos_2skip_trigram,"('vb', 'nn', 'dt')"
+3255,feature_vocab_pos_2skip_trigram,"('vb', 'vbg', 'vb')"
+3279,feature_vocab_pos_2skip_trigram,"('vb', 'vbz', 'dt')"
+3325,feature_vocab_pos_2skip_trigram,"('vbd', 'in', 'rb')"
+3450,feature_vocab_pos_2skip_trigram,"('vbd', 'wrb', 'nn')"
+3469,feature_vocab_pos_2skip_trigram,"('vbg', 'in', 'cc')"
+3487,feature_vocab_pos_2skip_trigram,"('vbg', 'jj', 'prp')"
+3495,feature_vocab_pos_2skip_trigram,"('vbg', 'nn', 'cc')"
+3526,feature_vocab_pos_2skip_trigram,"('vbg', 'prp', 'vbp')"
+3532,feature_vocab_pos_2skip_trigram,"('vbg', 'rb', 'vb')"
+3559,feature_vocab_pos_2skip_trigram,"('vbg', 'vbd', 'prp')"
+3580,feature_vocab_pos_2skip_trigram,"('vbn', 'dt', 'in')"
+3591,feature_vocab_pos_2skip_trigram,"('vbn', 'in', 'to')"
+3598,feature_vocab_pos_2skip_trigram,"('vbn', 'jj', 'in')"
+3644,feature_vocab_pos_2skip_trigram,"('vbn', 'to', 'in')"
+3766,feature_vocab_pos_2skip_trigram,"('vbp', 'prp', 'vbg')"
+3778,feature_vocab_pos_2skip_trigram,"('vbp', 'rb', 'vbd')"
+3835,feature_vocab_pos_2skip_trigram,"('vbp', 'vbn', 'jj')"
+3838,feature_vocab_pos_2skip_trigram,"('vbp', 'vbn', 'rb')"
+3840,feature_vocab_pos_2skip_trigram,"('vbp', 'vbn', 'to')"
+4006,feature_vocab_pos_2skip_trigram,"('vbz', 'vbp', 'rb')"
+4025,feature_vocab_pos_2skip_trigram,"('wdt', 'md', 'vb')"
+4067,feature_vocab_pos_2skip_trigram,"('wp', 'jj', 'nn')"
+4170,feature_vocab_pos_2skip_trigram,"('wrb', 'prp', 'vbn')"
+4201,feature_vocab_td_other,FKRA
+4202,feature_vocab_td_other,FRE
+4211,feature_vocab_td_other,num_mentions
+4271,feature_vocab_chase_hashtag,#fsu
+4369,feature_vocab_chase_hashtag,#shitmybosssays
+4393,feature_vocab_chase_hashtag,#ferguson
+4401,feature_vocab_chase_hashtag,#gays
+4402,feature_vocab_chase_hashtag,#hypocrite
+4404,feature_vocab_chase_hashtag,#193
+4432,feature_vocab_chase_hashtag,#stupid
+4433,feature_vocab_chase_hashtag,#cousintoucher
+4434,feature_vocab_chase_hashtag,#honkie
+4435,feature_vocab_chase_hashtag,#whitetrash
+4436,feature_vocab_chase_hashtag,#blonde
+4479,feature_vocab_chase_hashtag,#vddie
+4494,feature_vocab_chase_hashtag,#stupidbitches
+4532,feature_vocab_chase_hashtag,#yostknowsmost

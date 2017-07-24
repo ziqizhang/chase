@@ -10,7 +10,7 @@ from sklearn.feature_extraction.text import TfidfVectorizer
 from ml.vectorizer import feature_vectorizer as fv
 from util import logger as logger
 
-class FeatureVectorizerChaseOther(fv.FeatureVectorizer):
+class FeatureVectorizerChaseSkipPoSOnly(fv.FeatureVectorizer):
     def __init__(self):
         super().__init__()
         self.ngram_vectorizer = TfidfVectorizer(
