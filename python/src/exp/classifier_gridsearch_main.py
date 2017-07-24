@@ -193,8 +193,9 @@ if __name__ == '__main__':
     settings=[]
     for lad in label_and_data:
         l_d = lad.split("=")
-        settings = exp.create_settings(sys.argv[1], l_d[0], l_d[1], bool(sys.argv[1]),
-                                   fv,fs_options)
+        settings.extend(exp.create_settings(sys.argv[1], l_d[1], l_d[0], bool(sys.argv[1]),
+                                   fv,fs_options))
+    print("total settings={}".format(len(settings)))
 
     for ds in settings:
         ec.logger.info("\n##########\nSTARTING EXPERIMENT SETTING:" + '; '.join(map(str, ds)))
