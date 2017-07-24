@@ -83,11 +83,9 @@
 2125,feature_vocab_ngram_pos,NNS VBP JJ
 2154,feature_vocab_ngram_pos,PRP
 2197,feature_vocab_ngram_pos,PRP NNS
-2242,feature_vocab_ngram_pos,PRP VBP
 2321,feature_vocab_ngram_pos,RB VB
 2379,feature_vocab_ngram_pos,RP JJ NN
 2417,feature_vocab_ngram_pos,VB
-2462,feature_vocab_ngram_pos,VB PRP
 2658,feature_vocab_ngram_pos,VBP JJ
 2661,feature_vocab_ngram_pos,VBP JJ NN
 2747,feature_vocab_ngram_pos,VBZ
@@ -95,6 +93,8 @@
 2757,feature_vocab_ngram_pos,VBZ JJ
 2875,feature_vocab_td_other,num_syllables
 2876,feature_vocab_td_other,num_chars
+2877,feature_vocab_td_other,num_chars_total
+2878,feature_vocab_td_other,num_terms
 2879,feature_vocab_td_other,num_words
 2880,feature_vocab_td_other,num_unique_words
-2882,feature_vocab_td_other,num_hashtags
+2881,feature_vocab_td_other,vader compound

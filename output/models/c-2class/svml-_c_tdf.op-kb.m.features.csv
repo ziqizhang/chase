@@ -35,7 +35,6 @@
 787,feature_vocab_ngram,park
 805,feature_vocab_ngram,peac
 808,feature_vocab_ngram,pedophil
-907,feature_vocab_ngram,rapefuge
 919,feature_vocab_ngram,refuge
 920,feature_vocab_ngram,refugeesnotwelcom
 921,feature_vocab_ngram,refugeeweek
@@ -84,7 +83,6 @@
 2293,feature_vocab_ngram_pos,VB NN NN
 2305,feature_vocab_ngram_pos,VB PRP
 2313,feature_vocab_ngram_pos,VB PRP RP
-2420,feature_vocab_ngram_pos,VBG JJ VBP
 2501,feature_vocab_ngram_pos,VBP JJ
 2504,feature_vocab_ngram_pos,VBP JJ NN
 2590,feature_vocab_ngram_pos,VBZ
@@ -95,6 +93,8 @@
 2603,feature_vocab_ngram_pos,VBZ JJ JJ
 2718,feature_vocab_td_other,num_syllables
 2719,feature_vocab_td_other,num_chars
+2720,feature_vocab_td_other,num_chars_total
+2721,feature_vocab_td_other,num_terms
 2722,feature_vocab_td_other,num_words
 2723,feature_vocab_td_other,num_unique_words
-2725,feature_vocab_td_other,num_hashtags
+2724,feature_vocab_td_other,vader compound

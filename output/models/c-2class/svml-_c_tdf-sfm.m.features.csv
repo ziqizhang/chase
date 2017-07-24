@@ -1,4 +1,5 @@
 77,feature_vocab_ngram,attack
+111,feature_vocab_ngram,ban
 117,feature_vocab_ngram,ban muslim
 127,feature_vocab_ngram,bani
 128,feature_vocab_ngram,bani slam
@@ -8,14 +9,13 @@
 313,feature_vocab_ngram,destroy
 369,feature_vocab_ngram,evil
 465,feature_vocab_ngram,global
-563,feature_vocab_ngram,immedi
 591,feature_vocab_ngram,isl
 596,feature_vocab_ngram,islam
+599,feature_vocab_ngram,islam evil
 797,feature_vocab_ngram,muslim
 960,feature_vocab_ngram,preach
 1033,feature_vocab_ngram,refuge
-1560,feature_vocab_ngram_pos,DT VBZ
 2004,feature_vocab_ngram_pos,NN VBP VBZ
+2007,feature_vocab_ngram_pos,NN VBZ DT
 2379,feature_vocab_ngram_pos,RP JJ NN
 2417,feature_vocab_ngram_pos,VB
-2882,feature_vocab_td_other,num_hashtags

@@ -1,0 +1,86 @@
+25,feature_vocab_ngram,agre
+98,feature_vocab_ngram,ass nigga
+102,feature_vocab_ngram,attack
+147,feature_vocab_ngram,ban
+152,feature_vocab_ngram,ban islam
+153,feature_vocab_ngram,ban muslim
+164,feature_vocab_ngram,bani
+165,feature_vocab_ngram,bani slam
+183,feature_vocab_ngram,beaner
+204,feature_vocab_ngram,bill
+404,feature_vocab_ngram,complain
+405,feature_vocab_ngram,complet
+412,feature_vocab_ngram,constitut
+433,feature_vocab_ngram,cracker
+449,feature_vocab_ngram,cult
+496,feature_vocab_ngram,deport
+503,feature_vocab_ngram,destroy
+504,feature_vocab_ngram,destroy isl
+562,feature_vocab_ngram,dyke
+609,feature_vocab_ngram,evil
+634,feature_vocab_ngram,fag
+635,feature_vocab_ngram,faggot
+711,feature_vocab_ngram,fuck
+715,feature_vocab_ngram,fuck isl
+769,feature_vocab_ngram,global
+867,feature_vocab_ngram,hoe
+880,feature_vocab_ngram,homophob
+898,feature_vocab_ngram,hungari
+929,feature_vocab_ngram,immedi
+965,feature_vocab_ngram,isl
+970,feature_vocab_ngram,islam
+1001,feature_vocab_ngram,jew
+1059,feature_vocab_ngram,lame
+1108,feature_vocab_ngram,like fuck
+1230,feature_vocab_ngram,mo
+1263,feature_vocab_ngram,muslim
+1322,feature_vocab_ngram,nig
+1330,feature_vocab_ngram,nigger
+1363,feature_vocab_ngram,offici
+1427,feature_vocab_ngram,peac
+1494,feature_vocab_ngram,preach
+1543,feature_vocab_ngram,queer
+1554,feature_vocab_ngram,racist
+1602,feature_vocab_ngram,refuge
+1609,feature_vocab_ngram,refuge welcom
+1636,feature_vocab_ngram,retard
+1679,feature_vocab_ngram,safe
+1731,feature_vocab_ngram,shoot
+1741,feature_vocab_ngram,shut
+1743,feature_vocab_ngram,shut fuck
+1826,feature_vocab_ngram,stfu
+1844,feature_vocab_ngram,stupid bitch
+1987,feature_vocab_ngram,tranni
+2026,feature_vocab_ngram,u know
+2047,feature_vocab_ngram,usual
+2088,feature_vocab_ngram,wa gay
+2143,feature_vocab_ngram,white trash
+2157,feature_vocab_ngram,wonder
+2167,feature_vocab_ngram,wors
+2310,feature_vocab_ngram_pos,CD JJR
+2311,feature_vocab_ngram_pos,CD JJR NN
+2319,feature_vocab_ngram_pos,DT CC
+2398,feature_vocab_ngram_pos,DT PRP VBP
+2476,feature_vocab_ngram_pos,IN JJ PRP
+2508,feature_vocab_ngram_pos,IN NNS DT
+2620,feature_vocab_ngram_pos,JJ NN CC
+2674,feature_vocab_ngram_pos,JJ RB JJ
+2758,feature_vocab_ngram_pos,JJS NN RB
+2809,feature_vocab_ngram_pos,NN DT VBN
+2881,feature_vocab_ngram_pos,NN NNS DT
+2995,feature_vocab_ngram_pos,NN VBN RB
+3012,feature_vocab_ngram_pos,NN VBP VBZ
+3016,feature_vocab_ngram_pos,NN VBZ DT
+3547,feature_vocab_ngram_pos,RP JJ NN
+3603,feature_vocab_ngram_pos,TO VB WP
+3612,feature_vocab_ngram_pos,VB CD NN
+3646,feature_vocab_ngram_pos,VB NN DT
+3724,feature_vocab_ngram_pos,VB VBG PRP
+3884,feature_vocab_ngram_pos,VBG PRP VB
+3885,feature_vocab_ngram_pos,VBG PRP VBP
+4009,feature_vocab_ngram_pos,VBP NN VBZ
+4092,feature_vocab_ngram_pos,VBP VBN RP
+4097,feature_vocab_ngram_pos,VBP VBP IN
+4158,feature_vocab_ngram_pos,VBZ PRP DT
+4175,feature_vocab_ngram_pos,VBZ RBR
+4225,feature_vocab_ngram_pos,WDT VBP JJ

@@ -12,6 +12,5 @@
 920,feature_vocab_ngram,refugeesnotwelcom
 1847,feature_vocab_ngram_pos,NN VBP VBZ
 1850,feature_vocab_ngram_pos,NN VBZ DT
-2095,feature_vocab_ngram_pos,PRP VBP VB
 2260,feature_vocab_ngram_pos,VB
-2725,feature_vocab_td_other,num_hashtags
+2724,feature_vocab_td_other,vader compound

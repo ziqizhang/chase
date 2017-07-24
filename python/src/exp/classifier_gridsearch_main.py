@@ -175,13 +175,13 @@ if __name__ == '__main__':
     #argv[5] - 0 to use td orignal features; 1 to use chase-basic features
 
     fv=None
-    if sys.argv[2]=='1':
+    if sys.argv[3]=='1':
         fv=fv_chase_basic.FeatureVectorizerChaseBasic()
-    elif sys.argv[2]=='2':
+    elif sys.argv[3]=='2':
         fv=fv_chase_skipgram.FeatureVectorizerChaseSkipgram()
-    elif sys.argv[2]=='3':
+    elif sys.argv[3]=='3':
         fv=fv_chase_skipgram_pos_only.FeatureVectorizerChaseOther()
-    elif sys.argv[2]=='4':
+    elif sys.argv[3]=='4':
         fv=fv_chase_basic_othering.FeatureVectorizerChaseBasicOthering()
     else:
         fv=fv_davison.FeatureVectorizerDavidson()

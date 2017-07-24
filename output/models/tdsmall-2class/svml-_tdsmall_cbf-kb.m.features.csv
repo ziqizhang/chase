@@ -1,0 +1,100 @@
+37,feature_vocab_ngram,ass nigga
+59,feature_vocab_ngram,beaner
+70,feature_vocab_ngram,biggest
+74,feature_vocab_ngram,bitch
+103,feature_vocab_ngram,bitch shit
+119,feature_vocab_ngram,boss
+122,feature_vocab_ngram,boy
+168,feature_vocab_ngram,complain
+171,feature_vocab_ngram,coon
+177,feature_vocab_ngram,cracker
+181,feature_vocab_ngram,cri
+236,feature_vocab_ngram,dyke
+263,feature_vocab_ngram,fag
+264,feature_vocab_ngram,faggot
+268,feature_vocab_ngram,fan
+295,feature_vocab_ngram,found
+306,feature_vocab_ngram,fuckin
+315,feature_vocab_ngram,gay
+359,feature_vocab_ngram,head
+360,feature_vocab_ngram,hear
+373,feature_vocab_ngram,hoe
+385,feature_vocab_ngram,hop
+423,feature_vocab_ngram,kill
+460,feature_vocab_ngram,listen
+492,feature_vocab_ngram,may
+499,feature_vocab_ngram,mexican
+514,feature_vocab_ngram,monkey
+547,feature_vocab_ngram,nigger
+582,feature_vocab_ngram,person
+614,feature_vocab_ngram,queer
+615,feature_vocab_ngram,quit
+618,feature_vocab_ngram,racist
+623,feature_vocab_ngram,read
+637,feature_vocab_ngram,retard
+669,feature_vocab_ngram,shit like
+671,feature_vocab_ngram,shoot
+675,feature_vocab_ngram,shut
+677,feature_vocab_ngram,shut fuck
+682,feature_vocab_ngram,sinc
+715,feature_vocab_ngram,state
+718,feature_vocab_ngram,stfu
+724,feature_vocab_ngram,stupid
+726,feature_vocab_ngram,stupid bitch
+842,feature_vocab_ngram,white
+844,feature_vocab_ngram,white trash
+957,feature_vocab_ngram_pos,DT JJ IN
+967,feature_vocab_ngram_pos,DT MD
+1061,feature_vocab_ngram_pos,IN NN NNS
+1076,feature_vocab_ngram_pos,IN NNS VBD
+1093,feature_vocab_ngram_pos,IN PRP VBG
+1143,feature_vocab_ngram_pos,JJ JJ NNS
+1229,feature_vocab_ngram_pos,JJ VBP VBN
+1240,feature_vocab_ngram_pos,JJR JJ
+1261,feature_vocab_ngram_pos,MD VB NN
+1287,feature_vocab_ngram_pos,NN DT VBZ
+1421,feature_vocab_ngram_pos,NN VBG NN
+1426,feature_vocab_ngram_pos,NN VBG VBD
+1446,feature_vocab_ngram_pos,NN VBP VBN
+1469,feature_vocab_ngram_pos,NN WP DT
+1494,feature_vocab_ngram_pos,NNS IN NN
+1522,feature_vocab_ngram_pos,NNS RB JJ
+1730,feature_vocab_ngram_pos,RB JJ VBP
+1732,feature_vocab_ngram_pos,RB MD
+1733,feature_vocab_ngram_pos,RB MD VB
+1783,feature_vocab_ngram_pos,RB VBG PRP
+1809,feature_vocab_ngram_pos,RBR
+1822,feature_vocab_ngram_pos,RP IN NN
+1830,feature_vocab_ngram_pos,RP NNS
+1832,feature_vocab_ngram_pos,RP PRP JJ
+1839,feature_vocab_ngram_pos,TO DT JJ
+1885,feature_vocab_ngram_pos,VB IN RB
+1932,feature_vocab_ngram_pos,VB RP PRP
+2012,feature_vocab_ngram_pos,VBD VBG NN
+2048,feature_vocab_ngram_pos,VBG PRP VBP
+2057,feature_vocab_ngram_pos,VBG VBD
+2130,feature_vocab_ngram_pos,VBP NN VBZ
+2163,feature_vocab_ngram_pos,VBP RB VBP
+2184,feature_vocab_ngram_pos,VBP VBN
+2186,feature_vocab_ngram_pos,VBP VBN JJ
+2205,feature_vocab_ngram_pos,VBZ DT JJS
+2255,feature_vocab_ngram_pos,WDT MD
+2305,feature_vocab_td_other,FKRA
+2306,feature_vocab_td_other,FRE
+2313,feature_vocab_td_other,vader compound
+2315,feature_vocab_td_other,num_mentions
+2329,feature_vocab_chase_hashtag,#233
+2375,feature_vocab_chase_hashtag,#fsu
+2473,feature_vocab_chase_hashtag,#shitmybosssays
+2497,feature_vocab_chase_hashtag,#ferguson
+2505,feature_vocab_chase_hashtag,#gays
+2506,feature_vocab_chase_hashtag,#hypocrite
+2508,feature_vocab_chase_hashtag,#193
+2536,feature_vocab_chase_hashtag,#stupid
+2537,feature_vocab_chase_hashtag,#cousintoucher
+2538,feature_vocab_chase_hashtag,#honkie
+2539,feature_vocab_chase_hashtag,#whitetrash
+2540,feature_vocab_chase_hashtag,#blonde
+2583,feature_vocab_chase_hashtag,#vddie
+2598,feature_vocab_chase_hashtag,#stupidbitches
+2636,feature_vocab_chase_hashtag,#yostknowsmost
