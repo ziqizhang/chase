@@ -1,18 +1,34 @@
-INFO:__main__:	generating word vectors, 2017-07-24 15:45:51.548849
-INFO:__main__:		 complete, dim=(2677, 733), 2017-07-24 15:45:52.863667
-INFO:__main__:New run started at 2017-07-24 15:45:54.749248
+INFO:gensim.models.keyedvectors:loading projection weights from /home/zqz/Work/data/GoogleNews-vectors-negative300.bin.gz
+INFO:gensim.models.keyedvectors:loaded (3000000, 300) matrix from /home/zqz/Work/data/GoogleNews-vectors-negative300.bin.gz
+INFO:__main__:	generating word vectors, 2017-07-24 19:09:46.308531
+INFO:__main__:		 complete, dim=(2677, 733), 2017-07-24 19:09:47.544052
+INFO:__main__:loading pre-trained embedding model... 2017-07-24 19:09:48.004134
+INFO:__main__:loading complete. 2017-07-24 19:09:48.004280
+INFO:__main__:New run started at 2017-07-24 19:09:49.520918
 None
-INFO:__main__:New run started at 2017-07-24 15:45:54.750549
+INFO:__main__:New run started at 2017-07-24 19:09:49.522215
 None
-INFO:__main__:New run started at 2017-07-24 15:45:54.783708
+INFO:__main__:New run started at 2017-07-24 19:09:49.554332
 None
-INFO:__main__:New run started at 2017-07-24 15:45:54.784258
+INFO:__main__:New run started at 2017-07-24 19:09:49.555569
 None
-INFO:__main__:New run started at 2017-07-24 15:45:54.784980
+INFO:__main__:New run started at 2017-07-24 19:09:49.645901
 None
-INFO:__main__:New run started at 2017-07-24 15:45:54.785489
+INFO:__main__:New run started at 2017-07-24 19:09:49.647185
 None
-INFO:__main__:New run started at 2017-07-24 15:45:55.051531
+INFO:__main__:New run started at 2017-07-24 19:09:49.693852
 None
-INFO:__main__:New run started at 2017-07-24 15:45:55.053438
+INFO:__main__:New run started at 2017-07-24 19:09:49.695060
+None
+INFO:__main__:New run started at 2017-07-24 19:14:02.757113
+None
+INFO:__main__:New run started at 2017-07-24 19:14:02.757753
+None
+INFO:__main__:New run started at 2017-07-24 19:15:12.608228
+None
+INFO:__main__:New run started at 2017-07-24 19:15:12.608907
+None
+INFO:__main__:New run started at 2017-07-24 19:16:35.512285
+None
+INFO:__main__:New run started at 2017-07-24 19:16:35.512924
 None

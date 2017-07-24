@@ -89,7 +89,7 @@ def create_model_lstm(embedding_layer):
     model = Sequential()
     model.add(embedding_layer)
     model.add(Dropout(0.2))
-    model.add(LSTM(150))
+    model.add(LSTM(100))
     model.add(Dropout(0.2))
     model.add(Dense(1, activation='sigmoid'))
     model.compile(loss='binary_crossentropy', optimizer='adam', metrics=['accuracy'])
@@ -259,11 +259,13 @@ def create_settings(indata, outdir, datalabel, print_result_per_ds,
     #           1, 1, model, expected_embedding_dim, 1]
     # settings.append(params)
 
-    params = ['lstm_oov=randemb_', datalabel, indata, outdir, print_result_per_ds,
+    params = ['lstm_twe_oov=rand', datalabel, indata, outdir, print_result_per_ds,
               0, 2, model, expected_embedding_dim, 0]
     settings.append(params)
 
     return settings
+# /home/zqz/Work/data/GoogleNews-vectors-negative300.bin.gz
+# 300
 
 
 pretrained_embedding_file = None
@@ -297,5 +299,4 @@ for set in settings:
                set[8]  # pretrained embedding dim
                )
 
-# /home/zqz/Work/data/GoogleNews-vectors-negative300.bin.gz
-# 300
+
