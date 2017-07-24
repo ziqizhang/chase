@@ -69,5 +69,4 @@ def create_settings(sys_out, data_in, label, scores_per_ds, fvect: fv.FeatureVec
     #                  -1, #use pca for dimensionality reduction
     #                  False, #grid search on pca
     #                  sys_out])
-    print("inside setting method, settings={}".format(len(settings)))
     return settings
