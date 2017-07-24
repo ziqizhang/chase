@@ -192,7 +192,7 @@ if __name__ == '__main__':
     settings=[]
     for lad in label_and_data:
         l_d = lad.split("=")
-        settings.extend(exp.create_settings(sys.argv[1], l_d[1], l_d[0], bool(sys.argv[1]),
+        settings.extend(exp.create_settings(sys.argv[1], l_d[1], l_d[0], bool(sys.argv[2]),
                                    fv,fs_options))
     print("total settings={}".format(len(settings)))
 
