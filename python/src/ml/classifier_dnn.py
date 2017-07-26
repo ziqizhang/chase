@@ -260,7 +260,7 @@ def create_settings(indata, outdir, datalabel, print_result_per_ds,
     # settings.append(params)
 
     params = ['lstm_twe_', datalabel, indata, outdir, print_result_per_ds,
-              0, 1, model, expected_embedding_dim, 0]
+              0, 0, model, expected_embedding_dim, 0]
     settings.append(params)
 
     return settings

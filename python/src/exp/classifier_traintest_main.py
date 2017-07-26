@@ -103,7 +103,7 @@ class ChaseClassifier(object):
             util.save_selected_features(feature_idx,
                                         meta_TRAIN[1],
                                         training_feature_save)
-        ec.logger.log("FEATURE SELECTION={}, Shape={}".format(select, X_train.shape))
+        ec.logger.info("FEATURE SELECTION={}, Shape={}".format(select, X_train.shape))
 
         X_test=self.transform_test_features(SCALING_STRATEGY,
                            self.feat_v,
