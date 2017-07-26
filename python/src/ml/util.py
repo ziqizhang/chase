@@ -258,6 +258,9 @@ def saveOutput(prediction, model_name, task, outfolder):
 
 
 def feature_scale(option, M):
+    if option==-1:
+        return M
+
     print("feature scaling, first perform sanity check...")
     if M.isnull().values.any():
         print("input matrix has NaN values, replace with 0")
