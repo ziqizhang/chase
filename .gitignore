@@ -12,3 +12,4 @@ output/*.pkl
 output/fs/*
 logs/*
 job_iceberg*
+output/td_tdca/*

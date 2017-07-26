@@ -104,10 +104,15 @@ def write_scores(predictoins, truth: pandas.Series, digits, writer, instance_dst
             subset_truth = []
             for index, label in zip(truth.index, predictoins):
                 if instance_dst_column[index] == dstag:
-                    subset_pred.append(label)
+                    if isinstance(label,np.ndarray):
+                        subset_pred.append(label[0])
+                    else:
+                        subset_pred.append(label)
             for index, label in zip(truth.index, truth):
                 if instance_dst_column[index] == dstag:
                     subset_truth.append(label)
+            # print("subset_truth={}, type={}".format(len(subset_truth), type(subset_truth)))
+            # print("subset_pred={}, type={}".format(len(subset_pred), type(subset_pred)))
             subset_labels = unique_labels(subset_truth, subset_pred)
             target_names = ['%s' % l for l in labels]
             p, r, f1, s = precision_recall_fscore_support(subset_truth, subset_pred,

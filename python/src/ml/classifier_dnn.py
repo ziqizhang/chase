@@ -259,8 +259,8 @@ def create_settings(indata, outdir, datalabel, print_result_per_ds,
     #           1, 1, model, expected_embedding_dim, 1]
     # settings.append(params)
 
-    params = ['lstm_twe_oov=rand', datalabel, indata, outdir, print_result_per_ds,
-              0, 2, model, expected_embedding_dim, 0]
+    params = ['lstm_twe_', datalabel, indata, outdir, print_result_per_ds,
+              0, 1, model, expected_embedding_dim, 0]
     settings.append(params)
 
     return settings
