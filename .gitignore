@@ -1,7 +1,6 @@
 logs/log.txt
 config/twitter_oauth.txt
 aws/*
-data/solr/*
 output/errors/*
 output/features/*
 output/models/*.m
@@ -13,3 +12,6 @@ output/fs/*
 logs/*
 job_iceberg*
 output/td_tdca/*
+data/solr/tags/data
+data/solr/tweets/data
+data/solr/hsperfdata_zz
