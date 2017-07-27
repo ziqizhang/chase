@@ -1,4 +1,7 @@
 import datetime
+
+import logging
+
 from ml import feature_extractor as fe
 from ml import text_preprocess as tp
 from ml import nlp
@@ -6,7 +9,7 @@ import numpy as np
 import pandas as pd
 from sklearn.feature_extraction.text import TfidfVectorizer
 from ml.vectorizer import feature_vectorizer as fv
-from util import logger as logger
+logger = logging.getLogger(__name__)
 
 class FeatureVectorizerChaseBasic(fv.FeatureVectorizer):
     def __init__(self):
@@ -64,17 +67,17 @@ class FeatureVectorizerChaseBasic(fv.FeatureVectorizer):
         td_pos=fe.get_ngram_pos_tfidf(self.pos_vectorizer, tweets_cleaned, out_folder, flag)
 
         # Features group 3: other features
-        logger.logger.info("\tgenerating other feature vectors, {}".format(datetime.datetime.now()))
+        logger.info("\tgenerating other feature vectors, {}".format(datetime.datetime.now()))
         td_otherfeats = fe.get_oth_features(tweets_original, tweets_cleaned,out_folder)
 
         '''CHASE basic features={}'''
-        logger.logger.info("\tgenerating CHASE hashtag feature vectors, {}".format(datetime.datetime.now()))
+        logger.info("\tgenerating CHASE hashtag feature vectors, {}".format(datetime.datetime.now()))
         c_hashtags=fe.get_hashtags_in_tweets(tweets_original, out_folder)
-        logger.logger.info("\tgenerating CHASE other stats feature vectors, {}".format(datetime.datetime.now()))
+        logger.info("\tgenerating CHASE other stats feature vectors, {}".format(datetime.datetime.now()))
         c_stats=fe.get_chase_stats_features(tweets_original, tweets_cleaned, out_folder)
 
 
-        logger.logger.info("\t\tcompleted, {}, {}".format(td_otherfeats[0].shape,datetime.datetime.now()))
+        logger.info("\t\tcompleted, {}, {}".format(td_otherfeats[0].shape,datetime.datetime.now()))
 
         # Now concatenate all features in to single sparse matrix
         M = np.concatenate([td_tfidf[0], td_pos[0], td_otherfeats[0],

@@ -4,7 +4,6 @@ import pickle
 import datetime
 import random
 
-import gensim
 import pandas
 from sklearn.cross_validation import train_test_split
 import os

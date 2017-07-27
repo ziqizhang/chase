@@ -3,6 +3,7 @@ import functools
 import pickle
 
 import enchant
+import logging
 import numpy as np
 import pandas as pd
 from nltk import word_tokenize
@@ -13,9 +14,9 @@ from sklearn.feature_extraction.text import TfidfVectorizer
 from textstat.textstat import *
 
 from ml import nlp
-from util import logger as log
 import sys
 
+logger = logging.getLogger(__name__)
 NGRAM_FEATURES_VOCAB="feature_vocab_ngram"
 NGRAM_POS_FEATURES_VOCAB="feature_vocab_ngram_pos"
 SKIPGRAM_FEATURES_VOCAB="feature_vocab_skipgram"
@@ -36,9 +37,9 @@ skipgram_label={}
 #generates tfidf weighted ngram feature as a matrix and the vocabulary
 def get_ngram_tfidf(ngram_vectorizer: TfidfVectorizer, tweets, out_folder, flag):
     joblib.dump(ngram_vectorizer, out_folder + '/'+flag+'_ngram_tfidf.pkl')
-    log.logger.info("\tgenerating n-gram vectors, {}".format(datetime.datetime.now()))
+    logger.info("\tgenerating n-gram vectors, {}".format(datetime.datetime.now()))
     tfidf = ngram_vectorizer.fit_transform(tweets).toarray()
-    log.logger.info("\t\t complete, dim={}, {}".format(tfidf.shape, datetime.datetime.now()))
+    logger.info("\t\t complete, dim={}, {}".format(tfidf.shape, datetime.datetime.now()))
     vocab = {v: i for i, v in enumerate(ngram_vectorizer.get_feature_names())}
     idf_vals = ngram_vectorizer.idf_
     idf_dict = {i: idf_vals[i] for i in vocab.values()}  # keys are indices; values are IDF scores
@@ -48,12 +49,12 @@ def get_ngram_tfidf(ngram_vectorizer: TfidfVectorizer, tweets, out_folder, flag)
 
 #generates tfidf weighted PoS of ngrams as a feature matrix and the vocabulary
 def get_ngram_pos_tfidf(pos_vectorizer:TfidfVectorizer, tweets, out_folder, flag):
-    log.logger.info("\tcreating pos tags, {}".format(datetime.datetime.now()))
+    logger.info("\tcreating pos tags, {}".format(datetime.datetime.now()))
     tweet_tags = nlp.get_pos_tags(tweets)
-    log.logger.info("\tgenerating pos tag vectors, {}".format(datetime.datetime.now()))
+    logger.info("\tgenerating pos tag vectors, {}".format(datetime.datetime.now()))
     pos = pos_vectorizer.fit_transform(pd.Series(tweet_tags)).toarray()
     joblib.dump(pos_vectorizer, out_folder + '/'+flag+'_pos.pkl')
-    log.logger.info("\t\tcompleted, dim={}, {}".format(pos.shape, datetime.datetime.now()))
+    logger.info("\t\tcompleted, dim={}, {}".format(pos.shape, datetime.datetime.now()))
     pos_vocab = {v: i for i, v in enumerate(pos_vectorizer.get_feature_names())}
     pickle.dump(pos_vocab, open(out_folder+"/"+NGRAM_POS_FEATURES_VOCAB+".pk", "wb" ))
     return pos, pos_vocab
@@ -81,9 +82,9 @@ def get_skipgram(tweets, out_folder, nIn, kIn):
     #     skipgram_feature_matrix.append(list(skipper(tweetTokens)))
 
     # Fit the text into the vectorizer.
-    log.logger.info("\tgenerating skip-gram vectors, n={}, k={}, {}".format(nIn, kIn,datetime.datetime.now()))
+    logger.info("\tgenerating skip-gram vectors, n={}, k={}, {}".format(nIn, kIn,datetime.datetime.now()))
     tfidf = vectorizer.fit_transform(tweet_tokenized).toarray()
-    log.logger.info("\t\t complete, dim={}, {}".format(tfidf.shape, datetime.datetime.now()))
+    logger.info("\t\t complete, dim={}, {}".format(tfidf.shape, datetime.datetime.now()))
     vocab = {v: i for i, v in enumerate(vectorizer.get_feature_names())}
     idf_vals = vectorizer.idf_
     idf_dict = {i: idf_vals[i] for i in vocab.values()}  # keys are indices; values are IDF scores

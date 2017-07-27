@@ -1,6 +1,11 @@
 import csv
 import os
 
+import pickle
+
+from ml import util, text_preprocess
+from ml import classifier_traintest as ct
+
 def merge_annotations(in_folder, out_file):
     tag_lookup={}
     id_lookup={}
@@ -31,13 +36,28 @@ def merge_annotations(in_folder, out_file):
             tag=tag_lookup[key]
             writer.writerow([tag,key, value])
 
+def ml_tag(tweet, feat_vectorizer, model, selected_features, scaling,sysout, logger):
+    tc = text_preprocess.strip_hashtags(tweet)
+    tweets_cleaned=[tc]
+    tweets=[tweet]
+    # tweets_cleaned = [text_preprocess.preprocess_clean(x, True, True) for x in tweets]
+    M = feat_vectorizer.transform_inputs(tweets, tweets_cleaned, sysout, "na")      
 
+    X_test_selected = ct.map_to_trainingfeatures(selected_features, M)
+    X_test_selected = util.feature_scale(scaling, X_test_selected)
+    label = model.predict(X_test_selected)
+    return label
+
+
+def load_ml_model(file):
+    with open(file, 'rb') as model:
+        return pickle.load(model)
 
 # in_folder="/home/zqz/Work/chase/data/annotation/unfiltered"
 # out_file="/home/zqz/Work/chase/data/annotation/unfilered_merged.csv"
 # in_folder="/home/zqz/Work/chase/data/annotation/keyword_filtered"
 # out_file="/home/zqz/Work/chase/data/annotation/keywordfilered_merged.csv"
-print(os.getcwd())
-in_folder="../../../data/annotation/tag_filtered"
-out_file="../../../data/annotation/tagfilered_merged.csv"
-merge_annotations(in_folder,out_file)
+# print(os.getcwd())
+# in_folder="../../../data/annotation/tag_filtered"
+# out_file="../../../data/annotation/tagfilered_merged.csv"
+# merge_annotations(in_folder,out_file)

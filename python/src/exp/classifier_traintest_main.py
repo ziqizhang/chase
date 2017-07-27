@@ -164,6 +164,9 @@ class ChaseClassifier(object):
 
         y_preds = classifier.predict(X_test)
         util.save_scores(y_preds, y_test, y_preds, y_test, model_name, self.task_name, identifier, 2, sys_out)
+        subfolder = sys_out + "/models"
+        model_file = subfolder + "/svml-%s.m" % identifier
+        util.save_classifier_model(classifier, model_file)
         ec.logger.info("complete, {}".format(datetime.datetime.now()))
 
 

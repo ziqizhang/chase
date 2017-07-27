@@ -1,16 +1,16 @@
 import csv
 
+import logging
 import numpy
-from keras.wrappers.scikit_learn import KerasClassifier
 from sklearn import svm
 from sklearn.ensemble import RandomForestClassifier
 from sklearn.linear_model import LogisticRegression
 from sklearn.linear_model import SGDClassifier
-
-from ml import classifier_gridsearch
+import os
 from ml import util
-from util import logger as ec
-
+LOG_DIR = os.getcwd() + "/logs"
+logger = logging.getLogger(__name__)
+logging.basicConfig(filename=LOG_DIR + '/classifier.log', level=logging.INFO, filemode='w')
 
 def create_classifier(model, sysout, task, cpus, input_dim):
     classifier=None
@@ -33,9 +33,6 @@ def create_classifier(model, sysout, task, cpus, input_dim):
     if (model == "lr"):
         classifier = LogisticRegression(random_state=111)
         model_file = subfolder + "/stochasticLR-%s.m" % task
-    if (model=="ann"):
-        classifier = KerasClassifier(build_fn=classifier_gridsearch.create_model(input_dim), verbose=0)
-        model_file = subfolder + "/ann-%s.m" % task
 
     return classifier, model_file
 
@@ -46,10 +43,10 @@ def transform_test_features(data, feature_vectorizer,
                             scaling_option):
     # test data must be represented in a feature matrix of the same dimension of the training data feature matrix
     # step 1: reconstruct empty feature matrix using the vocabularies seen at training time
-    ec.logger.info("\n\nEXTRACTING TEST DATA FEATURS...")
-    meta_TEST = util.feature_extraction(data, feature_vectorizer, sys_out, ec.logger)
+    logger.info("\n\nEXTRACTING TEST DATA FEATURS...")
+    meta_TEST = util.feature_extraction(data, feature_vectorizer, sys_out, logger)
 
-    ec.logger.info("\nFEATURE SELECTION ON TEST DATA...")
+    logger.info("\nFEATURE SELECTION ON TEST DATA...")
     train_features = create_training_features(training_feature_save)
     # step 2: create test data features
     M_features_by_type = meta_TEST[1]
@@ -103,7 +100,7 @@ def map_to_trainingfeatures(keep_features: {}, from_features: {},
         if isinstance(t_value_, set):
             t_value_=list(t_value)
 
-        ec.logger.info("\t mapping feature type={}, features={}".format(t_key, len(t_value_)))
+        logger.info("\t mapping feature type={}, features={}".format(t_key, len(t_value_)))
         features = numpy.zeros((num_instances, len(t_value_)))
         # if feature type exist in test data features
         if t_key in from_features:
@@ -131,7 +128,7 @@ def map_to_trainingfeatures(keep_features: {}, from_features: {},
                         new_row[vocab_index] = value
                 features[row_index] = new_row
                 if(from_features_row_index%100==0):
-                    ec.logger.info("(progress: {})".format(from_features_row_index))
+                    logger.info("(progress: {})".format(from_features_row_index))
                 from_features_row_index += 1
                 row_index+=1
         else:

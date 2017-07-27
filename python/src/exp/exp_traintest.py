@@ -9,8 +9,8 @@ def create_settings(sys_out, data_train, data_test):
     #will take significantly longer time. but possibly better results
 
     settings=[]
-    settings.append(['td_', #task name to identify model files
-                     'td_', #identifier to identify scores
+    settings.append(['tdcb_cbf_production_', #task name to identify model files
+                     'tdcb_cbf_production_', #identifier to identify scores
                      data_train,
                      data_test,
                      fv_davison.FeatureVectorizerDavidson(),#what feature vectorizer to use
