@@ -90,5 +90,5 @@ def collect_samples(config_file,out_folder):
 
 
 
-collect_samples("/home/zqz/Work/chase/config/data_sampling.txt",
-                "/home/zqz/Work/chase/data/annotation/tag_filtered")
+# collect_samples("/home/zqz/Work/chase/config/data_sampling.txt",
+#                 "/home/zqz/Work/chase/data/annotation/tag_filtered")

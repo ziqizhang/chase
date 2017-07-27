@@ -191,7 +191,7 @@ class TwitterStream(StreamListener):
 
                 # ml_tag=util.ml_tag(jdata['text'], feat_vectorizer,self.__ml_model, self.__selected_features,
                 #                    SCALING_STRATEGY, self.__sysout, logger)
-                ml_tag = '1' if random.random() < 0.2 else '0'
+                ml_tag = '0' if random.random() < 0.2 else '2'
                 tweet_risk = random.uniform(0, 1.0)
 
                 docs = [{'id': jdata["id"],

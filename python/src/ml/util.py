@@ -261,7 +261,7 @@ def feature_scale(option, M):
         return M
 
     print("feature scaling, first perform sanity check...")
-    if M.isnull().values.any():
+    if not isinstance(M, np.ndarray) and M.isnull().values.any():
         print("input matrix has NaN values, replace with 0")
         M.fillna(0)
 

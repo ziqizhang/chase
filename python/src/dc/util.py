@@ -36,17 +36,14 @@ def merge_annotations(in_folder, out_file):
             tag=tag_lookup[key]
             writer.writerow([tag,key, value])
 
-def ml_tag(tweet, feat_vectorizer, model, selected_features, scaling,sysout, logger):
-    tc = text_preprocess.strip_hashtags(tweet)
-    tweets_cleaned=[tc]
-    tweets=[tweet]
-    # tweets_cleaned = [text_preprocess.preprocess_clean(x, True, True) for x in tweets]
+def ml_tag(tweets, feat_vectorizer, model, selected_features, scaling,sysout, logger):
+    tweets_cleaned = [text_preprocess.preprocess_clean(x, True, True) for x in tweets]
     M = feat_vectorizer.transform_inputs(tweets, tweets_cleaned, sysout, "na")      
 
-    X_test_selected = ct.map_to_trainingfeatures(selected_features, M)
+    X_test_selected = ct.map_to_trainingfeatures(selected_features, M[1])
     X_test_selected = util.feature_scale(scaling, X_test_selected)
-    label = model.predict(X_test_selected)
-    return label
+    labels = model.predict(X_test_selected)
+    return labels
 
 
 def load_ml_model(file):
