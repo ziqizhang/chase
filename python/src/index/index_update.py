@@ -28,7 +28,7 @@ def update_ml_tag(docs, feat_vectorizer, ml_model, selected_features, scaling_op
     for t, d in zip(tags,docs):
         if t==0:
             count+=1
-            print(d['status_text'])
+            #print(d['status_text'])
         d['ml_tag']=str(t)
     print(count)
     solr.index(SOLR_CORE_TWEET, docs)
