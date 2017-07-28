@@ -1,10 +1,6 @@
 import csv
 import os
 
-import pickle
-
-from ml import util, text_preprocess
-from ml import classifier_traintest as ct
 
 def merge_annotations(in_folder, out_file):
     tag_lookup={}
@@ -36,19 +32,7 @@ def merge_annotations(in_folder, out_file):
             tag=tag_lookup[key]
             writer.writerow([tag,key, value])
 
-def ml_tag(tweets, feat_vectorizer, model, selected_features, scaling,sysout, logger):
-    tweets_cleaned = [text_preprocess.preprocess_clean(x, True, True) for x in tweets]
-    M = feat_vectorizer.transform_inputs(tweets, tweets_cleaned, sysout, "na")      
 
-    X_test_selected = ct.map_to_trainingfeatures(selected_features, M[1])
-    X_test_selected = util.feature_scale(scaling, X_test_selected)
-    labels = model.predict(X_test_selected)
-    return labels
-
-
-def load_ml_model(file):
-    with open(file, 'rb') as model:
-        return pickle.load(model)
 
 # in_folder="/home/zqz/Work/chase/data/annotation/unfiltered"
 # out_file="/home/zqz/Work/chase/data/annotation/unfilered_merged.csv"

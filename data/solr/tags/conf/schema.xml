@@ -130,18 +130,11 @@
 		<fieldType name="tdate" class="solr.TrieDateField" precisionStep="6" positionIncrementGap="0"/>
 		<fieldType name="text_general" class="solr.TextField" positionIncrementGap="100">
 			<analyzer type="index">
-				<tokenizer class="solr.StandardTokenizerFactory" />
-				<filter class="solr.ASCIIFoldingFilterFactory"/>
-				<filter class="solr.StopFilterFactory" ignoreCase="true" words="stopwords.txt"/>
-				<!-- in this example, we will only use synonyms at query time <filter class="solr.SynonymFilterFactory" synonyms="index_synonyms.txt" ignoreCase="true" expand="false"/> -->
-				<filter class="solr.LowerCaseFilterFactory" />				
+				<tokenizer class="solr.StandardTokenizerFactory" />				
+				<!-- in this example, we will only use synonyms at query time <filter class="solr.SynonymFilterFactory" synonyms="index_synonyms.txt" ignoreCase="true" expand="false"/> -->							
 			</analyzer>
 			<analyzer type="query">
-				<tokenizer class="solr.StandardTokenizerFactory" />
-				<filter class="solr.ASCIIFoldingFilterFactory"/>
-				<filter class="solr.StopFilterFactory" ignoreCase="true" words="stopwords.txt"/>
-				<filter class="solr.SynonymFilterFactory" synonyms="synonyms.txt" ignoreCase="true" expand="true" />
-				<filter class="solr.LowerCaseFilterFactory" />
+				<tokenizer class="solr.StandardTokenizerFactory" />				
 			</analyzer>
 		</fieldType>			
 	</types>
@@ -155,9 +148,15 @@
 		  trailing underscores (e.g. _version_) are reserved.
 	    -->
 	<field name="_version_" type="long" indexed="true" stored="true" multiValued="false"/>
-	<field name="id" type="string" indexed="true" stored="true" required="true" multiValued="false" />   
-	<field name="related" type="string" indexed="false" stored="true" multiValued="false"/>	
-
+	<field name="id" type="string" indexed="true" stored="true" required="true" multiValued="false" />  
+	<field name="type" type="string" indexed="true" stored="true" required="true" multiValued="false" />
+	<field name="tag_text" type="text_general" indexed="true" stored="true" required="true" multiValued="false" /> 	
+	<field name="frequency" type="int" indexed="true" stored="true" multiValued="false"/>
+	<!-- tag pair only -->
+	<field name="pmi" type="string" indexed="true" stored="true" multiValued="false"/>
+	<!-- single tag only -->
+	<field name="frequencyh" type="int" indexed="true" stored="true" multiValued="false"/>
+	<field name="risk_score" type="float" indexed="true" stored="true" multiValued="false"/>
        <dynamicField name="*_i"  type="int"    indexed="true"  stored="true"/>
 	   <dynamicField name="*_is" type="int"    indexed="true"  stored="true"  multiValued="true"/>
 	   <dynamicField name="*_s"  type="string"  indexed="true"  stored="true" />

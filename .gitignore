@@ -15,3 +15,4 @@ output/td_tdca/*
 data/solr/tags/data
 data/solr/tweets/data
 data/solr/hsperfdata_zz
+*.tar.gz

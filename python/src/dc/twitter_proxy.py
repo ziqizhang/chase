@@ -13,6 +13,7 @@ from SolrClient import SolrClient
 from tweepy import OAuthHandler
 from tweepy.streaming import StreamListener, Stream
 from geopy.geocoders import Nominatim
+from index import util as iu
 
 # documentation of tweets fields https://dev.twitter.com/overview/api/tweets
 # from dc import util
@@ -21,9 +22,6 @@ from geopy.geocoders import Nominatim
 
 IGNORE_RETWEETS = True
 LANGUAGES_ACCETED = ["en"]
-SOLR_SERVER = "http://localhost:8983/solr"
-SOLR_CORE_TWEETS = "tweets"
-SOLR_CORE_TAGS = "tags"
 SOLR_CORE_SEARCHAPI = "chase_searchapi"
 TWITTER_TIME_PATTERN = "%a %b %d %H:%M:%S %z %Y"
 SOLR_TIME_PATTERN = "%Y-%m-%dT%H:%M:%SZ"  # YYYY-MM-DDThh:mm:ssZ
@@ -61,8 +59,8 @@ class TwitterSearch():
 
     def __init__(self, oauth):
         super().__init__()
-        self.__solr = SolrClient(SOLR_SERVER)
-        self.__core = SOLR_CORE_TWEETS
+        self.__solr = SolrClient(iu.solr_url)
+        self.__core = iu.solr_core_tweets
         self.__api = tweepy.API(oauth)
 
     def index(self, keywords):
@@ -80,9 +78,7 @@ class TwitterSearch():
                         ]
                 self.__solr.index(self.__core, docs)
             print(str(count) + "," + keyword)
-        code = urllib.request. \
-            urlopen("http://localhost:8983/solr/{}/update?commit=true".
-                    format(self.__core)).read()
+        code = iu.commit(iu.solr_core_tweets)
 
 
 class TwitterStream(StreamListener):
@@ -93,8 +89,8 @@ class TwitterStream(StreamListener):
 
     def __init__(self, ml_model_file, ml_selected_features, sysout):
         super().__init__()
-        self.__solr = SolrClient(SOLR_SERVER)
-        self.__core = SOLR_CORE_TWEETS
+        self.__solr = SolrClient(iu.solr_url)
+        self.__core = iu.solr_core_tweets
         # self.__ml_model=util.load_ml_model(ml_model_file)
         # self.__selected_features = mutil.read_preselected_features(False, ml_selected_features)
         self.__sysout = sysout
@@ -109,8 +105,7 @@ class TwitterStream(StreamListener):
         self.__count += 1
         if self.__count % 100 == 0:
             code = urllib.request. \
-                urlopen("http://localhost:8983/solr/{}/update?commit=true".
-                        format(self.__core)).read()
+                code = iu.commit(iu.solr_core_tweets)
             now = datetime.datetime.now()
             print("{} processed: {}, where {} are retweets and ignored".
                   format(now, self.__count, self.__count_retweet))
@@ -165,7 +160,6 @@ class TwitterStream(StreamListener):
                     place_coordinates = None
 
                 coordinates = jdata["coordinates"]
-
                 # user_location, only compute geocode if other means have failed
                 geocode_coordinates_of_user_location = []
                 str_user_loc = jdata["user"]["location"]
@@ -193,6 +187,12 @@ class TwitterStream(StreamListener):
                 #                    SCALING_STRATEGY, self.__sysout, logger)
                 ml_tag = '0' if random.random() < 0.2 else '2'
                 tweet_risk = random.uniform(0, 1.0)
+
+
+                if coordinates==None:
+                    coordinates=place_coordinates
+                if coordinates==None:
+                    coordinates=geocode_coordinates_of_user_location
 
                 docs = [{'id': jdata["id"],
                          'created_at': str_solr_time,
