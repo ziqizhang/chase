@@ -194,9 +194,16 @@ class TwitterStream(StreamListener):
                 if coordinates==None:
                     coordinates=geocode_coordinates_of_user_location
 
+                coord_lat=None
+                coord_lon=None
+                if coordinates is not None and len(coordinates)>0:
+                    coord_lat=coordinates[0]
+                    coord_lon=coordinates[1]
+
                 docs = [{'id': jdata["id"],
                          'created_at': str_solr_time,
-                         'coordinates': coordinates,
+                         'coordinate_lat': coord_lat,
+                         'coordinate_lon': coord_lon,
                          'favorite_count': jdata["favorite_count"],
                          'in_reply_to_screen_name': jdata["in_reply_to_screen_name"],
                          'in_reply_to_status_id': jdata["in_reply_to_status_id"],

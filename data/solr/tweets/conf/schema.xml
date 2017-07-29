@@ -158,7 +158,8 @@
 	<field name="id" type="string" indexed="true" stored="true" required="true" multiValued="false" />
     <field name="created_at" type="tdate" indexed="true" stored="true" multiValued="false"/>
 	<field name="geo" type="string" indexed="true" stored="true" multiValued="false"/>
-	<field name="coordinates" type="string" indexed="true" stored="true" multiValued="true"/>
+	<field name="coordinate_lat" type="float" indexed="true" stored="true" multiValued="false"/>
+	<field name="coordinate_lon" type="float" indexed="true" stored="true" multiValued="false"/>
 	<field name="favorite_count" type="int" indexed="true" stored="true" multiValued="false"/>	
 	<field name="in_reply_to_screen_name" type="string" indexed="true" stored="true" multiValued="false"/>
 	<field name="in_reply_to_status_id" type="string" indexed="true" stored="true" multiValued="false"/>
