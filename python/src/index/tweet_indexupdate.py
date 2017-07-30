@@ -126,6 +126,7 @@ def update(solr:SolrClient, tweet_core_name, tag_core_name,
     start=0
     while not stop:
         logger.warn("Processing from {} for a batch of {}".format(start, rows))
+        print("Processing from {} for a batch of {}".format(start, rows))
         res = solr.query(tweet_core_name, {
             'q':'created_at:' + timespan,
             'rows':rows,
@@ -155,7 +156,7 @@ logging.basicConfig(level=logging.INFO)
 update(solr,
        iu.solr_core_tweets,
        iu.solr_core_tags,
-       "[2017-07-27T01:00:00Z TO 2017-07-28T01:00:00Z]", 500,
+       "[2017-07-28T01:00:00Z TO 2017-07-31T01:00:00Z]", 500,
        feat_vectorizer,ml_model,selected_features,
        hate_indicative_features,
        0,sys.argv[4],logger)

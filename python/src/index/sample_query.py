@@ -136,7 +136,7 @@ def get_tags_by_pmi(target_tag, solr:SolrClient, core_name="tags"):
 
 ###################
 solr=SolrClient(iu.solr_url)
-timespan="[2016-07-29T10:10:00Z TO 2017-07-29T10:20:00Z]"
+timespan="[2017-07-29T22:40:00Z TO 2017-07-29T22:45:00Z]"
 #notice how solr formats time. we must use the exact format
 get_tweets_by_time(timespan, solr)
 #the following method is incomplete, just an example. step in to see comments
