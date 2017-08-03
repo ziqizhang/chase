@@ -1,0 +1,58 @@
+
+<!DOCTYPE html>
+<html>
+  <head>
+    <link rel="stylesheet" type="text/css" href="style.css">
+    <meta name="viewport" content="initial-scale=1.0, user-scalable=no">
+    <meta charset="utf-8">
+    <title>Marker Clustering</title>
+  </head>
+  <body>
+    <div id="map"></div>
+    <div id="tweets">
+       <button onclick = "setInterval(add,100)">AddMarker</button>
+       <p id="latlng">null</p>
+    </div>
+    <script>
+
+      function initMap() {
+
+        var map = new google.maps.Map(document.getElementById('map'), {
+          zoom: 2,
+          center: {lat: 0, lng: 0}
+        });
+        markerCluster = new MarkerClusterer(map, null,  {imagePath: 'https://developers.google.com/maps/documentation/javascript/examples/markerclusterer/m'});
+        google.maps.event.addListener(map, 'bounds_changed', function() {
+            try {
+                var bounds = map.getBounds();
+                if (bounds != null){
+                    document.getElementById("latlng").innerHTML = bounds.toString();
+                }
+            } catch( err ) {
+                alert( err );
+            }
+        });
+        //So that the map doesn't zoom in when you are dragging the map with mouse on a cluster
+        google.maps.event.addListener(map,'dragstart',function(){
+           markerCluster.zoomOnClick_=false;});
+        google.maps.event.addListener(map,'mouseup',function(){setTimeout(function(){
+           markerCluster.zoomOnClick_=true;},50);});
+       }
+     function add(){
+         var randLat = Math.floor(Math.random() * 181) - 90
+         var randLng = Math.floor(Math.random() * 361) - 180 
+         var newMarkerLoc = {lat: randLat, lng: randLng};
+         var newMarker = new google.maps.Marker({
+            position: newMarkerLoc,
+            label: 'Rand'
+         });
+         markerCluster.addMarker(newMarker);
+      }
+    </script>
+    <script src="https://developers.google.com/maps/documentation/javascript/examples/markerclusterer/markerclusterer.js">
+    </script>
+    <script async defer
+    src="https://maps.googleapis.com/maps/api/js?key=AIzaSyDRPAR13zQbdb5JucblIAC7JBGdRcIjSqU&callback=initMap&language=en">
+    </script>
+  </body>
+</html>
