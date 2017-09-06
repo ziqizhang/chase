@@ -1,22 +1,22 @@
+import os
+os.environ['PYTHONHASHSEED'] = '0'
+from numpy.random import seed
+seed(1)
+from tensorflow import set_random_seed
+set_random_seed(2)
+
 import datetime
 import logging
-import os
 import sys
-
 import functools
 import gensim
 import numpy
-import numpy as np
 import random as rn
-import tensorflow as tf
-tf.set_random_seed(42)
-os.environ['PYTHONHASHSEED'] = '0'
-np.random.seed(42)
-rn.seed(42)
 
 import pandas as pd
 import pickle
-from keras.layers import Dense, Embedding, Conv1D, MaxPooling1D, LSTM, Dropout
+from keras.layers import Dense, Embedding, Conv1D, MaxPooling1D, LSTM, Dropout, AveragePooling1D, TimeDistributed, \
+    GlobalAveragePooling1D, GlobalMaxPooling1D
 from keras.models import Sequential
 from keras.wrappers.scikit_learn import KerasClassifier
 from sklearn.cross_validation import cross_val_predict, train_test_split
@@ -85,11 +85,15 @@ def create_model(max_index=100, wemb_matrix=None, model_option=0):
     return model
 
 
-def create_model_lstm(embedding_layer):
+def create_model_lstm(embedding_layer):#start from simple model
+    # use features from svm to train dnn, do not use lstm
+    # features from svm, apply autoencoder to compress..
     model = Sequential()
     model.add(embedding_layer)
     model.add(Dropout(0.2))
-    model.add(LSTM(100))
+    model.add(LSTM(units=100, return_sequences=True)) #continuous time vs discrete time, gating, forgetting,
+    model.add(GlobalMaxPooling1D())
+    # lstm params,lstm hidden layers which ones are feeding into
     model.add(Dropout(0.2))
     model.add(Dense(1, activation='sigmoid'))
     model.compile(loss='binary_crossentropy', optimizer='adam', metrics=['accuracy'])
@@ -100,10 +104,12 @@ def create_model_lstm(embedding_layer):
 def create_model_conv_lstm(embedding_layer):
     model = Sequential()
     model.add(embedding_layer)
+    model.add(Dropout(0.2))
     model.add(Conv1D(filters=100, kernel_size=4, padding='same', activation='relu'))
     model.add(MaxPooling1D(pool_size=4))
-    model.add(LSTM(100, activation='tanh'))
-    model.add(Dropout(0.2))
+    model.add(LSTM(units=100, return_sequences=True))
+    model.add(GlobalMaxPooling1D())
+    #model.add(Dropout(0.2))
     model.add(Dense(1, activation='sigmoid'))
     model.compile(loss='binary_crossentropy', optimizer='adam', metrics=['accuracy'])
 
@@ -240,7 +246,8 @@ def create_settings(indata, outdir, datalabel, print_result_per_ds,
             load_word2vec_format(pretrained_embedding_file, binary=True)
 
     # params = ['lstm_lemma_oov=0_', indata, outdir, print_result_per_ds,
-    #           1, 0, model, expected_embedding_dim, 0]  # 1-stem or lem; 0-oov init method; 0-what ann model
+    #           1, 0, model, expected_embedding_dim, 0]
+    #  1-stem or lem; 0-oov init method; 0-what ann model
     # settings.append(params)
 
     # params = ['lstm_lemma_oov=rand_', indata, outdir, print_result_per_ds,
@@ -261,7 +268,7 @@ def create_settings(indata, outdir, datalabel, print_result_per_ds,
 
     params = ['lstm_twe_', datalabel, indata, outdir, print_result_per_ds,
               0, 0, model, expected_embedding_dim, 0]
-    settings.append(params)
+    settings.append(params) #  1-stem or lem; 0-oov init method; 0-what ann model
 
     return settings
 # /home/zqz/Work/data/GoogleNews-vectors-negative300.bin.gz
