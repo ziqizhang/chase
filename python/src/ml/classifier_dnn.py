@@ -267,7 +267,7 @@ def create_settings(indata, outdir, datalabel, print_result_per_ds,
     # settings.append(params)
 
     params = ['lstm_twe_', datalabel, indata, outdir, print_result_per_ds,
-              0, 0, model, expected_embedding_dim, 0]
+              0, 2, model, expected_embedding_dim, 0]
     settings.append(params) #  1-stem or lem; 0-oov init method; 0-what ann model
 
     return settings
