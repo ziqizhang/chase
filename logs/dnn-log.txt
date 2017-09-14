@@ -1,52 +1,48 @@
-INFO:gensim.models.keyedvectors:loading projection weights from /home/zqz/Work/data/GoogleNews-vectors-negative300.bin.gz
-INFO:gensim.models.keyedvectors:loaded (3000000, 300) matrix from /home/zqz/Work/data/GoogleNews-vectors-negative300.bin.gz
-INFO:__main__:	generating word vectors, 2017-09-07 07:30:07.931765
-INFO:__main__:		 complete, dim=(24783, 3689), 2017-09-07 07:30:19.218665
-INFO:__main__:loading pre-trained embedding model... 2017-09-07 07:30:40.685397
-INFO:__main__:loading complete. 2017-09-07 07:30:40.685546
-INFO:__main__:New run started at 2017-09-07 07:30:42.473612
+INFO:__main__:	generating word vectors, 2017-09-13 18:24:57.903397
+INFO:__main__:		 complete, dim=(27213, 4126), 2017-09-13 18:25:13.570168
+INFO:__main__:New run started at 2017-09-13 18:25:42.725717
 None
-INFO:__main__:New run started at 2017-09-07 07:30:42.475074
+INFO:__main__:New run started at 2017-09-13 18:25:42.727173
 None
-INFO:__main__:New run started at 2017-09-07 07:30:42.489526
+INFO:__main__:New run started at 2017-09-13 18:25:42.807491
 None
-INFO:__main__:New run started at 2017-09-07 07:30:42.490869
+INFO:__main__:New run started at 2017-09-13 18:25:42.808798
 None
-INFO:__main__:New run started at 2017-09-07 07:30:42.585182
+INFO:__main__:New run started at 2017-09-13 18:25:42.973460
 None
-INFO:__main__:New run started at 2017-09-07 07:30:42.586613
+INFO:__main__:New run started at 2017-09-13 18:25:42.974805
 None
-INFO:__main__:New run started at 2017-09-07 07:30:42.592803
+INFO:__main__:New run started at 2017-09-13 18:25:43.142787
 None
-INFO:__main__:New run started at 2017-09-07 07:30:42.594185
+INFO:__main__:New run started at 2017-09-13 18:25:43.144198
 None
-INFO:__main__:New run started at 2017-09-07 08:16:40.561323
+INFO:__main__:New run started at 2017-09-13 19:24:07.281659
 None
-INFO:__main__:New run started at 2017-09-07 08:16:40.562501
+INFO:__main__:New run started at 2017-09-13 19:24:07.282488
 None
-INFO:__main__:New run started at 2017-09-07 08:29:05.275720
+INFO:__main__:New run started at 2017-09-13 19:39:47.663846
 None
-INFO:__main__:New run started at 2017-09-07 08:29:05.276493
+INFO:__main__:New run started at 2017-09-13 19:39:47.664537
 None
-INFO:__main__:New run started at 2017-09-07 08:43:48.404360
+INFO:__main__:New run started at 2017-09-13 19:58:49.318038
 None
-INFO:__main__:New run started at 2017-09-07 08:43:48.405047
+INFO:__main__:New run started at 2017-09-13 19:58:49.318651
 None
-INFO:__main__:New run started at 2017-09-07 08:55:46.105592
+INFO:__main__:New run started at 2017-09-13 20:14:16.934627
 None
-INFO:__main__:New run started at 2017-09-07 08:55:46.106306
+INFO:__main__:New run started at 2017-09-13 20:14:16.935237
 None
-INFO:__main__:New run started at 2017-09-07 09:07:44.830701
+INFO:__main__:New run started at 2017-09-13 20:30:20.289703
 None
-INFO:__main__:New run started at 2017-09-07 09:07:44.831380
+INFO:__main__:New run started at 2017-09-13 20:30:20.290394
 None
-INFO:__main__:New run started at 2017-09-07 09:19:38.156102
+INFO:__main__:New run started at 2017-09-13 20:46:59.141524
 None
-INFO:__main__:New run started at 2017-09-07 09:19:38.156751
+INFO:__main__:New run started at 2017-09-13 20:46:59.142136
 None
-INFO:__main__:New run started at 2017-09-07 09:31:29.601491
+INFO:__main__:New run started at 2017-09-13 21:02:50.580858
 None
-INFO:__main__:New run started at 2017-09-07 09:31:29.602138
+INFO:__main__:New run started at 2017-09-13 21:02:50.581487
 None
-INFO:__main__:+ best params for <keras.wrappers.scikit_learn.KerasClassifier object at 0x7f56c7bdf7b8> model are:{'batch_size': 100, 'nb_epoch': 10}
+INFO:__main__:+ best params for <keras.wrappers.scikit_learn.KerasClassifier object at 0x7f7dbabe28d0> model are:{'batch_size': 100, 'nb_epoch': 10}
 INFO:__main__:testing on development set ....
