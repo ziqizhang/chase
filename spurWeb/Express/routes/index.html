@@ -1,0 +1,422 @@
+<!doctype html>
+<!--
+Notes:
+this will work for word cloud: http://mistic100.github.io/jQCloud/
+Should time slider work by sliming down the total results from solr, or the results that are already loaded in the bar.
+What should the start and end date be set to on init, currently set to the first and last date on the list that is loaded.
+Should the date slider only be active when a tick box is selected?
+Where should the tag word cloud be, above the tweets? have a special tab that replaces the map?
+should it show all tags/just tags within the time frame selected/just the tags in the box
+
+
+todo:
+when two tweets come from the same location it causes a problem with the clustering making it so the tweet cannot be selected
+Implement date slider, will need actual data for this.
+Implement a word cloud generator
+clean up stylings and place them in a seperate css file (they will go in /static/css/)
+clean up the console outputs
+Finish the styling and sizing of the body and the map 
+
+
+
+-->
+<html>
+  <link rel="stylesheet" href="css/iThing.css" type="text/css" />
+  <style>
+  html,body {height:100%; overflow:hidden;margin:0;padding:0}
+  .tweet,.highlight{display: inline-block;
+    width:90%;
+    background: white;
+    padding: 16px;
+    margin: 3px 0;
+    max-width: 468px;
+    border: #ddd 1px solid;
+    border-top-color: #eee;
+    border-bottom-color: #bbb;
+    border-radius: 5px;
+    box-shadow: 0 1px 3px rgba(0,0,0,0.15);
+
+    font: 14px/18px Helvetica, Arial, sans-serif;
+    color: #000;
+  }
+  a{
+    color:black;
+    margin-right: 2px;
+    margin-bottom: 10px;
+    text-decoration: none;
+  }
+  a:hover{
+    text-shadow: 1px 1px #67707F;
+  }
+  .nextprev{
+    background-color: white;
+    font-size: 17px;
+    border: 1px solid #cccccc;
+  }
+  div.tab {
+    overflow: hidden;
+    border: 1px solid #ccc;
+    background-color: #f1f1f1;
+  }
+
+  /* Style the buttons inside the tab */
+  div.tab button {
+      background-color: inherit;
+      float: left;
+      border: none;
+      outline: none;
+      cursor: pointer;
+      padding: 14px 16px;
+      transition: 0.3s;
+  }
+
+  /* Change background color of buttons on hover */
+  div.tab button:hover {
+      background-color: #ddd;
+  }
+
+  /* Create an active/current tablink class */
+  div.tab button.active {
+      background-color: #ccc;
+  }
+
+  .tweet:hover {background-color:#c0deed;}
+  .highlight {background-color:#c0deed}
+  </style>
+  <head>
+      <title> Chase Web </title>
+  </head>
+    <script src="/socket.io/socket.io.js"></script>
+  <body>
+    <div id="rightBox" style="margin:0;padding:0;width:30%;height:100%;position:absolute;right:0;">
+      <div id="tabsBox" style="height:5%" class="tab">
+          <button class="tablinks" onclick="changeBoxTo('tweets')"><b>Tweets</b></button>
+          <button class="tablinks" onclick="changeBoxTo('tags')"><b>Tags</b></button>
+      </div>
+      <div id="tweetBox" style="box-shadow:10px 10px 200px 5px black inset;background: #67707F;resize:none;overflow:auto;height:91.3%;right:0;border-left:1px solid grey;padding-left:5px;position:relative;">
+      </div>
+      <div id="buttonBox" style="height:3.7%;float:bottom;background: #67707F;border-top:1px solid black;border-left:0px solid black;padding:0px;margin:0px;border-left:1px solid grey;">
+        <button type="Previous" class="nextprev" onclick="loadPrevTweets()"><b><</b> Previous</button>
+        <button type="Next" class="nextprev" onclick="loadNextTweets()">Next <b>></b></button>
+        <div id="selectBox" style="float:right;padding-right:5%">  
+          per page: 
+          <select id='perPageSelect'>
+                <option value="25">25</option>
+                <option value="50">50</option>
+                <option value="75">75</option>
+                <option value="100">100</option>
+          </select>
+        </div>
+      </div>
+    </div>
+    <div id="slider" style="position:absolute;bottom:0;left:0;width:70%;z-index:100;"></div>
+    <div id="map" style="width:70%;height:96.5%;border-bottom: 1px solid black;position:absolute;z-index:0"></div>
+    <div id="tweets">
+        <p id="latlng">null</p>
+     </div>
+    <script src="assets/jquery.js"></script>
+    <script src="assets/jquery-ui.min.js"></script>
+    <script src="assets/jQDateRangeSlider-min.js"></script>
+  </body>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.5.0/Chart.min.js"></script>
+  <script src="https://developers.google.com/maps/documentation/javascript/examples/markerclusterer/markerclusterer.js">
+  </script>
+  
+  <script async defer
+  src="https://maps.googleapis.com/maps/api/js?key=AIzaSyDRPAR13zQbdb5JucblIAC7JBGdRcIjSqU&callback=initMap&language=en">
+  </script>
+  <script>
+    //script for smooth scrolling
+    var scrollme;
+    //scrollme = document.querySelector("#tweetBox");
+    //scrollme.addEventListener("click",runScroll,false)
+
+    function scrollTo(element, to, duration) {
+      if (duration <= 0) return;
+      var difference = to - element.scrollTop;
+      var perTick = difference / duration * 55;
+
+      setTimeout(function() {
+        element.scrollTop = element.scrollTop + perTick;
+        if (element.scrollTop == to) return;
+        scrollTo(element, to, duration - 10);
+      }, 10);
+    }
+  </script>
+  <script>
+    //document.getElementById("debug").innerHTML+= today;
+     $("#slider").dateRangeSlider()
+    $("#slider").dateRangeSlider(
+    {
+      bounds:{//2017-07-29T09:22:45Z
+        min: new Date(2017, 04, 17),//should be 06 to represent the actual first result. Months start at 0 for january. is 05 because it allows for proper spacing for the tab
+        max: new Date()
+      },
+      //valueLabels: "change"
+    }).dateRangeSlider("values", new Date(2017, 05, 1),new Date());
+       // min: new Date(2012, 0, 1),
+        //max: new Date(2012, 11, 31)
+
+      /*    defaultValues:{
+        min: new Date(2009, 1, 11),
+        max: new Date(2012, 10, 11)
+      }*/
+
+window.oldhighlight = 0;
+window.lastTweetNo = 25;
+var socket = io.connect('http://localhost:3000');
+
+
+
+
+var labels = [];
+var frequency = [];
+var commonlyused = [];
+var tagschart;
+
+
+socket.on('commonlyusedIn',function(data){
+  var commonIn = JSON.parse(data)
+  var tempcommon =[];
+  //console.log(data)
+  console.log(commonIn);
+  commonlyused.push(commonIn);
+  //console.log(commonl)
+});
+
+socket.on('tagsIn',function(data){
+  tags = JSON.parse(data)
+
+  labels = [];
+  frequency = [];
+  var queries = [];
+  for(i = 0;i < tags.length; i++){
+    labels.push(tags[i][0]);
+    frequency.push(tags[i][1]);
+    //http://localhost:8983/solr/tags/select?indent=on&q=tag_text:banmuslims%20AND%20type:1&rows=5&sort=frequency%20desc&wt=json
+    queries.push("http://localhost:8983/solr/tags/select?indent=on&q=tag_text:"+tags[i][0]+"%20AND%20type:1&rows=5&sort=frequency%20desc&wt=json");
+    //commonlyused.push(["first","second","third"]);
+
+  }
+
+  socket.emit('commonlyUsed',JSON.stringify(queries));
+  tagschart.config.data.labels = labels;
+  tagschart.data.datasets[0].data = frequency;
+  tagschart.update(1);
+  //console.log(frequency)
+});
+
+socket.on('tweetIn',function(data){
+  data = JSON.parse(data)
+  window.data = data;
+  var update = "";
+  if(data.length==0){ // no found responses
+    //alert("No results found within search parameters!\nPlease try changing the date slider markers.")
+    //return
+    update += '<div id="tweet'+i+'" class = "tweet">No tweets available for this time period</div>'
+
+  }
+
+  //var lowestDate = new Date(data[1][2].substring(0,10).replace(/-/g,"/"));
+  //var highestDate = new Date(data[1][2].substring(0,10).replace(/-/g,"/"));
+
+  markerCluster.clearMarkers();
+  for(i = 0;i < data.length; i++){
+     update += '<div id="tweet'+i+'" class = "tweet"><b>'+data[i][0]+'</b><i style = "color:grey;padding-right:10px;float:right;">'+data[i][2]+'</i><br>'+data[i][1]+'<div style="position:absolute;right:5%"><a href="https://twitter.com/'+data[i][0]+'/status/'+data[i][4]+'" style="border-right: #bbb 1px solid;margin-right:2px;padding-right:2px">Tweet</a><a href="https://twitter.com/'+data[i][0]+'">profile</a></div></div>';
+
+     /*var newdate = new Date(data[i][2].substring(0,10).replace(/-/g,"/"));
+     if(newdate > highestDate){
+       highestDate = newdate
+     } else if(newdate < lowestDate){
+       lowestDate = newdate
+     }*/
+     if(data[i][3]!=null){      
+       add(parseFloat(data[i][3][0]),parseFloat(data[i][3][1]),data[i][4])
+     }
+  }
+  //$("#slider").dateRangeSlider("values", lowestDate,highestDate);
+  //$("#slider").dateRangeSlider("values", new Date(2017, 0, 1),new Date(2017, 0, 1));
+  //document.getElementById("debug").innerHTML += "lowest: "+ lowestDate.toString()+ "<br>" + "highest: " + highestDate.toString();
+  document.getElementById("tweetBox").innerHTML = update
+  //console.log("updated")
+});
+function loadNextTweets(){
+  updateTweet(buildQuery("tweets",$("#perPageSelect").val(),window.lastTweetNo))
+  //console.log(window.lastTweetNo)
+  window.lastTweetNo = window.lastTweetNo + data.length;
+}
+
+function loadPrevTweets(){
+  if(window.lastTweetNo == 25){
+    alert("No previous tweets available")
+    return;
+  }
+  if(window.lastTweetNo-parseInt($("#perPageSelect").val()) < 0){
+    start = 0;
+  } else {
+    start = window.lastTweetNo-(parseInt($("#perPageSelect").val())*2);
+  }
+  updateTweet(buildQuery("tweets",$("#perPageSelect").val(),start));
+  //console.log(window.lastTweetNo)
+  window.lastTweetNo = window.lastTweetNo - data.length;
+}
+
+function buildQuery(node,rows,start){
+  //fq=created_at:[1976-03-06T23:59:59.999Z%20TO%202017-12-12T23:59:59.999Z]
+  //http://localhost:8983/solr/tweets/select?indent=on&q=*:*&rows=20&sort=tweet_risk%20desc&wt=json
+  var dateSliderMax = $("#slider").dateRangeSlider("max");
+  //console.log(dateSliderMax)
+  return "http://localhost:8983/solr/" + node + "/select?indent=on&q=ml_tag:0&rows=" + rows + "&sort=tweet_risk%20desc&start=" + start + "&fq=created_at:["+convertDate($("#slider").dateRangeSlider("min"))+"T23:59:59.999Z%20TO%20"+convertDate($("#slider").dateRangeSlider("max"))+"T23:59:59.999Z]"+"&wt=json"
+}
+
+function updateTweet(query){
+  socket.emit('updateTweets',query);
+  //console.log("updated!");
+};
+function updateTags(query){
+  socket.emit('updateTags',query);
+  //console.log("updated!");
+};
+
+
+  function initMap() {
+    var map = new google.maps.Map(document.getElementById('map'), {
+      zoom: 2,
+      center: {lat: 0, lng: 0}
+    });
+    markerCluster = new MarkerClusterer(map, null,  {imagePath: 'https://developers.google.com/maps/documentation/javascript/examples/markerclusterer/m'});
+    google.maps.event.addListener(map, 'bounds_changed', function() {
+        try {
+            var bounds = map.getBounds();
+            if (bounds != null){
+                document.getElementById("latlng").innerHTML = bounds.toString();
+            }
+        } catch( err ) {
+            alert( err );
+        }
+    });
+    //So that the map doesn't zoom in when you are dragging the map with mouse on a cluster
+    google.maps.event.addListener(map,'dragstart',function(){
+       markerCluster.zoomOnClick_=false;});
+
+    google.maps.event.addListener(map,'mouseup',function(){setTimeout(function(){
+       markerCluster.zoomOnClick_=true;},50);});
+   }
+  
+  function add(latIn,lonIn,tweetIDIn){
+      //var randLat = Math.floor(Math.random() * 181) - 90
+      //var randLng = Math.floor(Math.random() * 361) - 180 
+      var newMarkerLoc = {lat: latIn, lng: lonIn};
+      var newMarker = new google.maps.Marker({
+          position: newMarkerLoc,
+          //label: labelIn
+          tweetID: tweetIDIn,
+          animation:google.maps.Animation.DROP
+      });
+      google.maps.event.addDomListener(newMarker, 'click', function() {
+        //console.log(this.tweetID);
+        for(i = 0;i < window.data.length;i++){
+          if(window.data[i][4]==this.tweetID){
+            //console.log("found: "+ i)
+            document.getElementById("tweet"+window.oldhighlight).className = 'tweet';
+            document.getElementById("tweet"+i).className = 'highlight';
+            offset = document.getElementById("tweet"+i).offsetTop - 5 //find the posiiton to goto and go 5 px above it
+            //document.getElementById("tweetBox").scrollTop = offset
+            scrollTo( document.getElementById("tweetBox"), offset, 1000);
+            window.oldhighlight = i;
+          }
+        }
+      });
+      markerCluster.addMarker(newMarker);
+    }
+$("#slider").bind("valuesChanging", function(e, data){
+  //console.log(data.values.min + "-----" + data.values.max);
+  convertDate(data.values.max)
+});
+function convertDate(dateIn){
+  return(dateIn.getFullYear()+"-"+(dateIn.getMonth()+1)+"-"+dateIn.getDate())
+}
+
+function changeBoxTo(option){
+  if(option == "tags"){
+    console.log("tags")
+    updateTags("http://localhost:8983/solr/tags/select?indent=on&q=type:0&rows=10&sort=risk_score%20desc&wt=json");
+
+
+    document.getElementById("tweetBox").innerHTML = '<canvas id="bar-chart-horizontal" width="100%" height="100%"></canvas>'
+    
+    tagschart = new Chart(document.getElementById("bar-chart-horizontal"), {
+    type: 'horizontalBar',
+    data: {
+      labels: labels,
+      datasets: [
+        {
+          label: "Usage",
+          backgroundColor: ["#3e95cd", "#8e5ea2","#3cba9f","#e8c3b9","#c45850","#a8f75d","#4d88ff","#c61aff","#70af46","#96009e"],
+          data: frequency
+        }
+      ]
+    },
+    options: {
+      tooltips: {
+        enabled: true,
+        responsive: true,
+        mode: 'single',
+        //scaleFontColor: "#FFFFFF",
+        callbacks: {
+        afterLabel: function(tooltipItem, data) {
+          var multistringText = ['Commonly used with:'];
+          console.log(tooltipItem.yLabel)
+            // do some stuff
+          var othertags = commonlyused[tooltipItem.index];
+          if(othertags.length!=0){
+            for(i = 0;i < othertags.length; i++){
+              multistringText.push("#" + othertags[i].toString().replace(tooltipItem.yLabel, "").replace(" ", ""))
+              
+            }
+          } else {
+            multistringText = "[error] No common tags found!"
+          }
+          //console.log(commonlyused[0][0])
+          return multistringText
+        }
+      }
+      },
+      legend: {
+        /*labels:{
+          fontColor: '#fff'
+        },*/
+        display: false 
+      },
+      title: {
+        fontColor: '#fff',
+        display: true,
+        text: 'Usage of hateful hashtags:'
+      },
+      scales: {
+            yAxes: [{
+                ticks: {
+                    beginAtZero:true,
+                    fontColor: '#fff'
+                },
+            }],
+          xAxes: [{
+                ticks: {
+                  fontColor: '#fff'
+                },
+            }]
+        }
+    }
+    });
+    tagschart.defaults.global.defaultFontColor = "#fff";
+  }
+  else if (option == "tweets"){
+    updateTweet(buildQuery("tweets",$("#perPageSelect").val(),0));
+  }
+
+}
+$("#slider").on("valuesChanging", function(e, data){
+  updateTweet(buildQuery("tweets",$("#perPageSelect").val(),0));
+});
+</script>
+</html>
