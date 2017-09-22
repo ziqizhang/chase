@@ -110,8 +110,8 @@ def create_model_conv_lstm(embedding_layer):
     model.add(LSTM(units=100, return_sequences=True))
     model.add(GlobalMaxPooling1D())
     #model.add(Dropout(0.2))
-    model.add(Dense(1, activation='sigmoid'))
-    model.compile(loss='binary_crossentropy', optimizer='adam', metrics=['accuracy'])
+    model.add(Dense(3, activation='softmax'))
+    model.compile(loss='categorical_crossentropy', optimizer='adam', metrics=['accuracy'])
 
     logger.info("New run started at {}\n{}".format(datetime.datetime.now(), model.summary()))
     return model
@@ -267,7 +267,7 @@ def create_settings(indata, outdir, datalabel, print_result_per_ds,
     # settings.append(params)
 
     params = ['lstm_', datalabel, indata, outdir, print_result_per_ds,
-              0, 0, model, expected_embedding_dim, 0]
+              0, 2, model, expected_embedding_dim, 1]
     settings.append(params) #  1-stem or lem; 0-oov init method; 0-what ann model
 
     return settings

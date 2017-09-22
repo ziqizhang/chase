@@ -451,8 +451,8 @@ def remove_offensive_label(in_file, out_file):
                 writer.writerow(row)
 
 
-# remove_offensive_label("/home/zqz/Work/chase/data/ml/td/labeled_data_all.csv",
-#                        "/home/zqz/Work/chase/data/ml/td/labeled_data_all_2.csv")
+#remove_offensive_label("/home/zqz/Work/chase/data/ml/w/labeled_data_all.csv",
+#                        "/home/zqz/Work/chase/data/ml/w/labeled_data_all_sexism.csv")
 
 # separate_tdc("/home/zqz/Work/chase/data/ml/tdc-b/labeled_data_all.csv",
 #               "/home/zqz/Work/chase/data/ml/tdsmall/labeled_data_all.csv", "td")

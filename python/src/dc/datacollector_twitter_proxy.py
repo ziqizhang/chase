@@ -5,6 +5,9 @@ import json
 import os
 import traceback
 import urllib.request
+import pandas as pd
+import csv
+import time
 
 import datetime
 
@@ -253,14 +256,131 @@ class TwitterStream(StreamListener):
         print(status.text)
 
 
+#reads Waseem2016 data in its own format and transforms it into that required by CHASE
+#racism=0, sexism=1, none=2
+def fetch_waseem_data(in_file, tweepy_api, out_file):
+    start=0
+    with open(out_file, 'w', newline='',encoding='utf-8') as csvfile:
+        writer = csv.writer(csvfile, delimiter=',',
+                                quotechar='"', quoting=csv.QUOTE_MINIMAL)
+        writer.writerow(["ds","","count","hate_speech","offensive_language,","neither","class","tweet"])
+        data=pd.read_csv(in_file, sep=',', encoding="utf-8")
+        index=0
+        missed=0
+        for row in data.itertuples():
+            if index<start:
+                index+=1
+                continue
+
+            tweetid=row[1]
+            label=row[2]
+            if label=='racism':
+                label='0'
+            elif label=='sexism':
+                label='1'
+            else:
+                label='2'
+
+            try:
+                tweet = tweepy_api.get_status(tweetid)
+                text=tweet.text
+
+                writer.writerow(["w",tweetid,"0","0","0","",label,text])
+                index+=1
+                if index%100==0:
+                    print(index)
+            except tweepy.error.TweepError:
+                traceback.print_exc(file=sys.stdout)
+                missed+=1
+                print("==="+str(tweetid)+","+label)
+            time.sleep(1)
+
+#this method should be applied to the log file of the above one
+def refetch_waseem_data_missed(log_file, tweepy_api, out_file):
+    with open(out_file, 'w', newline='',encoding='utf-8') as csvfile:
+        writer = csv.writer(csvfile, delimiter=',',
+                                quotechar='"', quoting=csv.QUOTE_MINIMAL)
+        writer.writerow(["ds","","count","hate_speech","offensive_language,","neither","class","tweet"])
+
+        f = open(log_file,'r')
+        while True:
+            x = f.readline()
+            if (x.startswith("===")):
+                x = x[3:]
+                x=x.split(",")
+
+                tweetid=x[0]
+                label=x[1].strip()
+                try:
+                    tweet = tweepy_api.get_status(tweetid)
+                    text=tweet.text
+
+                    writer.writerow(["w",tweetid,"0","0","0","",label,text])
+
+                except tweepy.error.TweepError:
+                    #traceback.print_exc(file=sys.stdout)
+                    print("===,"+tweetid+","+label)
+                time.sleep(1)
+
+
+#reads Waseem2016 data the small version (v2) in its own format and transforms it into that required by CHASE
+#racism=0, sexism=1, none=2
+def fetch_waseem_data_v2(in_file, tweepy_api, out_file):
+    start=1
+    with open(out_file, 'w', newline='',encoding='utf-8') as csvfile:
+        writer = csv.writer(csvfile, delimiter=',',
+                                quotechar='"', quoting=csv.QUOTE_MINIMAL)
+        writer.writerow(["ds","","count","hate_speech","offensive_language,","neither","class","tweet",
+                         "expert","am1","am2","am3"])
+        data=pd.read_csv(in_file, sep='\t', encoding="utf-8")
+        index=0
+        missed=0
+        for row in data.itertuples():
+            if index<start:
+                index+=1
+                continue
+
+            tweetid=row[0]
+
+            try:
+                tweet = tweepy_api.get_status(tweetid)
+                text=tweet.text
+
+                writer.writerow(["w",tweetid,"0","0","0","","-1",text,
+                                 row[1],row[2],row[3],row[4]])
+                index+=1
+                if index%100==0:
+                    print(index)
+            except tweepy.error.TweepError:
+                traceback.print_exc(file=sys.stdout)
+                missed+=1
+                print("==="+str(tweetid))
+            time.sleep(1)
+
+
 oauth = read_oauth(sys.argv[1])
 print(sys.argv[1])
 sc = read_search_criteria(sys.argv[2])
 print(sys.argv[2])
 auth = OAuthHandler(oauth["C_KEY"], oauth["C_SECRET"])
 auth.set_access_token(oauth["A_TOKEN"], oauth["A_SECRET"])
-twitterStream = Stream(auth, TwitterStream(sys.argv[3], sys.argv[4], sys.argv[5]))
-twitterStream.filter(track=[sc["KEYWORDS"]], languages=LANGUAGES_ACCETED)
+
+
+api=tweepy.API(auth)
+#fetch_tweets("/home/zqz/GDrive/papers/chase/dataset/waseem2016/NAACL_SRW_2016.csv", api,
+#             "/home/zqz/Work/chase/data/ml/w/labeled_data_all.csv")
+#refetch_waseem_data_missed("/home/zqz/GDrive/papers/chase/dataset/waseem2016/NLP+CSS_2016_log",
+#                           api,
+#             "/home/zqz/GDrive/papers/chase/dataset/waseem2016/NLP+CSS_2016_tweets_missed.csv")
+
+# fetch_waseem_data_v2("/home/zqz/GDrive/papers/chase/dataset/waseem2016/NLP+CSS_2016.csv", api,
+#             "/home/zqz/GDrive/papers/chase/dataset/waseem2016/NLP+CSS_2016_tweets.csv")
+print("end")
+
+#twitterStream = Stream(auth, TwitterStream(sys.argv[3], sys.argv[4], sys.argv[5]))
+#twitterStream.filter(track=[sc["KEYWORDS"]], languages=LANGUAGES_ACCETED)
+
+
 
 # searcher = TwitterSearch(auth)
 # searcher.index(["#refugeesnotwelcome","#DeportallMuslims", "#banislam","#banmuslims", "#destroyislam",

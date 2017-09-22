@@ -1,0 +1,12 @@
+dense N-FOLD AVERAGE :
+,precision, recall, f1, support
+0,0.69,0.66,0.67,1472
+2,0.95,0.96,0.96,10597
+avg,0.82,0.81,0.81,12069
+
+ HELDOUT :
+,precision, recall, f1, support
+0,0.70,0.74,0.72,462
+2,0.97,0.96,0.96,3562
+avg,0.83,0.85,0.84,4024
+
