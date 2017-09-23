@@ -1,5 +1,6 @@
 import csv
 import os
+import pandas as pd
 
 
 def merge_annotations(in_folder, out_file):
@@ -33,6 +34,48 @@ def merge_annotations(in_folder, out_file):
             writer.writerow([tag,key, value])
 
 
+
+def merge_waseem_datasets(in_large_dataset, in_small_dataset, out_file):
+    with open(out_file, 'w', newline='',encoding='utf-8') as csvfile:
+        writer = csv.writer(csvfile, delimiter=',',
+                                quotechar='"', quoting=csv.QUOTE_MINIMAL)
+        writer.writerow(["ds","","count","hate_speech","offensive_language,","neither","class","tweet"])
+        all_tweet_ids=set()
+        data=pd.read_csv(in_large_dataset, sep=',', encoding="utf-8")
+        index=0
+        for row in data.itertuples():
+            if index<1:
+                index+=1
+                continue
+
+            tweetid=row[2]
+            all_tweet_ids.add(tweetid)
+
+            writer.writerow(row[1:])
+            index+=1
+            if index%100==0:
+                print(index)
+
+        data=pd.read_csv(in_small_dataset, sep=',', encoding="utf-8")
+        index=0
+        for row in data.itertuples():
+            if index<1:
+                index+=1
+                continue
+            tweetid=row[2]
+            if tweetid in all_tweet_ids:
+                continue
+
+            writer.writerow(row[1:])
+            index+=1
+            if index%100==0:
+                print(index)
+
+
+
+merge_waseem_datasets("/home/zqz/Work/chase/data/ml/w/labeled_data_all.csv",
+                      "/home/zqz/Work/chase/data/ml/ws-merge/labeled_data_all.csv",
+                      "/home/zqz/Work/chase/data/ml/w+ws/labeled_data_all.csv")
 
 # in_folder="/home/zqz/Work/chase/data/annotation/unfiltered"
 # out_file="/home/zqz/Work/chase/data/annotation/unfilered_merged.csv"
