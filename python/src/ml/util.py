@@ -487,6 +487,6 @@ def remove_offensive_label(in_file, out_file):
 
 # output_data_splits("/home/zqz/Work/chase/data/ml/td/labeled_data_all_2.csv"
 #                      ,"/home/zqz/Work/chase/data/ml/td")
-
-output_data_splits("/home/zqz/Work/chase/data/ml/w+ws/labeled_data_all.csv"
-                      ,"/home/zqz/Work/chase/data/ml/w+ws")
+#
+# output_data_splits("/home/zqz/Work/chase/data/ml/w+ws/labeled_data_all.csv"
+#                       ,"/home/zqz/Work/chase/data/ml/w+ws")
