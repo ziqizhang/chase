@@ -57,7 +57,8 @@ class FeatureVectorizerDavidson(fv.FeatureVectorizer):
 
         """
         # Features group 1: tfidf weighted n-grams
-        tfidf = fe.get_ngram_tfidf(self.ngram_vectorizer, tweets_original, out_folder, flag)
+        #to use original DV preprocessing, replce tweets_cleaned with tweets_original
+        tfidf = fe.get_ngram_tfidf(self.ngram_vectorizer, tweets_cleaned, out_folder, flag)
 
         # Features group 2: PoS for ngrams
         # Features group 2: PoS for ngrams
