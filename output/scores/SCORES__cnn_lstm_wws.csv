@@ -1,0 +1,18 @@
+dense N-FOLD AVERAGE :
+,precision, recall, f1, support
+0,0.69,0.66,0.68,1534
+1,0.71,0.67,0.69,2955
+2,0.85,0.88,0.86,9460
+3,0.18,0.11,0.13,19
+avg_micro,0.81,0.81,0.81,None
+avg_macro,0.61,0.58,0.59,None
+
+ HELDOUT :
+,precision, recall, f1, support
+0,0.70,0.68,0.69,482
+1,0.72,0.61,0.66,963
+2,0.85,0.89,0.87,3204
+3,0.40,0.25,0.31,8
+avg_micro,0.81,0.81,0.81,None
+avg_macro,0.67,0.61,0.63,None
+
