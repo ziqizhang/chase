@@ -1,18 +1,22 @@
-INFO:__main__:	generating word vectors, 2017-09-25 07:02:16.713842
-INFO:__main__:		 complete, dim=(6594, 1742), 2017-09-25 07:02:20.996465
-INFO:__main__:New run started at 2017-09-25 07:02:24.906405
+INFO:gensim.models.keyedvectors:loading projection weights from /home/zqz/Work/data/GoogleNews-vectors-negative300.bin.gz
+INFO:gensim.models.keyedvectors:loaded (3000000, 300) matrix from /home/zqz/Work/data/GoogleNews-vectors-negative300.bin.gz
+INFO:__main__:	generating word vectors, 2017-09-25 12:51:18.944882
+INFO:__main__:		 complete, dim=(18625, 3453), 2017-09-25 12:51:33.429063
+INFO:__main__:loading pre-trained embedding model... 2017-09-25 12:51:48.542431
+INFO:__main__:loading complete. 2017-09-25 12:51:48.542577
+INFO:__main__:New run started at 2017-09-25 12:51:50.188391
 None
-INFO:__main__:New run started at 2017-09-25 07:02:24.907897
+INFO:__main__:New run started at 2017-09-25 12:51:50.189884
 None
-INFO:__main__:New run started at 2017-09-25 07:02:25.018346
+INFO:__main__:New run started at 2017-09-25 12:51:50.304719
 None
-INFO:__main__:New run started at 2017-09-25 07:02:25.019836
+INFO:__main__:New run started at 2017-09-25 12:51:50.306214
 None
-INFO:__main__:New run started at 2017-09-25 07:02:25.152913
+INFO:__main__:New run started at 2017-09-25 12:51:50.344725
 None
-INFO:__main__:New run started at 2017-09-25 07:02:25.154616
+INFO:__main__:New run started at 2017-09-25 12:51:50.346263
 None
-INFO:__main__:New run started at 2017-09-25 07:02:25.422607
+INFO:__main__:New run started at 2017-09-25 12:51:50.357119
 None
-INFO:__main__:New run started at 2017-09-25 07:02:25.424249
+INFO:__main__:New run started at 2017-09-25 12:51:50.358575
 None
