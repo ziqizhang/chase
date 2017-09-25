@@ -1,0 +1,235 @@
+19,feature_vocab_ngram,account
+47,feature_vocab_ngram,aint fuckin
+61,feature_vocab_ngram,aka
+64,feature_vocab_ngram,alcohol
+65,feature_vocab_ngram,alex
+76,feature_vocab_ngram,alway want
+106,feature_vocab_ngram,armi
+142,feature_vocab_ngram,babe
+160,feature_vocab_ngram,band
+181,feature_vocab_ngram,beat yo
+205,feature_vocab_ngram,betta
+210,feature_vocab_ngram,big
+239,feature_vocab_ngram,bitch boy
+252,feature_vocab_ngram,bitch dont even
+277,feature_vocab_ngram,bitch im
+333,feature_vocab_ngram,bitch think
+338,feature_vocab_ngram,bitch twitter
+373,feature_vocab_ngram,boo
+415,feature_vocab_ngram,brown
+488,feature_vocab_ngram,chase
+489,feature_vocab_ngram,cheat
+497,feature_vocab_ngram,child
+521,feature_vocab_ngram,clap
+551,feature_vocab_ngram,complain
+553,feature_vocab_ngram,condom
+572,feature_vocab_ngram,correct
+595,feature_vocab_ngram,crib
+617,feature_vocab_ngram,cuz bitch
+626,feature_vocab_ngram,damn
+670,feature_vocab_ngram,didnt get
+685,feature_vocab_ngram,dnt
+743,feature_vocab_ngram,drop
+796,feature_vocab_ngram,ever
+814,feature_vocab_ngram,expect
+815,feature_vocab_ngram,experi
+833,feature_vocab_ngram,fairi
+835,feature_vocab_ngram,faith
+859,feature_vocab_ngram,fed
+890,feature_vocab_ngram,fix
+914,feature_vocab_ngram,four
+942,feature_vocab_ngram,fuck u
+984,feature_vocab_ngram,get money
+1041,feature_vocab_ngram,got mani
+1082,feature_vocab_ngram,halloween
+1096,feature_vocab_ngram,hate hoe
+1099,feature_vocab_ngram,hatin
+1102,feature_vocab_ngram,hawk
+1109,feature_vocab_ngram,hell
+1113,feature_vocab_ngram,hello
+1118,feature_vocab_ngram,hi bitch ass
+1131,feature_vocab_ngram,ho
+1135,feature_vocab_ngram,hoe alway
+1149,feature_vocab_ngram,hoe got
+1151,feature_vocab_ngram,hoe hoe
+1154,feature_vocab_ngram,hoe know
+1155,feature_vocab_ngram,hoe let
+1169,feature_vocab_ngram,hoe stop
+1191,feature_vocab_ngram,hop
+1207,feature_vocab_ngram,hungri
+1259,feature_vocab_ngram,internet
+1276,feature_vocab_ngram,ive ever seen
+1306,feature_vocab_ngram,justin
+1322,feature_vocab_ngram,kill two
+1349,feature_vocab_ngram,last
+1391,feature_vocab_ngram,like bird
+1392,feature_vocab_ngram,like bitch
+1393,feature_vocab_ngram,like damn
+1479,feature_vocab_ngram,main bitch
+1489,feature_vocab_ngram,makeup
+1511,feature_vocab_ngram,mean
+1546,feature_vocab_ngram,mix
+1567,feature_vocab_ngram,morn jo e
+1580,feature_vocab_ngram,music
+1590,feature_vocab_ngram,nap
+1592,feature_vocab_ngram,nation
+1611,feature_vocab_ngram,neva
+1615,feature_vocab_ngram,new
+1633,feature_vocab_ngram,nigga dont love
+1637,feature_vocab_ngram,nigga hoe
+1638,feature_vocab_ngram,nigga like
+1639,feature_vocab_ngram,nigga n
+1640,feature_vocab_ngram,nigga nigga
+1641,feature_vocab_ngram,nigga press
+1643,feature_vocab_ngram,nigga pussi
+1644,feature_vocab_ngram,nigga realli
+1666,feature_vocab_ngram,nope
+1678,feature_vocab_ngram,ny
+1705,feature_vocab_ngram,onli
+1707,feature_vocab_ngram,onli one
+1735,feature_vocab_ngram,part
+1779,feature_vocab_ngram,pleas
+1792,feature_vocab_ngram,pornandroidsexxxx
+1816,feature_vocab_ngram,protect
+1843,feature_vocab_ngram,pussi lip
+1853,feature_vocab_ngram,pussi wa
+1862,feature_vocab_ngram,quot
+1911,feature_vocab_ngram,regular
+1939,feature_vocab_ngram,ring
+2028,feature_vocab_ngram,shi
+2032,feature_vocab_ngram,shit bird
+2103,feature_vocab_ngram,smh
+2113,feature_vocab_ngram,sneak
+2114,feature_vocab_ngram,snitch
+2124,feature_vocab_ngram,somebodi
+2134,feature_vocab_ngram,soon
+2143,feature_vocab_ngram,speak
+2157,feature_vocab_ngram,stadium
+2158,feature_vocab_ngram,stage
+2228,feature_vocab_ngram,take trash
+2248,feature_vocab_ngram,tast
+2249,feature_vocab_ngram,tast like
+2261,feature_vocab_ngram,teabag ger
+2288,feature_vocab_ngram,thank
+2296,feature_vocab_ngram,thi faggot
+2298,feature_vocab_ngram,thi guy
+2344,feature_vocab_ngram,tit
+2360,feature_vocab_ngram,took
+2409,feature_vocab_ngram,tv
+2418,feature_vocab_ngram,twitter
+2424,feature_vocab_ngram,type
+2431,feature_vocab_ngram,u cant
+2435,feature_vocab_ngram,u get
+2439,feature_vocab_ngram,u know
+2444,feature_vocab_ngram,u talk
+2447,feature_vocab_ngram,u want
+2457,feature_vocab_ngram,uncl
+2481,feature_vocab_ngram,vine
+2495,feature_vocab_ngram,wack
+2539,feature_vocab_ngram,whatev
+2543,feature_vocab_ngram,whi aint
+2544,feature_vocab_ngram,whi bitch
+2545,feature_vocab_ngram,whi cant
+2548,feature_vocab_ngram,whi u
+2595,feature_vocab_ngram,wors
+2624,feature_vocab_ngram,yea
+2631,feature_vocab_ngram,yellow bone
+2654,feature_vocab_ngram,zone
+2657,feature_vocab_ngram_pos,CC DT
+2708,feature_vocab_ngram_pos,CC PRP VB
+2709,feature_vocab_ngram_pos,CC PRP VBD
+2719,feature_vocab_ngram_pos,CC RB PRP
+2732,feature_vocab_ngram_pos,CC VB RB
+2739,feature_vocab_ngram_pos,CC VB VBP
+2829,feature_vocab_ngram_pos,DT MD
+2907,feature_vocab_ngram_pos,DT VBP NN
+2933,feature_vocab_ngram_pos,IN CC VB
+2958,feature_vocab_ngram_pos,IN IN NN
+3031,feature_vocab_ngram_pos,IN PRP RB
+3032,feature_vocab_ngram_pos,IN PRP TO
+3130,feature_vocab_ngram_pos,JJ JJ RB
+3144,feature_vocab_ngram_pos,JJ NN JJR
+3269,feature_vocab_ngram_pos,JJ WP
+3290,feature_vocab_ngram_pos,JJR NN NN
+3347,feature_vocab_ngram_pos,NN CC VBD
+3450,feature_vocab_ngram_pos,NN NNS VB
+3475,feature_vocab_ngram_pos,NN PRP VBN
+3487,feature_vocab_ngram_pos,NN RB PRP
+3574,feature_vocab_ngram_pos,NN VBP JJ
+3634,feature_vocab_ngram_pos,NNS CC
+3655,feature_vocab_ngram_pos,NNS IN NN
+3712,feature_vocab_ngram_pos,NNS RB DT
+3716,feature_vocab_ngram_pos,NNS RB NN
+3736,feature_vocab_ngram_pos,NNS VB DT
+3772,feature_vocab_ngram_pos,NNS VBP CC
+3875,feature_vocab_ngram_pos,PRP NN PRP
+3900,feature_vocab_ngram_pos,PRP NNS VBG
+3901,feature_vocab_ngram_pos,PRP NNS VBN
+3912,feature_vocab_ngram_pos,PRP PRP VB
+3942,feature_vocab_ngram_pos,PRP VB
+3945,feature_vocab_ngram_pos,PRP VB IN
+3981,feature_vocab_ngram_pos,PRP VBG TO
+4005,feature_vocab_ngram_pos,PRP VBP VBZ
+4053,feature_vocab_ngram_pos,RB IN
+4163,feature_vocab_ngram_pos,RB VBG DT
+4178,feature_vocab_ngram_pos,RB VBN NNS
+4245,feature_vocab_ngram_pos,RP IN DT
+4323,feature_vocab_ngram_pos,UH NN
+4359,feature_vocab_ngram_pos,VB JJ DT
+4401,feature_vocab_ngram_pos,VB NNS VB
+4418,feature_vocab_ngram_pos,VB PRP VB
+4432,feature_vocab_ngram_pos,VB RB PRP
+4441,feature_vocab_ngram_pos,VB RP DT
+4463,feature_vocab_ngram_pos,VB VBG IN
+4509,feature_vocab_ngram_pos,VBD DT CD
+4517,feature_vocab_ngram_pos,VBD IN JJ
+4520,feature_vocab_ngram_pos,VBD IN PRP
+4526,feature_vocab_ngram_pos,VBD JJ JJ
+4585,feature_vocab_ngram_pos,VBD RP
+4669,feature_vocab_ngram_pos,VBG NNS PRP
+4694,feature_vocab_ngram_pos,VBG RP
+4744,feature_vocab_ngram_pos,VBN NN PRP
+4751,feature_vocab_ngram_pos,VBN PRP
+4772,feature_vocab_ngram_pos,VBN VB
+4809,feature_vocab_ngram_pos,VBP IN IN
+4906,feature_vocab_ngram_pos,VBP RP NN
+4953,feature_vocab_ngram_pos,VBP VBP
+5070,feature_vocab_ngram_pos,VBZ TO
+5080,feature_vocab_ngram_pos,VBZ VBG IN
+5087,feature_vocab_ngram_pos,VBZ VBN
+5130,feature_vocab_ngram_pos,WDT VBZ
+5167,feature_vocab_ngram_pos,WP VBP JJ
+5194,feature_vocab_ngram_pos,WRB JJ RB
+5202,feature_vocab_ngram_pos,WRB NN NN
+5204,feature_vocab_ngram_pos,WRB NN PRP
+5205,feature_vocab_ngram_pos,WRB NN RB
+5229,feature_vocab_ngram_pos,WRB VB DT
+5231,feature_vocab_ngram_pos,WRB VBP
+5332,feature_vocab_chase_hashtag,#throwback
+5382,feature_vocab_chase_hashtag,#gaffeoke
+5399,feature_vocab_chase_hashtag,#vote5sos
+5400,feature_vocab_chase_hashtag,#emabiggestfans1d
+5409,feature_vocab_chase_hashtag,#isis
+5421,feature_vocab_chase_hashtag,#blocked
+5448,feature_vocab_chase_hashtag,#red2blue
+5464,feature_vocab_chase_hashtag,#vinylgasm
+5534,feature_vocab_chase_hashtag,#orange
+5537,feature_vocab_chase_hashtag,#transformthursday
+5617,feature_vocab_chase_hashtag,#dro
+5618,feature_vocab_chase_hashtag,#mikebrown
+5633,feature_vocab_chase_hashtag,#trash
+5734,feature_vocab_chase_hashtag,#light
+5738,feature_vocab_chase_hashtag,#booksofgodwidom
+5765,feature_vocab_chase_hashtag,#redtail
+5807,feature_vocab_chase_hashtag,#marlins
+5808,feature_vocab_chase_hashtag,#qtna
+5809,feature_vocab_chase_hashtag,#outdoorpoolparty
+5823,feature_vocab_chase_hashtag,#struggles
+5830,feature_vocab_chase_hashtag,#hate
+5834,feature_vocab_chase_hashtag,#djmemphis10
+5965,feature_vocab_chase_hashtag,#itakeshitfromnoone
+5966,feature_vocab_chase_hashtag,#cle
+5967,feature_vocab_chase_hashtag,#marketing
+6044,feature_vocab_chase_hashtag,#r4apersec
+6045,feature_vocab_chase_hashtag,#vermontgirlsbelike
+6046,feature_vocab_chase_hashtag,#vermontproblems

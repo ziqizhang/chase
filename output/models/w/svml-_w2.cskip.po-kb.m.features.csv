@@ -1,0 +1,100 @@
+181,feature_vocab_ngram,barbar
+233,feature_vocab_ngram,bitch
+310,feature_vocab_ngram,call
+311,feature_vocab_ngram,call sexist
+390,feature_vocab_ngram,christian
+557,feature_vocab_ngram,declar
+558,feature_vocab_ngram,declar war
+559,feature_vocab_ngram,declar war human
+679,feature_vocab_ngram,driver
+804,feature_vocab_ngram,extermin
+850,feature_vocab_ngram,femal
+854,feature_vocab_ngram,femin
+855,feature_vocab_ngram,feminist
+897,feature_vocab_ngram,footbal
+972,feature_vocab_ngram,girl
+1067,feature_vocab_ngram,hatr
+1132,feature_vocab_ngram,human
+1136,feature_vocab_ngram,human year
+1137,feature_vocab_ngram,human year ago
+1162,feature_vocab_ngram,im
+1168,feature_vocab_ngram,im sexist
+1180,feature_vocab_ngram,im sexist women
+1247,feature_vocab_ngram,isl
+1248,feature_vocab_ngram,islam
+1281,feature_vocab_ngram,jew
+1302,feature_vocab_ngram,kat
+1561,feature_vocab_ngram,mk
+1562,feature_vocab_ngram,mk r
+1588,feature_vocab_ngram,moham
+1590,feature_vocab_ngram,moham wa
+1618,feature_vocab_ngram,murder
+1623,feature_vocab_ngram,muslim
+1789,feature_vocab_ngram,pedophil
+1790,feature_vocab_ngram,pedophil prophet
+1912,feature_vocab_ngram,prophet
+1913,feature_vocab_ngram,prophet moham
+1944,feature_vocab_ngram,quran
+1949,feature_vocab_ngram,r
+2035,feature_vocab_ngram,religion
+2191,feature_vocab_ngram,sexist
+2216,feature_vocab_ngram,sexist women
+2275,feature_vocab_ngram,slave
+2278,feature_vocab_ngram,slaveri
+2334,feature_vocab_ngram,sport
+2472,feature_vocab_ngram,terrorist
+2684,feature_vocab_ngram,war
+2685,feature_vocab_ngram,war human
+2686,feature_vocab_ngram,war human year
+2753,feature_vocab_ngram,woman
+2755,feature_vocab_ngram,women
+2817,feature_vocab_ngram,year ago
+2850,feature_vocab_td_other,num_terms
+2853,feature_vocab_td_other,vader compound
+2864,feature_vocab_chase_hashtag,#islam
+2956,feature_vocab_chase_hashtag,#voguecafe
+2962,feature_vocab_chase_hashtag,#nervous
+2976,feature_vocab_chase_hashtag,#ashandcamilla
+3031,feature_vocab_chase_hashtag,#wrongsocialmediaplatform
+3083,feature_vocab_chase_hashtag,#pjnet
+3088,feature_vocab_chase_hashtag,#exclusive
+3099,feature_vocab_chase_hashtag,#mykitchenrules
+3177,feature_vocab_chase_hashtag,#franga
+3436,feature_vocab_pos_2skip_bigram,"('dt', 'jjr')"
+3444,feature_vocab_pos_2skip_bigram,"('dt', 'to')"
+3856,feature_vocab_pos_2skip_bigram,"('vbz', 'vbn')"
+4479,feature_vocab_pos_2skip_trigram,"('dt', 'vb', 'in')"
+4482,feature_vocab_pos_2skip_trigram,"('dt', 'vb', 'prp')"
+4484,feature_vocab_pos_2skip_trigram,"('dt', 'vb', 'rp')"
+4492,feature_vocab_pos_2skip_trigram,"('dt', 'vbd', 'cc')"
+4572,feature_vocab_pos_2skip_trigram,"('dt', 'vbz', 'vbd')"
+5137,feature_vocab_pos_2skip_trigram,"('jj', 'nn', 'ex')"
+5246,feature_vocab_pos_2skip_trigram,"('jj', 'vbd', 'cc')"
+5251,feature_vocab_pos_2skip_trigram,"('jj', 'vbd', 'nn')"
+5261,feature_vocab_pos_2skip_trigram,"('jj', 'vbd', 'vbz')"
+5617,feature_vocab_pos_2skip_trigram,"('nn', 'cd', 'to')"
+5901,feature_vocab_pos_2skip_trigram,"('nn', 'vbd', 'vbd')"
+5904,feature_vocab_pos_2skip_trigram,"('nn', 'vbd', 'vbp')"
+5906,feature_vocab_pos_2skip_trigram,"('nn', 'vbd', 'wp')"
+5914,feature_vocab_pos_2skip_trigram,"('nn', 'vbg', 'md')"
+5970,feature_vocab_pos_2skip_trigram,"('nn', 'vbp', 'vbg')"
+5975,feature_vocab_pos_2skip_trigram,"('nn', 'vbp', 'wp')"
+5978,feature_vocab_pos_2skip_trigram,"('nn', 'vbz', 'cd')"
+6096,feature_vocab_pos_2skip_trigram,"('prp', 'cc', 'prp')"
+6680,feature_vocab_pos_2skip_trigram,"('rb', 'vbg', 'in')"
+6742,feature_vocab_pos_2skip_trigram,"('rb', 'vbz', 'rb')"
+6747,feature_vocab_pos_2skip_trigram,"('rb', 'vbz', 'vbn')"
+7027,feature_vocab_pos_2skip_trigram,"('to', 'prp', 'vbp')"
+7583,feature_vocab_pos_2skip_trigram,"('vbd', 'prp', 'rp')"
+8677,feature_vocab_pos_2skip_trigram,"('vbz', 'rp', 'to')"
+8678,feature_vocab_pos_2skip_trigram,"('vbz', 'to', 'cc')"
+8679,feature_vocab_pos_2skip_trigram,"('vbz', 'to', 'dt')"
+8680,feature_vocab_pos_2skip_trigram,"('vbz', 'to', 'in')"
+8681,feature_vocab_pos_2skip_trigram,"('vbz', 'to', 'jj')"
+8682,feature_vocab_pos_2skip_trigram,"('vbz', 'to', 'nn')"
+8683,feature_vocab_pos_2skip_trigram,"('vbz', 'to', 'prp')"
+8684,feature_vocab_pos_2skip_trigram,"('vbz', 'to', 'rb')"
+8685,feature_vocab_pos_2skip_trigram,"('vbz', 'to', 'rp')"
+8686,feature_vocab_pos_2skip_trigram,"('vbz', 'to', 'to')"
+8691,feature_vocab_pos_2skip_trigram,"('vbz', 'to', 'wp')"
+8694,feature_vocab_pos_2skip_trigram,"('vbz', 'vb', 'dt')"

@@ -28,7 +28,7 @@ from ml import util
 from ml import nlp
 from ml import text_preprocess as tp
 
-MAX_SEQUENCE_LENGTH = 100 #maximum # of words allowed in a tweet
+MAX_SEQUENCE_LENGTH = 50 #maximum # of words allowed in a tweet
 WORD_EMBEDDING_DIM_OUTPUT = 300
 logger = logging.getLogger(__name__)
 LOG_DIR = os.getcwd() + "/logs"

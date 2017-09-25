@@ -1,0 +1,250 @@
+44,feature_vocab_ngram_pos,CC JJ VBG
+56,feature_vocab_ngram_pos,CC NN JJ
+150,feature_vocab_ngram_pos,CC VBP VBN
+151,feature_vocab_ngram_pos,CC VBP VBP
+166,feature_vocab_ngram_pos,CC WRB VBP
+211,feature_vocab_ngram_pos,DT CD VBZ
+220,feature_vocab_ngram_pos,DT IN DT
+231,feature_vocab_ngram_pos,DT JJ JJ
+244,feature_vocab_ngram_pos,DT JJR NNS
+266,feature_vocab_ngram_pos,DT NN RBR
+267,feature_vocab_ngram_pos,DT NN RP
+268,feature_vocab_ngram_pos,DT NN TO
+274,feature_vocab_ngram_pos,DT NN VBZ
+299,feature_vocab_ngram_pos,DT PRP
+373,feature_vocab_ngram_pos,EX VBP DT
+375,feature_vocab_ngram_pos,EX VBP NNS
+399,feature_vocab_ngram_pos,IN DT CC
+454,feature_vocab_ngram_pos,IN JJS PRP
+457,feature_vocab_ngram_pos,IN NN
+458,feature_vocab_ngram_pos,IN NN CC
+465,feature_vocab_ngram_pos,IN NN NN
+466,feature_vocab_ngram_pos,IN NN NNS
+517,feature_vocab_ngram_pos,IN PRP VBP
+520,feature_vocab_ngram_pos,IN RB
+566,feature_vocab_ngram_pos,IN VBP VBN
+576,feature_vocab_ngram_pos,IN WP NN
+621,feature_vocab_ngram_pos,JJ IN NNS
+624,feature_vocab_ngram_pos,JJ IN VBG
+667,feature_vocab_ngram_pos,JJ NN WP
+668,feature_vocab_ngram_pos,JJ NN WRB
+669,feature_vocab_ngram_pos,JJ NNS
+805,feature_vocab_ngram_pos,JJR NN IN
+813,feature_vocab_ngram_pos,JJR TO VB
+837,feature_vocab_ngram_pos,MD
+857,feature_vocab_ngram_pos,MD VB CD
+883,feature_vocab_ngram_pos,NN CC NNS
+892,feature_vocab_ngram_pos,NN CC WP
+897,feature_vocab_ngram_pos,NN CD RB
+913,feature_vocab_ngram_pos,NN EX VBP
+952,feature_vocab_ngram_pos,NN JJ VBZ
+955,feature_vocab_ngram_pos,NN JJR NN
+956,feature_vocab_ngram_pos,NN JJS
+958,feature_vocab_ngram_pos,NN MD PRP
+978,feature_vocab_ngram_pos,NN NN VBG
+993,feature_vocab_ngram_pos,NN NNS NNS
+994,feature_vocab_ngram_pos,NN NNS PRP
+995,feature_vocab_ngram_pos,NN NNS RB
+1005,feature_vocab_ngram_pos,NN NNS WRB
+1006,feature_vocab_ngram_pos,NN PDT
+1011,feature_vocab_ngram_pos,NN PRP IN
+1013,feature_vocab_ngram_pos,NN PRP MD
+1019,feature_vocab_ngram_pos,NN PRP VBP
+1031,feature_vocab_ngram_pos,NN RB RB
+1059,feature_vocab_ngram_pos,NN VB
+1066,feature_vocab_ngram_pos,NN VB RB
+1079,feature_vocab_ngram_pos,NN VBD NN
+1117,feature_vocab_ngram_pos,NN VBP IN
+1124,feature_vocab_ngram_pos,NN VBP TO
+1125,feature_vocab_ngram_pos,NN VBP VB
+1142,feature_vocab_ngram_pos,NN VBZ RB
+1202,feature_vocab_ngram_pos,NNS DT IN
+1203,feature_vocab_ngram_pos,NNS DT JJ
+1218,feature_vocab_ngram_pos,NNS IN RB
+1253,feature_vocab_ngram_pos,NNS NN VBD
+1283,feature_vocab_ngram_pos,NNS RB JJ
+1325,feature_vocab_ngram_pos,NNS VBG IN
+1329,feature_vocab_ngram_pos,NNS VBG PRP
+1330,feature_vocab_ngram_pos,NNS VBG RB
+1359,feature_vocab_ngram_pos,NNS VBP VBZ
+1368,feature_vocab_ngram_pos,NNS VBZ PRP
+1379,feature_vocab_ngram_pos,NNS WP PRP
+1393,feature_vocab_ngram_pos,PRP CC DT
+1405,feature_vocab_ngram_pos,PRP DT RB
+1412,feature_vocab_ngram_pos,PRP IN NN
+1454,feature_vocab_ngram_pos,PRP NN VB
+1458,feature_vocab_ngram_pos,PRP NN VBP
+1459,feature_vocab_ngram_pos,PRP NN VBZ
+1460,feature_vocab_ngram_pos,PRP NN WRB
+1461,feature_vocab_ngram_pos,PRP NNS
+1462,feature_vocab_ngram_pos,PRP NNS CC
+1463,feature_vocab_ngram_pos,PRP NNS DT
+1465,feature_vocab_ngram_pos,PRP NNS JJ
+1471,feature_vocab_ngram_pos,PRP NNS TO
+1475,feature_vocab_ngram_pos,PRP NNS VBP
+1496,feature_vocab_ngram_pos,PRP RB VB
+1497,feature_vocab_ngram_pos,PRP RB VBD
+1501,feature_vocab_ngram_pos,PRP RB VBZ
+1504,feature_vocab_ngram_pos,PRP RP DT
+1515,feature_vocab_ngram_pos,PRP VB IN
+1594,feature_vocab_ngram_pos,PRP VBZ VBG
+1627,feature_vocab_ngram_pos,RB DT VBZ
+1633,feature_vocab_ngram_pos,RB IN IN
+1699,feature_vocab_ngram_pos,RB PRP NN
+1729,feature_vocab_ngram_pos,RB TO DT
+1762,feature_vocab_ngram_pos,RB VBD RP
+1765,feature_vocab_ngram_pos,RB VBD VBN
+1767,feature_vocab_ngram_pos,RB VBG CC
+1778,feature_vocab_ngram_pos,RB VBG VBG
+1779,feature_vocab_ngram_pos,RB VBG VBN
+1803,feature_vocab_ngram_pos,RB VBP RP
+1804,feature_vocab_ngram_pos,RB VBP TO
+1829,feature_vocab_ngram_pos,RB WP VBZ
+1832,feature_vocab_ngram_pos,RB WRB JJ
+1849,feature_vocab_ngram_pos,RBR NN NN
+1865,feature_vocab_ngram_pos,RP DT
+1870,feature_vocab_ngram_pos,RP IN DT
+1872,feature_vocab_ngram_pos,RP IN NN
+1878,feature_vocab_ngram_pos,RP JJ NN
+1893,feature_vocab_ngram_pos,RP RB RB
+1932,feature_vocab_ngram_pos,TO VB
+1934,feature_vocab_ngram_pos,TO VB CD
+2005,feature_vocab_ngram_pos,VB IN WP
+2021,feature_vocab_ngram_pos,VB JJ WRB
+2027,feature_vocab_ngram_pos,VB MD
+2036,feature_vocab_ngram_pos,VB NN PRP
+2062,feature_vocab_ngram_pos,VB PDT DT
+2063,feature_vocab_ngram_pos,VB PRP
+2082,feature_vocab_ngram_pos,VB PRP WP
+2090,feature_vocab_ngram_pos,VB RB NNS
+2101,feature_vocab_ngram_pos,VB RBR JJ
+2107,feature_vocab_ngram_pos,VB RP PRP
+2132,feature_vocab_ngram_pos,VB VBG DT
+2146,feature_vocab_ngram_pos,VB VBN NN
+2178,feature_vocab_ngram_pos,VBD CD NN
+2193,feature_vocab_ngram_pos,VBD IN NN
+2194,feature_vocab_ngram_pos,VBD IN NNS
+2221,feature_vocab_ngram_pos,VBD NNS
+2222,feature_vocab_ngram_pos,VBD NNS CC
+2228,feature_vocab_ngram_pos,VBD NNS RB
+2229,feature_vocab_ngram_pos,VBD NNS TO
+2231,feature_vocab_ngram_pos,VBD NNS VBG
+2261,feature_vocab_ngram_pos,VBD RB VBN
+2272,feature_vocab_ngram_pos,VBD TO VB
+2274,feature_vocab_ngram_pos,VBD VB JJ
+2332,feature_vocab_ngram_pos,VBG JJ JJ
+2333,feature_vocab_ngram_pos,VBG JJ NN
+2375,feature_vocab_ngram_pos,VBG PRP
+2496,feature_vocab_ngram_pos,VBN PRP NN
+2504,feature_vocab_ngram_pos,VBN RB JJ
+2508,feature_vocab_ngram_pos,VBN RB TO
+2511,feature_vocab_ngram_pos,VBN RB VBZ
+2526,feature_vocab_ngram_pos,VBN VBD
+2595,feature_vocab_ngram_pos,VBP JJ RB
+2596,feature_vocab_ngram_pos,VBP JJ TO
+2597,feature_vocab_ngram_pos,VBP JJ VB
+2599,feature_vocab_ngram_pos,VBP JJ VBN
+2667,feature_vocab_ngram_pos,VBP RB IN
+2741,feature_vocab_ngram_pos,VBP VBP RB
+2811,feature_vocab_ngram_pos,VBZ JJR IN
+2813,feature_vocab_ngram_pos,VBZ JJR NNS
+2815,feature_vocab_ngram_pos,VBZ NN CC
+2937,feature_vocab_ngram_pos,WDT JJ
+3041,feature_vocab_ngram_pos,WP VBZ NN
+3046,feature_vocab_ngram_pos,WP VBZ VBG
+3080,feature_vocab_ngram_pos,WRB NN PRP
+3082,feature_vocab_ngram_pos,WRB NN VBD
+3083,feature_vocab_ngram_pos,WRB NN VBG
+3156,feature_vocab_chase_hashtag,#club
+3158,feature_vocab_chase_hashtag,#go
+3164,feature_vocab_chase_hashtag,#superiorfruit
+3184,feature_vocab_chase_hashtag,#heelsdontbelongonthefield
+3221,feature_vocab_chase_hashtag,#oil
+3222,feature_vocab_chase_hashtag,#burp
+3255,feature_vocab_chase_hashtag,#feministfailed
+3278,feature_vocab_chase_hashtag,#jewish
+3290,feature_vocab_chase_hashtag,#disgraceful
+3314,feature_vocab_chase_hashtag,#gameonmute
+3497,feature_vocab_chase_hashtag,#fuckboy
+3502,feature_vocab_chase_hashtag,#page3
+3522,feature_vocab_chase_hashtag,#patriots
+3609,feature_vocab_chase_hashtag,#stopislam
+3701,feature_vocab_chase_hashtag,#feminismisequalitywhen
+3832,feature_vocab_ngram,act like
+3833,feature_vocab_ngram,action
+3836,feature_vocab_ngram,actual
+3838,feature_vocab_ngram,ad
+3928,feature_vocab_ngram,apost
+4127,feature_vocab_ngram,boot
+4160,feature_vocab_ngram,bubbl
+4168,feature_vocab_ngram,bullshit mk
+4182,feature_vocab_ngram,cake
+4188,feature_vocab_ngram,call sexist dont
+4205,feature_vocab_ngram,canon
+4211,feature_vocab_ngram,cant even
+4213,feature_vocab_ngram,cant imagin
+4235,feature_vocab_ngram,catch mk
+4256,feature_vocab_ngram,chase
+4265,feature_vocab_ngram,chef
+4270,feature_vocab_ngram,children
+4278,feature_vocab_ngram,christian hindu
+4318,feature_vocab_ngram,collect
+4330,feature_vocab_ngram,comedian funni
+4405,feature_vocab_ngram,couscou
+4429,feature_vocab_ngram,critic
+4434,feature_vocab_ngram,cult
+4492,feature_vocab_ngram,delay
+4497,feature_vocab_ngram,demand
+4583,feature_vocab_ngram,dont get
+4584,feature_vocab_ngram,dont give
+4664,feature_vocab_ngram,elimin
+4665,feature_vocab_ngram,elimin mk
+4694,feature_vocab_ngram,enough
+4780,feature_vocab_ngram,failur
+4887,feature_vocab_ngram,freak
+4888,feature_vocab_ngram,free
+4978,feature_vocab_ngram,go sudden death
+4979,feature_vocab_ngram,goal
+5152,feature_vocab_ngram,husband
+5159,feature_vocab_ngram,id rather
+5311,feature_vocab_ngram,jewish
+5422,feature_vocab_ngram,legit
+5457,feature_vocab_ngram,like mk r
+5477,feature_vocab_ngram,locat
+5522,feature_vocab_ngram,make laugh
+5599,feature_vocab_ngram,militia
+5654,feature_vocab_ngram,mood
+5680,feature_vocab_ngram,murder muslim
+5770,feature_vocab_ngram,obvious
+5771,feature_vocab_ngram,odd
+5794,feature_vocab_ngram,one
+5817,feature_vocab_ngram,op
+6011,feature_vocab_ngram,protest
+6206,feature_vocab_ngram,rose
+6266,feature_vocab_ngram,screen
+6367,feature_vocab_ngram,shitti
+6368,feature_vocab_ngram,shock
+6369,feature_vocab_ngram,shoe
+6370,feature_vocab_ngram,shoot
+6371,feature_vocab_ngram,shop
+6372,feature_vocab_ngram,short
+6373,feature_vocab_ngram,shot
+6374,feature_vocab_ngram,shouldnt
+6375,feature_vocab_ngram,shouldv
+6376,feature_vocab_ngram,show
+6382,feature_vocab_ngram,side
+6389,feature_vocab_ngram,simpson
+6392,feature_vocab_ngram,singl
+6395,feature_vocab_ngram,sister
+6396,feature_vocab_ngram,sit
+6397,feature_vocab_ngram,site
+6412,feature_vocab_ngram,sleep
+6454,feature_vocab_ngram,sorri sorri
+6497,feature_vocab_ngram,statement
+6553,feature_vocab_ngram,sum
+6571,feature_vocab_ngram,swear im
+6659,feature_vocab_ngram,thi show
+6681,feature_vocab_ngram,think im
+6854,feature_vocab_ngram,villag
+6914,feature_vocab_ngram,web
+6941,feature_vocab_ngram,whi women

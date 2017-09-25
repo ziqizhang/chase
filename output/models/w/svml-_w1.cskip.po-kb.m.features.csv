@@ -1,0 +1,100 @@
+186,feature_vocab_ngram,barbar
+210,feature_vocab_ngram,behead
+236,feature_vocab_ngram,bitch
+252,feature_vocab_ngram,blond
+321,feature_vocab_ngram,call
+322,feature_vocab_ngram,call sexist
+403,feature_vocab_ngram,christian
+441,feature_vocab_ngram,comedian
+571,feature_vocab_ngram,declar
+572,feature_vocab_ngram,declar war
+869,feature_vocab_ngram,femal
+872,feature_vocab_ngram,femin
+874,feature_vocab_ngram,feminist
+910,feature_vocab_ngram,footbal
+980,feature_vocab_ngram,genocid
+998,feature_vocab_ngram,girl
+1188,feature_vocab_ngram,im
+1196,feature_vocab_ngram,im sexist
+1208,feature_vocab_ngram,im sexist women
+1270,feature_vocab_ngram,isi
+1273,feature_vocab_ngram,isl
+1274,feature_vocab_ngram,islam
+1290,feature_vocab_ngram,islamolunat
+1295,feature_vocab_ngram,israel
+1314,feature_vocab_ngram,jew
+1555,feature_vocab_ngram,men
+1584,feature_vocab_ngram,mk
+1585,feature_vocab_ngram,mk r
+1614,feature_vocab_ngram,moham
+1617,feature_vocab_ngram,moham wa
+1648,feature_vocab_ngram,murder
+1655,feature_vocab_ngram,muslim
+1797,feature_vocab_ngram,palestinian
+1819,feature_vocab_ngram,pedophil
+1937,feature_vocab_ngram,prophet
+1938,feature_vocab_ngram,prophet moham
+1968,feature_vocab_ngram,quran
+1971,feature_vocab_ngram,r
+2070,feature_vocab_ngram,religion
+2220,feature_vocab_ngram,sexist
+2229,feature_vocab_ngram,sexist femal
+2246,feature_vocab_ngram,sexist women
+2307,feature_vocab_ngram,slave
+2489,feature_vocab_ngram,terrorist
+2782,feature_vocab_ngram,woman
+2783,feature_vocab_ngram,women
+2875,feature_vocab_td_other,num_terms
+2878,feature_vocab_td_other,vader compound
+2889,feature_vocab_chase_hashtag,#breakingbad
+2917,feature_vocab_chase_hashtag,#is
+2983,feature_vocab_chase_hashtag,#ozgecanaslan
+2989,feature_vocab_chase_hashtag,#fauxfoodies
+2995,feature_vocab_chase_hashtag,#gymtime
+3003,feature_vocab_chase_hashtag,#russia
+3058,feature_vocab_chase_hashtag,#2
+3109,feature_vocab_chase_hashtag,#armpitvaginas
+3114,feature_vocab_chase_hashtag,#teamsgofrantic
+3124,feature_vocab_chase_hashtag,#firstworldproblems
+3199,feature_vocab_chase_hashtag,#tweetlik
+3302,feature_vocab_chase_hashtag,#iamcharliehebdo
+3467,feature_vocab_pos_2skip_bigram,"('ex', 'vbp')"
+3860,feature_vocab_pos_2skip_bigram,"('vbz', 'vbz')"
+4481,feature_vocab_pos_2skip_trigram,"('dt', 'vbd', 'nn')"
+4484,feature_vocab_pos_2skip_trigram,"('dt', 'vbd', 'rp')"
+4487,feature_vocab_pos_2skip_trigram,"('dt', 'vbd', 'vbd')"
+4489,feature_vocab_pos_2skip_trigram,"('dt', 'vbd', 'vbn')"
+4496,feature_vocab_pos_2skip_trigram,"('dt', 'vbg', 'prp')"
+4574,feature_vocab_pos_2skip_trigram,"('dt', 'wp', 'dt')"
+4649,feature_vocab_pos_2skip_trigram,"('in', 'cc', 'cc')"
+5137,feature_vocab_pos_2skip_trigram,"('jj', 'nn', 'vbz')"
+5249,feature_vocab_pos_2skip_trigram,"('jj', 'vbg', 'dt')"
+5254,feature_vocab_pos_2skip_trigram,"('jj', 'vbg', 'prp')"
+5263,feature_vocab_pos_2skip_trigram,"('jj', 'vbg', 'vbz')"
+5606,feature_vocab_pos_2skip_trigram,"('nn', 'dt', 'nn')"
+5889,feature_vocab_pos_2skip_trigram,"('nn', 'vbg', 'in')"
+5892,feature_vocab_pos_2skip_trigram,"('nn', 'vbg', 'md')"
+5894,feature_vocab_pos_2skip_trigram,"('nn', 'vbg', 'prp')"
+5902,feature_vocab_pos_2skip_trigram,"('nn', 'vbg', 'vbn')"
+5961,feature_vocab_pos_2skip_trigram,"('nn', 'vbz', 'jjr')"
+5966,feature_vocab_pos_2skip_trigram,"('nn', 'vbz', 'rb')"
+5969,feature_vocab_pos_2skip_trigram,"('nn', 'vbz', 'to')"
+5972,feature_vocab_pos_2skip_trigram,"('nn', 'vbz', 'vbg')"
+5980,feature_vocab_pos_2skip_trigram,"('nn', 'wdt', 'cd')"
+6090,feature_vocab_pos_2skip_trigram,"('prp', 'dt', 'jjr')"
+6592,feature_vocab_pos_2skip_trigram,"('rb', 'rp', 'dt')"
+6662,feature_vocab_pos_2skip_trigram,"('rb', 'vbg', 'vbg')"
+6722,feature_vocab_pos_2skip_trigram,"('rb', 'vbz', 'vbp')"
+6726,feature_vocab_pos_2skip_trigram,"('rb', 'wdt', 'vbp')"
+8645,feature_vocab_pos_2skip_trigram,"('vbz', 'to', 'rp')"
+8646,feature_vocab_pos_2skip_trigram,"('vbz', 'to', 'to')"
+8647,feature_vocab_pos_2skip_trigram,"('vbz', 'to', 'vb')"
+8648,feature_vocab_pos_2skip_trigram,"('vbz', 'to', 'vbg')"
+8649,feature_vocab_pos_2skip_trigram,"('vbz', 'to', 'vbn')"
+8650,feature_vocab_pos_2skip_trigram,"('vbz', 'vb', 'cc')"
+8651,feature_vocab_pos_2skip_trigram,"('vbz', 'vb', 'dt')"
+8652,feature_vocab_pos_2skip_trigram,"('vbz', 'vb', 'in')"
+8653,feature_vocab_pos_2skip_trigram,"('vbz', 'vb', 'jj')"
+8655,feature_vocab_pos_2skip_trigram,"('vbz', 'vb', 'prp')"
+8666,feature_vocab_pos_2skip_trigram,"('vbz', 'vbd', 'dt')"
+8670,feature_vocab_pos_2skip_trigram,"('vbz', 'vbd', 'prp')"

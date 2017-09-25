@@ -1,0 +1,100 @@
+24,feature_vocab_ngram,act like dont
+68,feature_vocab_ngram,alcohol
+111,feature_vocab_ngram,arm
+156,feature_vocab_ngram,baker
+162,feature_vocab_ngram,bar
+172,feature_vocab_ngram,battl
+211,feature_vocab_ngram,big booti
+338,feature_vocab_ngram,bitch want
+340,feature_vocab_ngram,bitch wear
+362,feature_vocab_ngram,blue
+485,feature_vocab_ngram,charli sheen
+498,feature_vocab_ngram,chines
+540,feature_vocab_ngram,complain
+541,feature_vocab_ngram,complet
+558,feature_vocab_ngram,couch
+722,feature_vocab_ngram,drug
+771,feature_vocab_ngram,ever met
+792,feature_vocab_ngram,excus
+793,feature_vocab_ngram,exist
+794,feature_vocab_ngram,expect
+872,feature_vocab_ngram,foh
+896,feature_vocab_ngram,fri
+1052,feature_vocab_ngram,hahahaha
+1088,feature_vocab_ngram,hi bitch
+1146,feature_vocab_ngram,holi
+1238,feature_vocab_ngram,instead
+1258,feature_vocab_ngram,jack
+1284,feature_vocab_ngram,ju
+1330,feature_vocab_ngram,last time
+1493,feature_vocab_ngram,mental
+1536,feature_vocab_ngram,morn jo
+1582,feature_vocab_ngram,new bitch
+1606,feature_vocab_ngram,nigga know
+1778,feature_vocab_ngram,problem
+1809,feature_vocab_ngram,pussi like
+1817,feature_vocab_ngram,pussi tast like
+1823,feature_vocab_ngram,queer
+1869,feature_vocab_ngram,refus
+1910,feature_vocab_ngram,rule
+2092,feature_vocab_ngram,soul
+2132,feature_vocab_ngram,stick
+2145,feature_vocab_ngram,stop pussi
+2149,feature_vocab_ngram,street
+2236,feature_vocab_ngram,terribl
+2299,feature_vocab_ngram,time im
+2388,feature_vocab_ngram,u hoe
+2478,feature_vocab_ngram,weed
+2492,feature_vocab_ngram,wetback
+2498,feature_vocab_ngram,whi gotta
+2499,feature_vocab_ngram,whi hoe
+2587,feature_vocab_ngram,yellow
+2665,feature_vocab_ngram_pos,CC PRP VBP
+2778,feature_vocab_ngram_pos,DT JJ VBD
+2992,feature_vocab_ngram_pos,IN PRP MD
+3281,feature_vocab_ngram_pos,MD VB
+4349,feature_vocab_ngram_pos,VB MD
+4368,feature_vocab_ngram_pos,VB NNS DT
+4516,feature_vocab_ngram_pos,VBD NNS CC
+4533,feature_vocab_ngram_pos,VBD PRP PRP
+4594,feature_vocab_ngram_pos,VBG DT NN
+4794,feature_vocab_ngram_pos,VBP JJ TO
+4825,feature_vocab_ngram_pos,VBP NNS DT
+4826,feature_vocab_ngram_pos,VBP NNS IN
+5076,feature_vocab_ngram_pos,WDT JJ
+5093,feature_vocab_ngram_pos,WDT VBP PRP
+5195,feature_vocab_ngram_pos,WRB RB PRP
+5196,feature_vocab_ngram_pos,WRB RB VB
+5204,feature_vocab_ngram_pos,WRB VBP PRP
+5205,feature_vocab_ngram_pos,WRB VBP RB
+5266,feature_vocab_chase_hashtag,#clevelandsports
+5267,feature_vocab_chase_hashtag,#browns
+5268,feature_vocab_chase_hashtag,#brownie
+5324,feature_vocab_chase_hashtag,#syria
+5343,feature_vocab_chase_hashtag,#free
+5376,feature_vocab_chase_hashtag,#tngseason4finale
+5377,feature_vocab_chase_hashtag,#weavetrip
+5391,feature_vocab_chase_hashtag,#justsaying
+5423,feature_vocab_chase_hashtag,#uniteblue
+5430,feature_vocab_chase_hashtag,#illneverunderstandwhy
+5435,feature_vocab_chase_hashtag,#teabagger
+5454,feature_vocab_chase_hashtag,#thankgod
+5470,feature_vocab_chase_hashtag,#hoosierdaddy
+5533,feature_vocab_chase_hashtag,#monstertape
+5585,feature_vocab_chase_hashtag,#eagles
+5588,feature_vocab_chase_hashtag,#tweetlikepontiacholmes
+5594,feature_vocab_chase_hashtag,#summertime
+5595,feature_vocab_chase_hashtag,#fam
+5672,feature_vocab_chase_hashtag,#dobetter
+5682,feature_vocab_chase_hashtag,#hatefakepeople
+5757,feature_vocab_chase_hashtag,#hellyeah
+5791,feature_vocab_chase_hashtag,#freeelchapo
+5818,feature_vocab_chase_hashtag,#montlake
+5850,feature_vocab_chase_hashtag,#youcansitwithus
+5871,feature_vocab_chase_hashtag,#freaksandgeeks
+5880,feature_vocab_chase_hashtag,#anncoulter
+5881,feature_vocab_chase_hashtag,#rich
+5882,feature_vocab_chase_hashtag,#wildnigga
+5922,feature_vocab_chase_hashtag,#blackish
+5982,feature_vocab_chase_hashtag,#family
+5984,feature_vocab_chase_hashtag,#boxing
