@@ -16,3 +16,57 @@ avg_macro,0.61,0.58,0.59,None
 avg_micro,0.81,0.81,0.81,None
 avg_macro,0.67,0.61,0.63,None
 
+dense N-FOLD AVERAGE :
+,precision, recall, f1, support
+0,0.75,0.57,0.65,1534
+1,0.74,0.64,0.69,2955
+2,0.83,0.90,0.87,9460
+3,0.00,0.00,0.00,19
+avg_micro,0.81,0.81,0.81,None
+avg_macro,0.58,0.53,0.55,None
+
+ HELDOUT :
+,precision, recall, f1, support
+0,0.65,0.78,0.71,482
+1,0.84,0.51,0.64,963
+2,0.84,0.92,0.88,3204
+3,0.00,0.00,0.00,8
+avg_micro,0.82,0.82,0.82,None
+avg_macro,0.58,0.55,0.56,None
+
+dense N-FOLD AVERAGE :
+,precision, recall, f1, support
+0,0.69,0.73,0.71,1534
+1,0.75,0.65,0.70,2955
+2,0.86,0.89,0.87,9460
+3,0.00,0.00,0.00,19
+avg_micro,0.82,0.82,0.82,None
+avg_macro,0.58,0.57,0.57,None
+
+ HELDOUT :
+,precision, recall, f1, support
+0,0.69,0.72,0.71,482
+1,0.80,0.58,0.67,963
+2,0.84,0.91,0.88,3204
+3,0.00,0.00,0.00,8
+avg_micro,0.82,0.82,0.82,None
+avg_macro,0.58,0.55,0.56,None
+
+dense N-FOLD AVERAGE :
+,precision, recall, f1, support
+0,0.75,0.59,0.66,1534
+1,0.74,0.65,0.69,2955
+2,0.84,0.90,0.87,9460
+3,0.00,0.00,0.00,19
+avg_micro,0.81,0.81,0.81,None
+avg_macro,0.58,0.53,0.55,None
+
+ HELDOUT :
+,precision, recall, f1, support
+0,0.76,0.60,0.67,482
+1,0.86,0.48,0.61,963
+2,0.81,0.95,0.88,3204
+3,1.00,0.25,0.40,8
+avg_micro,0.81,0.81,0.81,None
+avg_macro,0.86,0.57,0.64,None
+

@@ -88,14 +88,14 @@ def write_scores(predictoins, truth: pandas.Series, digits, writer, instance_dst
                                                   labels=labels)
 
     line = prepare_score_string(p, r, f1, s, labels, target_names, digits)
-    pa, ra, f1a, sa=precision_recall_fscore_support(truth, predictoins,
-                                                  average='micro')
+    pa, ra, f1a, sa = precision_recall_fscore_support(truth, predictoins,
+                                                      average='micro')
     line += "avg_micro,"
     for v in (pa, ra, f1a):
         line += "{0:0.{1}f}".format(v, digits) + ","
     line += '{0}'.format(np.sum(sa)) + "\n"
-    pa, ra, f1a, sa=precision_recall_fscore_support(truth, predictoins,
-                                                  average='macro')
+    pa, ra, f1a, sa = precision_recall_fscore_support(truth, predictoins,
+                                                      average='macro')
     line += "avg_macro,"
     for v in (pa, ra, f1a):
         line += "{0:0.{1}f}".format(v, digits) + ","
@@ -111,7 +111,7 @@ def write_scores(predictoins, truth: pandas.Series, digits, writer, instance_dst
             subset_truth = []
             for index, label in zip(truth.index, predictoins):
                 if instance_dst_column[index] == dstag:
-                    if isinstance(label,np.ndarray):
+                    if isinstance(label, np.ndarray):
                         subset_pred.append(label[0])
                     else:
                         subset_pred.append(label)
@@ -217,7 +217,6 @@ def output_data_splits(data_file, out_folder):
     # X_test_1.to_csv(out_folder + "/part3.csv", sep=',', encoding='utf-8')
 
 
-
 def save_selected_features(finalFeatureIndices, featureTypes, file):
     with open(file, 'w', newline='', encoding='utf-8') as csvfile:
         writer = csv.writer(csvfile, delimiter=',',
@@ -265,7 +264,7 @@ def saveOutput(prediction, model_name, task, outfolder):
 
 
 def feature_scale(option, M):
-    if option==-1:
+    if option == -1:
         return M
 
     print("feature scaling, first perform sanity check...")
@@ -284,12 +283,12 @@ def feature_scale(option, M):
         M = feature_scaling_mean_std(M)
         if np.isnan(M).any():
             print("scaled matrix has NaN values, replace with 0")
-        M= np.nan_to_num(M)
+        M = np.nan_to_num(M)
     elif option == 1:
         M = feature_scaling_min_max(M)
         if np.isnan(M).any():
             print("scaled matrix has NaN values, replace with 0")
-        M= np.nan_to_num(M)
+        M = np.nan_to_num(M)
     else:
         pass
 
@@ -308,7 +307,7 @@ def feature_extraction(data_column, feat_vectorizer, sysout, logger):
                 .format(len(tweets), datetime.datetime.now()))
     logger.info("\tbegin feature extraction and vectorization...")
     tweets_cleaned = [text_preprocess.strip_hashtags(x) for x in tweets]
-    #tweets_cleaned = [text_preprocess.preprocess_clean(x, True, True) for x in tweets]
+    # tweets_cleaned = [text_preprocess.preprocess_clean(x, True, True) for x in tweets]
     M = feat_vectorizer.transform_inputs(tweets, tweets_cleaned, sysout, "na")
     logger.info("FEATURE MATRIX dimensions={}".format(M[0].shape))
     return M
@@ -453,16 +452,19 @@ def remove_offensive_label(in_file, out_file):
                     count += 1
                     continue
 
-                if row[6] == "1":
-                     row[6]="2"
+                # if row[6] == "1":
+                #     row[6] = "2"
+
+                if row[6] == "3":
+                    continue
                 # if row[6] == "1" or row[6]==3:
                 #     row[6]="0"
 
                 writer.writerow(row)
 
 
-# remove_offensive_label("/home/zqz/Work/chase/data/ml/ws-merge/labeled_data_all.csv",
-#                         "/home/zqz/Work/chase/data/ml/ws-merge/labeled_data_all_2.csv")
+# remove_offensive_label("/home/zqz/Work/chase/data/ml/w+ws/labeled_data_all_part2.csv",
+#                        "/home/zqz/Work/chase/data/ml/w+ws/labeled_data_all3_part2.csv")
 
 # separate_tdc("/home/zqz/Work/chase/data/ml/tdc-b/labeled_data_all.csv",
 #               "/home/zqz/Work/chase/data/ml/tdsmall/labeled_data_all.csv", "td")

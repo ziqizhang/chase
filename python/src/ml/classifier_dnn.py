@@ -110,7 +110,7 @@ def create_model_conv_lstm(embedding_layer):
     model.add(LSTM(units=100, return_sequences=True))
     model.add(GlobalMaxPooling1D())
     #model.add(Dropout(0.2))
-    model.add(Dense(4, activation='softmax'))
+    model.add(Dense(3, activation='softmax'))
     model.compile(loss='categorical_crossentropy', optimizer='adam', metrics=['accuracy'])
 
     logger.info("New run started at {}\n{}".format(datetime.datetime.now(), model.summary()))
