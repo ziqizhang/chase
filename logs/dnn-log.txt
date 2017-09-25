@@ -1,0 +1,18 @@
+INFO:__main__:	generating word vectors, 2017-09-25 07:02:16.713842
+INFO:__main__:		 complete, dim=(6594, 1742), 2017-09-25 07:02:20.996465
+INFO:__main__:New run started at 2017-09-25 07:02:24.906405
+None
+INFO:__main__:New run started at 2017-09-25 07:02:24.907897
+None
+INFO:__main__:New run started at 2017-09-25 07:02:25.018346
+None
+INFO:__main__:New run started at 2017-09-25 07:02:25.019836
+None
+INFO:__main__:New run started at 2017-09-25 07:02:25.152913
+None
+INFO:__main__:New run started at 2017-09-25 07:02:25.154616
+None
+INFO:__main__:New run started at 2017-09-25 07:02:25.422607
+None
+INFO:__main__:New run started at 2017-09-25 07:02:25.424249
+None

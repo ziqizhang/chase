@@ -73,9 +73,9 @@ def merge_waseem_datasets(in_large_dataset, in_small_dataset, out_file):
 
 
 
-merge_waseem_datasets("/home/zqz/Work/chase/data/ml/w/labeled_data_all.csv",
-                      "/home/zqz/Work/chase/data/ml/ws-merge/labeled_data_all.csv",
-                      "/home/zqz/Work/chase/data/ml/w+ws/labeled_data_all.csv")
+# merge_waseem_datasets("/home/zqz/Work/chase/data/ml/w/labeled_data_all.csv",
+#                       "/home/zqz/Work/chase/data/ml/ws-exp/labeled_data_all.csv",
+#                       "/home/zqz/Work/chase/data/ml/w+ws/labeled_data_all.csv")
 
 # in_folder="/home/zqz/Work/chase/data/annotation/unfiltered"
 # out_file="/home/zqz/Work/chase/data/annotation/unfilered_merged.csv"
