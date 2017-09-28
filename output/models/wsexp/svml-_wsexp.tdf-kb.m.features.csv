@@ -1,0 +1,100 @@
+2,feature_vocab_td_other,num_syllables
+96,feature_vocab_ngram,app
+97,feature_vocab_ngram,appar
+111,feature_vocab_ngram,arent
+112,feature_vocab_ngram,argu
+122,feature_vocab_ngram,asia
+123,feature_vocab_ngram,asia n
+124,feature_vocab_ngram,ask
+140,feature_vocab_ngram,author
+163,feature_vocab_ngram,band
+164,feature_vocab_ngram,baph
+165,feature_vocab_ngram,bare
+198,feature_vocab_ngram,bet
+213,feature_vocab_ngram,blame one
+285,feature_vocab_ngram,campaign
+386,feature_vocab_ngram,contest
+505,feature_vocab_ngram,discov
+506,feature_vocab_ngram,discuss
+559,feature_vocab_ngram,drop
+561,feature_vocab_ngram,drunk
+562,feature_vocab_ngram,duck
+563,feature_vocab_ngram,dude
+564,feature_vocab_ngram,dude dont
+605,feature_vocab_ngram,enjoy
+668,feature_vocab_ngram,fan
+669,feature_vocab_ngram,fantast
+670,feature_vocab_ngram,far
+686,feature_vocab_ngram,feel
+691,feature_vocab_ngram,fem
+692,feature_vocab_ngram,femal
+790,feature_vocab_ngram,garrison
+791,feature_vocab_ngram,gate
+792,feature_vocab_ngram,gater
+806,feature_vocab_ngram,get thi
+807,feature_vocab_ngram,gg
+904,feature_vocab_ngram,hero
+905,feature_vocab_ngram,hey
+906,feature_vocab_ngram,hey guy
+930,feature_vocab_ngram,hous
+975,feature_vocab_ngram,imagin
+976,feature_vocab_ngram,immedi
+977,feature_vocab_ngram,impact
+978,feature_vocab_ngram,impli
+979,feature_vocab_ngram,import
+980,feature_vocab_ngram,impress
+1036,feature_vocab_ngram,itll
+1037,feature_vocab_ngram,ive
+1043,feature_vocab_ngram,ive onli
+1045,feature_vocab_ngram,ive talk
+1094,feature_vocab_ngram,kitchen
+1095,feature_vocab_ngram,kitchen rule
+1096,feature_vocab_ngram,kitten
+1141,feature_vocab_ngram,leonard nimoy
+1142,feature_vocab_ngram,lesbian
+1143,feature_vocab_ngram,less
+1211,feature_vocab_ngram,major
+1234,feature_vocab_ngram,market
+1235,feature_vocab_ngram,markov
+1246,feature_vocab_ngram,mean term feminazi
+1247,feature_vocab_ngram,meant
+1258,feature_vocab_ngram,men bcz indiass
+1259,feature_vocab_ngram,men dont
+1308,feature_vocab_ngram,movement
+1315,feature_vocab_ngram,music
+1343,feature_vocab_ngram,nerd
+1364,feature_vocab_ngram,normal
+1533,feature_vocab_ngram,privaci
+1534,feature_vocab_ngram,privat
+1535,feature_vocab_ngram,privileg
+1576,feature_vocab_ngram,qualifi
+1577,feature_vocab_ngram,qualiti
+1583,feature_vocab_ngram,quot
+1584,feature_vocab_ngram,r
+1596,feature_vocab_ngram,rage
+1642,feature_vocab_ngram,reflect
+1643,feature_vocab_ngram,refus
+1847,feature_vocab_ngram,social media
+1964,feature_vocab_ngram,teacher
+1965,feature_vocab_ngram,team
+1967,feature_vocab_ngram,tech
+1968,feature_vocab_ngram,tech compani
+1969,feature_vocab_ngram,technic
+2045,feature_vocab_ngram,throw
+2046,feature_vocab_ngram,ticket
+2065,feature_vocab_ngram,tool
+2099,feature_vocab_ngram,tweet
+2100,feature_vocab_ngram,tweet wa
+2809,feature_vocab_ngram_pos,JJ JJ NNS
+2816,feature_vocab_ngram_pos,JJ JJR NNS
+2996,feature_vocab_ngram_pos,MD VB JJ
+3048,feature_vocab_ngram_pos,NN IN PDT
+3053,feature_vocab_ngram_pos,NN IN VBG
+3054,feature_vocab_ngram_pos,NN IN VBN
+3070,feature_vocab_ngram_pos,NN JJ VBN
+3075,feature_vocab_ngram_pos,NN JJR NN
+3078,feature_vocab_ngram_pos,NN MD PRP
+3546,feature_vocab_ngram_pos,PRP RB RB
+3902,feature_vocab_ngram_pos,TO DT NN
+4109,feature_vocab_ngram_pos,VB VBN
+4333,feature_vocab_ngram_pos,VBG RBR

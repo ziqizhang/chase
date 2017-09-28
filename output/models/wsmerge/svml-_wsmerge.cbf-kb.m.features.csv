@@ -1,0 +1,250 @@
+2,feature_vocab_ngram,abort
+3,feature_vocab_ngram,abort provid
+45,feature_vocab_ngram,almost
+92,feature_vocab_ngram,appreci abort
+93,feature_vocab_ngram,appreci abort provid
+96,feature_vocab_ngram,ara
+97,feature_vocab_ngram,ara b
+115,feature_vocab_ngram,ass
+123,feature_vocab_ngram,attack j
+124,feature_vocab_ngram,attack j e
+128,feature_vocab_ngram,attribut
+140,feature_vocab_ngram,b
+168,feature_vocab_ngram,becaus
+171,feature_vocab_ngram,becaus men
+196,feature_vocab_ngram,bitch
+197,feature_vocab_ngram,black
+200,feature_vocab_ngram,blame
+201,feature_vocab_ngram,blame one
+204,feature_vocab_ngram,blame one men
+211,feature_vocab_ngram,blog remind
+212,feature_vocab_ngram,blog remind liber
+261,feature_vocab_ngram,call
+263,feature_vocab_ngram,call feminazi
+317,feature_vocab_ngram,ci
+341,feature_vocab_ngram,color
+348,feature_vocab_ngram,common
+364,feature_vocab_ngram,congratul
+385,feature_vocab_ngram,coon
+386,feature_vocab_ngram,coon ass
+393,feature_vocab_ngram,cost
+418,feature_vocab_ngram,cunt
+426,feature_vocab_ngram,cuz
+439,feature_vocab_ngram,day appreci
+440,feature_vocab_ngram,day appreci abort
+447,feature_vocab_ngram,death
+448,feature_vocab_ngram,death threat
+452,feature_vocab_ngram,decis
+518,feature_vocab_ngram,dont care
+522,feature_vocab_ngram,dont hurt
+523,feature_vocab_ngram,dont hurt women
+527,feature_vocab_ngram,dont need
+559,feature_vocab_ngram,e
+563,feature_vocab_ngram,e rae
+564,feature_vocab_ngram,e rae l
+566,feature_vocab_ngram,earlier
+590,feature_vocab_ngram,enemi
+602,feature_vocab_ngram,equal
+605,feature_vocab_ngram,erol
+668,feature_vocab_ngram,fe
+669,feature_vocab_ngram,fe mi
+670,feature_vocab_ngram,fe mi nazi
+680,feature_vocab_ngram,fem
+681,feature_vocab_ngram,femal
+682,feature_vocab_ngram,femin
+684,feature_vocab_ngram,femin ye
+685,feature_vocab_ngram,femin ye women
+686,feature_vocab_ngram,feminazi
+689,feature_vocab_ngram,feminazi blog
+690,feature_vocab_ngram,feminazi blog remind
+704,feature_vocab_ngram,feminist
+706,feature_vocab_ngram,feminist feminazi
+745,feature_vocab_ngram,fraud
+746,feature_vocab_ngram,fraud feminazi
+759,feature_vocab_ngram,fuck feminazi
+909,feature_vocab_ngram,histori
+934,feature_vocab_ngram,hurt women
+947,feature_vocab_ngram,im feminazi
+1022,feature_vocab_ngram,islam
+1047,feature_vocab_ngram,job coon
+1096,feature_vocab_ngram,l
+1097,feature_vocab_ngram,l e
+1098,feature_vocab_ngram,l e rae
+1144,feature_vocab_ngram,liber
+1145,feature_vocab_ngram,liber today
+1146,feature_vocab_ngram,liber today nation
+1213,feature_vocab_ngram,male
+1214,feature_vocab_ngram,man
+1248,feature_vocab_ngram,men
+1251,feature_vocab_ngram,men dont
+1252,feature_vocab_ngram,men dont hurt
+1261,feature_vocab_ngram,mi
+1262,feature_vocab_ngram,mi nazi
+1263,feature_vocab_ngram,mi nazi femin
+1296,feature_vocab_ngram,mother
+1314,feature_vocab_ngram,nation
+1315,feature_vocab_ngram,nation day
+1316,feature_vocab_ngram,nation day appreci
+1318,feature_vocab_ngram,nazi
+1319,feature_vocab_ngram,nazi femin
+1334,feature_vocab_ngram,neo
+1345,feature_vocab_ngram,nigga
+1366,feature_vocab_ngram,ob
+1391,feature_vocab_ngram,one becaus
+1394,feature_vocab_ngram,one men
+1395,feature_vocab_ngram,one men dont
+1443,feature_vocab_ngram,pax
+1493,feature_vocab_ngram,poor
+1582,feature_vocab_ngram,racism
+1583,feature_vocab_ngram,racist
+1586,feature_vocab_ngram,rae
+1587,feature_vocab_ngram,rae l
+1595,feature_vocab_ngram,rape
+1645,feature_vocab_ngram,remind liber
+1646,feature_vocab_ngram,remind liber today
+1655,feature_vocab_ngram,requir
+1704,feature_vocab_ngram,safeti
+1753,feature_vocab_ngram,sens
+1765,feature_vocab_ngram,sexism
+1766,feature_vocab_ngram,sexist
+1767,feature_vocab_ngram,sexretari
+1827,feature_vocab_ngram,slut
+1849,feature_vocab_ngram,son
+1903,feature_vocab_ngram,straight
+1908,feature_vocab_ngram,strike
+1965,feature_vocab_ngram,term
+1966,feature_vocab_ngram,term feminazi
+1969,feature_vocab_ngram,terror
+1970,feature_vocab_ngram,terror attack
+1971,feature_vocab_ngram,terror attack j
+2047,feature_vocab_ngram,today nation
+2048,feature_vocab_ngram,today nation day
+2067,feature_vocab_ngram,traffic
+2085,feature_vocab_ngram,tumblr
+2100,feature_vocab_ngram,u
+2119,feature_vocab_ngram,ur
+2124,feature_vocab_ngram,use term
+2127,feature_vocab_ngram,use word
+2228,feature_vocab_ngram,white
+2242,feature_vocab_ngram,woc
+2245,feature_vocab_ngram,woman
+2249,feature_vocab_ngram,women
+2258,feature_vocab_ngram,word feminazi
+2264,feature_vocab_ngram,wors
+2285,feature_vocab_ngram,ya
+2290,feature_vocab_ngram,ye women
+2435,feature_vocab_ngram_pos,CD RB
+2436,feature_vocab_ngram_pos,CD RB DT
+2562,feature_vocab_ngram_pos,DT VBP NNS
+2652,feature_vocab_ngram_pos,IN NN CD
+2661,feature_vocab_ngram_pos,IN NN RBR
+2672,feature_vocab_ngram_pos,IN NNS
+2684,feature_vocab_ngram_pos,IN NNS VBG
+2685,feature_vocab_ngram_pos,IN NNS VBN
+2753,feature_vocab_ngram_pos,IN WP VBD
+2793,feature_vocab_ngram_pos,JJ JJ
+2797,feature_vocab_ngram_pos,JJ JJ NN
+2809,feature_vocab_ngram_pos,JJ NN
+2816,feature_vocab_ngram_pos,JJ NN NN
+2827,feature_vocab_ngram_pos,JJ NN VBZ
+2845,feature_vocab_ngram_pos,JJ NNS VBN
+2849,feature_vocab_ngram_pos,JJ NNS WP
+2871,feature_vocab_ngram_pos,JJ RB VBD
+2922,feature_vocab_ngram_pos,JJ VBZ DT
+2936,feature_vocab_ngram_pos,JJR IN
+2940,feature_vocab_ngram_pos,JJR IN NNS
+2996,feature_vocab_ngram_pos,MD VB VBP
+3013,feature_vocab_ngram_pos,NN CD
+3015,feature_vocab_ngram_pos,NN CD RB
+3049,feature_vocab_ngram_pos,NN JJ
+3053,feature_vocab_ngram_pos,NN JJ JJ
+3054,feature_vocab_ngram_pos,NN JJ NN
+3070,feature_vocab_ngram_pos,NN NN
+3075,feature_vocab_ngram_pos,NN NN JJ
+3078,feature_vocab_ngram_pos,NN NN NN
+3081,feature_vocab_ngram_pos,NN NN PRP
+3091,feature_vocab_ngram_pos,NN NN WP
+3117,feature_vocab_ngram_pos,NN PRP JJ
+3123,feature_vocab_ngram_pos,NN PRP VBD
+3174,feature_vocab_ngram_pos,NN VBD JJR
+3254,feature_vocab_ngram_pos,NN WP
+3259,feature_vocab_ngram_pos,NN WP VBP
+3325,feature_vocab_ngram_pos,NNS NN VBD
+3389,feature_vocab_ngram_pos,NNS VBG JJ
+3397,feature_vocab_ngram_pos,NNS VBN
+3434,feature_vocab_ngram_pos,NNS WP
+3437,feature_vocab_ngram_pos,NNS WP VBP
+3645,feature_vocab_ngram_pos,RB DT IN
+3649,feature_vocab_ngram_pos,RB DT NNS
+3653,feature_vocab_ngram_pos,RB DT VBP
+3685,feature_vocab_ngram_pos,RB JJR
+3686,feature_vocab_ngram_pos,RB JJR IN
+3766,feature_vocab_ngram_pos,RB VBD NNS
+3843,feature_vocab_ngram_pos,RBR NN
+3894,feature_vocab_ngram_pos,TO IN
+4109,feature_vocab_ngram_pos,VB VBP DT
+4142,feature_vocab_ngram_pos,VBD IN NNS
+4156,feature_vocab_ngram_pos,VBD JJR
+4157,feature_vocab_ngram_pos,VBD JJR IN
+4228,feature_vocab_ngram_pos,VBD VBN RP
+4229,feature_vocab_ngram_pos,VBD VBN TO
+4258,feature_vocab_ngram_pos,VBG JJ IN
+4310,feature_vocab_ngram_pos,VBG PRP VBP
+4389,feature_vocab_ngram_pos,VBN NNS RB
+4414,feature_vocab_ngram_pos,VBN TO
+4510,feature_vocab_ngram_pos,VBP NNS VBD
+4514,feature_vocab_ngram_pos,VBP NNS WP
+4519,feature_vocab_ngram_pos,VBP PRP DT
+4554,feature_vocab_ngram_pos,VBP RP NN
+4616,feature_vocab_ngram_pos,VBP WP NN
+4651,feature_vocab_ngram_pos,VBZ JJ NN
+4673,feature_vocab_ngram_pos,VBZ NNS NN
+4790,feature_vocab_ngram_pos,WP
+4804,feature_vocab_ngram_pos,WP NN VBZ
+4820,feature_vocab_ngram_pos,WP VBP
+4823,feature_vocab_ngram_pos,WP VBP PRP
+4824,feature_vocab_ngram_pos,WP VBP VBN
+4825,feature_vocab_ngram_pos,WP VBP VBP
+4828,feature_vocab_ngram_pos,WP VBZ IN
+4874,feature_vocab_ngram_pos,WRB RB VB
+4877,feature_vocab_ngram_pos,WRB VB
+4878,feature_vocab_ngram_pos,WRB VB PRP
+4894,feature_vocab_td_other,num_syllables
+4895,feature_vocab_td_other,num_chars
+4896,feature_vocab_td_other,num_chars_total
+4897,feature_vocab_td_other,num_terms
+4898,feature_vocab_td_other,num_words
+4899,feature_vocab_td_other,num_unique_words
+4900,feature_vocab_td_other,vader compound
+4901,feature_vocab_td_other,num_hashtags
+4904,feature_vocab_chase_hashtag,#feminazi
+4906,feature_vocab_chase_hashtag,#1
+4907,feature_vocab_chase_hashtag,#blameonenotall
+4910,feature_vocab_chase_hashtag,#coon
+4929,feature_vocab_chase_hashtag,#cohen
+4943,feature_vocab_chase_hashtag,#feminist
+4948,feature_vocab_chase_hashtag,#israel
+4949,feature_vocab_chase_hashtag,#racist
+4950,feature_vocab_chase_hashtag,#arab
+4951,feature_vocab_chase_hashtag,#terror
+4952,feature_vocab_chase_hashtag,#attack
+4954,feature_vocab_chase_hashtag,#shalom
+4955,feature_vocab_chase_hashtag,#happy
+4956,feature_vocab_chase_hashtag,#shushan
+4957,feature_vocab_chase_hashtag,#purim
+4967,feature_vocab_chase_hashtag,#feminism
+4987,feature_vocab_chase_hashtag,#housenigga
+5000,feature_vocab_chase_hashtag,#zionist
+5024,feature_vocab_chase_hashtag,#funrun2
+5025,feature_vocab_chase_hashtag,#pepcman
+5030,feature_vocab_chase_hashtag,#bagheera
+5129,feature_vocab_chase_hashtag,#israelites
+5130,feature_vocab_chase_hashtag,#israelunitedinchrist
+5131,feature_vocab_chase_hashtag,#blacktwitter
+5133,feature_vocab_chase_hashtag,#feminismisawful
+5169,feature_vocab_chase_hashtag,#blacks
+5240,feature_vocab_chase_hashtag,#babyraccoon
+5270,feature_vocab_chase_hashtag,#donlemon
+5298,feature_vocab_chase_hashtag,#hustlers
+5299,feature_vocab_chase_hashtag,#meekmillseason
+5307,feature_vocab_chase_hashtag,#yesallwomen

@@ -1,0 +1,199 @@
+110,feature_vocab_chase_hashtag,#cattery
+128,feature_vocab_chase_hashtag,#idontneedfeminism
+171,feature_vocab_chase_hashtag,#freebsd
+192,feature_vocab_chase_hashtag,#sambo
+196,feature_vocab_chase_hashtag,#sweetjustice
+197,feature_vocab_chase_hashtag,#morethanwadhwa
+200,feature_vocab_chase_hashtag,#science
+213,feature_vocab_chase_hashtag,#mensrights
+234,feature_vocab_chase_hashtag,#octaviaspencer
+254,feature_vocab_chase_hashtag,#muslim
+262,feature_vocab_chase_hashtag,#thedanishgirl
+301,feature_vocab_chase_hashtag,#coast2coast
+341,feature_vocab_chase_hashtag,#sticks
+361,feature_vocab_chase_hashtag,#puppet
+364,feature_vocab_chase_hashtag,#walkingdead
+380,feature_vocab_chase_hashtag,#lucas
+381,feature_vocab_chase_hashtag,#carolcorps
+382,feature_vocab_chase_hashtag,#wonderwoman
+386,feature_vocab_chase_hashtag,#somewhiskers
+416,feature_vocab_td_other,num_terms
+448,feature_vocab_pos_2skip_bigram,"('cd', 'in')"
+455,feature_vocab_pos_2skip_bigram,"('cd', 'rb')"
+469,feature_vocab_pos_2skip_bigram,"('dt', 'in')"
+486,feature_vocab_pos_2skip_bigram,"('dt', 'wp')"
+518,feature_vocab_pos_2skip_bigram,"('in', 'rp')"
+523,feature_vocab_pos_2skip_bigram,"('in', 'vbn')"
+590,feature_vocab_pos_2skip_bigram,"('nn', 'cd')"
+609,feature_vocab_pos_2skip_bigram,"('nn', 'vbp')"
+610,feature_vocab_pos_2skip_bigram,"('nn', 'vbz')"
+668,feature_vocab_pos_2skip_bigram,"('rb', 'vbn')"
+681,feature_vocab_pos_2skip_bigram,"('rbr', 'rb')"
+682,feature_vocab_pos_2skip_bigram,"('rbr', 'to')"
+686,feature_vocab_pos_2skip_bigram,"('rbr', 'vbz')"
+704,feature_vocab_pos_2skip_bigram,"('to', 'cc')"
+738,feature_vocab_pos_2skip_bigram,"('uh', 'vbp')"
+759,feature_vocab_pos_2skip_bigram,"('vb', 'vbn')"
+799,feature_vocab_pos_2skip_bigram,"('vbg', 'rb')"
+801,feature_vocab_pos_2skip_bigram,"('vbg', 'rp')"
+804,feature_vocab_pos_2skip_bigram,"('vbg', 'vbd')"
+805,feature_vocab_pos_2skip_bigram,"('vbg', 'vbg')"
+880,feature_vocab_pos_2skip_bigram,"('vbz', 'wdt')"
+886,feature_vocab_pos_2skip_bigram,"('wdt', 'jj')"
+909,feature_vocab_pos_2skip_bigram,"('wp', 'vb')"
+919,feature_vocab_pos_2skip_bigram,"('wrb', 'dt')"
+934,feature_vocab_pos_2skip_bigram,"('wrb', 'wrb')"
+940,feature_vocab_ngram,abort
+985,feature_vocab_ngram,along
+1000,feature_vocab_ngram,anita sarkeesian
+1022,feature_vocab_ngram,api
+1040,feature_vocab_ngram,argument
+1056,feature_vocab_ngram,assist
+1061,feature_vocab_ngram,attack j
+1067,feature_vocab_ngram,author
+1126,feature_vocab_ngram,beyond
+1134,feature_vocab_ngram,bitch
+1136,feature_vocab_ngram,black milk
+1198,feature_vocab_ngram,california
+1199,feature_vocab_ngram,call
+1248,feature_vocab_ngram,chick
+1252,feature_vocab_ngram,choic
+1271,feature_vocab_ngram,club
+1296,feature_vocab_ngram,concept
+1352,feature_vocab_ngram,cri
+1443,feature_vocab_ngram,doesnt hire
+1514,feature_vocab_ngram,effort
+1576,feature_vocab_ngram,exploit
+1582,feature_vocab_ngram,facebook
+1583,feature_vocab_ngram,fact
+1595,feature_vocab_ngram,fan
+1684,feature_vocab_ngram,fraud feminazi
+1725,feature_vocab_ngram,gender equal
+1730,feature_vocab_ngram,german professor give
+1757,feature_vocab_ngram,go work
+1764,feature_vocab_ngram,gone
+1765,feature_vocab_ngram,gonna
+1766,feature_vocab_ngram,good
+1806,feature_vocab_ngram,hahahaha
+1832,feature_vocab_ngram,help
+1859,feature_vocab_ngram,hous
+1933,feature_vocab_ngram,instanc
+1969,feature_vocab_ngram,ive got
+2039,feature_vocab_ngram,ladi
+2055,feature_vocab_ngram,le
+2228,feature_vocab_ngram,moment
+2242,feature_vocab_ngram,much
+2245,feature_vocab_ngram,music
+2249,feature_vocab_ngram,n
+2285,feature_vocab_ngram,nikki
+2286,feature_vocab_ngram,nimoy
+2493,feature_vocab_ngram,provid
+2512,feature_vocab_ngram,quit
+2586,feature_vocab_ngram,rent
+2620,feature_vocab_ngram,rogu
+2836,feature_vocab_ngram,stop laugh
+2840,feature_vocab_ngram,storm
+2864,feature_vocab_ngram,sure
+2945,feature_vocab_ngram,thi thread
+3013,feature_vocab_ngram,tri get
+3021,feature_vocab_ngram,trust
+3042,feature_vocab_ngram,ugh
+3085,feature_vocab_ngram,video game
+3136,feature_vocab_ngram,way get
+3173,feature_vocab_ngram,win
+3285,feature_vocab_pos_2skip_trigram,"('cc', 'in', 'vbg')"
+3448,feature_vocab_pos_2skip_trigram,"('cc', 'vbz', 'vbn')"
+3474,feature_vocab_pos_2skip_trigram,"('cd', 'dt', 'vbz')"
+3621,feature_vocab_pos_2skip_trigram,"('dt', 'md', 'nn')"
+3735,feature_vocab_pos_2skip_trigram,"('dt', 'vbg', 'jj')"
+3794,feature_vocab_pos_2skip_trigram,"('dt', 'vbz', 'wdt')"
+3895,feature_vocab_pos_2skip_trigram,"('in', 'dt', 'md')"
+4008,feature_vocab_pos_2skip_trigram,"('in', 'prp', 'pdt')"
+4046,feature_vocab_pos_2skip_trigram,"('in', 'rp', 'jj')"
+4048,feature_vocab_pos_2skip_trigram,"('in', 'rp', 'prp')"
+4084,feature_vocab_pos_2skip_trigram,"('in', 'vbd', 'rb')"
+4165,feature_vocab_pos_2skip_trigram,"('in', 'wdt', 'nn')"
+4177,feature_vocab_pos_2skip_trigram,"('in', 'wp', 'prp')"
+4219,feature_vocab_pos_2skip_trigram,"('jj', 'dt', 'dt')"
+4222,feature_vocab_pos_2skip_trigram,"('jj', 'dt', 'jjr')"
+4278,feature_vocab_pos_2skip_trigram,"('jj', 'jj', 'wdt')"
+4279,feature_vocab_pos_2skip_trigram,"('jj', 'jj', 'wp')"
+4423,feature_vocab_pos_2skip_trigram,"('jj', 'vbg', 'prp')"
+4447,feature_vocab_pos_2skip_trigram,"('jj', 'vbn', 'vbz')"
+4476,feature_vocab_pos_2skip_trigram,"('jj', 'vbz', 'jjr')"
+4483,feature_vocab_pos_2skip_trigram,"('jj', 'vbz', 'vbg')"
+4486,feature_vocab_pos_2skip_trigram,"('jj', 'vbz', 'vbz')"
+4615,feature_vocab_pos_2skip_trigram,"('md', 'jjr', 'nn')"
+4805,feature_vocab_pos_2skip_trigram,"('nn', 'jj', 'md')"
+4810,feature_vocab_pos_2skip_trigram,"('nn', 'jj', 'rp')"
+4914,feature_vocab_pos_2skip_trigram,"('nn', 'rb', 'rbr')"
+5040,feature_vocab_pos_2skip_trigram,"('nn', 'vbn', 'cd')"
+5184,feature_vocab_pos_2skip_trigram,"('prp', 'cc', 'vbp')"
+5249,feature_vocab_pos_2skip_trigram,"('prp', 'jj', 'wp')"
+5408,feature_vocab_pos_2skip_trigram,"('prp', 'vbg', 'vbg')"
+5464,feature_vocab_pos_2skip_trigram,"('prp', 'vbz', 'vb')"
+5478,feature_vocab_pos_2skip_trigram,"('prp', 'wp', 'in')"
+5493,feature_vocab_pos_2skip_trigram,"('prp', 'wrb', 'vbg')"
+5494,feature_vocab_pos_2skip_trigram,"('prp', 'wrb', 'vbp')"
+5513,feature_vocab_pos_2skip_trigram,"('rb', 'cd', 'rb')"
+5541,feature_vocab_pos_2skip_trigram,"('rb', 'in', 'md')"
+5568,feature_vocab_pos_2skip_trigram,"('rb', 'jj', 'vb')"
+5578,feature_vocab_pos_2skip_trigram,"('rb', 'jjr', 'in')"
+5694,feature_vocab_pos_2skip_trigram,"('rb', 'vb', 'vbz')"
+5728,feature_vocab_pos_2skip_trigram,"('rb', 'vbg', 'vbn')"
+5751,feature_vocab_pos_2skip_trigram,"('rb', 'vbp', 'cd')"
+5955,feature_vocab_pos_2skip_trigram,"('to', 'dt', 'in')"
+5963,feature_vocab_pos_2skip_trigram,"('to', 'dt', 'to')"
+5998,feature_vocab_pos_2skip_trigram,"('to', 'jj', 'vbg')"
+6079,feature_vocab_pos_2skip_trigram,"('to', 'vb', 'cd')"
+6100,feature_vocab_pos_2skip_trigram,"('to', 'vb', 'wrb')"
+6101,feature_vocab_pos_2skip_trigram,"('to', 'vbd', 'prp')"
+6217,feature_vocab_pos_2skip_trigram,"('vb', 'in', 'rb')"
+6309,feature_vocab_pos_2skip_trigram,"('vb', 'rb', 'in')"
+6334,feature_vocab_pos_2skip_trigram,"('vb', 'rp', 'prp')"
+6455,feature_vocab_pos_2skip_trigram,"('vb', 'wrb', 'vbp')"
+6650,feature_vocab_pos_2skip_trigram,"('vbd', 'vbn', 'nn')"
+6669,feature_vocab_pos_2skip_trigram,"('vbd', 'vbp', 'vbg')"
+6708,feature_vocab_pos_2skip_trigram,"('vbg', 'dt', 'prp')"
+6772,feature_vocab_pos_2skip_trigram,"('vbg', 'nn', 'rbr')"
+6847,feature_vocab_pos_2skip_trigram,"('vbg', 'to', 'to')"
+6851,feature_vocab_pos_2skip_trigram,"('vbg', 'to', 'vbn')"
+7048,feature_vocab_pos_2skip_trigram,"('vbn', 'rb', 'vb')"
+7095,feature_vocab_pos_2skip_trigram,"('vbn', 'vbd', 'vbn')"
+7118,feature_vocab_pos_2skip_trigram,"('vbn', 'vbn', 'vbn')"
+7133,feature_vocab_pos_2skip_trigram,"('vbn', 'vbz', 'nn')"
+7216,feature_vocab_pos_2skip_trigram,"('vbp', 'jj', 'md')"
+7378,feature_vocab_pos_2skip_trigram,"('vbp', 'vbg', 'to')"
+7419,feature_vocab_pos_2skip_trigram,"('vbp', 'vbp', 'vbz')"
+7430,feature_vocab_pos_2skip_trigram,"('vbp', 'vbz', 'vb')"
+7437,feature_vocab_pos_2skip_trigram,"('vbp', 'wp', 'dt')"
+7444,feature_vocab_pos_2skip_trigram,"('vbp', 'wp', 'vbp')"
+7668,feature_vocab_pos_2skip_trigram,"('vbz', 'vbn', 'rb')"
+7673,feature_vocab_pos_2skip_trigram,"('vbz', 'vbn', 'vbn')"
+7676,feature_vocab_pos_2skip_trigram,"('vbz', 'vbp', 'cc')"
+7678,feature_vocab_pos_2skip_trigram,"('vbz', 'vbp', 'in')"
+7679,feature_vocab_pos_2skip_trigram,"('vbz', 'vbp', 'jj')"
+7682,feature_vocab_pos_2skip_trigram,"('vbz', 'vbp', 'rb')"
+7701,feature_vocab_pos_2skip_trigram,"('vbz', 'wp', 'jj')"
+7722,feature_vocab_pos_2skip_trigram,"('wdt', 'in', 'nn')"
+7723,feature_vocab_pos_2skip_trigram,"('wdt', 'in', 'prp')"
+7759,feature_vocab_pos_2skip_trigram,"('wdt', 'prp', 'vbz')"
+7772,feature_vocab_pos_2skip_trigram,"('wdt', 'to', 'prp')"
+7784,feature_vocab_pos_2skip_trigram,"('wdt', 'vbd', 'jj')"
+7796,feature_vocab_pos_2skip_trigram,"('wdt', 'vbg', 'prp')"
+7797,feature_vocab_pos_2skip_trigram,"('wdt', 'vbg', 'to')"
+7799,feature_vocab_pos_2skip_trigram,"('wdt', 'vbn', 'dt')"
+7802,feature_vocab_pos_2skip_trigram,"('wdt', 'vbn', 'nn')"
+7860,feature_vocab_pos_2skip_trigram,"('wp', 'nn', 'prp')"
+7901,feature_vocab_pos_2skip_trigram,"('wp', 'vbd', 'nn')"
+7902,feature_vocab_pos_2skip_trigram,"('wp', 'vbd', 'prp')"
+7903,feature_vocab_pos_2skip_trigram,"('wp', 'vbd', 'rb')"
+7917,feature_vocab_pos_2skip_trigram,"('wp', 'vbp', 'dt')"
+7929,feature_vocab_pos_2skip_trigram,"('wp', 'vbz', 'cc')"
+7930,feature_vocab_pos_2skip_trigram,"('wp', 'vbz', 'dt')"
+7932,feature_vocab_pos_2skip_trigram,"('wp', 'vbz', 'jj')"
+7941,feature_vocab_pos_2skip_trigram,"('wrb', 'cc', 'prp')"
+8012,feature_vocab_pos_2skip_trigram,"('wrb', 'prp', 'vbg')"
+8042,feature_vocab_pos_2skip_trigram,"('wrb', 'vb', 'vb')"
+8070,feature_vocab_pos_2skip_trigram,"('wrb', 'vbp', 'rb')"
+8071,feature_vocab_pos_2skip_trigram,"('wrb', 'vbp', 'to')"

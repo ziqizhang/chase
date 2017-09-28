@@ -1,0 +1,100 @@
+24,feature_vocab_ngram,african
+68,feature_vocab_ngram,american
+111,feature_vocab_ngram,ass nigga
+162,feature_vocab_ngram,beaner
+172,feature_vocab_ngram,becaus theyr
+211,feature_vocab_ngram,bitch
+338,feature_vocab_ngram,black
+340,feature_vocab_ngram,black peopl
+362,feature_vocab_ngram,border
+485,feature_vocab_ngram,chink
+498,feature_vocab_ngram,citizen
+540,feature_vocab_ngram,coon
+541,feature_vocab_ngram,cop
+558,feature_vocab_ngram,cracker
+722,feature_vocab_ngram,dyke
+792,feature_vocab_ngram,fag
+793,feature_vocab_ngram,faggot
+794,feature_vocab_ngram,faggot ass
+872,feature_vocab_ngram,fox
+896,feature_vocab_ngram,fuck faggot
+1052,feature_vocab_ngram,hate
+1088,feature_vocab_ngram,hoe
+1238,feature_vocab_ngram,israel
+1258,feature_vocab_ngram,jew
+1284,feature_vocab_ngram,kill
+1330,feature_vocab_ngram,lebron
+1536,feature_vocab_ngram,muzzi
+1582,feature_vocab_ngram,nigga
+1606,feature_vocab_ngram,nigger
+1778,feature_vocab_ngram,punk
+1809,feature_vocab_ngram,queer
+1817,feature_vocab_ngram,racist
+1823,feature_vocab_ngram,rape
+1869,feature_vocab_ngram,retard
+1910,feature_vocab_ngram,sauc
+2092,feature_vocab_ngram,spic
+2132,feature_vocab_ngram,store
+2145,feature_vocab_ngram,stupid
+2149,feature_vocab_ngram,stupid nigger
+2388,feature_vocab_ngram,uncl tom
+2478,feature_vocab_ngram,wetback
+2492,feature_vocab_ngram,white
+2498,feature_vocab_ngram,white trash
+2499,feature_vocab_ngram,whitey
+2727,feature_vocab_pos_2skip_trigram,"('cc', 'rp', 'jj')"
+2832,feature_vocab_pos_2skip_trigram,"('cd', 'cd', 'nn')"
+3315,feature_vocab_pos_2skip_trigram,"('in', 'md', 'jj')"
+3481,feature_vocab_pos_2skip_trigram,"('in', 'vbp', 'to')"
+3633,feature_vocab_pos_2skip_trigram,"('jj', 'md', 'vbn')"
+4078,feature_vocab_pos_2skip_trigram,"('nn', 'in', 'pdt')"
+4156,feature_vocab_pos_2skip_trigram,"('nn', 'nn', 'vb')"
+4247,feature_vocab_pos_2skip_trigram,"('nn', 'to', 'pdt')"
+4491,feature_vocab_pos_2skip_trigram,"('prp', 'cd', 'in')"
+4524,feature_vocab_pos_2skip_trigram,"('prp', 'in', 'in')"
+5357,feature_vocab_pos_2skip_trigram,"('to', 'rb', 'rb')"
+5423,feature_vocab_pos_2skip_trigram,"('uh', 'nn', 'nn')"
+6145,feature_vocab_pos_2skip_trigram,"('vbg', 'vbp', 'vb')"
+6654,feature_vocab_pos_2skip_trigram,"('vbz', 'dt', 'in')"
+6825,feature_vocab_pos_2skip_trigram,"('vbz', 'vbg', 'to')"
+6912,feature_vocab_pos_2skip_trigram,"('wdt', 'prp', 'rb')"
+7290,feature_vocab_chase_hashtag,#oregon
+7302,feature_vocab_chase_hashtag,#htgawm
+7327,feature_vocab_chase_hashtag,#wpxi
+7446,feature_vocab_chase_hashtag,#clubmetro
+7466,feature_vocab_chase_hashtag,#getwitme
+7614,feature_vocab_chase_hashtag,#indonesia
+7737,feature_vocab_chase_hashtag,#5spmg
+7738,feature_vocab_chase_hashtag,#ggl
+7746,feature_vocab_chase_hashtag,#astros
+7747,feature_vocab_chase_hashtag,#mygirlfriendnotallowedto
+7808,feature_vocab_chase_hashtag,#wetback
+7809,feature_vocab_chase_hashtag,#ca
+7810,feature_vocab_chase_hashtag,#1x
+7866,feature_vocab_chase_hashtag,#tdf12
+7885,feature_vocab_chase_hashtag,#tpot
+7918,feature_vocab_chase_hashtag,#unbothered
+7919,feature_vocab_chase_hashtag,#threatenwho
+7933,feature_vocab_chase_hashtag,#tryhard
+7965,feature_vocab_chase_hashtag,#occupyslu
+7972,feature_vocab_chase_hashtag,#freegucci
+7977,feature_vocab_chase_hashtag,#votewendydavis
+7996,feature_vocab_chase_hashtag,#bowebergdahl
+8012,feature_vocab_chase_hashtag,#family
+8075,feature_vocab_pos_2skip_bigram,"('dt', 'vbd')"
+8127,feature_vocab_pos_2skip_bigram,"('jj', 'cd')"
+8130,feature_vocab_pos_2skip_bigram,"('jj', 'fw')"
+8136,feature_vocab_pos_2skip_bigram,"('jj', 'pdt')"
+8137,feature_vocab_pos_2skip_bigram,"('jj', 'prp')"
+8214,feature_vocab_pos_2skip_bigram,"('pdt', 'jj')"
+8224,feature_vocab_pos_2skip_bigram,"('prp', 'ex')"
+8299,feature_vocab_pos_2skip_bigram,"('rp', 'vbz')"
+8333,feature_vocab_pos_2skip_bigram,"('vb', 'dt')"
+8360,feature_vocab_pos_2skip_bigram,"('vbd', 'in')"
+8392,feature_vocab_pos_2skip_bigram,"('vbg', 'rbr')"
+8413,feature_vocab_pos_2skip_bigram,"('vbn', 'rb')"
+8422,feature_vocab_pos_2skip_bigram,"('vbn', 'wdt')"
+8423,feature_vocab_pos_2skip_bigram,"('vbn', 'wp')"
+8424,feature_vocab_pos_2skip_bigram,"('vbn', 'wrb')"
+8464,feature_vocab_pos_2skip_bigram,"('vbz', 'rp')"
+8524,feature_vocab_pos_2skip_bigram,"('wrb', 'vbp')"

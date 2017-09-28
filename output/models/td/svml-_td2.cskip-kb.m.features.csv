@@ -1,0 +1,100 @@
+20,feature_vocab_pos_2skip_bigram,"('cc', 'wp')"
+45,feature_vocab_pos_2skip_bigram,"('dt', 'in')"
+123,feature_vocab_pos_2skip_bigram,"('jj', 'uh')"
+156,feature_vocab_pos_2skip_bigram,"('md', 'to')"
+179,feature_vocab_pos_2skip_bigram,"('nn', 'uh')"
+279,feature_vocab_pos_2skip_bigram,"('rp', 'vbp')"
+331,feature_vocab_pos_2skip_bigram,"('vb', 'vbp')"
+348,feature_vocab_pos_2skip_bigram,"('vbd', 'rb')"
+461,feature_vocab_pos_2skip_bigram,"('wdt', 'md')"
+518,feature_vocab_ngram,action
+519,feature_vocab_ngram,activ
+714,feature_vocab_ngram,broad
+789,feature_vocab_ngram,chip
+806,feature_vocab_ngram,clean
+829,feature_vocab_ngram,concern
+1043,feature_vocab_ngram,father
+1046,feature_vocab_ngram,fear
+1190,feature_vocab_ngram,halloween
+1200,feature_vocab_ngram,hatin
+1207,feature_vocab_ngram,heat
+1280,feature_vocab_ngram,injuri
+1421,feature_vocab_ngram,lost
+1454,feature_vocab_ngram,massag
+1467,feature_vocab_ngram,mental
+1687,feature_vocab_ngram,problem
+1692,feature_vocab_ngram,protect
+1693,feature_vocab_ngram,protest
+1816,feature_vocab_ngram,send
+1838,feature_vocab_ngram,sheen
+1904,feature_vocab_ngram,solo
+1939,feature_vocab_ngram,stadium
+2246,feature_vocab_ngram,yal
+2252,feature_vocab_ngram,yea
+2374,feature_vocab_2skip_bigram,"('a', 'fuckin')"
+2396,feature_vocab_2skip_bigram,"('a', 'have')"
+2446,feature_vocab_2skip_bigram,"('a', 'monkey')"
+2574,feature_vocab_2skip_bigram,"('a', 'young')"
+2967,feature_vocab_2skip_bigram,"('ask', 'to')"
+3085,feature_vocab_2skip_bigram,"('be', 'as')"
+3158,feature_vocab_2skip_bigram,"('beat', 'ass')"
+3485,feature_vocab_2skip_bigram,"('black', 'bitch')"
+3486,feature_vocab_2skip_bigram,"('black', 'is')"
+3487,feature_vocab_2skip_bigram,"('black', 'peopl')"
+3626,feature_vocab_2skip_bigram,"('can', 'it')"
+3681,feature_vocab_2skip_bigram,"('caus', 'im')"
+3982,feature_vocab_2skip_bigram,"('ever', 'seen')"
+4040,feature_vocab_2skip_bigram,"('find', 'to')"
+4742,feature_vocab_2skip_bigram,"('hoe', 'lmao')"
+4838,feature_vocab_2skip_bigram,"('how', 'the')"
+4906,feature_vocab_2skip_bigram,"('i', 'from')"
+5211,feature_vocab_2skip_bigram,"('im', 'the')"
+5466,feature_vocab_2skip_bigram,"('it', 'get')"
+5861,feature_vocab_2skip_bigram,"('lookin', 'bitch')"
+5862,feature_vocab_2skip_bigram,"('lot', 'bitch')"
+5863,feature_vocab_2skip_bigram,"('lot', 'of')"
+5864,feature_vocab_2skip_bigram,"('love', 'a')"
+5871,feature_vocab_2skip_bigram,"('love', 'hoe')"
+6059,feature_vocab_2skip_bigram,"('met', 'a')"
+6475,feature_vocab_2skip_bigram,"('not', 'you')"
+6728,feature_vocab_2skip_bigram,"('onli', 'like')"
+6879,feature_vocab_2skip_bigram,"('pussi', 'boy')"
+7045,feature_vocab_2skip_bigram,"('say', 'hoe')"
+7162,feature_vocab_2skip_bigram,"('shit', 'fuck')"
+7163,feature_vocab_2skip_bigram,"('shit', 'get')"
+7669,feature_vocab_2skip_bigram,"('the', 'day')"
+7783,feature_vocab_2skip_bigram,"('the', 's')"
+7945,feature_vocab_2skip_bigram,"('these', 'these')"
+7946,feature_vocab_2skip_bigram,"('these', 'they')"
+8232,feature_vocab_2skip_bigram,"('to', 'new')"
+8260,feature_vocab_2skip_bigram,"('to', 'sex')"
+8301,feature_vocab_2skip_bigram,"('to', 'where')"
+8309,feature_vocab_2skip_bigram,"('to', 'yo')"
+8312,feature_vocab_2skip_bigram,"('today', 'a')"
+8457,feature_vocab_2skip_bigram,"('u', 'want')"
+8605,feature_vocab_2skip_bigram,"('want', 'to')"
+8670,feature_vocab_2skip_bigram,"('went', 'to')"
+8702,feature_vocab_2skip_bigram,"('what', 'make')"
+8768,feature_vocab_2skip_bigram,"('when', 'wa')"
+8796,feature_vocab_2skip_bigram,"('whi', 'doe')"
+8961,feature_vocab_2skip_bigram,"('work', 'bitch')"
+9098,feature_vocab_2skip_bigram,"('you', 'bout')"
+9500,feature_vocab_2skip_trigram,"('a', 'of', 'bitch')"
+9540,feature_vocab_2skip_trigram,"('about', 'a', 'bitch')"
+9548,feature_vocab_2skip_trigram,"('aint', 'a', 'bitch')"
+10022,feature_vocab_2skip_trigram,"('fuck', 'you', 'the')"
+10051,feature_vocab_2skip_trigram,"('go', 'to', 'bitch')"
+10228,feature_vocab_2skip_trigram,"('i', 'fuck', 'with')"
+10942,feature_vocab_2skip_trigram,"('talk', 'to', 'you')"
+10965,feature_vocab_2skip_trigram,"('that', 'bitch', 'like')"
+11868,feature_vocab_pos_2skip_trigram,"('dt', 'jj', 'vbn')"
+12020,feature_vocab_pos_2skip_trigram,"('dt', 'vbn', 'rb')"
+12465,feature_vocab_pos_2skip_trigram,"('jj', 'dt', 'to')"
+12543,feature_vocab_pos_2skip_trigram,"('jj', 'nn', 'nnp')"
+12634,feature_vocab_pos_2skip_trigram,"('jj', 'vb', 'vbd')"
+13810,feature_vocab_pos_2skip_trigram,"('rb', 'nn', 'prp')"
+15041,feature_vocab_pos_2skip_trigram,"('vbg', 'vbp', 'prp')"
+15299,feature_vocab_pos_2skip_trigram,"('vbp', 'jj', 'jjr')"
+15714,feature_vocab_pos_2skip_trigram,"('vbz', 'vbd', 'rb')"
+16125,feature_vocab_pos_2skip_trigram,"('wrb', 'vbp', 'vbp')"
+16359,feature_vocab_chase_hashtag,#illneverunderstandwhy
