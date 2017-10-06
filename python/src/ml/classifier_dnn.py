@@ -28,7 +28,7 @@ from ml import util
 from ml import nlp
 from ml import text_preprocess as tp
 
-MAX_SEQUENCE_LENGTH = 50 #maximum # of words allowed in a tweet
+MAX_SEQUENCE_LENGTH = 100 #maximum # of words allowed in a tweet
 WORD_EMBEDDING_DIM_OUTPUT = 300
 logger = logging.getLogger(__name__)
 LOG_DIR = os.getcwd() + "/logs"
@@ -104,11 +104,11 @@ def create_model_lstm(embedding_layer):#start from simple model
 def create_model_conv_lstm(embedding_layer):
     model = Sequential()
     model.add(embedding_layer)
-    model.add(Dropout(0.2))
+    #model.add(Dropout(0.2))
     model.add(Conv1D(filters=100, kernel_size=4, padding='same', activation='relu'))
     model.add(MaxPooling1D(pool_size=4))
-    model.add(LSTM(units=100, return_sequences=True))
-    model.add(GlobalMaxPooling1D())
+    model.add(LSTM(units=100, return_sequences=False))
+    #model.add(GlobalMaxPooling1D())
     #model.add(Dropout(0.2))
     model.add(Dense(4, activation='softmax'))
     model.compile(loss='categorical_crossentropy', optimizer='adam', metrics=['accuracy'])
@@ -185,10 +185,10 @@ def learn_dnn(label, cpus, nfold, task, X_train, y_train, X_test, y_test,
     if (X_test is not None):
         heldout_predictions_final = best_estimator.predict(X_test)
         util.save_scores(nfold_predictions, y_train, heldout_predictions_final, y_test, label, task,
-                         identifier, 2, outfolder, instance_data_source_tags, accepted_ds_tags)
+                         identifier, 3, outfolder, instance_data_source_tags, accepted_ds_tags)
 
     else:
-        util.save_scores(nfold_predictions, y_train, None, y_test, label, task, identifier, 2,
+        util.save_scores(nfold_predictions, y_train, None, y_test, label, task, identifier, 3,
                          outfolder, instance_data_source_tags, accepted_ds_tags)
 
         # util.print_eval_report(best_param_ann, cv_score_ann, dev_data_prediction_ann,
@@ -271,7 +271,7 @@ def create_settings(indata, outdir, datalabel, print_result_per_ds,
     settings.append(params) #  1-stem or lem; 0-oov init method; 0-what ann model
 
     return settings
-# /home/zqz/Work/data/GoogleNews-vectors-negative300.bin.gz
+#/home/zqz/Work/data/GoogleNews-vectors-negative300.bin.gz
 # 300
 
 

@@ -1,0 +1,12 @@
+		tdf	cbf
+wws (part1)	6246	6918
+w (part1)	5745	6257
+td (part1)	5154	5956
+c		2884	3365
+ws-exp		4904	5318
+ws-amt		4903	5318
+ws-merge	4903	5317
+
+
+
+
