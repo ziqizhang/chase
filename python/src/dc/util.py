@@ -72,6 +72,30 @@ def merge_waseem_datasets(in_large_dataset, in_small_dataset, out_file):
                 print(index)
 
 
+def anonymize_dataset(in_file, out_file):
+    with open(out_file, 'w', newline='',encoding='utf-8') as csvfile:
+        writer = csv.writer(csvfile, delimiter=',',
+                                quotechar='"', quoting=csv.QUOTE_MINIMAL)
+        writer.writerow(["id","class"])
+
+        data=pd.read_csv(in_file, sep=',', encoding="utf-8")
+        index=0
+        for row in data.itertuples():
+            if index<1:
+                index+=1
+                continue
+
+            tweetid=row[2]
+            clazz=row[7]
+
+            writer.writerow([tweetid,clazz])
+            index+=1
+            if index%100==0:
+                print(index)
+
+anonymize_dataset("/home/zqz/Work/chase/data/ml/public/w+ws/labeled_data_all.csv",
+                  "/home/zqz/Work/chase/data/ml/public/w+ws/labeled_data.csv")
+
 
 # merge_waseem_datasets("/home/zqz/Work/chase/data/ml/w/labeled_data_all.csv",
 #                       "/home/zqz/Work/chase/data/ml/ws-exp/labeled_data_all.csv",
