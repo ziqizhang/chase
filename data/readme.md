@@ -1,4 +1,7 @@
-to start a solr server running at the background (which is needed before running the python script to fetch data), cd into your downloaded Solr executables. Type
+FOLDERS:
+
+ml - machine learning datasets
+solr - a solr index template. To start a solr server running at the background (which is needed before running the python script to fetch data), cd into your downloaded Solr executables. Type
 
 ./bin/solr -s [..../chase/data/solr]
 

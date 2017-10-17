@@ -1,5 +1,2 @@
-c-chase data
-td- davidson data
-tdc-a: c + td
-tdc-b: c + td but only to take part of td randomly to match the size of c
-tdsmall: the part of td from tdc-b
+rm - dataset covering refugee and muslim
+ml.zip - These contain the actual Tweets so cannot be shared due to twitter policy. Readers may use the twitter ids in the other folders to fetch them.
