@@ -1,9 +1,0 @@
-currently results are poor possibly because of feature selection
-- fs selects features on training set, typically returns <200 features. But
-it is highly likely that the test set will not contain those reduced features,
-because test set is unseen
-
-- try select more features
-- try experiment on the larger dataset
-- try dnn
-- decide which are the different FS to use
