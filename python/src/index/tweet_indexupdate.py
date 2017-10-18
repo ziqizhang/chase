@@ -156,7 +156,7 @@ logging.basicConfig(level=logging.INFO)
 update(solr,
        iu.solr_core_tweets,
        iu.solr_core_tags,
-       "[2017-07-29T01:00:00Z TO 2017-08-08T01:00:00Z]", 500,
+       "[2017-07-29T01:00:00Z TO 2017-08-08T01:00:00Z]", 1000,
        feat_vectorizer,ml_model,selected_features,
        hate_indicative_features,
        0,sys.argv[4],logger)

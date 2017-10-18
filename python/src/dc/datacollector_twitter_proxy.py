@@ -90,13 +90,12 @@ class TwitterStream(StreamListener):
     __count = 0
     __count_retweet = 0
 
-    def __init__(self, ml_model_file, ml_selected_features, sysout):
+    def __init__(self):
         super().__init__()
         self.__solr = SolrClient(iu.solr_url)
         self.__core = iu.solr_core_tweets
         # self.__ml_model=util.load_ml_model(ml_model_file)
         # self.__selected_features = mutil.read_preselected_features(False, ml_selected_features)
-        self.__sysout = sysout
 
     def ignoreRetweet(self, status_text):
         if "rt @" in status_text.lower() and IGNORE_RETWEETS:
@@ -377,8 +376,8 @@ api=tweepy.API(auth)
 #             "/home/zqz/GDrive/papers/chase/dataset/waseem2016/NLP+CSS_2016_tweets.csv")
 print("end")
 
-#twitterStream = Stream(auth, TwitterStream(sys.argv[3], sys.argv[4], sys.argv[5]))
-#twitterStream.filter(track=[sc["KEYWORDS"]], languages=LANGUAGES_ACCETED)
+twitterStream = Stream(auth, TwitterStream())
+twitterStream.filter(track=[sc["KEYWORDS"]], languages=LANGUAGES_ACCETED)
 
 
 
