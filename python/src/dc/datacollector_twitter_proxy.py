@@ -1,5 +1,6 @@
 import logging
 import random
+import re
 import sys
 import json
 import os
@@ -255,6 +256,34 @@ class TwitterStream(StreamListener):
         print(status.text)
 
 
+def index_data(in_file, tweepy_api, tweet_id_col, tweet_label_col):
+    start=0
+
+    data=pd.read_csv(in_file, sep=',', encoding="utf-8")
+    index=0
+    missed=0
+    for row in data.itertuples():
+        if index<start:
+            index+=1
+            continue
+        tweetid=str(row[tweet_id_col])
+        label=row[tweet_label_col]
+        if label!='2':
+            label='0'
+
+        try:
+            tweet = tweepy_api.get_status(tweetid)
+            text=tweet.text
+
+            index+=1
+            if index%100==0:
+                print(index)
+        except tweepy.error.TweepError:
+            traceback.print_exc(file=sys.stdout)
+            missed+=1
+            print("==="+str(tweetid)+","+label)
+        time.sleep(1)
+
 #reads Waseem2016 data in its own format and transforms it into that required by CHASE
 #racism=0, sexism=1, none=2
 def fetch_waseem_data(in_file, tweepy_api, out_file):
@@ -374,11 +403,16 @@ api=tweepy.API(auth)
 
 # fetch_waseem_data_v2("/home/zqz/GDrive/papers/chase/dataset/waseem2016/NLP+CSS_2016.csv", api,
 #             "/home/zqz/GDrive/papers/chase/dataset/waseem2016/NLP+CSS_2016_tweets.csv")
-print("end")
+#print("end")
 
-twitterStream = Stream(auth, TwitterStream())
-twitterStream.filter(track=[sc["KEYWORDS"]], languages=LANGUAGES_ACCETED)
 
+# ===== streaming =====
+# twitterStream = Stream(auth, TwitterStream())
+# twitterStream.filter(track=[sc["KEYWORDS"]], languages=LANGUAGES_ACCETED)
+
+# ===== index existing data =====
+index_data("/home/zqz/Work/chase/data/ml/public/w+ws/labeled_data.csv",
+           api, 1,2)
 
 
 # searcher = TwitterSearch(auth)
