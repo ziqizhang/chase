@@ -112,8 +112,8 @@ class TwitterStream(StreamListener):
 
     def on_data(self, data):
         self.__count += 1
-        print(self.__count)
-        if self.__count % 100 == 0:
+        #print(self.__count)
+        if self.__count % 200 == 0:
             code = urllib.request. \
                 code = iu.commit(iu.solr_core_tweets)
             now = datetime.datetime.now()
