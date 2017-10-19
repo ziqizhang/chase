@@ -1,5 +1,6 @@
 logs/log.txt
 config/twitter_oauth.txt
+config/google_api_key.txt
 aws/*
 output/errors/*
 output/features/*

@@ -9,6 +9,7 @@ import urllib.request
 import pandas as pd
 import csv
 import time
+from time import sleep
 
 import datetime
 
@@ -18,6 +19,8 @@ from tweepy import OAuthHandler
 from tweepy.streaming import StreamListener, Stream
 from geopy.geocoders import Nominatim
 from index import util as iu
+from geolocation.main import GoogleMaps
+from geolocation.distance_matrix.client import DistanceMatrixApiClient
 
 # documentation of tweets fields https://dev.twitter.com/overview/api/tweets
 # from dc import util
@@ -38,7 +41,7 @@ logging.basicConfig(filename=LOG_DIR + '/twitter_stream.log', level=logging.INFO
 SCALING_STRATEGY = -1
 
 
-def read_oauth(file):
+def read_auth(file):
     vars = {}
     with open(file) as auth_file:
         for line in auth_file:
@@ -90,11 +93,13 @@ class TwitterStream(StreamListener):
     __core = None
     __count = 0
     __count_retweet = 0
+    __google_maps = None
 
-    def __init__(self):
+    def __init__(self, google_api_key):
         super().__init__()
         self.__solr = SolrClient(iu.solr_url)
         self.__core = iu.solr_core_tweets
+        self.__google_maps=GoogleMaps(api_key=google_api_key)
         # self.__ml_model=util.load_ml_model(ml_model_file)
         # self.__selected_features = mutil.read_preselected_features(False, ml_selected_features)
 
@@ -107,6 +112,7 @@ class TwitterStream(StreamListener):
 
     def on_data(self, data):
         self.__count += 1
+        print(self.__count)
         if self.__count % 100 == 0:
             code = urllib.request. \
                 code = iu.commit(iu.solr_core_tweets)
@@ -179,15 +185,28 @@ class TwitterStream(StreamListener):
                     else:
                         # geocode_obj=None #currently the api for getting geo codes seems to be unstable
                         try:
-                            geocode_obj = geolocator.geocode(str_user_loc)
+                            geocode_obj = self.__google_maps.search(location=str_user_loc)
+                            if (geocode_obj is not None):
+                                geocode_obj=geocode_obj.first()
                             LOCATION_COORDINATES[str_user_loc] = geocode_obj
+                            if geocode_obj is not None:
+                                geocode_coordinates_of_user_location.append(geocode_obj.lat)
+                                geocode_coordinates_of_user_location.append(geocode_obj.lng)
                         except Exception as exc:
-                            traceback.print_exc(file=sys.stdout)
-                            logger.error("geopy not responding to: {}".format(str_user_loc))
+                            #traceback.print_exc(file=sys.stdout)
+                            print("GoogleMap not responding to: {}, error={}".format(str_user_loc,exc))
+                            logger.error("GoogleMap not responding to: {}".format(str_user_loc))
+                            try:
+                                geocode_obj = geolocator.geocode(str_user_loc)
+                                LOCATION_COORDINATES[str_user_loc] = geocode_obj
+                                if geocode_obj is not None:
+                                    geocode_coordinates_of_user_location.append(geocode_obj.latitude)
+                                    geocode_coordinates_of_user_location.append(geocode_obj.longitude)
+                            except Exception as exc:
+                                #traceback.print_exc(file=sys.stdout)
+                                print("GeoPy not responding to: {}, error={}".format(str_user_loc,exc))
+                                logger.error("GeoPy not responding to: {}".format(str_user_loc))
 
-                    if geocode_obj is not None:
-                        geocode_coordinates_of_user_location.append(geocode_obj.latitude)
-                        geocode_coordinates_of_user_location.append(geocode_obj.longitude)
 
                 # ml_tag=util.ml_tag(jdata['text'], feat_vectorizer,self.__ml_model, self.__selected_features,
                 #                    SCALING_STRATEGY, self.__sysout, logger)
@@ -389,7 +408,8 @@ def fetch_waseem_data_v2(in_file, tweepy_api, out_file):
             time.sleep(1)
 
 
-oauth = read_oauth(sys.argv[1])
+oauth = read_auth(sys.argv[1])
+googleauth=read_auth(sys.argv[3])
 print(sys.argv[1])
 sc = read_search_criteria(sys.argv[2])
 print(sys.argv[2])
@@ -410,7 +430,7 @@ api=tweepy.API(auth)
 
 
 # ===== streaming =====
-twitterStream = Stream(auth, TwitterStream())
+twitterStream = Stream(auth, TwitterStream(googleauth["key"]))
 twitterStream.filter(track=[sc["KEYWORDS"]], languages=LANGUAGES_ACCETED)
 
 # ===== index existing data =====
