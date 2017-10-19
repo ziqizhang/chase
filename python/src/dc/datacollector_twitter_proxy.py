@@ -24,7 +24,7 @@ from index import util as iu
 # from ml import util as mutil
 # from ml.vectorizer import fv_chase_basic
 
-IGNORE_RETWEETS = True
+IGNORE_RETWEETS = False
 LANGUAGES_ACCETED = ["en"]
 SOLR_CORE_SEARCHAPI = "chase_searchapi"
 TWITTER_TIME_PATTERN = "%a %b %d %H:%M:%S %z %Y"
@@ -99,8 +99,9 @@ class TwitterStream(StreamListener):
         # self.__selected_features = mutil.read_preselected_features(False, ml_selected_features)
 
     def ignoreRetweet(self, status_text):
-        if "rt @" in status_text.lower() and IGNORE_RETWEETS:
+        if "rt @" in status_text.lower():
             self.__count_retweet += 1
+        if IGNORE_RETWEETS:
             return True
         return False
 
@@ -117,7 +118,9 @@ class TwitterStream(StreamListener):
         jdata = None
         try:
             jdata = json.loads(data)
-            if jdata is not None and "id" in jdata.keys() and not self.ignoreRetweet(jdata["text"]):
+
+            if jdata is not None and "id" in jdata.keys() \
+                    and not self.ignoreRetweet(jdata["text"]):
                 # created_at_time
                 str_created_at = jdata["created_at"]
                 time = datetime.datetime.strptime(str_created_at, TWITTER_TIME_PATTERN)
@@ -407,12 +410,12 @@ api=tweepy.API(auth)
 
 
 # ===== streaming =====
-# twitterStream = Stream(auth, TwitterStream())
-# twitterStream.filter(track=[sc["KEYWORDS"]], languages=LANGUAGES_ACCETED)
+twitterStream = Stream(auth, TwitterStream())
+twitterStream.filter(track=[sc["KEYWORDS"]], languages=LANGUAGES_ACCETED)
 
 # ===== index existing data =====
-index_data("/home/zqz/Work/chase/data/ml/public/w+ws/labeled_data.csv",
-           api, 1,2)
+# index_data("/home/zqz/Work/chase/data/ml/public/w+ws/labeled_data.csv",
+#            api, 1,2)
 
 
 # searcher = TwitterSearch(auth)
