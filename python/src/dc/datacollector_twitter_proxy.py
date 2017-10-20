@@ -194,8 +194,8 @@ class TwitterStream(StreamListener):
                                 geocode_coordinates_of_user_location.append(geocode_obj.lng)
                         except Exception as exc:
                             #traceback.print_exc(file=sys.stdout)
-                            print("GoogleMap not responding to: {}, error={}".format(str_user_loc,exc))
-                            logger.error("GoogleMap not responding to: {}".format(str_user_loc))
+                            print("\t\t gmap error={}".format(str_user_loc,exc))
+                            logger.error("\t\t gmap: {}".format(str_user_loc))
                             try:
                                 geocode_obj = geolocator.geocode(str_user_loc)
                                 LOCATION_COORDINATES[str_user_loc] = geocode_obj
@@ -204,8 +204,8 @@ class TwitterStream(StreamListener):
                                     geocode_coordinates_of_user_location.append(geocode_obj.longitude)
                             except Exception as exc:
                                 #traceback.print_exc(file=sys.stdout)
-                                print("GeoPy not responding to: {}, error={}".format(str_user_loc,exc))
-                                logger.error("GeoPy not responding to: {}".format(str_user_loc))
+                                print("\t\t GeoPy error={}".format(str_user_loc,exc))
+                                logger.error("\t\t GeoPy {}".format(str_user_loc))
 
 
                 # ml_tag=util.ml_tag(jdata['text'], feat_vectorizer,self.__ml_model, self.__selected_features,
