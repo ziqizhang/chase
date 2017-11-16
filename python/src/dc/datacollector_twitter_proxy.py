@@ -117,9 +117,9 @@ class TwitterStream(StreamListener):
             code = urllib.request. \
                 code = iu.commit(iu.solr_core_tweets)
             now = datetime.datetime.now()
-            print("{} processed: {}, where {} are retweets and ignored".
+            print("{} processed: {}, where {} are retweets".
                   format(now, self.__count, self.__count_retweet))
-            logger.info("{} processed: {}, where {} are retweets and ignored".
+            logger.info("{} processed: {}, where {} are retweets".
                         format(now, self.__count, self.__count_retweet))
         jdata = None
         try:

@@ -3,6 +3,7 @@ os.environ['PYTHONHASHSEED'] = '0'
 from numpy.random import seed
 seed(1)
 from tensorflow import set_random_seed
+
 set_random_seed(2)
 
 import datetime
@@ -16,7 +17,7 @@ import random as rn
 import pandas as pd
 import pickle
 from keras.layers import Dense, Embedding, Conv1D, MaxPooling1D, LSTM, Dropout, AveragePooling1D, TimeDistributed, \
-    GlobalAveragePooling1D, GlobalMaxPooling1D
+    GlobalAveragePooling1D, GlobalMaxPooling1D, Merge
 from keras.models import Sequential
 from keras.wrappers.scikit_learn import KerasClassifier
 from sklearn.cross_validation import cross_val_predict, train_test_split
@@ -115,6 +116,32 @@ def create_model_conv_lstm(embedding_layer):
 
     logger.info("New run started at {}\n{}".format(datetime.datetime.now(), model.summary()))
     return model
+
+
+def create_model_conv_lstm_multi_filter(embedding_layer):
+    filters=100
+    kernel_sizes=[2,3,4]
+    submodels = []
+    for kw in kernel_sizes:    # kernel sizes
+        submodel = Sequential()
+        submodel.add(embedding_layer)
+        submodel.add(Conv1D(filter=filters,
+                            kernel_size=kw,
+                            padding='same',
+                            activation='relu'))
+        submodel.add(MaxPooling1D(pool_size=kw))
+        submodels.append(submodel)
+
+    big_model = Sequential()
+    big_model.add(Merge(submodels, mode="concat"))
+    big_model.add(LSTM(units=100, return_sequences=False))
+    #model.add(GlobalMaxPooling1D())
+    #model.add(Dropout(0.2))
+    big_model.add(Dense(4, activation='softmax'))
+    big_model.compile(loss='categorical_crossentropy', optimizer='adam', metrics=['accuracy'])
+
+    logger.info("New run started at {}\n{}".format(datetime.datetime.now(), model.summary()))
+    return big_model
 
 
 def pretrained_embedding(word_vocab: dict, embedding_model, expected_emb_dim, randomize_strategy):

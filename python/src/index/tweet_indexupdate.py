@@ -93,7 +93,12 @@ def update_ml_tag(solr:SolrClient,
                   hate_indicative_features, scaling_option, sysout, logger):
     tweets=[]
     for d in docs:
-        tweets.append(d['status_text'])
+        text=d['status_text']
+        if "rt @" in text.lower():
+            start=text.lower().index("rt @")+4
+            text=text[start].strip()
+
+        tweets.append(text)
 
     #ml classify, also compute risk scores
     logger.info("begin ml classification for tweets={}, time={}".format(len(tweets), datetime.datetime.now()))
@@ -153,6 +158,8 @@ hate_indicative_features = mu.read_preselected_features(False, sys.argv[3])
 solr = SolrClient(iu.solr_url)
 
 logging.basicConfig(level=logging.INFO)
+#todo: how should we deal with retweet? currently it is treated as a new tweet and we simply remove the 'rt @' from text
+
 update(solr,
        iu.solr_core_tweets,
        iu.solr_core_tags,
