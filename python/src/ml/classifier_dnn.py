@@ -1,7 +1,5 @@
 import os
 
-from keras.engine import Input
-from keras.engine import Model
 
 os.environ['PYTHONHASHSEED'] = '0'
 from numpy.random import seed
@@ -82,27 +80,31 @@ def create_model(model_descriptor:str, max_index=100, wemb_matrix=None):
                                     weights=[wemb_matrix],
                                     input_length=MAX_SEQUENCE_LENGTH,
                                     trainable=False)
-
-    model=dmc.create_model_without_branch(embedding_layer, model_descriptor)
+    if model_descriptor.startswith("b "):
+        model_descriptor=model_descriptor[1:].strip()
+        model=dmc.create_model_with_branch(embedding_layer, model_descriptor)
+    else:
+        model=dmc.create_model_without_branch(embedding_layer, model_descriptor)
+    #create_model_conv_lstm_multi_filter(embedding_layer)
 
     logger.info("New run started at {}\n{}".format(datetime.datetime.now(), model.summary()))
     return model
 
 
-def create_model_lstm(embedding_layer):#start from simple model
-    # use features from svm to train dnn, do not use lstm
-    # features from svm, apply autoencoder to compress..
-    model = Sequential()
-    model.add(embedding_layer)
-    model.add(Dropout(0.2))
-    model.add(LSTM(units=100, return_sequences=True)) #continuous time vs discrete time, gating, forgetting,
-    model.add(GlobalMaxPooling1D())
-    # lstm params,lstm hidden layers which ones are feeding into
-    model.add(Dropout(0.2))
-    model.add(Dense(1, activation='sigmoid'))
-    model.compile(loss='binary_crossentropy', optimizer='adam', metrics=['accuracy'])
-    logger.info("New run started at {}\n{}".format(datetime.datetime.now(), model.summary()))
-    return model
+# def create_model_lstm(embedding_layer):#start from simple model
+#     # use features from svm to train dnn, do not use lstm
+#     # features from svm, apply autoencoder to compress..
+#     model = Sequential()
+#     model.add(embedding_layer)
+#     model.add(Dropout(0.2))
+#     model.add(LSTM(units=100, return_sequences=True)) #continuous time vs discrete time, gating, forgetting,
+#     model.add(GlobalMaxPooling1D())
+#     # lstm params,lstm hidden layers which ones are feeding into
+#     model.add(Dropout(0.2))
+#     model.add(Dense(1, activation='sigmoid'))
+#     model.compile(loss='binary_crossentropy', optimizer='adam', metrics=['accuracy'])
+#     logger.info("New run started at {}\n{}".format(datetime.datetime.now(), model.summary()))
+#     return model
 
 
 # def create_model_conv_lstm(embedding_layer):
@@ -150,41 +152,42 @@ def create_model_lstm(embedding_layer):#start from simple model
 
 #workaround for functional api,
 #https://stackoverflow.com/questions/43151775/how-to-have-parallel-convolutional-layers-in-keras
-def create_model_conv_lstm_multi_filter(embedding_layer):
-    flts=100
-    kernel_sizes=[2,3,4]
-    submodels = []
-    for kw in kernel_sizes:    # kernel sizes
-        submodel = Sequential()
-        submodel.add(embedding_layer)
-        submodel.add(Dropout(0.2))
-        submodel.add(Conv1D(filters=flts,
-                            kernel_size=kw,
-                            padding='same',
-                            activation='relu'))
-        submodel.add(MaxPooling1D(pool_size=kw))
-        # submodel.add(LSTM(units=100, return_sequences=True))
-        # submodel.add(GlobalMaxPooling1D())
-        submodels.append(submodel)
-
-    submodel_outputs = [model.output for model in submodels]
-    x = Concatenate(axis=1)(submodel_outputs)
-
-    parallel_layers=Model(inputs=embedding_layer.input, outputs=x)
-    print("submodel:")
-    parallel_layers.summary()
-    print("")
-    big_model = Sequential()
-    big_model.add(parallel_layers)
-    big_model.add(LSTM(units=100, return_sequences=True))
-    big_model.add(GlobalMaxPooling1D())
-    #big_model.add(Dropout(0.2))
-    big_model.add(Dense(2, activation='softmax'))
-
-    big_model.compile(loss='categorical_crossentropy', optimizer='adam', metrics=['accuracy'])
-    big_model.summary()
-
-    return big_model
+# def create_model_conv_lstm_multi_filter(embedding_layer):
+#     "sub_conv[2,3,4](dropout=0.2,conv1d=100-v,)"
+#     flts=100
+#     kernel_sizes=[2,3,4]
+#     submodels = []
+#     for kw in kernel_sizes:    # kernel sizes
+#         submodel = Sequential()
+#         submodel.add(embedding_layer)
+#         submodel.add(Dropout(0.2))
+#         submodel.add(Conv1D(filters=flts,
+#                             kernel_size=kw,
+#                             padding='same',
+#                             activation='relu'))
+#         submodel.add(MaxPooling1D(pool_size=kw))
+#         # submodel.add(LSTM(units=100, return_sequences=True))
+#         # submodel.add(GlobalMaxPooling1D())
+#         submodels.append(submodel)
+#
+#     submodel_outputs = [model.output for model in submodels]
+#     x = Concatenate(axis=1)(submodel_outputs)
+#
+#     parallel_layers=Model(inputs=embedding_layer.input, outputs=x)
+#     print("submodel:")
+#     parallel_layers.summary()
+#     print("")
+#     big_model = Sequential()
+#     big_model.add(parallel_layers)
+#     big_model.add(LSTM(units=100, return_sequences=True))
+#     big_model.add(GlobalMaxPooling1D())
+#     #big_model.add(Dropout(0.2))
+#     big_model.add(Dense(2, activation='softmax'))
+#
+#     big_model.compile(loss='categorical_crossentropy', optimizer='adam', metrics=['accuracy'])
+#     big_model.summary()
+#
+#     return big_model
 
 
 class MyKerasClassifier(KerasClassifier):
@@ -331,7 +334,12 @@ def gridsearch(input_data_file, dataset_name, sys_out, model_descriptor:str,
 emb_model = None
 emb_dim=None
 params={}
-for arg in sys.argv:
+
+sys_argv=sys.argv
+if len(sys.argv)==2:
+    sys_argv= sys.argv[1].split(" ")
+
+for arg in sys_argv:
     pv=arg.split("=",1)
     if(len(pv)==1):
         continue
@@ -357,4 +365,11 @@ gridsearch(params["input"],
             params["oov_random"], #0-ignore oov; 1-random init by uniform dist; 2-random from embedding
             emb_model,
             emb_dim)
+sys.exit(0)
+
+
+# input=/home/zqz/Work/chase/data/ml/ml/rm/labeled_data_all.csv
+# output=/home/zqz/Work/chase/output
+# dataset=rm
+# model_desc="dropout=0.2,conv1d=100-4,maxpooling1d=4,lstm=100-True,gmaxpooling1d,dense=2-softmax"
 
