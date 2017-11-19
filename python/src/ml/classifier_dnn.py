@@ -1,4 +1,8 @@
 import os
+
+from keras.engine import Input
+from keras.engine import Model
+
 os.environ['PYTHONHASHSEED'] = '0'
 from numpy.random import seed
 seed(1)
@@ -17,7 +21,7 @@ import random as rn
 import pandas as pd
 import pickle
 from keras.layers import Dense, Embedding, Conv1D, MaxPooling1D, LSTM, Dropout, AveragePooling1D, TimeDistributed, \
-    GlobalAveragePooling1D, GlobalMaxPooling1D, Merge
+    GlobalAveragePooling1D, GlobalMaxPooling1D, Merge, Concatenate
 from keras.models import Sequential
 from keras.wrappers.scikit_learn import KerasClassifier
 from sklearn.cross_validation import cross_val_predict, train_test_split
@@ -28,6 +32,7 @@ from keras.preprocessing import sequence
 from ml import util
 from ml import nlp
 from ml import text_preprocess as tp
+from ml import dnn_model_creator as dmc
 
 MAX_SEQUENCE_LENGTH = 100 #maximum # of words allowed in a tweet
 WORD_EMBEDDING_DIM_OUTPUT = 300
@@ -36,10 +41,10 @@ LOG_DIR = os.getcwd() + "/logs"
 logging.basicConfig(filename=LOG_DIR + '/dnn-log.txt', level=logging.INFO, filemode='w')
 
 
-def get_word_vocab(tweets, out_folder, normalize):
+def get_word_vocab(tweets, out_folder, normalize_option):
     word_vectorizer = CountVectorizer(
         # vectorizer = sklearn.feature_extraction.text.CountVectorizer(
-        tokenizer=functools.partial(nlp.tokenize, stem_or_lemma=normalize),
+        tokenizer=functools.partial(nlp.tokenize, stem_or_lemma=normalize_option),
         preprocessor=tp.strip_hashtags,
         ngram_range=(1, 1),
         stop_words=nlp.stopwords,  # We do better when we keep stopwords
@@ -65,7 +70,7 @@ def get_word_vocab(tweets, out_folder, normalize):
     return word_embedding_input, vocab
 
 
-def create_model(max_index=100, wemb_matrix=None, model_option=0):
+def create_model(model_descriptor:str, max_index=100, wemb_matrix=None):
     '''A model that uses word embeddings'''
     if wemb_matrix is None:
         embedding_layer = Embedding(input_dim=max_index, output_dim=WORD_EMBEDDING_DIM_OUTPUT,
@@ -77,10 +82,8 @@ def create_model(max_index=100, wemb_matrix=None, model_option=0):
                                     weights=[wemb_matrix],
                                     input_length=MAX_SEQUENCE_LENGTH,
                                     trainable=False)
-    if model_option == 1:
-        model = create_model_conv_lstm(embedding_layer)
-    else:
-        model = create_model_lstm(embedding_layer)
+
+    model=dmc.create_model_without_branch(embedding_layer, model_descriptor)
 
     logger.info("New run started at {}\n{}".format(datetime.datetime.now(), model.summary()))
     return model
@@ -102,46 +105,97 @@ def create_model_lstm(embedding_layer):#start from simple model
     return model
 
 
-def create_model_conv_lstm(embedding_layer):
-    model = Sequential()
-    model.add(embedding_layer)
-    #model.add(Dropout(0.2))
-    model.add(Conv1D(filters=100, kernel_size=4, padding='same', activation='relu'))
-    model.add(MaxPooling1D(pool_size=4))
-    model.add(LSTM(units=100, return_sequences=False))
-    #model.add(GlobalMaxPooling1D())
-    #model.add(Dropout(0.2))
-    model.add(Dense(4, activation='softmax'))
-    model.compile(loss='categorical_crossentropy', optimizer='adam', metrics=['accuracy'])
+# def create_model_conv_lstm(embedding_layer):
+#     model = Sequential()
+#     model.add(embedding_layer)
+#     model.add(Dropout(0.2))
+#     model.add(Conv1D(filters=100, kernel_size=4, padding='same', activation='relu'))
+#     model.add(MaxPooling1D(pool_size=4))
+#     model.add(LSTM(units=100, return_sequences=True))
+#     model.add(GlobalMaxPooling1D())
+#     #model.add(Dropout(0.2))
+#     model.add(Dense(2, activation='softmax'))
+#     model.compile(loss='categorical_crossentropy', optimizer='adam', metrics=['accuracy'])
+#
+#     logger.info("New run started at {}\n{}".format(datetime.datetime.now(), model.summary()))
+#     return model
 
-    logger.info("New run started at {}\n{}".format(datetime.datetime.now(), model.summary()))
-    return model
 
+#using deprecated Merge, see https://statcompute.wordpress.com/2017/01/08/an-example-of-merge-layer-in-keras/
+# def create_model_conv_lstm_multi_filter(embedding_layer):
+#     flts=100
+#     kernel_sizes=[2,3,4]
+#     submodels = []
+#     for kw in kernel_sizes:    # kernel sizes
+#        submodel = Sequential()
+#         submodel.add(embedding_layer)
+#         submodel.add(Dropout(0.2))
+#         submodel.add(Conv1D(filters=flts,
+#                             kernel_size=kw,
+#                             padding='same',
+#                             activation='relu'))
+#         submodel.add(MaxPooling1D(pool_size=kw))
+#         submodels.append(submodel)
+#
+#     big_model = Sequential()
+#     #concat = Concatenate(axis=1)     #line B
+#     #big_model.add(concat(submodels)) #line C
+#     big_model.add(Merge(submodels, mode="concat", concat_axis=1))  #line A
+#     big_model.add(LSTM(units=100, return_sequences=True))
+#     big_model.add(GlobalMaxPooling1D())
+#     #big_model.add(Dropout(0.2))
+#     big_model.add(Dense(2, activation='softmax'))
+#     big_model.compile(loss='categorical_crossentropy', optimizer='adam', metrics=['accuracy'])
+#     return big_model
 
+#workaround for functional api,
+#https://stackoverflow.com/questions/43151775/how-to-have-parallel-convolutional-layers-in-keras
 def create_model_conv_lstm_multi_filter(embedding_layer):
-    filters=100
+    flts=100
     kernel_sizes=[2,3,4]
     submodels = []
     for kw in kernel_sizes:    # kernel sizes
         submodel = Sequential()
         submodel.add(embedding_layer)
-        submodel.add(Conv1D(filter=filters,
+        submodel.add(Dropout(0.2))
+        submodel.add(Conv1D(filters=flts,
                             kernel_size=kw,
                             padding='same',
                             activation='relu'))
         submodel.add(MaxPooling1D(pool_size=kw))
+        # submodel.add(LSTM(units=100, return_sequences=True))
+        # submodel.add(GlobalMaxPooling1D())
         submodels.append(submodel)
 
-    big_model = Sequential()
-    big_model.add(Merge(submodels, mode="concat"))
-    big_model.add(LSTM(units=100, return_sequences=False))
-    #model.add(GlobalMaxPooling1D())
-    #model.add(Dropout(0.2))
-    big_model.add(Dense(4, activation='softmax'))
-    big_model.compile(loss='categorical_crossentropy', optimizer='adam', metrics=['accuracy'])
+    submodel_outputs = [model.output for model in submodels]
+    x = Concatenate(axis=1)(submodel_outputs)
 
-    logger.info("New run started at {}\n{}".format(datetime.datetime.now(), model.summary()))
+    parallel_layers=Model(inputs=embedding_layer.input, outputs=x)
+    print("submodel:")
+    parallel_layers.summary()
+    print("")
+    big_model = Sequential()
+    big_model.add(parallel_layers)
+    big_model.add(LSTM(units=100, return_sequences=True))
+    big_model.add(GlobalMaxPooling1D())
+    #big_model.add(Dropout(0.2))
+    big_model.add(Dense(2, activation='softmax'))
+
+    big_model.compile(loss='categorical_crossentropy', optimizer='adam', metrics=['accuracy'])
+    big_model.summary()
+
     return big_model
+
+
+class MyKerasClassifier(KerasClassifier):
+    def predict(self, x, **kwargs):
+        kwargs = self.filter_sk_params(self.model.predict, kwargs)
+        proba = self.model.predict(x, **kwargs)
+        if proba.shape[-1] > 1:
+            classes = proba.argmax(axis=-1)
+        else:
+            classes = (proba > 0.5).astype('int32')
+        return self.classes_[classes]
 
 
 def pretrained_embedding(word_vocab: dict, embedding_model, expected_emb_dim, randomize_strategy):
@@ -175,8 +229,9 @@ def pretrained_embedding(word_vocab: dict, embedding_model, expected_emb_dim, ra
     return matrix
 
 
-def learn_dnn(label, cpus, nfold, task, X_train, y_train, X_test, y_test,
-              identifier, outfolder, embedding_layer_max_index, model_=0, pretrained_embedding_matrix=None,
+def learn_dnn(dataset_name, outfolder, model_descriptor:str,
+              cpus, nfold, X_train, y_train, X_test, y_test,
+              embedding_layer_max_index, pretrained_embedding_matrix=None,
               instance_data_source_tags=None, accepted_ds_tags: list = None):
     print("== Perform ANN ...")
     subfolder = outfolder + "/models"
@@ -188,7 +243,8 @@ def learn_dnn(label, cpus, nfold, task, X_train, y_train, X_test, y_test,
     create_model_with_args = \
         functools.partial(create_model, max_index=embedding_layer_max_index,
                           wemb_matrix=pretrained_embedding_matrix,
-                          model_option=model_)
+                          model_descriptor=model_descriptor)
+    #model = MyKerasClassifier(build_fn=create_model_with_args, verbose=0)
     model = KerasClassifier(build_fn=create_model_with_args, verbose=0)
     # define the grid search parameters
     batch_size = [100]
@@ -211,28 +267,31 @@ def learn_dnn(label, cpus, nfold, task, X_train, y_train, X_test, y_test,
     logger.info("testing on development set ....")
     if (X_test is not None):
         heldout_predictions_final = best_estimator.predict(X_test)
-        util.save_scores(nfold_predictions, y_train, heldout_predictions_final, y_test, label, task,
-                         identifier, 3, outfolder, instance_data_source_tags, accepted_ds_tags)
+        util.save_scores(nfold_predictions, y_train, heldout_predictions_final, y_test,
+                         model_descriptor, dataset_name,
+                         3, outfolder, instance_data_source_tags, accepted_ds_tags)
 
     else:
-        util.save_scores(nfold_predictions, y_train, None, y_test, label, task, identifier, 3,
+        util.save_scores(nfold_predictions, y_train, None, y_test,
+                         model_descriptor, dataset_name, 3,
                          outfolder, instance_data_source_tags, accepted_ds_tags)
 
         # util.print_eval_report(best_param_ann, cv_score_ann, dev_data_prediction_ann,
         #                       time_ann_predict_dev,
         #                       time_ann_train, y_test)
 
-
-def gridsearch(label, data_label, data_file, sys_out, output_scores_per_ds, word_normalize,
-               randomize_strategy, model_=0,
+def gridsearch(input_data_file, dataset_name, sys_out, model_descriptor:str,
+               print_scores_per_class,
+               word_norm_option,
+               randomize_strategy,
                pretrained_embedding_model=None, expected_embedding_dim=None):
-    raw_data = pd.read_csv(data_file, sep=',', encoding="utf-8")
-    M = get_word_vocab(raw_data.tweet, sys_out, word_normalize)
+    raw_data = pd.read_csv(input_data_file, sep=',', encoding="utf-8")
+    M = get_word_vocab(raw_data.tweet, sys_out, word_norm_option)
     # M=self.feature_scale(M)
     M0 = M[0]
 
     pretrained_word_matrix = None
-    if pretrained_embedding_file is not None:
+    if pretrained_embedding_model is not None:
         pretrained_word_matrix = pretrained_embedding(M[1], pretrained_embedding_model, expected_embedding_dim,
                                                       randomize_strategy)
 
@@ -249,88 +308,53 @@ def gridsearch(label, data_label, data_file, sys_out, output_scores_per_ds, word
 
     instance_data_source_column = None
     accepted_ds_tags = None
-    if output_scores_per_ds:
+    if print_scores_per_class:
         instance_data_source_column = pd.Series(raw_data.ds)
         accepted_ds_tags = ["c", "td"]
 
-    learn_dnn(label, -1, 5, data_label,
+
+    learn_dnn(dataset_name, sys_out, model_descriptor,
+              -1, 5,
               X_train_data,
-              y_train, X_test_data, y_test, "dense", sys_out,
-              len(M[1]), model_, pretrained_word_matrix,
+              y_train, X_test_data, y_test,
+              len(M[1]), pretrained_word_matrix,
               instance_data_source_column, accepted_ds_tags)
     print("complete {}".format(datetime.datetime.now()))
 
 
 ##############################################
 ##############################################
-def create_settings(indata, outdir, datalabel, print_result_per_ds,
-                    pretrained_embedding_file=None,
-                    expected_embedding_dim=-1):
-    settings = []
-    model = None
-    if pretrained_embedding_file is not None:
-        model = gensim.models.KeyedVectors. \
-            load_word2vec_format(pretrained_embedding_file, binary=True)
 
-    # params = ['lstm_lemma_oov=0_', indata, outdir, print_result_per_ds,
-    #           1, 0, model, expected_embedding_dim, 0]
-    #  1-stem or lem; 0-oov init method; 0-what ann model
-    # settings.append(params)
-
-    # params = ['lstm_lemma_oov=rand_', indata, outdir, print_result_per_ds,
-    #           1, 1, model, expected_embedding_dim, 0]
-    # settings.append(params)
-
-    # params = ['lstm_lemma_oov=randemb_', indata, outdir, print_result_per_ds,
-    #           1, 2, model, expected_embedding_dim, 0]
-    # settings.append(params)
-
-    # params = ['conv_lemma_oov=0_', indata, outdir, print_result_per_ds,
-    #           1, 0, model, expected_embedding_dim, 1]  # 1-stem or lem; 0-oov init method
-    # settings.append(params)
-
-    # params = ['conv_lemma_oov=rand_', indata, outdir, print_result_per_ds,
-    #           1, 1, model, expected_embedding_dim, 1]
-    # settings.append(params)
-
-    params = ['cnn_lstm', datalabel, indata, outdir, print_result_per_ds,
-              0, 2, model, expected_embedding_dim, 1]
-    settings.append(params) #  1-stem or lem; 0-oov init method; 0-what ann model
-
-    return settings
 #/home/zqz/Work/data/GoogleNews-vectors-negative300.bin.gz
 # 300
 
+emb_model = None
+emb_dim=None
+params={}
+for arg in sys.argv:
+    pv=arg.split("=",1)
+    if(len(pv)==1):
+        continue
+    params[pv[0]]=pv[1]
+if "scoreperclass" not in params.keys():
+    params["scoreperclass"]=False
+if "word_norm" not in params.keys():
+    params["word_norm"]=0
+if "oov_random" not in params.keys():
+    params["oov_random"]=0
+if "emb_model" in params.keys():
+    emb_model = gensim.models.KeyedVectors. \
+        load_word2vec_format(params["emb_model"], binary=True)
+if "emb_dim" in params.keys():
+    emb_dim=int(params["emb_dim"])
 
-pretrained_embedding_file = None
-expected_embedding_dim = -1
-model_option = 0
-
-if len(sys.argv) > 5:
-    pretrained_embedding_file = sys.argv[5]
-    expected_embedding_dim = sys.argv[6]
-
-settings = create_settings(sys.argv[1],  # in data
-                           sys.argv[2],  # output)
-                           sys.argv[3],  # data label
-                           sys.argv[4],  # print results per ds
-                           pretrained_embedding_file,
-                           int(expected_embedding_dim))
-
-print("total settings = {}, time = {}".format(len(settings), datetime.datetime.now()))
-
-for set in settings:
-    print("setting = {}, time = {}".format(str(set), datetime.datetime.now()))
-    gridsearch(set[0],  # label for output files
-               set[1],  # data label
-               set[2],  # in data
-               set[3],  # output
-               set[4],  # print results per ds
-               set[5],  # 0-stem words; 1-lemmatize words; other-do nothing
-               set[6],  # 0-oov has 0 vector; 1-oov is randomised ; 2-oov uses a random vector from the model
-               set[9],  # which dnn model to use
-               set[7],  # pretrained model, if any
-               set[8]  # pretrained embedding dim
-               )
-
+gridsearch(params["input"],
+            params["dataset"],  # dataset name
+            params["output"],  # output
+            params["model_desc"], #model descriptor
+            params["scoreperclass"], #print scores per class
+            params["word_norm"], #0-stemming, 1-lemma, other-do nothing
+            params["oov_random"], #0-ignore oov; 1-random init by uniform dist; 2-random from embedding
+            emb_model,
+            emb_dim)
 

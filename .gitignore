@@ -2,11 +2,7 @@ logs/log.txt
 config/twitter_oauth.txt
 config/google_api_key.txt
 aws/*
-output/errors/*
-output/features/*
-output/models/*.m
-output/*.pk
-output/*.pkl
+output/*
 .idea/*
 *.pyc
 output/fs/*
@@ -17,3 +13,4 @@ data/solr/tags/data
 data/solr/tweets/data
 data/solr/hsperfdata_zz
 *.tar.gz
+data/ml/ml/*

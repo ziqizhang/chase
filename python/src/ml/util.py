@@ -24,14 +24,15 @@ def load_classifier_model(classifier_pickled=None):
         return classifier
 
 
-def outputFalsePredictions(pred, truth, model_name, task, outfolder):
+def outputFalsePredictions(pred, truth, model_descriptor, dataset_name, outfolder):
     subfolder = outfolder + "/errors"
     try:
         os.stat(subfolder)
     except:
         os.mkdir(subfolder)
-    filename = os.path.join(subfolder, "errors-%s-%s.csv" % (model_name, task))
+    filename = os.path.join(subfolder, "errors-%s.csv" % (dataset_name))
     file = open(filename, "w")
+    file.write(model_descriptor+"\n")
     for p, t in zip(pred, truth):
         if p == t:
             line = str(p) + ",ok\n"
@@ -43,7 +44,7 @@ def outputFalsePredictions(pred, truth, model_name, task, outfolder):
 
 
 def prepare_score_string(p, r, f1, s, labels, target_names, digits):
-    string = ",precision, recall, f1, support\n"
+    string = ",precision,recall,f1,support\n"
     for i, label in enumerate(labels):
         string = string + target_names[i] + ","
         for v in (p[i], r[i], f1[i]):
@@ -57,18 +58,19 @@ def prepare_score_string(p, r, f1, s, labels, target_names, digits):
 
 def save_scores(nfold_predictions, nfold_truth,
                 heldout_predictions, heldout_truth,
-                model_name, task_name,
-                identifier, digits, outfolder,
+                model_descriptor,
+                dataset_name,
+                digits, outfolder,
                 instance_data_source_tags: pandas.Series = None, accepted_ds_tags: list = None):
-    outputFalsePredictions(nfold_predictions, nfold_truth, model_name, task_name, outfolder)
+    outputFalsePredictions(nfold_predictions, nfold_truth, model_descriptor,dataset_name, outfolder)
     subfolder = outfolder + "/scores"
     try:
         os.stat(subfolder)
     except:
         os.mkdir(subfolder)
-    filename = os.path.join(subfolder, "SCORES__%s_%s.csv" % (model_name, task_name))
+    filename = os.path.join(subfolder, "SCORES_%s.csv" % (dataset_name))
     writer = open(filename, "a+")
-    writer.write(identifier)
+    writer.write(model_descriptor+"\n")
     if nfold_predictions is not None:
         writer.write(" N-FOLD AVERAGE :\n")
         write_scores(nfold_predictions, nfold_truth, digits, writer, instance_data_source_tags, accepted_ds_tags)

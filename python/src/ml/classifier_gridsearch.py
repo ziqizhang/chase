@@ -163,7 +163,7 @@ def create_classifier(outfolder, model, task, nfold, classifier_gridsearch, dr_o
 
 def learn_general(cpus, nfold, task, load_model, model,
                   feature_vocbs: dict, X_train, y_train, X_test, y_test,
-                  identifier, outfolder, classifier_gridsearch=True,
+                  outfolder, classifier_gridsearch=True,
                   dr_option=0, dr_gridsearch=True, fs_option=0, fs_gridsearch=True,
                   instance_data_source_tags=None, accepted_ds_tags:list=None
                   ):
@@ -211,10 +211,11 @@ def learn_general(cpus, nfold, task, load_model, model,
         heldout_predictions_final = best_estimator.predict(X_test)
         util.save_scores(nfold_predictions, y_train,
                          heldout_predictions_final,
-                         y_test, model, task,
-                         identifier, 2, outfolder,
+                         y_test,
+                         model, task,
+                         2, outfolder,
                          instance_data_source_tags, accepted_ds_tags)
     else:
         util.save_scores(nfold_predictions, y_train, None, y_test, model, task,
-                         identifier, 2, outfolder,
+                         2, outfolder,
                          instance_data_source_tags, accepted_ds_tags)
