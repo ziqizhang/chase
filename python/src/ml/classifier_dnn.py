@@ -18,9 +18,7 @@ import random as rn
 
 import pandas as pd
 import pickle
-from keras.layers import Dense, Embedding, Conv1D, MaxPooling1D, LSTM, Dropout, AveragePooling1D, TimeDistributed, \
-    GlobalAveragePooling1D, GlobalMaxPooling1D, Merge, Concatenate
-from keras.models import Sequential
+from keras.layers import Embedding
 from keras.wrappers.scikit_learn import KerasClassifier
 from sklearn.cross_validation import cross_val_predict, train_test_split
 from sklearn.feature_extraction.text import CountVectorizer
@@ -80,9 +78,11 @@ def create_model(model_descriptor:str, max_index=100, wemb_matrix=None):
                                     weights=[wemb_matrix],
                                     input_length=MAX_SEQUENCE_LENGTH,
                                     trainable=False)
-    if model_descriptor.startswith("b "):
-        model_descriptor=model_descriptor[1:].strip()
+    if model_descriptor.startswith("b_"):
+        model_descriptor=model_descriptor[2:].strip()
         model=dmc.create_model_with_branch(embedding_layer, model_descriptor)
+    elif model_descriptor.startswith("f_"):
+        model=dmc.create_final_model_with_concat_cnn(embedding_layer,model_descriptor)
     else:
         model=dmc.create_model_without_branch(embedding_layer, model_descriptor)
     #create_model_conv_lstm_multi_filter(embedding_layer)
