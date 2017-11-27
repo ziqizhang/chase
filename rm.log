@@ -1,7 +1,0 @@
-20
-
->>> Start the following setting at Mon 27 Nov 06:34:36 GMT 2017: 
-1
-	input=/home/zqz/Work/chase/data/ml/ml/rm/labeled_data_all.csv output=/home/zqz/Work/chase/output oov_random=0 dataset=rm model_desc=www_,dropout=0.2,conv1d=100-4,maxpooling1d=4,lstm=100-True,gmaxpooling1d,dropout=0.2,dense=2-softmax
-	== Perform ANN ...
-	fitting model...

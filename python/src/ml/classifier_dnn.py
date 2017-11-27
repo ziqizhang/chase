@@ -6,7 +6,7 @@ from numpy.random import seed
 seed(1)
 from tensorflow import set_random_seed
 set_random_seed(2)
-
+from keras import backend as K
 import datetime
 import logging
 import sys
@@ -442,6 +442,9 @@ gridsearch(params["input"],
             params["oov_random"], #0-ignore oov; 1-random init by uniform dist; 2-random from embedding
             emb_model,
             emb_dim)
+
+# ... code
+K.clear_session()
 sys.exit(0)
 
 

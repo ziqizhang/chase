@@ -24,10 +24,10 @@ word_norm=0
 #"input=$input output=$output oov_random=2 emb_model=$emt_model emb_dim=$emt_dim dataset=$data model_desc=b_gt2_sub_conv[2,3,4](conv1d=100),maxpooling1d=4,flatten,dense=$targets-softmax" )
 
 #www model, lstm model
-SETTINGS=("input=$input output=$output oov_random=0 dataset=$data model_desc=www_,dropout=0.2,conv1d=100-4,maxpooling1d=4,lstm=100-True,gmaxpooling1d,dense=$targets-softmax" 
-"input=$input output=$output oov_random=0 dataset=$data model_desc=www_,dropout=0.2,conv1d=100-4,maxpooling1d=4,lstm=100-True,gmaxpooling1d,dense=$targets-softmax" 
-"input=$input output=$output oov_random=0 dataset=$data model_desc=www_,dropout=0.2,conv1d=100-4,maxpooling1d=4,lstm=100-True,gmaxpooling1d,dense=$targets-softmax" 
-"input=$input output=$output oov_random=0 dataset=$data model_desc=www_,dropout=0.2,conv1d=100-4,maxpooling1d=4,lstm=100-True,gmaxpooling1d,dense=$targets-softmax" )
+SETTINGS=("input=$input output=$output oov_random=0 dataset=$data model_desc=www_,dropout=0.2,conv1d=100-4,maxpooling1d=4,lstm=100-True,gmaxpooling1d,dense=$targets-softmax" )
+#"input=$input output=$output oov_random=0 dataset=$data model_desc=www_,dropout=0.2,conv1d=100-4,maxpooling1d=4,lstm=100-True,gmaxpooling1d,dense=$targets-softmax" 
+#"input=$input output=$output oov_random=0 dataset=$data model_desc=www_,dropout=0.2,conv1d=100-4,maxpooling1d=4,lstm=100-True,gmaxpooling1d,dense=$targets-softmax" 
+#"input=$input output=$output oov_random=0 dataset=$data model_desc=www_,dropout=0.2,conv1d=100-4,maxpooling1d=4,lstm=100-True,gmaxpooling1d,dense=$targets-softmax" )
 #"input=$input output=$output oov_random=0 dataset=$data emb_model=$emt_model emb_dim=$emt_dim model_desc=wwwt0_,dropout=0.2,conv1d=100-4,maxpooling1d=4,lstm=100-True,gmaxpooling1d,dense=$targets-softmax" 
 #"input=$input output=$output oov_random=1 dataset=$data emb_model=$emt_model emb_dim=$emt_dim model_desc=wwwt1_,dropout=0.2,conv1d=100-4,maxpooling1d=4,lstm=100-True,gmaxpooling1d,dense=$targets-softmax" 
 #"input=$input output=$output oov_random=2 dataset=$data emb_model=$emt_model emb_dim=$emt_dim model_desc=wwwt2_,dropout=0.2,conv1d=100-4,maxpooling1d=4,lstm=100-True,gmaxpooling1d,dense=$targets-softmax" )
