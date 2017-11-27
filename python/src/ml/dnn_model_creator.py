@@ -26,9 +26,9 @@ def create_final_model_with_concat_cnn(embedding_layer, model_descriptor:str):
         x= submodel_outputs[0]
 
     parallel_layers=Model(inputs=embedding_layer.input, outputs=x)
-    print("submodel:")
-    parallel_layers.summary()
-    print("\n")
+    #print("submodel:")
+    #parallel_layers.summary()
+    #print("\n")
 
     outter_model_descriptor=model_descriptor[model_descriptor.index(")")+2:]
     big_model = Sequential()
@@ -68,7 +68,7 @@ def create_final_model_with_concat_cnn(embedding_layer, model_descriptor:str):
             big_model.add(Flatten())
 
     big_model.compile(loss='categorical_crossentropy', optimizer='adam', metrics=['accuracy'])
-    big_model.summary()
+    #big_model.summary()
 
     return big_model
 
@@ -199,9 +199,9 @@ def create_model_with_branch(embedding_layer, model_descriptor:str):
         x=submodel_outputs[0]
 
     parallel_layers=Model(inputs=embedding_layer.input, outputs=x)
-    print("submodel:")
-    parallel_layers.summary()
-    print("\n")
+    #print("submodel:")
+    #parallel_layers.summary()
+    #print("\n")
 
     outter_model_descriptor=model_descriptor[model_descriptor.index(")")+2:]
     big_model = Sequential()
@@ -241,7 +241,7 @@ def create_model_with_branch(embedding_layer, model_descriptor:str):
             big_model.add(Flatten())
 
     big_model.compile(loss='categorical_crossentropy', optimizer='adam', metrics=['accuracy'])
-    big_model.summary()
+    #big_model.summary()
 
     return big_model
 
@@ -250,6 +250,8 @@ def create_submodel(embedding_layer, submod_layer_descriptor, cnn_ks, cnn_dilati
     model = Sequential()
     model.add(embedding_layer)
     for layer_descriptor in submod_layer_descriptor.split(","):
+        if "=" not in layer_descriptor:
+            continue
         ld=layer_descriptor.split("=")
 
         layer_name=ld[0]

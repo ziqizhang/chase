@@ -5,7 +5,6 @@ os.environ['PYTHONHASHSEED'] = '0'
 from numpy.random import seed
 seed(1)
 from tensorflow import set_random_seed
-
 set_random_seed(2)
 
 import datetime
@@ -20,7 +19,7 @@ import pandas as pd
 import pickle
 from keras.layers import Embedding
 from keras.wrappers.scikit_learn import KerasClassifier
-from sklearn.cross_validation import cross_val_predict, train_test_split
+from sklearn.cross_validation import cross_val_predict, train_test_split, cross_val_score
 from sklearn.feature_extraction.text import CountVectorizer
 from sklearn.model_selection import GridSearchCV
 from keras.preprocessing import sequence
@@ -87,7 +86,7 @@ def create_model(model_descriptor:str, max_index=100, wemb_matrix=None):
         model=dmc.create_model_without_branch(embedding_layer, model_descriptor)
     #create_model_conv_lstm_multi_filter(embedding_layer)
 
-    logger.info("New run started at {}\n{}".format(datetime.datetime.now(), model.summary()))
+    #logger.info("New run started at {}\n{}".format(datetime.datetime.now(), model.summary()))
     return model
 
 
@@ -202,9 +201,9 @@ class MyKerasClassifier(KerasClassifier):
 
 
 def pretrained_embedding(word_vocab: dict, embedding_model, expected_emb_dim, randomize_strategy):
-    logger.info("loading pre-trained embedding model... {}".format(datetime.datetime.now()))
+    logger.info("\tloading pre-trained embedding model... {}".format(datetime.datetime.now()))
     model = embedding_model
-    logger.info("loading complete. {}".format(datetime.datetime.now()))
+    logger.info("\tloading complete. {}".format(datetime.datetime.now()))
 
     matrix = numpy.zeros((len(word_vocab), expected_emb_dim))
     count = 0
@@ -232,11 +231,11 @@ def pretrained_embedding(word_vocab: dict, embedding_model, expected_emb_dim, ra
     return matrix
 
 
-def learn_dnn(dataset_name, outfolder, model_descriptor:str,
-              cpus, nfold, X_train, y_train, X_test, y_test,
-              embedding_layer_max_index, pretrained_embedding_matrix=None,
-              instance_data_source_tags=None, accepted_ds_tags: list = None):
-    print("== Perform ANN ...")
+def grid_search_dnn(dataset_name, outfolder, model_descriptor:str,
+                    cpus, nfold, X_train, y_train, X_test, y_test,
+                    embedding_layer_max_index, pretrained_embedding_matrix=None,
+                    instance_data_source_tags=None, accepted_ds_tags: list = None):
+    print("\t== Perform ANN ...")
     subfolder = outfolder + "/models"
     try:
         os.stat(subfolder)
@@ -249,25 +248,33 @@ def learn_dnn(dataset_name, outfolder, model_descriptor:str,
                           model_descriptor=model_descriptor)
     #model = MyKerasClassifier(build_fn=create_model_with_args, verbose=0)
     model = KerasClassifier(build_fn=create_model_with_args, verbose=0)
+
+    # model = KerasClassifier(build_fn=create_model_with_args, verbose=0, batch_size=100,
+    #                         nb_epoch=10)
+    #
+    # nfold_predictions = cross_val_predict(model, X_train, y_train, cv=nfold)
+
+
+
     # define the grid search parameters
-    batch_size = [100]
+    batch_size = [50,100]
     epochs = [10]
     param_grid = dict(batch_size=batch_size, nb_epoch=epochs)
 
     _classifier = GridSearchCV(estimator=model, param_grid=param_grid, n_jobs=cpus,
                                cv=nfold)
 
-    print("fitting model...")
+    print("\tfitting model...")
     _classifier.fit(X_train, y_train)
     nfold_predictions = cross_val_predict(_classifier.best_estimator_, X_train, y_train, cv=nfold)
 
     best_param_ann = _classifier.best_params_
-    logger.info("+ best params for {} model are:{}".format(model, best_param_ann))
+    print("\tbest params for {} model are:{}".format(model_descriptor, best_param_ann))
     best_estimator = _classifier.best_estimator_
 
     # util.save_classifier_model(best_estimator, ann_model_file)
 
-    logger.info("testing on development set ....")
+    #logger.info("testing on development set ....")
     if (X_test is not None):
         heldout_predictions_final = best_estimator.predict(X_test)
         util.save_scores(nfold_predictions, y_train, heldout_predictions_final, y_test,
@@ -316,12 +323,80 @@ def gridsearch(input_data_file, dataset_name, sys_out, model_descriptor:str,
         accepted_ds_tags = ["c", "td"]
 
 
-    learn_dnn(dataset_name, sys_out, model_descriptor,
-              -1, 5,
-              X_train_data,
-              y_train, X_test_data, y_test,
-              len(M[1]), pretrained_word_matrix,
-              instance_data_source_column, accepted_ds_tags)
+    grid_search_dnn(dataset_name, sys_out, model_descriptor,
+                    -1, 5,
+                    X_train_data,
+                    y_train, X_test_data, y_test,
+                    len(M[1]), pretrained_word_matrix,
+                    instance_data_source_column, accepted_ds_tags)
+    print("complete {}".format(datetime.datetime.now()))
+
+
+def cross_eval_dnn(dataset_name, outfolder, model_descriptor:str,
+                   cpus, nfold, X_data, y_data,
+                   embedding_layer_max_index, pretrained_embedding_matrix=None,
+                   instance_data_source_tags=None, accepted_ds_tags: list = None):
+    print("== Perform ANN ...")
+    subfolder = outfolder + "/models"
+    try:
+        os.stat(subfolder)
+    except:
+        os.mkdir(subfolder)
+
+    create_model_with_args = \
+        functools.partial(create_model, max_index=embedding_layer_max_index,
+                          wemb_matrix=pretrained_embedding_matrix,
+                          model_descriptor=model_descriptor)
+    #model = MyKerasClassifier(build_fn=create_model_with_args, verbose=0)
+    model = KerasClassifier(build_fn=create_model_with_args, verbose=0, batch_size=100)
+    model.fit(X_data,y_data)
+
+    nfold_predictions = cross_val_predict(model, X_data, y_data, cv=nfold)
+
+    util.save_scores(nfold_predictions, y_data, None, None,
+                         model_descriptor, dataset_name, 3,
+                         outfolder, instance_data_source_tags, accepted_ds_tags)
+
+        # util.print_eval_report(best_param_ann, cv_score_ann, dev_data_prediction_ann,
+        #                       time_ann_predict_dev,
+        #
+
+
+def cross_fold_eval(input_data_file, dataset_name, sys_out, model_descriptor:str,
+               print_scores_per_class,
+               word_norm_option,
+               randomize_strategy,
+               pretrained_embedding_model=None, expected_embedding_dim=None):
+    raw_data = pd.read_csv(input_data_file, sep=',', encoding="utf-8")
+    M = get_word_vocab(raw_data.tweet, sys_out, word_norm_option)
+    # M=self.feature_scale(M)
+    M0 = M[0]
+
+    pretrained_word_matrix = None
+    if pretrained_embedding_model is not None:
+        pretrained_word_matrix = pretrained_embedding(M[1], pretrained_embedding_model, expected_embedding_dim,
+                                                      randomize_strategy)
+
+    # split the dataset into two parts, 0.75 for train and 0.25 for testing
+    X_data = M0
+    y_data= raw_data['class']
+    y_data = y_data.astype(int)
+
+    X_data = sequence.pad_sequences(X_data, maxlen=MAX_SEQUENCE_LENGTH)
+
+    instance_data_source_column = None
+    accepted_ds_tags = None
+    if print_scores_per_class:
+        instance_data_source_column = pd.Series(raw_data.ds)
+        accepted_ds_tags = ["c", "td"]
+
+
+    cross_eval_dnn(dataset_name, sys_out, model_descriptor,
+                    -1, 5,
+                    X_data,
+                    y_data,
+                    len(M[1]), pretrained_word_matrix,
+                    instance_data_source_column, accepted_ds_tags)
     print("complete {}".format(datetime.datetime.now()))
 
 
@@ -351,8 +426,10 @@ if "word_norm" not in params.keys():
 if "oov_random" not in params.keys():
     params["oov_random"]=0
 if "emb_model" in params.keys():
+    print("===> use pre-trained embeddings...")
     emb_model = gensim.models.KeyedVectors. \
         load_word2vec_format(params["emb_model"], binary=True)
+    print("<===loaded")
 if "emb_dim" in params.keys():
     emb_dim=int(params["emb_dim"])
 
