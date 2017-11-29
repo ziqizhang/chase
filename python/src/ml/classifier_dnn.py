@@ -1,5 +1,6 @@
 import os
 
+import theano
 
 os.environ['PYTHONHASHSEED'] = '0'
 from numpy.random import seed
@@ -445,6 +446,9 @@ if "emb_model" in params.keys():
     print("<===loaded")
 if "emb_dim" in params.keys():
     emb_dim=int(params["emb_dim"])
+if "gpu" in params.keys():
+    theano.config.device = 'gpu'
+    theano.config.floatX = 'float32'
 
 gridsearch(params["input"],
             params["dataset"],  # dataset name
