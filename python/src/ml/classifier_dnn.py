@@ -4,9 +4,21 @@ import os
 os.environ['PYTHONHASHSEED'] = '0'
 from numpy.random import seed
 seed(1)
-from tensorflow import set_random_seed
-set_random_seed(2)
+import tensorflow as tf
+tf.set_random_seed(2)
+#single thread
+session_conf = tf.ConfigProto(
+  intra_op_parallelism_threads=1,
+  inter_op_parallelism_threads=1)
+
 from keras import backend as K
+sess = tf.Session(graph=tf.get_default_graph(), config=session_conf)
+K.set_session(sess)
+#sess = tf.Session(config=session_conf)
+#with sess.as_default():
+#  print(tf.constant(42).eval())
+
+
 import datetime
 import logging
 import sys
@@ -31,6 +43,7 @@ from ml import dnn_model_creator as dmc
 
 MAX_SEQUENCE_LENGTH = 100 #maximum # of words allowed in a tweet
 WORD_EMBEDDING_DIM_OUTPUT = 300
+CPUS=1
 logger = logging.getLogger(__name__)
 LOG_DIR = os.getcwd() + "/logs"
 logging.basicConfig(filename=LOG_DIR + '/dnn-log.txt', level=logging.INFO, filemode='w')
@@ -257,11 +270,11 @@ def grid_search_dnn(dataset_name, outfolder, model_descriptor:str,
 
 
     # define the grid search parameters
-    batch_size = [50,100]
+    batch_size = [100]
     epochs = [10]
     param_grid = dict(batch_size=batch_size, nb_epoch=epochs)
 
-    _classifier = GridSearchCV(estimator=model, param_grid=param_grid, n_jobs=cpus,
+    _classifier = GridSearchCV(estimator=model, param_grid=param_grid, n_jobs=cpus ,
                                cv=nfold)
 
     print("\tfitting model...")
@@ -324,7 +337,7 @@ def gridsearch(input_data_file, dataset_name, sys_out, model_descriptor:str,
 
 
     grid_search_dnn(dataset_name, sys_out, model_descriptor,
-                    -1, 5,
+                    CPUS, 5,
                     X_train_data,
                     y_train, X_test_data, y_test,
                     len(M[1]), pretrained_word_matrix,
@@ -405,7 +418,7 @@ def cross_fold_eval(input_data_file, dataset_name, sys_out, model_descriptor:str
 
 #/home/zqz/Work/data/GoogleNews-vectors-negative300.bin.gz
 # 300
-
+print("start {}".format(datetime.datetime.now()))
 emb_model = None
 emb_dim=None
 params={}
@@ -442,9 +455,8 @@ gridsearch(params["input"],
             params["oov_random"], #0-ignore oov; 1-random init by uniform dist; 2-random from embedding
             emb_model,
             emb_dim)
-
-# ... code
 K.clear_session()
+# ... code
 sys.exit(0)
 
 

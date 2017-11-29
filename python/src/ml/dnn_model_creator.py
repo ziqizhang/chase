@@ -68,7 +68,7 @@ def create_final_model_with_concat_cnn(embedding_layer, model_descriptor:str):
             big_model.add(Flatten())
 
     big_model.compile(loss='categorical_crossentropy', optimizer='adam', metrics=['accuracy'])
-    big_model.summary()
+    #big_model.summary()
 
     return big_model
 
@@ -241,7 +241,7 @@ def create_model_with_branch(embedding_layer, model_descriptor:str):
             big_model.add(Flatten())
 
     big_model.compile(loss='categorical_crossentropy', optimizer='adam', metrics=['accuracy'])
-    big_model.summary()
+    #big_model.summary()
 
     return big_model
 

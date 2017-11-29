@@ -25,10 +25,10 @@ word_norm=0
 
 #www model, lstm model
 SETTINGS=(
-#"input=$input output=$output oov_random=0 dataset=$data model_desc=www_,dropout=0.2,conv1d=100-4,maxpooling1d=4,lstm=100-True,gmaxpooling1d,dense=$targets-softmax" 
-#"input=$input output=$output oov_random=0 dataset=$data emb_model=$emg_model emb_dim=$emg_dim model_desc=wwwggl0_,dropout=0.2,conv1d=100-4,maxpooling1d=4,lstm=100-True,gmaxpooling1d,dense=$targets-softmax" 
-#"input=$input output=$output oov_random=1 dataset=$data emb_model=$emg_model emb_dim=$emg_dim model_desc=wwwggl1_,dropout=0.2,conv1d=100-4,maxpooling1d=4,lstm=100-True,gmaxpooling1d,dense=$targets-softmax" 
-#"input=$input output=$output oov_random=2 dataset=$data emb_model=$emg_model emb_dim=$emg_dim model_desc=wwwggl2_,dropout=0.2,conv1d=100-4,maxpooling1d=4,lstm=100-True,gmaxpooling1d,dense=$targets-softmax"
+"input=$input output=$output oov_random=0 dataset=$data model_desc=www_,dropout=0.2,conv1d=100-4,maxpooling1d=4,lstm=100-True,gmaxpooling1d,dense=$targets-softmax" 
+"input=$input output=$output oov_random=0 dataset=$data emb_model=$emg_model emb_dim=$emg_dim model_desc=wwwggl0_,dropout=0.2,conv1d=100-4,maxpooling1d=4,lstm=100-True,gmaxpooling1d,dense=$targets-softmax" 
+"input=$input output=$output oov_random=1 dataset=$data emb_model=$emg_model emb_dim=$emg_dim model_desc=wwwggl1_,dropout=0.2,conv1d=100-4,maxpooling1d=4,lstm=100-True,gmaxpooling1d,dense=$targets-softmax" 
+"input=$input output=$output oov_random=2 dataset=$data emb_model=$emg_model emb_dim=$emg_dim model_desc=wwwggl2_,dropout=0.2,conv1d=100-4,maxpooling1d=4,lstm=100-True,gmaxpooling1d,dense=$targets-softmax"
  
 #"input=$input output=$output oov_random=0 dataset=$data model_desc=wwwbase_,conv1d=100-4,maxpooling1d=4,lstm=100-False,dense=$targets-softmax" 
 #"input=$input output=$output oov_random=0 dataset=$data emb_model=$emg_model emb_dim=$emg_dim model_desc=wwwbaseggl0_,conv1d=100-4,maxpooling1d=4,lstm=100-False,dense=$targets-softmax" 
