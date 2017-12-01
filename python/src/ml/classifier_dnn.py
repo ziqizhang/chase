@@ -447,8 +447,12 @@ if "emb_model" in params.keys():
 if "emb_dim" in params.keys():
     emb_dim=int(params["emb_dim"])
 if "gpu" in params.keys():
-    theano.config.device = 'gpu'
-    theano.config.floatX = 'float32'
+    if params["gpu"]=="1":
+        print("using gpu...")
+        theano.config.device = 'gpu'
+        theano.config.floatX = 'float32'
+    else:
+        print("using cpu...")
 
 gridsearch(params["input"],
             params["dataset"],  # dataset name

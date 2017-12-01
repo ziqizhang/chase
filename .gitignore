@@ -14,3 +14,5 @@ data/solr/tweets/data
 data/solr/hsperfdata_zz
 *.tar.gz
 data/ml/ml/*
+*.sh
+TODO

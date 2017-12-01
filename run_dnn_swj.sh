@@ -13,18 +13,18 @@ word_norm=0
 
 #new models proposed in swj. although the descriptor does not show dropout, it is used. see code add_skipped_conv1d_submodel_other_layers
 SETTINGS=(
-#"input=$input output=$output oov_random=0 dataset=rm model_desc=f_(conv1d=100-[3]),lstm=100-True,gmaxpooling1d,dropout=0.2,dense=2-softmax" 
-#"input=$input output=$output oov_random=0 dataset=rm model_desc=f_(conv1d=100-[4]),lstm=100-True,gmaxpooling1d,dropout=0.2,dense=2-softmax" 
-#"input=$input output=$output oov_random=0 dataset=rm model_desc=f_(conv1d=100-[5]),lstm=100-True,gmaxpooling1d,dropout=0.2,dense=2-softmax" 
-#"input=$input output=$output oov_random=0 dataset=rm model_desc=f_(conv1d=100-[3,4,5]),lstm=100-True,gmaxpooling1d,dropout-0.2,dense=2-softmax" 
-"input=$input output=$output oov_random=0 emd_model=$emg_model emd_dim=$emg_dim dataset=rm model_desc=f_(conv1d=100-[3]),lstm=100-True,gmaxpooling1d,dropout=0.2,dense=2-softmax" 
-"input=$input output=$output oov_random=0 emd_model=$emg_model emd_dim=$emg_dim dataset=rm model_desc=f_(conv1d=100-[4]),lstm=100-True,gmaxpooling1d,dropout=0.2,dense=2-softmax" 
-"input=$input output=$output oov_random=0 emd_model=$emg_model emd_dim=$emg_dim dataset=rm model_desc=f_(conv1d=100-[5]),lstm=100-True,gmaxpooling1d,dropout=0.2,dense=2-softmax" 
-"input=$input output=$output oov_random=0 emd_model=$emg_model emd_dim=$emg_dim dataset=rm model_desc=f_(conv1d=100-[3,4,5]),lstm=100-True,gmaxpooling1d,dropout-0.2,dense=2-softmax" 
-"input=$input output=$output oov_random=0 emd_model=$emt_model emd_dim=$emt_dim dataset=rm model_desc=f_(conv1d=100-[3]),lstm=100-True,gmaxpooling1d,dropout=0.2,dense=2-softmax" 
-"input=$input output=$output oov_random=0 emd_model=$emt_model emd_dim=$emt_dim dataset=rm model_desc=f_(conv1d=100-[4]),lstm=100-True,gmaxpooling1d,dropout=0.2,dense=2-softmax" 
-"input=$input output=$output oov_random=0 emd_model=$emt_model emd_dim=$emt_dim dataset=rm model_desc=f_(conv1d=100-[5]),lstm=100-True,gmaxpooling1d,dropout=0.2,dense=2-softmax" 
-"input=$input output=$output oov_random=0 emd_model=$emt_model emd_dim=$emt_dim dataset=rm model_desc=f_(conv1d=100-[3,4,5]),lstm=100-True,gmaxpooling1d,dropout-0.2,dense=2-softmax" )
+#"input=$input output=$output oov_random=0 dataset=rm model_desc=f_(conv1d=100-[3]),lstm=100-True,gmaxpooling1d,dense=2-softmax" 
+#"input=$input output=$output oov_random=0 dataset=rm model_desc=f_(conv1d=100-[4]),lstm=100-True,gmaxpooling1d,dense=2-softmax" 
+#"input=$input output=$output oov_random=0 dataset=rm model_desc=f_(conv1d=100-[5]),lstm=100-True,gmaxpooling1d,dense=2-softmax" 
+#"input=$input output=$output oov_random=0 dataset=rm model_desc=f_(conv1d=100-[3,4,5]),lstm=100-True,gmaxpooling1d,dense=2-softmax" 
+"input=$input output=$output oov_random=0 emb_model=$emg_model emd_dim=$emg_dim dataset=rm model_desc=f_ggl0(conv1d=100-[3]),lstm=100-True,gmaxpooling1d,dense=2-softmax" 
+"input=$input output=$output oov_random=0 emb_model=$emg_model emb_dim=$emg_dim dataset=rm model_desc=f_ggl0(conv1d=100-[4]),lstm=100-True,gmaxpooling1d,dense=2-softmax" 
+"input=$input output=$output oov_random=0 emb_model=$emg_model emb_dim=$emg_dim dataset=rm model_desc=f_ggl0(conv1d=100-[5]),lstm=100-True,gmaxpooling1d,dense=2-softmax" 
+"input=$input output=$output oov_random=0 emb_model=$emg_model emb_dim=$emg_dim dataset=rm model_desc=f_ggl0(conv1d=100-[3,4,5]),lstm=100-True,gmaxpooling1d,dense=2-softmax" 
+"input=$input output=$output oov_random=0 emb_model=$emt_model emb_dim=$emt_dim dataset=rm model_desc=f_t0(conv1d=100-[3]),lstm=100-True,gmaxpooling1d,dense=2-softmax" 
+"input=$input output=$output oov_random=0 emb_model=$emt_model emb_dim=$emt_dim dataset=rm model_desc=f_t0(conv1d=100-[4]),lstm=100-True,gmaxpooling1d,dense=2-softmax" 
+"input=$input output=$output oov_random=0 emb_model=$emt_model emb_dim=$emt_dim dataset=rm model_desc=f_t0(conv1d=100-[5]),lstm=100-True,gmaxpooling1d,dense=2-softmax" 
+"input=$input output=$output oov_random=0 emb_model=$emt_model emb_dim=$emt_dim dataset=rm model_desc=f_t0(conv1d=100-[3,4,5]),lstm=100-True,gmaxpooling1d,dense=2-softmax" )
 #"input=$input output=$output dataset=rm model_desc=f_(conv1d=100-[3,4,5],so),lstm=100-True,gmaxpooling1d,dense=2-softmax" )
 #"input=$input output=$output dataset=rm model_desc=b_sub_conv[2,3,4]<1,2>(dropout=0.2,conv1d=100,maxpooling1d=4),lstm=100-True,gmaxpooling1d,dense=2-softmax" 
 #"input=$input output=$output dataset=rm model_desc=b_sub_conv[3,4]<1,2>(dropout=0.2,conv1d=100,maxpooling1d=4),lstm=100-True,gmaxpooling1d,dense=2-softmax" 
