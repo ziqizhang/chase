@@ -4,7 +4,7 @@ from numpy.random import seed
 seed(1)
 
 os.environ['PYTHONHASHSEED'] = '0'
-os.environ['THEANO_FLAGS']="floatX=float64,device=cuda0,openmp=True"
+os.environ['THEANO_FLAGS']="floatX=float64,device=cpu,openmp=True"
 #os.environ['THEANO_FLAGS']="openmp=True"
 os.environ['OMP_NUM_THREADS']='16'
 import theano
@@ -275,7 +275,7 @@ def grid_search_dnn(dataset_name, outfolder, model_descriptor:str,
 
     # define the grid search parameters
     batch_size = [100]
-    epochs = [10,20]
+    epochs = [10]
     param_grid = dict(batch_size=batch_size, nb_epoch=epochs)
 
     _classifier = GridSearchCV(estimator=model, param_grid=param_grid, n_jobs=cpus ,
