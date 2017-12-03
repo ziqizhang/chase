@@ -455,8 +455,6 @@ if "emb_dim" in params.keys():
 if "gpu" in params.keys():
     if params["gpu"]=="1":
         print("using gpu...")
-        theano.config.device = 'gpu'
-        theano.config.floatX = 'float32'
     else:
         print("using cpu...")
 
