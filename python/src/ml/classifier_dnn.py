@@ -4,7 +4,6 @@ from numpy.random import seed
 seed(1)
 
 os.environ['PYTHONHASHSEED'] = '0'
-os.environ['PYTHONHASHSEED'] = '0'
 os.environ['THEANO_FLAGS']="floatX=float64,device=cuda0,openmp=True"
 #os.environ['THEANO_FLAGS']="openmp=True"
 os.environ['OMP_NUM_THREADS']='16'
@@ -282,14 +281,12 @@ def grid_search_dnn(dataset_name, outfolder, model_descriptor:str,
 
     _classifier = GridSearchCV(estimator=model, param_grid=param_grid, n_jobs=cpus ,
                                cv=nfold)
-    print(datetime.datetime.now())
-    print("\tfitting model...")
+    print("\tfitting model...{}".format(datetime.datetime.now()))
     _classifier.fit(X_train, y_train)
-    print(datetime.datetime.now())
-    print("\tpredicting...")
+    print("\tcrossfold running...".format(datetime.datetime.now()))
     nfold_predictions = cross_val_predict(_classifier.best_estimator_, X_train, y_train, cv=nfold)
-    print(datetime.datetime.now())
     best_param_ann = _classifier.best_params_
+    print("\done {}".format(datetime.datetime.now()))
     print("\tbest params for {} model are:{}".format(model_descriptor, best_param_ann))
     best_estimator = _classifier.best_estimator_
 
@@ -297,12 +294,15 @@ def grid_search_dnn(dataset_name, outfolder, model_descriptor:str,
 
     #logger.info("testing on development set ....")
     if (X_test is not None):
+        print("\tpredicting...{}".format(datetime.datetime.now()))
         heldout_predictions_final = best_estimator.predict(X_test)
+        print("\tsaving...{}".format(datetime.datetime.now()))
         util.save_scores(nfold_predictions, y_train, heldout_predictions_final, y_test,
                          model_descriptor, dataset_name,
                          3, outfolder, instance_data_source_tags, accepted_ds_tags)
 
     else:
+        print("\tsaving...{}".format(datetime.datetime.now()))
         util.save_scores(nfold_predictions, y_train, None, y_test,
                          model_descriptor, dataset_name, 3,
                          outfolder, instance_data_source_tags, accepted_ds_tags)
