@@ -1,0 +1,433 @@
+24
+
+>>> Start the following setting at Fri  1 Dec 22:10:43 GMT 2017: 
+1
+	input=/home/zqz/Work/chase/data/ml/ml/rm/labeled_data_all.csv output=/home/zqz/Work/chase/output oov_random=0 dataset=rm model_desc=www_,dropout=0.2,conv1d=100-4,maxpooling1d=4,lstm=100-True,gmaxpooling1d,dense=2-softmax
+start 2017-12-01 22:10:45.982354
+	== Perform ANN ...
+	fitting model...
+	best params for www_,dropout=0.2,conv1d=100-4,maxpooling1d=4,lstm=100-True,gmaxpooling1d,dense=2-softmax model are:{'batch_size': 100, 'nb_epoch': 10}
+complete 2017-12-01 22:24:08.339221
+<<< completed at Fri  1 Dec 22:24:09 GMT 2017: 
+
+>>> Start the following setting at Fri  1 Dec 22:24:09 GMT 2017: 
+2
+	input=/home/zqz/Work/chase/data/ml/ml/rm/labeled_data_all.csv output=/home/zqz/Work/chase/output oov_random=0 dataset=rm emb_model=/home/zqz/Work/data/GoogleNews-vectors-negative300.bin.gz emb_dim=300 model_desc=wwwggl0_,dropout=0.2,conv1d=100-4,maxpooling1d=4,lstm=100-True,gmaxpooling1d,dense=2-softmax
+start 2017-12-01 22:24:11.294875
+===> use pre-trained embeddings...
+<===loaded
+100
+200
+300
+400
+500
+600
+700
+800
+900
+randomized=110
+	== Perform ANN ...
+	fitting model...
+	best params for wwwggl0_,dropout=0.2,conv1d=100-4,maxpooling1d=4,lstm=100-True,gmaxpooling1d,dense=2-softmax model are:{'batch_size': 100, 'nb_epoch': 10}
+complete 2017-12-01 22:36:20.168793
+<<< completed at Fri  1 Dec 22:36:23 GMT 2017: 
+
+>>> Start the following setting at Fri  1 Dec 22:36:23 GMT 2017: 
+3
+	input=/home/zqz/Work/chase/data/ml/ml/rm/labeled_data_all.csv output=/home/zqz/Work/chase/output oov_random=0 dataset=rm emb_model=/home/zqz/Work/data/Set1_TweetDataWithoutSpam_Word.bin emb_dim=300 model_desc=wwwtw0_,dropout=0.2,conv1d=100-4,maxpooling1d=4,lstm=100-True,gmaxpooling1d,dense=2-softmax
+start 2017-12-01 22:36:26.635617
+===> use pre-trained embeddings...
+<===loaded
+100
+200
+300
+400
+500
+600
+700
+800
+900
+randomized=8
+	== Perform ANN ...
+	fitting model...
+	best params for wwwtw0_,dropout=0.2,conv1d=100-4,maxpooling1d=4,lstm=100-True,gmaxpooling1d,dense=2-softmax model are:{'batch_size': 100, 'nb_epoch': 10}
+complete 2017-12-01 22:47:12.479676
+<<< completed at Fri  1 Dec 22:47:14 GMT 2017: 
+
+>>> Start the following setting at Fri  1 Dec 22:47:14 GMT 2017: 
+4
+	input=/home/zqz/Work/chase/data/ml/ml/rm/labeled_data_all.csv output=/home/zqz/Work/chase/output oov_random=0 dataset=rm model_desc=www_,dropout=0.2,conv1d=100-4,maxpooling1d=4,lstm=100-True,gmaxpooling1d,dropout=0.2,dense=2-softmax
+start 2017-12-01 22:47:16.606116
+	== Perform ANN ...
+	fitting model...
+	best params for www_,dropout=0.2,conv1d=100-4,maxpooling1d=4,lstm=100-True,gmaxpooling1d,dropout=0.2,dense=2-softmax model are:{'batch_size': 100, 'nb_epoch': 10}
+complete 2017-12-01 23:00:20.888829
+<<< completed at Fri  1 Dec 23:00:22 GMT 2017: 
+
+>>> Start the following setting at Fri  1 Dec 23:00:22 GMT 2017: 
+5
+	input=/home/zqz/Work/chase/data/ml/ml/rm/labeled_data_all.csv output=/home/zqz/Work/chase/output oov_random=0 dataset=rm emb_model=/home/zqz/Work/data/GoogleNews-vectors-negative300.bin.gz emb_dim=300 model_desc=wwwggl0_,dropout=0.2,conv1d=100-4,maxpooling1d=4,lstm=100-True,gmaxpooling1d,dropout=0.2,dense=2-softmax
+start 2017-12-01 23:00:23.985921
+===> use pre-trained embeddings...
+<===loaded
+100
+200
+300
+400
+500
+600
+700
+800
+900
+randomized=110
+	== Perform ANN ...
+	fitting model...
+	best params for wwwggl0_,dropout=0.2,conv1d=100-4,maxpooling1d=4,lstm=100-True,gmaxpooling1d,dropout=0.2,dense=2-softmax model are:{'batch_size': 100, 'nb_epoch': 10}
+complete 2017-12-01 23:12:46.436175
+<<< completed at Fri  1 Dec 23:12:50 GMT 2017: 
+
+>>> Start the following setting at Fri  1 Dec 23:12:50 GMT 2017: 
+6
+	input=/home/zqz/Work/chase/data/ml/ml/rm/labeled_data_all.csv output=/home/zqz/Work/chase/output oov_random=0 dataset=rm emb_model=/home/zqz/Work/data/Set1_TweetDataWithoutSpam_Word.bin emb_dim=300 model_desc=wwwtw0_,dropout=0.2,conv1d=100-4,maxpooling1d=4,lstm=100-True,gmaxpooling1d,dropout=0.2,dense=2-softmax
+start 2017-12-01 23:12:51.823422
+===> use pre-trained embeddings...
+<===loaded
+100
+200
+300
+400
+500
+600
+700
+800
+900
+randomized=8
+	== Perform ANN ...
+	fitting model...
+	best params for wwwtw0_,dropout=0.2,conv1d=100-4,maxpooling1d=4,lstm=100-True,gmaxpooling1d,dropout=0.2,dense=2-softmax model are:{'batch_size': 100, 'nb_epoch': 10}
+complete 2017-12-01 23:23:39.339868
+<<< completed at Fri  1 Dec 23:23:42 GMT 2017: 
+
+>>> Start the following setting at Fri  1 Dec 23:23:42 GMT 2017: 
+7
+	input=/home/zqz/Work/chase/data/ml/ml/rm/labeled_data_all.csv output=/home/zqz/Work/chase/output oov_random=0 dataset=rm model_desc=f_(conv1d=100-[3]),lstm=100-True,gmaxpooling1d,dense=2-softmax
+start 2017-12-01 23:23:43.727688
+	== Perform ANN ...
+	fitting model...
+	best params for f_(conv1d=100-[3]),lstm=100-True,gmaxpooling1d,dense=2-softmax model are:{'batch_size': 100, 'nb_epoch': 10}
+complete 2017-12-01 23:44:25.295074
+<<< completed at Fri  1 Dec 23:44:26 GMT 2017: 
+
+>>> Start the following setting at Fri  1 Dec 23:44:26 GMT 2017: 
+8
+	input=/home/zqz/Work/chase/data/ml/ml/rm/labeled_data_all.csv output=/home/zqz/Work/chase/output oov_random=0 dataset=rm model_desc=f_(conv1d=100-[4]),lstm=100-True,gmaxpooling1d,dense=2-softmax
+start 2017-12-01 23:44:27.972094
+	== Perform ANN ...
+	fitting model...
+	best params for f_(conv1d=100-[4]),lstm=100-True,gmaxpooling1d,dense=2-softmax model are:{'batch_size': 100, 'nb_epoch': 10}
+complete 2017-12-02 00:30:27.145082
+<<< completed at Sat  2 Dec 00:30:28 GMT 2017: 
+
+>>> Start the following setting at Sat  2 Dec 00:30:28 GMT 2017: 
+9
+	input=/home/zqz/Work/chase/data/ml/ml/rm/labeled_data_all.csv output=/home/zqz/Work/chase/output oov_random=0 dataset=rm model_desc=f_(conv1d=100-[5]),lstm=100-True,gmaxpooling1d,dense=2-softmax
+start 2017-12-02 00:30:30.316766
+	== Perform ANN ...
+	fitting model...
+	best params for f_(conv1d=100-[5]),lstm=100-True,gmaxpooling1d,dense=2-softmax model are:{'batch_size': 100, 'nb_epoch': 10}
+complete 2017-12-02 02:04:40.580031
+<<< completed at Sat  2 Dec 02:04:42 GMT 2017: 
+
+>>> Start the following setting at Sat  2 Dec 02:04:42 GMT 2017: 
+10
+	input=/home/zqz/Work/chase/data/ml/ml/rm/labeled_data_all.csv output=/home/zqz/Work/chase/output oov_random=0 emb_model=/home/zqz/Work/data/GoogleNews-vectors-negative300.bin.gz emb_dim=300 dataset=rm model_desc=f_ggl0(conv1d=100-[3]),lstm=100-True,gmaxpooling1d,dense=2-softmax
+start 2017-12-02 02:04:43.859521
+===> use pre-trained embeddings...
+<===loaded
+100
+200
+300
+400
+500
+600
+700
+800
+900
+randomized=110
+	== Perform ANN ...
+	fitting model...
+	best params for f_ggl0(conv1d=100-[3]),lstm=100-True,gmaxpooling1d,dense=2-softmax model are:{'batch_size': 100, 'nb_epoch': 10}
+complete 2017-12-02 02:23:52.706507
+<<< completed at Sat  2 Dec 02:23:55 GMT 2017: 
+
+>>> Start the following setting at Sat  2 Dec 02:23:55 GMT 2017: 
+11
+	input=/home/zqz/Work/chase/data/ml/ml/rm/labeled_data_all.csv output=/home/zqz/Work/chase/output oov_random=0 emb_model=/home/zqz/Work/data/GoogleNews-vectors-negative300.bin.gz emb_dim=300 dataset=rm model_desc=f_ggl0(conv1d=100-[4]),lstm=100-True,gmaxpooling1d,dense=2-softmax
+start 2017-12-02 02:23:57.251954
+===> use pre-trained embeddings...
+<===loaded
+100
+200
+300
+400
+500
+600
+700
+800
+900
+randomized=110
+	== Perform ANN ...
+	fitting model...
+	best params for f_ggl0(conv1d=100-[4]),lstm=100-True,gmaxpooling1d,dense=2-softmax model are:{'batch_size': 100, 'nb_epoch': 10}
+complete 2017-12-02 03:04:15.143186
+<<< completed at Sat  2 Dec 03:04:19 GMT 2017: 
+
+>>> Start the following setting at Sat  2 Dec 03:04:19 GMT 2017: 
+12
+	input=/home/zqz/Work/chase/data/ml/ml/rm/labeled_data_all.csv output=/home/zqz/Work/chase/output oov_random=0 emb_model=/home/zqz/Work/data/GoogleNews-vectors-negative300.bin.gz emb_dim=300 dataset=rm model_desc=f_ggl0(conv1d=100-[5]),lstm=100-True,gmaxpooling1d,dense=2-softmax
+start 2017-12-02 03:04:22.233131
+===> use pre-trained embeddings...
+<===loaded
+100
+200
+300
+400
+500
+600
+700
+800
+900
+randomized=110
+	== Perform ANN ...
+	fitting model...
+	best params for f_ggl0(conv1d=100-[5]),lstm=100-True,gmaxpooling1d,dense=2-softmax model are:{'batch_size': 100, 'nb_epoch': 10}
+complete 2017-12-02 04:25:55.644043
+<<< completed at Sat  2 Dec 04:25:59 GMT 2017: 
+
+>>> Start the following setting at Sat  2 Dec 04:25:59 GMT 2017: 
+13
+	input=/home/zqz/Work/chase/data/ml/ml/rm/labeled_data_all.csv output=/home/zqz/Work/chase/output oov_random=0 emb_model=/home/zqz/Work/data/Set1_TweetDataWithoutSpam_Word.bin emb_dim=300 dataset=rm model_desc=f_t0(conv1d=100-[3]),lstm=100-True,gmaxpooling1d,dense=2-softmax
+start 2017-12-02 04:26:01.488543
+===> use pre-trained embeddings...
+<===loaded
+100
+200
+300
+400
+500
+600
+700
+800
+900
+randomized=8
+	== Perform ANN ...
+	fitting model...
+	best params for f_t0(conv1d=100-[3]),lstm=100-True,gmaxpooling1d,dense=2-softmax model are:{'batch_size': 100, 'nb_epoch': 10}
+complete 2017-12-02 04:43:34.989286
+<<< completed at Sat  2 Dec 04:43:37 GMT 2017: 
+
+>>> Start the following setting at Sat  2 Dec 04:43:37 GMT 2017: 
+14
+	input=/home/zqz/Work/chase/data/ml/ml/rm/labeled_data_all.csv output=/home/zqz/Work/chase/output oov_random=0 emb_model=/home/zqz/Work/data/Set1_TweetDataWithoutSpam_Word.bin emb_dim=300 dataset=rm model_desc=f_t0(conv1d=100-[4]),lstm=100-True,gmaxpooling1d,dense=2-softmax
+start 2017-12-02 04:43:38.762223
+===> use pre-trained embeddings...
+<===loaded
+100
+200
+300
+400
+500
+600
+700
+800
+900
+randomized=8
+	== Perform ANN ...
+	fitting model...
+	best params for f_t0(conv1d=100-[4]),lstm=100-True,gmaxpooling1d,dense=2-softmax model are:{'batch_size': 100, 'nb_epoch': 10}
+complete 2017-12-02 05:22:11.152456
+<<< completed at Sat  2 Dec 05:22:14 GMT 2017: 
+
+>>> Start the following setting at Sat  2 Dec 05:22:14 GMT 2017: 
+15
+	input=/home/zqz/Work/chase/data/ml/ml/rm/labeled_data_all.csv output=/home/zqz/Work/chase/output oov_random=0 emb_model=/home/zqz/Work/data/Set1_TweetDataWithoutSpam_Word.bin emb_dim=300 dataset=rm model_desc=f_t0(conv1d=100-[5]),lstm=100-True,gmaxpooling1d,dense=2-softmax
+start 2017-12-02 05:22:15.757020
+===> use pre-trained embeddings...
+<===loaded
+100
+200
+300
+400
+500
+600
+700
+800
+900
+randomized=8
+	== Perform ANN ...
+	fitting model...
+	best params for f_t0(conv1d=100-[5]),lstm=100-True,gmaxpooling1d,dense=2-softmax model are:{'batch_size': 100, 'nb_epoch': 10}
+complete 2017-12-02 06:41:08.431728
+<<< completed at Sat  2 Dec 06:41:10 GMT 2017: 
+
+>>> Start the following setting at Sat  2 Dec 06:41:10 GMT 2017: 
+16
+	input=/home/zqz/Work/chase/data/ml/ml/rm/labeled_data_all.csv output=/home/zqz/Work/chase/output oov_random=0 dataset=rm model_desc=f_(conv1d=100-[3]),lstm=100-True,gmaxpooling1d,dropout=0.2,dense=2-softmax
+start 2017-12-02 06:41:12.332537
+	== Perform ANN ...
+	fitting model...
+	best params for f_(conv1d=100-[3]),lstm=100-True,gmaxpooling1d,dropout=0.2,dense=2-softmax model are:{'batch_size': 100, 'nb_epoch': 10}
+complete 2017-12-02 07:01:50.510757
+<<< completed at Sat  2 Dec 07:01:51 GMT 2017: 
+
+>>> Start the following setting at Sat  2 Dec 07:01:51 GMT 2017: 
+17
+	input=/home/zqz/Work/chase/data/ml/ml/rm/labeled_data_all.csv output=/home/zqz/Work/chase/output oov_random=0 dataset=rm model_desc=f_(conv1d=100-[4]),lstm=100-True,gmaxpooling1d,dropout=0.2,dense=2-softmax
+start 2017-12-02 07:01:53.199389
+	== Perform ANN ...
+	fitting model...
+	best params for f_(conv1d=100-[4]),lstm=100-True,gmaxpooling1d,dropout=0.2,dense=2-softmax model are:{'batch_size': 100, 'nb_epoch': 10}
+complete 2017-12-02 07:47:53.723471
+<<< completed at Sat  2 Dec 07:47:55 GMT 2017: 
+
+>>> Start the following setting at Sat  2 Dec 07:47:55 GMT 2017: 
+18
+	input=/home/zqz/Work/chase/data/ml/ml/rm/labeled_data_all.csv output=/home/zqz/Work/chase/output oov_random=0 dataset=rm model_desc=f_(conv1d=100-[5]),lstm=100-True,gmaxpooling1d,dropout=0.2,dense=2-softmax
+start 2017-12-02 07:47:57.029642
+	== Perform ANN ...
+	fitting model...
+	best params for f_(conv1d=100-[5]),lstm=100-True,gmaxpooling1d,dropout=0.2,dense=2-softmax model are:{'batch_size': 100, 'nb_epoch': 10}
+complete 2017-12-02 09:24:47.587497
+<<< completed at Sat  2 Dec 09:24:49 GMT 2017: 
+
+>>> Start the following setting at Sat  2 Dec 09:24:49 GMT 2017: 
+19
+	input=/home/zqz/Work/chase/data/ml/ml/rm/labeled_data_all.csv output=/home/zqz/Work/chase/output oov_random=0 emb_model=/home/zqz/Work/data/GoogleNews-vectors-negative300.bin.gz emb_dim=300 dataset=rm model_desc=f_ggl0(conv1d=100-[3]),lstm=100-True,gmaxpooling1d,dropout=0.2,dense=2-softmax
+start 2017-12-02 09:24:51.368791
+===> use pre-trained embeddings...
+<===loaded
+100
+200
+300
+400
+500
+600
+700
+800
+900
+randomized=110
+	== Perform ANN ...
+	fitting model...
+	best params for f_ggl0(conv1d=100-[3]),lstm=100-True,gmaxpooling1d,dropout=0.2,dense=2-softmax model are:{'batch_size': 100, 'nb_epoch': 10}
+complete 2017-12-02 09:45:05.580494
+<<< completed at Sat  2 Dec 09:45:08 GMT 2017: 
+
+>>> Start the following setting at Sat  2 Dec 09:45:08 GMT 2017: 
+20
+	input=/home/zqz/Work/chase/data/ml/ml/rm/labeled_data_all.csv output=/home/zqz/Work/chase/output oov_random=0 emb_model=/home/zqz/Work/data/GoogleNews-vectors-negative300.bin.gz emb_dim=300 dataset=rm model_desc=f_ggl0(conv1d=100-[4]),lstm=100-True,gmaxpooling1d,dropout=0.2,dense=2-softmax
+start 2017-12-02 09:45:11.187916
+===> use pre-trained embeddings...
+<===loaded
+100
+200
+300
+400
+500
+600
+700
+800
+900
+randomized=110
+	== Perform ANN ...
+	fitting model...
+	best params for f_ggl0(conv1d=100-[4]),lstm=100-True,gmaxpooling1d,dropout=0.2,dense=2-softmax model are:{'batch_size': 100, 'nb_epoch': 10}
+complete 2017-12-02 10:25:32.643238
+<<< completed at Sat  2 Dec 10:25:36 GMT 2017: 
+
+>>> Start the following setting at Sat  2 Dec 10:25:36 GMT 2017: 
+21
+	input=/home/zqz/Work/chase/data/ml/ml/rm/labeled_data_all.csv output=/home/zqz/Work/chase/output oov_random=0 emb_model=/home/zqz/Work/data/GoogleNews-vectors-negative300.bin.gz emb_dim=300 dataset=rm model_desc=f_ggl0(conv1d=100-[5]),lstm=100-True,gmaxpooling1d,dropout=0.2,dense=2-softmax
+start 2017-12-02 10:25:40.613307
+===> use pre-trained embeddings...
+<===loaded
+100
+200
+300
+400
+500
+600
+700
+800
+900
+randomized=110
+	== Perform ANN ...
+	fitting model...
+	best params for f_ggl0(conv1d=100-[5]),lstm=100-True,gmaxpooling1d,dropout=0.2,dense=2-softmax model are:{'batch_size': 100, 'nb_epoch': 10}
+complete 2017-12-02 11:40:27.145338
+<<< completed at Sat  2 Dec 11:40:30 GMT 2017: 
+
+>>> Start the following setting at Sat  2 Dec 11:40:30 GMT 2017: 
+22
+	input=/home/zqz/Work/chase/data/ml/ml/rm/labeled_data_all.csv output=/home/zqz/Work/chase/output oov_random=0 emb_model=/home/zqz/Work/data/Set1_TweetDataWithoutSpam_Word.bin emb_dim=300 dataset=rm model_desc=f_t0(conv1d=100-[3]),lstm=100-True,gmaxpooling1d,dropout=0.2,dense=2-softmax
+start 2017-12-02 11:40:32.112527
+===> use pre-trained embeddings...
+<===loaded
+100
+200
+300
+400
+500
+600
+700
+800
+900
+randomized=8
+	== Perform ANN ...
+	fitting model...
+	best params for f_t0(conv1d=100-[3]),lstm=100-True,gmaxpooling1d,dropout=0.2,dense=2-softmax model are:{'batch_size': 100, 'nb_epoch': 10}
+complete 2017-12-02 11:58:11.829256
+<<< completed at Sat  2 Dec 11:58:13 GMT 2017: 
+
+>>> Start the following setting at Sat  2 Dec 11:58:13 GMT 2017: 
+23
+	input=/home/zqz/Work/chase/data/ml/ml/rm/labeled_data_all.csv output=/home/zqz/Work/chase/output oov_random=0 emb_model=/home/zqz/Work/data/Set1_TweetDataWithoutSpam_Word.bin emb_dim=300 dataset=rm model_desc=f_t0(conv1d=100-[4]),lstm=100-True,gmaxpooling1d,dropout=0.2,dense=2-softmax
+start 2017-12-02 11:58:15.659260
+===> use pre-trained embeddings...
+<===loaded
+100
+200
+300
+400
+500
+600
+700
+800
+900
+randomized=8
+	== Perform ANN ...
+	fitting model...
+	best params for f_t0(conv1d=100-[4]),lstm=100-True,gmaxpooling1d,dropout=0.2,dense=2-softmax model are:{'batch_size': 100, 'nb_epoch': 10}
+complete 2017-12-02 12:35:07.363215
+<<< completed at Sat  2 Dec 12:35:10 GMT 2017: 
+
+>>> Start the following setting at Sat  2 Dec 12:35:10 GMT 2017: 
+24
+	input=/home/zqz/Work/chase/data/ml/ml/rm/labeled_data_all.csv output=/home/zqz/Work/chase/output oov_random=0 emb_model=/home/zqz/Work/data/Set1_TweetDataWithoutSpam_Word.bin emb_dim=300 dataset=rm model_desc=f_t0(conv1d=100-[5]),lstm=100-True,gmaxpooling1d,dropout=0.2,dense=2-softmax
+start 2017-12-02 12:35:12.009337
+===> use pre-trained embeddings...
+<===loaded
+100
+200
+300
+400
+500
+600
+700
+800
+900
+randomized=8
+	== Perform ANN ...
+	fitting model...
+	best params for f_t0(conv1d=100-[5]),lstm=100-True,gmaxpooling1d,dropout=0.2,dense=2-softmax model are:{'batch_size': 100, 'nb_epoch': 10}
+complete 2017-12-02 13:47:06.898896
+<<< completed at Sat  2 Dec 13:47:09 GMT 2017: 

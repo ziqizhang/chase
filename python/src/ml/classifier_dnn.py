@@ -1,24 +1,29 @@
 import os
 
-import theano
-
-os.environ['PYTHONHASHSEED'] = '0'
 from numpy.random import seed
 seed(1)
-import tensorflow as tf
-tf.set_random_seed(2)
+
+os.environ['PYTHONHASHSEED'] = '0'
+os.environ['PYTHONHASHSEED'] = '0'
+os.environ['THEANO_FLAGS']="floatX=float64,device=cuda0,openmp=True"
+#os.environ['THEANO_FLAGS']="openmp=True"
+os.environ['OMP_NUM_THREADS']='16'
+import theano
+theano.config.openmp=True
+
+#import tensorflow as tf
+#tf.set_random_seed(2)
 #single thread
-session_conf = tf.ConfigProto(
-  intra_op_parallelism_threads=1,
-  inter_op_parallelism_threads=1)
+#session_conf = tf.ConfigProto(
+#  intra_op_parallelism_threads=1,
+#  inter_op_parallelism_threads=1)
 
 from keras import backend as K
-sess = tf.Session(graph=tf.get_default_graph(), config=session_conf)
-K.set_session(sess)
+#sess = tf.Session(graph=tf.get_default_graph(), config=session_conf)
+#K.set_session(sess)
 #sess = tf.Session(config=session_conf)
 #with sess.as_default():
 #  print(tf.constant(42).eval())
-
 
 import datetime
 import logging
@@ -272,16 +277,18 @@ def grid_search_dnn(dataset_name, outfolder, model_descriptor:str,
 
     # define the grid search parameters
     batch_size = [100]
-    epochs = [10]
+    epochs = [10,20]
     param_grid = dict(batch_size=batch_size, nb_epoch=epochs)
 
     _classifier = GridSearchCV(estimator=model, param_grid=param_grid, n_jobs=cpus ,
                                cv=nfold)
-
+    print(datetime.datetime.now())
     print("\tfitting model...")
     _classifier.fit(X_train, y_train)
+    print(datetime.datetime.now())
+    print("\tpredicting...")
     nfold_predictions = cross_val_predict(_classifier.best_estimator_, X_train, y_train, cv=nfold)
-
+    print(datetime.datetime.now())
     best_param_ann = _classifier.best_params_
     print("\tbest params for {} model are:{}".format(model_descriptor, best_param_ann))
     best_estimator = _classifier.best_estimator_
@@ -463,7 +470,7 @@ gridsearch(params["input"],
             params["oov_random"], #0-ignore oov; 1-random init by uniform dist; 2-random from embedding
             emb_model,
             emb_dim)
-K.clear_session()
+#K.clear_session()
 # ... code
 sys.exit(0)
 
