@@ -282,10 +282,10 @@ def grid_search_dnn(dataset_name, outfolder, model_descriptor:str,
                                cv=nfold)
     print("\tfitting model...{}".format(datetime.datetime.now()))
     _classifier.fit(X_train, y_train)
-    print("\tcrossfold running...".format(datetime.datetime.now()))
+    print("\tcrossfold running...{}".format(datetime.datetime.now()))
     nfold_predictions = cross_val_predict(_classifier.best_estimator_, X_train, y_train, cv=nfold)
     best_param_ann = _classifier.best_params_
-    print("\done {}".format(datetime.datetime.now()))
+    print("\tdone {}".format(datetime.datetime.now()))
     print("\tbest params for {} model are:{}".format(model_descriptor, best_param_ann))
     best_estimator = _classifier.best_estimator_
 
