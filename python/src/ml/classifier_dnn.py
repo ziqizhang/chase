@@ -6,7 +6,7 @@ seed(1)
 os.environ['PYTHONHASHSEED'] = '0'
 os.environ['THEANO_FLAGS']="floatX=float64,device=cpu,openmp=True"
 #os.environ['THEANO_FLAGS']="openmp=True"
-os.environ['OMP_NUM_THREADS']='16'
+os.environ['OMP_NUM_THREADS']='8'
 import theano
 theano.config.openmp=True
 
@@ -274,7 +274,7 @@ def grid_search_dnn(dataset_name, outfolder, model_descriptor:str,
 
 
     # define the grid search parameters
-    batch_size = [100]
+    batch_size = [100,200]
     epochs = [10]
     param_grid = dict(batch_size=batch_size, nb_epoch=epochs)
 

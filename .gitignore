@@ -16,3 +16,4 @@ data/solr/hsperfdata_zz
 data/ml/ml/*
 *.sh
 TODO
+*.log

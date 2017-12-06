@@ -77,7 +77,11 @@ def create_skipped_conv1d_submodels(embedding_layer, cnn_ks, skip_layer_only:boo
     models=[]
 
     conv_layers=[]
-    if cnn_ks==3:
+    if cnn_ks<3:
+        if not skip_layer_only:
+            conv1d_3=Conv1D(filters=100,kernel_size=cnn_ks, padding='same', activation='relu')
+            conv_layers.append(conv1d_3)
+    elif cnn_ks==3:
         if not skip_layer_only:
             conv1d_3=Conv1D(filters=100,kernel_size=3, padding='same', activation='relu')
             conv_layers.append(conv1d_3)
