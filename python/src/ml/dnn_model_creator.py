@@ -319,6 +319,8 @@ def create_submodel_with_skipconv1d(embedding_layer, submod_layer_descriptor, ta
         model = Sequential()
         model.add(embedding_layer)
         for layer_descriptor in submod_layer_descriptor.split(","):
+            if layer_descriptor.endswith("_"):
+                continue
             ld=layer_descriptor.split("=")
 
             layer_name=ld[0]
@@ -356,6 +358,8 @@ def create_model_without_branch(embedding_layer, model_descriptor:str):
     model.add(embedding_layer)
     for layer_descriptor in model_descriptor.split(","):
         ld=layer_descriptor.split("=")
+        # if layer_descriptor.endswith("_"):
+            #     continue
 
         layer_name=ld[0]
         params=None
