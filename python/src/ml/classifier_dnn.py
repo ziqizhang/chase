@@ -274,7 +274,7 @@ def grid_search_dnn(dataset_name, outfolder, model_descriptor:str,
 
 
     # define the grid search parameters
-    batch_size = [100,200]
+    batch_size = [200]
     epochs = [10]
     param_grid = dict(batch_size=batch_size, nb_epoch=epochs)
 
