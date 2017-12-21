@@ -447,8 +447,12 @@ if "oov_random" not in params.keys():
     params["oov_random"]=0
 if "emb_model" in params.keys():
     print("===> use pre-trained embeddings...")
-    emb_model = gensim.models.KeyedVectors. \
-        load_word2vec_format(params["emb_model"], binary=True)
+    gensimFormat = ".gensim" in params["emb_model"]
+    if gensimFormat :
+        emb_model = gensim.models.KeyedVectors.load(params["emb_model"],mmap='r')
+    else:
+        emb_model = gensim.models.KeyedVectors. \
+            load_word2vec_format(params["emb_model"], binary=True)
     print("<===loaded")
 if "emb_dim" in params.keys():
     emb_dim=int(params["emb_dim"])
