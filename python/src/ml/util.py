@@ -30,7 +30,8 @@ def outputFalsePredictions(pred, truth, model_descriptor, dataset_name, outfolde
         os.stat(subfolder)
     except:
         os.mkdir(subfolder)
-    filename = os.path.join(subfolder, "errors-%s.csv" % (dataset_name))
+    filename="errors-"+dataset_name+"_"+model_descriptor+".csv"
+    filename = os.path.join(subfolder, filename)
     file = open(filename, "w")
     file.write(model_descriptor+"\n")
     for p, t in zip(pred, truth):
