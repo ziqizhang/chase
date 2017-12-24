@@ -244,7 +244,7 @@ def pretrained_embedding(word_vocab: dict, embedding_model, expected_emb_dim, ra
         if count % 100 == 0:
             print(count)
     model = None
-    if randomize_strategy>0:
+    if randomize_strategy!="0":
         print("randomized={}".format(random))
     else:
         print("oov={}".format(random))

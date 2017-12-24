@@ -1,5 +1,6 @@
 from keras.engine import Model
-from keras.layers import Dropout, GlobalMaxPooling1D, Dense, Conv1D, MaxPooling1D, Bidirectional, Concatenate, Flatten
+from keras.layers import Dropout, GlobalMaxPooling1D, Dense, Conv1D, MaxPooling1D, Bidirectional, Concatenate, Flatten, \
+    GRU
 from keras.layers import LSTM
 
 from keras import backend as K
@@ -45,6 +46,8 @@ def create_final_model_with_concat_cnn(embedding_layer, model_descriptor:str):
             big_model.add(Dropout(float(params[0])))
         elif layer_name=="lstm":
             big_model.add(LSTM(units=int(params[0]), return_sequences=bool(params[1])))
+        elif layer_name=="gru":
+            big_model.add(GRU(units=int(params[0]), return_sequences=bool(params[1])))
         elif layer_name=="bilstm":
             big_model.add(Bidirectional(LSTM(units=int(params[0]), return_sequences=bool(params[1]))))
         elif layer_name=="conv1d":
@@ -222,6 +225,8 @@ def create_model_with_branch(embedding_layer, model_descriptor:str):
             big_model.add(Dropout(float(params[0])))
         elif layer_name=="lstm":
             big_model.add(LSTM(units=int(params[0]), return_sequences=bool(params[1])))
+        elif layer_name=="gru":
+            big_model.add(GRU(units=int(params[0]), return_sequences=bool(params[1])))
         elif layer_name=="bilstm":
             big_model.add(Bidirectional(LSTM(units=int(params[0]), return_sequences=bool(params[1]))))
         elif layer_name=="conv1d":
@@ -267,6 +272,8 @@ def create_submodel(embedding_layer, submod_layer_descriptor, cnn_ks, cnn_dilati
             model.add(Dropout(float(params[0])))
         elif layer_name=="lstm":
             model.add(LSTM(units=int(params[0]), return_sequences=bool(params[1])))
+        elif layer_name=="gru":
+            model.add(GRU(units=int(params[0]), return_sequences=bool(params[1])))
         elif layer_name=="bilstm":
             model.add(Bidirectional(LSTM(units=int(params[0]), return_sequences=bool(params[1]))))
         elif layer_name=="conv1d":
@@ -332,6 +339,8 @@ def create_submodel_with_skipconv1d(embedding_layer, submod_layer_descriptor, ta
                 model.add(Dropout(float(params[0])))
             elif layer_name=="lstm":
                 model.add(LSTM(units=int(params[0]), return_sequences=bool(params[1])))
+            elif layer_name=="gru":
+                model.add(GRU(units=int(params[0]), return_sequences=bool(params[1])))
             elif layer_name=="bilstm":
                 model.add(Bidirectional(LSTM(units=int(params[0]), return_sequences=bool(params[1]))))
             elif layer_name=="conv1d":
@@ -370,6 +379,8 @@ def create_model_without_branch(embedding_layer, model_descriptor:str):
             model.add(Dropout(float(params[0])))
         elif layer_name=="lstm":
             model.add(LSTM(units=int(params[0]), return_sequences=bool(params[1])))
+        elif layer_name=="gru":
+            model.add(GRU(units=int(params[0]), return_sequences=bool(params[1])))
         elif layer_name=="bilstm":
             model.add(Bidirectional(LSTM(units=int(params[0]), return_sequences=bool(params[1]))))
         elif layer_name=="conv1d":
