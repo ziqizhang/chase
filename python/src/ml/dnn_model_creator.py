@@ -5,6 +5,113 @@ from keras.layers import LSTM
 
 from keras import backend as K
 from keras.models import Sequential
+from keras.regularizers import L1L2
+
+
+def create_regularizer(string):
+    if string=="none":
+        return None
+    string_array=string.split("_")
+    return L1L2(float(string_array[0]),float(string_array[1]))
+
+def create_model_without_branch(embedding_layer, model_descriptor:str):
+    model = Sequential()
+    model.add(embedding_layer)
+    for layer_descriptor in model_descriptor.split(","):
+        ld=layer_descriptor.split("=")
+        # if layer_descriptor.endswith("_"):
+            #     continue
+
+        layer_name=ld[0]
+        params=None
+        if len(ld)>1:
+            params=ld[1].split("-")
+
+        if layer_name=="dropout":
+            model.add(Dropout(float(params[0])))
+        elif layer_name=="lstm":
+            if params[1]=="True":
+                return_seq=True
+            else:
+                return_seq=False
+            if len(params)==2:
+                model.add(LSTM(units=int(params[0]), return_sequences=return_seq))
+            if len(params)>2:
+                kernel_reg=create_regularizer(params[2])
+                activity_reg=create_regularizer(params[3])
+                if kernel_reg is not None and activity_reg is None:
+                    model.add(LSTM(units=int(params[0]), return_sequences=return_seq,
+                                       kernel_regularizer=kernel_reg))
+                elif activity_reg is not None and kernel_reg is None:
+                    model.add(LSTM(units=int(params[0]), return_sequences=return_seq,
+                                       activity_regularizer=activity_reg))
+                elif activity_reg is not None and kernel_reg is not None:
+                    model.add(LSTM(units=int(params[0]), return_sequences=return_seq,
+                                       activity_regularizer=activity_reg, kernel_regularizer=kernel_reg))
+        elif layer_name=="gru":
+            if params[1]=="True":
+                return_seq=True
+            else:
+                return_seq=False
+            if len(params)==2:
+                model.add(GRU(units=int(params[0]), return_sequences=return_seq))
+            if len(params)>2:
+                kernel_reg=create_regularizer(params[2])
+                activity_reg=create_regularizer(params[3])
+                if kernel_reg is not None and activity_reg is None:
+                    model.add(GRU(units=int(params[0]), return_sequences=return_seq,
+                                       kernel_regularizer=kernel_reg))
+                elif activity_reg is not None and kernel_reg is None:
+                    model.add(GRU(units=int(params[0]), return_sequences=return_seq,
+                                       activity_regularizer=activity_reg))
+                elif activity_reg is not None and kernel_reg is not None:
+                    model.add(GRU(units=int(params[0]), return_sequences=return_seq,
+                                       activity_regularizer=activity_reg, kernel_regularizer=kernel_reg))
+        elif layer_name=="bilstm":
+            model.add(Bidirectional(LSTM(units=int(params[0]), return_sequences=return_seq)))
+        elif layer_name=="conv1d":
+            if len(params)==2:
+                model.add(Conv1D(filters=int(params[0]),
+                             kernel_size=int(params[1]), padding='same', activation='relu'))
+            if len(params)>2:
+                kernel_reg=create_regularizer(params[2])
+                activity_reg=create_regularizer(params[3])
+                if kernel_reg is not None and activity_reg is None:
+                    model.add(Conv1D(filters=int(params[0]),
+                             kernel_size=int(params[1]), padding='same', activation='relu', kernel_regularizer=kernel_reg))
+                elif activity_reg is not None and kernel_reg is None:
+                    model.add(Conv1D(filters=int(params[0]),
+                             kernel_size=int(params[1]), padding='same', activation='relu',activity_regularizer=activity_reg))
+                elif activity_reg is not None and kernel_reg is not None:
+                    model.add(Conv1D(filters=int(params[0]),
+                             kernel_size=int(params[1]), padding='same', activation='relu', kernel_regularizer=kernel_reg, activity_regularizer=activity_reg))
+        elif layer_name=="maxpooling1d":
+            model.add(MaxPooling1D(pool_size=int(params[0])))
+        elif layer_name=="gmaxpooling1d":
+            model.add(GlobalMaxPooling1D())
+        elif layer_name=="dense":
+            if len(params)==2:
+                model.add(Dense(int(params[0]), activation=params[1]))
+            elif len(params)>2:
+                kernel_reg=create_regularizer(params[2])
+                activity_reg=create_regularizer(params[3])
+                if kernel_reg is not None and activity_reg is None:
+                    model.add(Dense(int(params[0]), activation=params[1],
+                                    kernel_regularizer=kernel_reg))
+                elif activity_reg is not None and kernel_reg is None:
+                    model.add(Dense(int(params[0]), activation=params[1],
+                                    activity_regularizer=activity_reg))
+                elif activity_reg is not None and kernel_reg is not None:
+                    model.add(Dense(int(params[0]), activation=params[1],
+                                    activity_regularizer=activity_reg,
+                                        kernel_regularizer=kernel_reg))
+            else:
+                model.add(Dense(int(params[0])))
+        elif layer_name=="flatten":
+            model.add(Flatten())
+
+    model.compile(loss='categorical_crossentropy', optimizer='adam', metrics=['accuracy'])
+    return model
 
 
 def create_final_model_with_concat_cnn(embedding_layer, model_descriptor:str):
@@ -45,19 +152,62 @@ def create_final_model_with_concat_cnn(embedding_layer, model_descriptor:str):
         if layer_name=="dropout":
             big_model.add(Dropout(float(params[0])))
         elif layer_name=="lstm":
-            big_model.add(LSTM(units=int(params[0]), return_sequences=bool(params[1])))
+            if params[1]=="True":
+                return_seq=True
+            else:
+                return_seq=False
+            if len(params)==2:
+                big_model.add(LSTM(units=int(params[0]), return_sequences=return_seq))
+            if len(params)>2:
+                kernel_reg=create_regularizer(params[2])
+                activity_reg=create_regularizer(params[3])
+                if kernel_reg is not None and activity_reg is None:
+                    big_model.add(LSTM(units=int(params[0]), return_sequences=return_seq,
+                                       kernel_regularizer=kernel_reg))
+                elif activity_reg is not None and kernel_reg is None:
+                    big_model.add(LSTM(units=int(params[0]), return_sequences=return_seq,
+                                       activity_regularizer=activity_reg))
+                elif activity_reg is not None and kernel_reg is not None:
+                    big_model.add(LSTM(units=int(params[0]), return_sequences=return_seq,
+                                       activity_regularizer=activity_reg, kernel_regularizer=kernel_reg))
+
         elif layer_name=="gru":
-            big_model.add(GRU(units=int(params[0]), return_sequences=bool(params[1])))
+            if params[1]=="True":
+                return_seq=True
+            else:
+                return_seq=False
+            if len(params)==2:
+                big_model.add(GRU(units=int(params[0]), return_sequences=return_seq))
+            if len(params)>2:
+                kernel_reg=create_regularizer(params[2])
+                activity_reg=create_regularizer(params[3])
+                if kernel_reg is not None and activity_reg is None:
+                    big_model.add(GRU(units=int(params[0]), return_sequences=return_seq,
+                                       kernel_regularizer=kernel_reg))
+                elif activity_reg is not None and kernel_reg is None:
+                    big_model.add(GRU(units=int(params[0]), return_sequences=return_seq,
+                                       activity_regularizer=activity_reg))
+                elif activity_reg is not None and kernel_reg is not None:
+                    big_model.add(GRU(units=int(params[0]), return_sequences=return_seq,
+                                       activity_regularizer=activity_reg, kernel_regularizer=kernel_reg))
         elif layer_name=="bilstm":
-            big_model.add(Bidirectional(LSTM(units=int(params[0]), return_sequences=bool(params[1]))))
+            big_model.add(Bidirectional(LSTM(units=int(params[0]), return_sequences=return_seq)))
         elif layer_name=="conv1d":
             if len(params)==2:
                 big_model.add(Conv1D(filters=int(params[0]),
                              kernel_size=int(params[1]), padding='same', activation='relu'))
-            elif len(params)==3:
-                print("dilated cnn")
-                big_model.add(Conv1D(filters=int(params[0]),
-                             kernel_size=int(params[1]), dilation_rate=int(params[2]),padding='same', activation='relu'))
+            if len(params)>2:
+                kernel_reg=create_regularizer(params[2])
+                activity_reg=create_regularizer(params[3])
+                if kernel_reg is not None and activity_reg is None:
+                    big_model.add(Conv1D(filters=int(params[0]),
+                             kernel_size=int(params[1]), padding='same', activation='relu', kernel_regularizer=kernel_reg))
+                elif activity_reg is not None and kernel_reg is None:
+                    big_model.add(Conv1D(filters=int(params[0]),
+                             kernel_size=int(params[1]), padding='same', activation='relu',activity_regularizer=activity_reg))
+                elif activity_reg is not None and kernel_reg is not None:
+                    big_model.add(Conv1D(filters=int(params[0]),
+                             kernel_size=int(params[1]), padding='same', activation='relu', kernel_regularizer=kernel_reg, activity_regularizer=activity_reg))
         elif layer_name=="maxpooling1d":
             big_model.add(MaxPooling1D(pool_size=int(params[0])))
         elif layer_name=="gmaxpooling1d":
@@ -65,6 +215,19 @@ def create_final_model_with_concat_cnn(embedding_layer, model_descriptor:str):
         elif layer_name=="dense":
             if len(params)==2:
                 big_model.add(Dense(int(params[0]), activation=params[1]))
+            elif len(params)>2:
+                kernel_reg=create_regularizer(params[2])
+                activity_reg=create_regularizer(params[3])
+                if kernel_reg is not None and activity_reg is None:
+                    big_model.add(Dense(int(params[0]), activation=params[1],
+                                    kernel_regularizer=kernel_reg))
+                elif activity_reg is not None and kernel_reg is None:
+                    big_model.add(Dense(int(params[0]), activation=params[1],
+                                    activity_regularizer=activity_reg))
+                elif activity_reg is not None and kernel_reg is not None:
+                    big_model.add(Dense(int(params[0]), activation=params[1],
+                                    activity_regularizer=activity_reg,
+                                        kernel_regularizer=kernel_reg))
             else:
                 big_model.add(Dense(int(params[0])))
         elif layer_name=="flatten":
@@ -224,11 +387,23 @@ def create_model_with_branch(embedding_layer, model_descriptor:str):
         if layer_name=="dropout":
             big_model.add(Dropout(float(params[0])))
         elif layer_name=="lstm":
-            big_model.add(LSTM(units=int(params[0]), return_sequences=bool(params[1])))
+            if params[1]=="True":
+                return_seq=True
+            else:
+                return_seq=False
+            big_model.add(LSTM(units=int(params[0]), return_sequences=return_seq))
         elif layer_name=="gru":
-            big_model.add(GRU(units=int(params[0]), return_sequences=bool(params[1])))
+            if params[1]=="True":
+                return_seq=True
+            else:
+                return_seq=False
+            big_model.add(GRU(units=int(params[0]), return_sequences=return_seq))
         elif layer_name=="bilstm":
-            big_model.add(Bidirectional(LSTM(units=int(params[0]), return_sequences=bool(params[1]))))
+            if params[1]=="True":
+                return_seq=True
+            else:
+                return_seq=False
+            big_model.add(Bidirectional(LSTM(units=int(params[0]), return_sequences=return_seq)))
         elif layer_name=="conv1d":
             if len(params)==2:
                 big_model.add(Conv1D(filters=int(params[0]),
@@ -271,11 +446,23 @@ def create_submodel(embedding_layer, submod_layer_descriptor, cnn_ks, cnn_dilati
         if layer_name=="dropout":
             model.add(Dropout(float(params[0])))
         elif layer_name=="lstm":
-            model.add(LSTM(units=int(params[0]), return_sequences=bool(params[1])))
+            if params[1]=="True":
+                return_seq=True
+            else:
+                return_seq=False
+            model.add(LSTM(units=int(params[0]), return_sequences=return_seq))
         elif layer_name=="gru":
-            model.add(GRU(units=int(params[0]), return_sequences=bool(params[1])))
+            if params[1]=="True":
+                return_seq=True
+            else:
+                return_seq=False
+            model.add(GRU(units=int(params[0]), return_sequences=return_seq))
         elif layer_name=="bilstm":
-            model.add(Bidirectional(LSTM(units=int(params[0]), return_sequences=bool(params[1]))))
+            if params[1]=="True":
+                return_seq=True
+            else:
+                return_seq=False
+            model.add(Bidirectional(LSTM(units=int(params[0]), return_sequences=return_seq)))
         elif layer_name=="conv1d":
             if cnn_dilation is None:
                 model.add(Conv1D(filters=int(params[0]),
@@ -338,11 +525,23 @@ def create_submodel_with_skipconv1d(embedding_layer, submod_layer_descriptor, ta
             if layer_name=="dropout":
                 model.add(Dropout(float(params[0])))
             elif layer_name=="lstm":
-                model.add(LSTM(units=int(params[0]), return_sequences=bool(params[1])))
+                if params[1]=="True":
+                    return_seq=True
+                else:
+                    return_seq=False
+                model.add(LSTM(units=int(params[0]), return_sequences=return_seq))
             elif layer_name=="gru":
-                model.add(GRU(units=int(params[0]), return_sequences=bool(params[1])))
+                if params[1]=="True":
+                    return_seq=True
+                else:
+                    return_seq=False
+                model.add(GRU(units=int(params[0]), return_sequences=return_seq))
             elif layer_name=="bilstm":
-                model.add(Bidirectional(LSTM(units=int(params[0]), return_sequences=bool(params[1]))))
+                if params[1]=="True":
+                    return_seq=True
+                else:
+                    return_seq=False
+                model.add(Bidirectional(LSTM(units=int(params[0]), return_sequences=return_seq)))
             elif layer_name=="conv1d":
                 model.add(SkipConv1D(filters=int(params[0]),
                           kernel_size=int(ks_and_masks[0]), validGrams=mask,
@@ -361,50 +560,6 @@ def create_submodel_with_skipconv1d(embedding_layer, submod_layer_descriptor, ta
                 model.add(Dense(int(params[0]), activation=params[1]))
         submodels.append(model)
     return submodels
-
-def create_model_without_branch(embedding_layer, model_descriptor:str):
-    model = Sequential()
-    model.add(embedding_layer)
-    for layer_descriptor in model_descriptor.split(","):
-        ld=layer_descriptor.split("=")
-        # if layer_descriptor.endswith("_"):
-            #     continue
-
-        layer_name=ld[0]
-        params=None
-        if len(ld)>1:
-            params=ld[1].split("-")
-
-        if layer_name=="dropout":
-            model.add(Dropout(float(params[0])))
-        elif layer_name=="lstm":
-            model.add(LSTM(units=int(params[0]), return_sequences=bool(params[1])))
-        elif layer_name=="gru":
-            model.add(GRU(units=int(params[0]), return_sequences=bool(params[1])))
-        elif layer_name=="bilstm":
-            model.add(Bidirectional(LSTM(units=int(params[0]), return_sequences=bool(params[1]))))
-        elif layer_name=="conv1d":
-            if len(params)==2:
-                model.add(Conv1D(filters=int(params[0]),
-                             kernel_size=int(params[1]), padding='same', activation='relu'))
-            elif len(params)==3:
-                print("dilated cnn")
-                model.add(Conv1D(filters=int(params[0]),
-                             kernel_size=int(params[1]), dilation_rate=int(params[2]),padding='same', activation='relu'))
-        elif layer_name=="maxpooling1d":
-            model.add(MaxPooling1D(pool_size=int(params[0])))
-        elif layer_name=="gmaxpooling1d":
-            model.add(GlobalMaxPooling1D())
-        elif layer_name=="dense":
-            if len(params)==2:
-                model.add(Dense(int(params[0]), activation=params[1]))
-            else:
-                model.add(Dense(int(params[0])))
-        elif layer_name=="flatten":
-            model.add(Flatten())
-
-    model.compile(loss='categorical_crossentropy', optimizer='adam', metrics=['accuracy'])
-    return model
 
 
 def create_lstm_type1(embedding_layer):#start from simple model
