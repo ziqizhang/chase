@@ -221,7 +221,7 @@ def pretrained_embedding(word_vocab: dict, embedding_model, expected_emb_dim, ra
     logger.info("\tloading pre-trained embedding model... {}".format(datetime.datetime.now()))
     model = embedding_model
     logger.info("\tloading complete. {}".format(datetime.datetime.now()))
-
+    randomized_vectors={}
     matrix = numpy.zeros((len(word_vocab), expected_emb_dim))
     count = 0
     random = 0
@@ -235,10 +235,14 @@ def pretrained_embedding(word_vocab: dict, embedding_model, expected_emb_dim, ra
                 vec = numpy.random.random_sample(expected_emb_dim)
                 matrix[i] = vec
             elif randomize_strategy == 2:  # randomly take a vector from the model
-                max = len(model.wv.vocab.keys()) - 1
-                index = rn.randint(0, max)
-                word = model.index2word[index]
-                vec = model.wv[word]
+                if word in randomized_vectors.keys():
+                    vec=randomized_vectors[word]
+                else:
+                    max = len(model.wv.vocab.keys()) - 1
+                    index = rn.randint(0, max)
+                    word = model.index2word[index]
+                    vec = model.wv[word]
+                    randomized_vectors[word]=vec
                 matrix[i] = vec
         count += 1
         if count % 100 == 0:

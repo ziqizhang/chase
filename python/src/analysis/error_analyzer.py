@@ -33,7 +33,18 @@ def collect_wrong_predictoins(gs_data_file,error_folder,out_folder):
     filename=out_folder+"/"+error_folder[error_folder.rindex("/")+1:]+".csv"
     writer = csv.writer(open(filename, "w",encoding="utf8"))
 
+
+    class_distr={}
+    error_distr={}
     for i in range(0, len(_all_predictions[0])):
+        raw_data_row=X_train_data[i]
+        gs_label=raw_data_row[6]
+
+        if gs_label in class_distr.keys():
+            class_distr[gs_label]+=1
+        else:
+            class_distr[gs_label]=1
+
         select=True
         annotations=[]
         for pred in _all_predictions:
@@ -45,16 +56,45 @@ def collect_wrong_predictoins(gs_data_file,error_folder,out_folder):
                 annotations.append(row[0])
 
         if select:
-            raw_data_row=X_train_data[i]
+            if gs_label in error_distr.keys():
+                error_distr[gs_label]+=1
+            else:
+                error_distr[gs_label]=1
+
             msg=raw_data_row[7]
-            label=raw_data_row[6]
-            row=[label,msg]
+            row=[gs_label,msg]
             row=row+annotations
             writer.writerow(row)
 
+    for k, v in class_distr.items():
+        print(str(k)+","+str(v))
 
-gs_data_file = "/home/zqz/Work/chase/data/ml/ml/ws-exp/labeled_data_all.csv"
-error_folder = "/home/zqz/Work/chase/output/error_analysis/ws-exp"
+    for k, v in error_distr.items():
+        print(str(k)+","+str(v))
+
+# gs_data_file = "/home/zqz/Work/chase/data/ml/ml/ws-exp/labeled_data_all.csv"
+# error_folder = "/home/zqz/Work/chase/output/error_analysis/ws-exp"
+# out_folder = "/home/zqz/Work/chase/output/error_analysis"
+
+
+# gs_data_file = "/home/zqz/Work/chase/data/ml/ml/ws-amt/labeled_data_all.csv"
+# error_folder = "/home/zqz/Work/chase/output/error_analysis/ws-amt"
+# out_folder = "/home/zqz/Work/chase/output/error_analysis"
+
+# gs_data_file = "/home/zqz/Work/chase/data/ml/ml/ws-gb/labeled_data_all.csv"
+# error_folder = "/home/zqz/Work/chase/output/error_analysis/ws-gb"
+# out_folder = "/home/zqz/Work/chase/output/error_analysis"
+
+# gs_data_file = "/home/zqz/Work/chase/data/ml/ml/w+ws/labeled_data_all.csv"
+# error_folder = "/home/zqz/Work/chase/output/error_analysis/wws"
+# out_folder = "/home/zqz/Work/chase/output/error_analysis"
+
+# gs_data_file = "/home/zqz/Work/chase/data/ml/ml/rm/labeled_data_all.csv"
+# error_folder = "/home/zqz/Work/chase/output/error_analysis/rm"
+# out_folder = "/home/zqz/Work/chase/output/error_analysis"
+
+gs_data_file = "/home/zqz/Work/chase/data/ml/ml/dt/labeled_data_all_2.csv"
+error_folder = "/home/zqz/Work/chase/output/error_analysis/dt"
 out_folder = "/home/zqz/Work/chase/output/error_analysis"
 
 collect_wrong_predictoins(gs_data_file,error_folder,out_folder)

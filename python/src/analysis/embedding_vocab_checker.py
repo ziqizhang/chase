@@ -62,28 +62,48 @@ def check_vocab(model_file, input_date_file, sys_out, word_norm_option):
     print("data={}, model={}, norm={}, vocab={},oov={}".
           format(input_date_file,model_file,word_norm_option,count,random))
 
+
+def check_vocab_presence(model_file, list:[]):
+    gensimFormat = ".gensim" in model_file
+    if gensimFormat :
+        model = gensim.models.KeyedVectors.load(model_file,mmap='r')
+    else:
+        model = gensim.models.KeyedVectors. \
+            load_word2vec_format(model_file, binary=True)
+
+    for word in list:
+        if word in model.wv.vocab.keys():
+            print(word+", yes")
+        else:
+            print(word+", no")
+
+
+
 emg_model="/home/zqz/Work/data/GoogleNews-vectors-negative300.bin.gz"
 emt_model="/home/zqz/Work/data/Set1_TweetDataWithoutSpam_Word.bin"
 eml_model="/home/zqz/Work/data/glove.840B.300d.bin.gensim"
 input_data="/home/zqz/Work/chase/data/ml/ml/rm/labeled_data_all.csv"
 output="/home/zqz/Work/chase/output"
 
-check_vocab(emg_model,
-            input_data,
-            output,0)
-check_vocab(emt_model,
-            input_data,
-            output,0)
-check_vocab(eml_model,
-            input_data,
-            output,0)
+list=["faggot"]
+check_vocab_presence(emg_model, list)
 
-check_vocab(emg_model,
-            input_data,
-            output,1)
-check_vocab(emt_model,
-            input_data,
-            output,1)
-check_vocab(eml_model,
-            input_data,
-            output,1)
+# check_vocab(emg_model,
+#             input_data,
+#             output,0)
+# check_vocab(emt_model,
+#             input_data,
+#             output,0)
+# check_vocab(eml_model,
+#             input_data,
+#             output,0)
+#
+# check_vocab(emg_model,
+#             input_data,
+#             output,1)
+# check_vocab(emt_model,
+#             input_data,
+#             output,1)
+# check_vocab(eml_model,
+#             input_data,
+#             output,1)
