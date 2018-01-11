@@ -62,8 +62,8 @@ def get_word_vocab(tweets, out_folder, normalize_option):
         stop_words=nlp.stopwords,  # We do better when we keep stopwords
         decode_error='replace',
         max_features=50000,
-        min_df=1,
-        max_df=0.999
+        min_df=5,
+        max_df=0.501
     )
 
     logger.info("\tgenerating word vectors, {}".format(datetime.datetime.now()))
