@@ -111,7 +111,7 @@ def create_model_without_branch(embedding_layer, model_descriptor:str):
             model.add(Flatten())
 
     model.compile(loss='categorical_crossentropy', optimizer='adam', metrics=['accuracy'])
-    model.summary()
+    #model.summary()
     return model
 
 

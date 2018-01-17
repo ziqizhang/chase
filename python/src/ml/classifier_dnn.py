@@ -107,105 +107,6 @@ def create_model(model_descriptor:str, max_index=100, wemb_matrix=None):
     return model
 
 
-# def create_model_lstm(embedding_layer):#start from simple model
-#     # use features from svm to train dnn, do not use lstm
-#     # features from svm, apply autoencoder to compress..
-#     model = Sequential()
-#     model.add(embedding_layer)
-#     model.add(Dropout(0.2))
-#     model.add(LSTM(units=100, return_sequences=True)) #continuous time vs discrete time, gating, forgetting,
-#     model.add(GlobalMaxPooling1D())
-#     # lstm params,lstm hidden layers which ones are feeding into
-#     model.add(Dropout(0.2))
-#     model.add(Dense(1, activation='sigmoid'))
-#     model.compile(loss='binary_crossentropy', optimizer='adam', metrics=['accuracy'])
-#     logger.info("New run started at {}\n{}".format(datetime.datetime.now(), model.summary()))
-#     return model
-
-
-# def create_model_conv_lstm(embedding_layer):
-#     model = Sequential()
-#     model.add(embedding_layer)
-#     model.add(Dropout(0.2))
-#     model.add(Conv1D(filters=100, kernel_size=4, padding='same', activation='relu'))
-#     model.add(MaxPooling1D(pool_size=4))
-#     model.add(LSTM(units=100, return_sequences=True))
-#     model.add(GlobalMaxPooling1D())
-#     #model.add(Dropout(0.2))
-#     model.add(Dense(2, activation='softmax'))
-#     model.compile(loss='categorical_crossentropy', optimizer='adam', metrics=['accuracy'])
-#
-#     logger.info("New run started at {}\n{}".format(datetime.datetime.now(), model.summary()))
-#     return model
-
-
-#using deprecated Merge, see https://statcompute.wordpress.com/2017/01/08/an-example-of-merge-layer-in-keras/
-# def create_model_conv_lstm_multi_filter(embedding_layer):
-#     flts=100
-#     kernel_sizes=[2,3,4]
-#     submodels = []
-#     for kw in kernel_sizes:    # kernel sizes
-#        submodel = Sequential()
-#         submodel.add(embedding_layer)
-#         submodel.add(Dropout(0.2))
-#         submodel.add(Conv1D(filters=flts,
-#                             kernel_size=kw,
-#                             padding='same',
-#                             activation='relu'))
-#         submodel.add(MaxPooling1D(pool_size=kw))
-#         submodels.append(submodel)
-#
-#     big_model = Sequential()
-#     #concat = Concatenate(axis=1)     #line B
-#     #big_model.add(concat(submodels)) #line C
-#     big_model.add(Merge(submodels, mode="concat", concat_axis=1))  #line A
-#     big_model.add(LSTM(units=100, return_sequences=True))
-#     big_model.add(GlobalMaxPooling1D())
-#     #big_model.add(Dropout(0.2))
-#     big_model.add(Dense(2, activation='softmax'))
-#     big_model.compile(loss='categorical_crossentropy', optimizer='adam', metrics=['accuracy'])
-#     return big_model
-
-#workaround for functional api,
-#https://stackoverflow.com/questions/43151775/how-to-have-parallel-convolutional-layers-in-keras
-# def create_model_conv_lstm_multi_filter(embedding_layer):
-#     "sub_conv[2,3,4](dropout=0.2,conv1d=100-v,)"
-#     flts=100
-#     kernel_sizes=[2,3,4]
-#     submodels = []
-#     for kw in kernel_sizes:    # kernel sizes
-#         submodel = Sequential()
-#         submodel.add(embedding_layer)
-#         submodel.add(Dropout(0.2))
-#         submodel.add(Conv1D(filters=flts,
-#                             kernel_size=kw,
-#                             padding='same',
-#                             activation='relu'))
-#         submodel.add(MaxPooling1D(pool_size=kw))
-#         # submodel.add(LSTM(units=100, return_sequences=True))
-#         # submodel.add(GlobalMaxPooling1D())
-#         submodels.append(submodel)
-#
-#     submodel_outputs = [model.output for model in submodels]
-#     x = Concatenate(axis=1)(submodel_outputs)
-#
-#     parallel_layers=Model(inputs=embedding_layer.input, outputs=x)
-#     print("submodel:")
-#     parallel_layers.summary()
-#     print("")
-#     big_model = Sequential()
-#     big_model.add(parallel_layers)
-#     big_model.add(LSTM(units=100, return_sequences=True))
-#     big_model.add(GlobalMaxPooling1D())
-#     #big_model.add(Dropout(0.2))
-#     big_model.add(Dense(2, activation='softmax'))
-#
-#     big_model.compile(loss='categorical_crossentropy', optimizer='adam', metrics=['accuracy'])
-#     big_model.summary()
-#
-#     return big_model
-
-
 class MyKerasClassifier(KerasClassifier):
     def predict(self, x, **kwargs):
         kwargs = self.filter_sk_params(self.model.predict, kwargs)
@@ -217,20 +118,22 @@ class MyKerasClassifier(KerasClassifier):
         return self.classes_[classes]
 
 
-def pretrained_embedding(word_vocab: dict, embedding_model, expected_emb_dim, randomize_strategy):
+def pretrained_embedding(word_vocab: dict, models:list, expected_emb_dim, randomize_strategy):
     logger.info("\tloading pre-trained embedding model... {}".format(datetime.datetime.now()))
-    model = embedding_model
     logger.info("\tloading complete. {}".format(datetime.datetime.now()))
     randomized_vectors={}
     matrix = numpy.zeros((len(word_vocab), expected_emb_dim))
     count = 0
     random = 0
     for word, i in word_vocab.items():
-        if word in model.wv.vocab.keys():
-            vec = model.wv[word]
-            matrix[i] = vec
+        for model in models:
+            if word in model.wv.vocab.keys():
+                vec = model.wv[word]
+                matrix[i] = vec
+                break
         else:
             random += 1
+            model=models[0]
             if randomize_strategy == 1:  # randomly set values following a continuous uniform distribution
                 vec = numpy.random.random_sample(expected_emb_dim)
                 matrix[i] = vec
@@ -247,7 +150,7 @@ def pretrained_embedding(word_vocab: dict, embedding_model, expected_emb_dim, ra
         count += 1
         if count % 100 == 0:
             print(count)
-    model = None
+    models = None
     if randomize_strategy!="0":
         print("randomized={}".format(random))
     else:
@@ -321,15 +224,17 @@ def gridsearch(input_data_file, dataset_name, sys_out, model_descriptor:str,
                print_scores_per_class,
                word_norm_option,
                randomize_strategy,
-               pretrained_embedding_model=None, expected_embedding_dim=None):
+               pretrained_embedding_models=None, expected_embedding_dim=None):
     raw_data = pd.read_csv(input_data_file, sep=',', encoding="utf-8")
     M = get_word_vocab(raw_data.tweet, sys_out, word_norm_option)
     # M=self.feature_scale(M)
     M0 = M[0]
 
     pretrained_word_matrix = None
-    if pretrained_embedding_model is not None:
-        pretrained_word_matrix = pretrained_embedding(M[1], pretrained_embedding_model, expected_embedding_dim,
+    if pretrained_embedding_models is not None or len(pretrained_embedding_models)>0:
+        pretrained_word_matrix = pretrained_embedding(M[1],
+                                                      pretrained_embedding_models,
+                                                      expected_embedding_dim,
                                                       randomize_strategy)
 
     # split the dataset into two parts, 0.75 for train and 0.25 for testing
@@ -434,6 +339,7 @@ def cross_fold_eval(input_data_file, dataset_name, sys_out, model_descriptor:str
 # 300
 print("start {}".format(datetime.datetime.now()))
 emb_model = None
+emb_models=[]
 emb_dim=None
 params={}
 
@@ -454,13 +360,15 @@ if "oov_random" not in params.keys():
     params["oov_random"]=0
 if "emb_model" in params.keys():
     print("===> use pre-trained embeddings...")
-    gensimFormat = ".gensim" in params["emb_model"]
-    if gensimFormat :
-        emb_model = gensim.models.KeyedVectors.load(params["emb_model"],mmap='r')
-    else:
-        emb_model = gensim.models.KeyedVectors. \
-            load_word2vec_format(params["emb_model"], binary=True)
-    print("<===loaded")
+    model_str=params["emb_model"].split(",")
+    for m_s in model_str:
+        gensimFormat = ".gensim" in params["emb_model"]
+        if gensimFormat:
+            emb_models.append(gensim.models.KeyedVectors.load(params["emb_model"], mmap='r'))
+        else:
+            emb_models.append(gensim.models.KeyedVectors. \
+                load_word2vec_format(params["emb_model"], binary=True))
+    print("<===loaded {} models".format(len(emb_models)))
 if "emb_dim" in params.keys():
     emb_dim=int(params["emb_dim"])
 if "gpu" in params.keys():
@@ -476,7 +384,7 @@ gridsearch(params["input"],
             params["scoreperclass"], #print scores per class
             params["word_norm"], #0-stemming, 1-lemma, other-do nothing
             params["oov_random"], #0-ignore oov; 1-random init by uniform dist; 2-random from embedding
-            emb_model,
+            emb_models,
             emb_dim)
 #K.clear_session()
 # ... code
