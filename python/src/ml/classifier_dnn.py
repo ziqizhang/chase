@@ -62,8 +62,8 @@ def get_word_vocab(tweets, out_folder, normalize_option):
         stop_words=nlp.stopwords,  # We do better when we keep stopwords
         decode_error='replace',
         max_features=50000,
-        min_df=5,
-        max_df=0.501
+        min_df=1,
+        max_df=0.99
     )
 
     logger.info("\tgenerating word vectors, {}".format(datetime.datetime.now()))
@@ -150,8 +150,8 @@ def pretrained_embedding(word_vocab: dict, models:list, expected_emb_dim, random
         count += 1
         if count % 100 == 0:
             print(count)
-    models = None
-    if randomize_strategy!="0":
+    models.clear()
+    if randomize_strategy!=0:
         print("randomized={}".format(random))
     else:
         print("oov={}".format(random))
@@ -231,7 +231,7 @@ def gridsearch(input_data_file, dataset_name, sys_out, model_descriptor:str,
     M0 = M[0]
 
     pretrained_word_matrix = None
-    if pretrained_embedding_models is not None or len(pretrained_embedding_models)>0:
+    if pretrained_embedding_models is not None:
         pretrained_word_matrix = pretrained_embedding(M[1],
                                                       pretrained_embedding_models,
                                                       expected_embedding_dim,
@@ -339,7 +339,7 @@ def cross_fold_eval(input_data_file, dataset_name, sys_out, model_descriptor:str
 # 300
 print("start {}".format(datetime.datetime.now()))
 emb_model = None
-emb_models=[]
+emb_models=None
 emb_dim=None
 params={}
 
@@ -359,15 +359,16 @@ if "word_norm" not in params.keys():
 if "oov_random" not in params.keys():
     params["oov_random"]=0
 if "emb_model" in params.keys():
+    emb_models=[]
     print("===> use pre-trained embeddings...")
-    model_str=params["emb_model"].split(",")
+    model_str=params["emb_model"].split(',')
     for m_s in model_str:
-        gensimFormat = ".gensim" in params["emb_model"]
+        gensimFormat = ".gensim" in m_s
         if gensimFormat:
-            emb_models.append(gensim.models.KeyedVectors.load(params["emb_model"], mmap='r'))
+            emb_models.append(gensim.models.KeyedVectors.load(m_s, mmap='r'))
         else:
             emb_models.append(gensim.models.KeyedVectors. \
-                load_word2vec_format(params["emb_model"], binary=True))
+                load_word2vec_format(m_s, binary=True))
     print("<===loaded {} models".format(len(emb_models)))
 if "emb_dim" in params.keys():
     emb_dim=int(params["emb_dim"])
