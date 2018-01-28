@@ -505,6 +505,21 @@ def append_word_dist_features(vector, word, word_dist_scores_map):
         vector.append(0.5)
     return vector
 
+def concat_matrices(matrix1, matrix2):
+    concat = np.concatenate((matrix1,matrix2), axis=1)
+    return concat
+
+
+def build_word_dist_features(word, word_dist_scores_map):
+    vector=[]
+    if word in word_dist_scores_map.keys():
+        word_dist=word_dist_scores_map[word]
+        vector.append(word_dist["0"])
+        vector.append(word_dist["2"])
+    else:
+        vector.append(0.5)
+        vector.append(0.5)
+    return vector
 # remove_offensive_label("/home/zqz/Work/chase/data/ml/w+ws/labeled_data_all_part2.csv",
 #                        "/home/zqz/Work/chase/data/ml/w+ws/labeled_data_all3_part2.csv")
 

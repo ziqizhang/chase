@@ -81,25 +81,42 @@ def get_word_vocab(tweets, out_folder, normalize_option):
     return word_embedding_input, vocab
 
 
-def create_model(model_descriptor: str, max_index=100, wemb_matrix=None):
+def create_model(model_descriptor: str, max_index=100, wemb_matrix=None, wdist_matrix=None):
     '''A model that uses word embeddings'''
     if wemb_matrix is None:
-        embedding_layer = Embedding(input_dim=max_index, output_dim=WORD_EMBEDDING_DIM_OUTPUT,
-                                    input_length=MAX_SEQUENCE_LENGTH)
+        if wdist_matrix is not None:
+            embedding_layers = [Embedding(input_dim=max_index, output_dim=WORD_EMBEDDING_DIM_OUTPUT,
+                                          input_length=MAX_SEQUENCE_LENGTH),
+                                Embedding(input_dim=max_index, output_dim=len(wdist_matrix[0]),
+                                          weights=[wdist_matrix],
+                                          input_length=MAX_SEQUENCE_LENGTH,
+                                          trainable=False)]
+        else:
+            embedding_layers = [Embedding(input_dim=max_index, output_dim=WORD_EMBEDDING_DIM_OUTPUT,
+                                          input_length=MAX_SEQUENCE_LENGTH)]
+
     else:
-        # load pre-trained word embeddings into an Embedding layer
-        # note that we set trainable = False so as to keep the embeddings fixed
-        embedding_layer = Embedding(input_dim=max_index, output_dim=len(wemb_matrix[0]),
-                                    weights=[wemb_matrix],
-                                    input_length=MAX_SEQUENCE_LENGTH,
-                                    trainable=False)
+        if wdist_matrix is not None:
+            concat_matrices = util.concat_matrices(wemb_matrix, wdist_matrix)
+            # load pre-trained word embeddings into an Embedding layer
+            # note that we set trainable = False so as to keep the embeddings fixed
+            embedding_layers = [Embedding(input_dim=max_index, output_dim=len(concat_matrices[0]),
+                                          weights=[concat_matrices],
+                                          input_length=MAX_SEQUENCE_LENGTH,
+                                          trainable=False)]
+        else:
+            embedding_layers = [Embedding(input_dim=max_index, output_dim=len(wemb_matrix[0]),
+                                          weights=[wemb_matrix],
+                                          input_length=MAX_SEQUENCE_LENGTH,
+                                          trainable=False)]
+
     if model_descriptor.startswith("b_"):
         model_descriptor = model_descriptor[2:].strip()
-        model = dmc.create_model_with_branch(embedding_layer, model_descriptor)
+        model = dmc.create_model_with_branch(embedding_layers, model_descriptor)
     elif model_descriptor.startswith("f_"):
-        model = dmc.create_final_model_with_concat_cnn(embedding_layer, model_descriptor)
+        model = dmc.create_final_model_with_concat_cnn(embedding_layers, model_descriptor)
     else:
-        model = dmc.create_model_without_branch(embedding_layer, model_descriptor)
+        model = dmc.create_model_without_branch(embedding_layers, model_descriptor)
     # create_model_conv_lstm_multi_filter(embedding_layer)
 
     # logger.info("New run started at {}\n{}".format(datetime.datetime.now(), model.summary()))
@@ -117,35 +134,85 @@ class MyKerasClassifier(KerasClassifier):
         return self.classes_[classes]
 
 
-def pretrained_embedding(word_vocab: dict, models: list, expected_emb_dim, randomize_strategy,
-                         word_dist_scores_file=None):
+# def pretrained_embedding_with_wdist(word_vocab: dict, models: list, expected_emb_dim, randomize_strategy,
+#                                     word_dist_scores_file=None):
+#     # logger.info("\tloading pre-trained embedding model... {}".format(datetime.datetime.now()))
+#     # logger.info("\tloading complete. {}".format(datetime.datetime.now()))
+#     word_dist_scores = None
+#     if word_dist_scores_file is not None:
+#         print("using word dist features...")
+#         word_dist_scores = util.read_word_dist_features(word_dist_scores_file)
+#         expected_emb_dim += 2
+#
+#     randomized_vectors = {}
+#     matrix = numpy.zeros((len(word_vocab), expected_emb_dim))
+#     count = 0
+#     random = 0
+#     for word, i in word_vocab.items():
+#         is_in_model = False
+#         for model in models:
+#             if word in model.wv.vocab.keys():
+#                 is_in_model = True
+#                 vec = model.wv[word]
+#                 if word_dist_scores is not None:
+#                     vec = util.append_word_dist_features(vec, word, word_dist_scores)
+#                 matrix[i] = vec
+#                 break
+#
+#         if not is_in_model:
+#             random += 1
+#             model = models[0]
+#             if randomize_strategy == 1:  # randomly set values following a continuous uniform distribution
+#                 vec = numpy.random.random_sample(expected_emb_dim)
+#                 if word_dist_scores is not None:
+#                     vec = util.append_word_dist_features(vec, word, word_dist_scores)
+#                 matrix[i] = vec
+#             elif randomize_strategy == 2:  # randomly take a vector from the model
+#                 if word in randomized_vectors.keys():
+#                     vec = randomized_vectors[word]
+#                 else:
+#                     max = len(model.wv.vocab.keys()) - 1
+#                     index = rn.randint(0, max)
+#                     word = model.index2word[index]
+#                     vec = model.wv[word]
+#                     randomized_vectors[word] = vec
+#                 if word_dist_scores is not None:
+#                     vec = util.append_word_dist_features(vec, word, word_dist_scores)
+#                 matrix[i] = vec
+#         count += 1
+#         if count % 100 == 0:
+#             print(count)
+#     models.clear()
+#     if randomize_strategy != 0:
+#         print("randomized={}".format(random))
+#     else:
+#         print("oov={}".format(random))
+#     return matrix
+
+
+def build_pretrained_embedding_matrix(word_vocab: dict, models: list, expected_emb_dim, randomize_strategy
+                                      ):
     # logger.info("\tloading pre-trained embedding model... {}".format(datetime.datetime.now()))
     # logger.info("\tloading complete. {}".format(datetime.datetime.now()))
-    word_dist_scores = None
-    if word_dist_scores_file is not None:
-        print("using word dist features...")
-        word_dist_scores = util.read_word_dist_features(word_dist_scores_file)
-        expected_emb_dim+=2
 
     randomized_vectors = {}
     matrix = numpy.zeros((len(word_vocab), expected_emb_dim))
     count = 0
     random = 0
     for word, i in word_vocab.items():
+        is_in_model = False
         for model in models:
             if word in model.wv.vocab.keys():
+                is_in_model = True
                 vec = model.wv[word]
-                if word_dist_scores is not None:
-                    vec=util.append_word_dist_features(vec, word, word_dist_scores)
                 matrix[i] = vec
                 break
-        else:
+
+        if not is_in_model:
             random += 1
             model = models[0]
             if randomize_strategy == 1:  # randomly set values following a continuous uniform distribution
                 vec = numpy.random.random_sample(expected_emb_dim)
-                if word_dist_scores is not None:
-                    vec=util.append_word_dist_features(vec, word, word_dist_scores)
                 matrix[i] = vec
             elif randomize_strategy == 2:  # randomly take a vector from the model
                 if word in randomized_vectors.keys():
@@ -156,23 +223,40 @@ def pretrained_embedding(word_vocab: dict, models: list, expected_emb_dim, rando
                     word = model.index2word[index]
                     vec = model.wv[word]
                     randomized_vectors[word] = vec
-                if word_dist_scores is not None:
-                    vec=util.append_word_dist_features(vec, word, word_dist_scores)
                 matrix[i] = vec
         count += 1
         if count % 100 == 0:
             print(count)
-    models.clear()
     if randomize_strategy != 0:
         print("randomized={}".format(random))
     else:
         print("oov={}".format(random))
+    models.clear()
+    return matrix
+
+
+def build_word_dist_matrix(word_vocab: dict,
+                           word_dist_scores_file):
+    word_dist_scores = util.read_word_dist_features(word_dist_scores_file)
+    expected_emb_dim = 2
+
+    matrix = numpy.zeros((len(word_vocab), expected_emb_dim))
+    count = 0
+    for word, i in word_vocab.items():
+        vec = util.build_word_dist_features(word, word_dist_scores)
+        matrix[i] = vec
+
+        count += 1
+        if count % 100 == 0:
+            print(count)
+
     return matrix
 
 
 def grid_search_dnn(dataset_name, outfolder, model_descriptor: str,
                     cpus, nfold, X_train, y_train, X_test, y_test,
                     embedding_layer_max_index, pretrained_embedding_matrix=None,
+                    word_dist_matrix=None,
                     instance_data_source_tags=None, accepted_ds_tags: list = None):
     print("\t== Perform ANN ...")
     subfolder = outfolder + "/models"
@@ -184,6 +268,7 @@ def grid_search_dnn(dataset_name, outfolder, model_descriptor: str,
     create_model_with_args = \
         functools.partial(create_model, max_index=embedding_layer_max_index,
                           wemb_matrix=pretrained_embedding_matrix,
+                          wdist_matrix=word_dist_matrix,
                           model_descriptor=model_descriptor)
     # model = MyKerasClassifier(build_fn=create_model_with_args, verbose=0)
     model = KerasClassifier(build_fn=create_model_with_args, verbose=0)
@@ -244,11 +329,14 @@ def gridsearch(input_data_file, dataset_name, sys_out, model_descriptor: str,
 
     pretrained_word_matrix = None
     if pretrained_embedding_models is not None:
-        pretrained_word_matrix = pretrained_embedding(M[1],
-                                                      pretrained_embedding_models,
-                                                      expected_embedding_dim,
-                                                      randomize_strategy,
-                                                      word_dist_features_file)
+        pretrained_word_matrix = build_pretrained_embedding_matrix(M[1],
+                                                                   pretrained_embedding_models,
+                                                                   expected_embedding_dim,
+                                                                   randomize_strategy)
+    word_dist_matrix = None
+    if word_dist_features_file is not None:
+        word_dist_matrix = build_word_dist_matrix(M[1],
+                                                  word_dist_features_file)
 
     # split the dataset into two parts, 0.75 for train and 0.25 for testing
     X_train_data, X_test_data, y_train, y_test = \
@@ -271,7 +359,7 @@ def gridsearch(input_data_file, dataset_name, sys_out, model_descriptor: str,
                     CPUS, 5,
                     X_train_data,
                     y_train, X_test_data, y_test,
-                    len(M[1]), pretrained_word_matrix,
+                    len(M[1]), pretrained_word_matrix, word_dist_matrix,
                     instance_data_source_column, accepted_ds_tags)
     print("complete {}".format(datetime.datetime.now()))
 
@@ -306,41 +394,41 @@ def cross_eval_dnn(dataset_name, outfolder, model_descriptor: str,
     #
 
 
-def cross_fold_eval(input_data_file, dataset_name, sys_out, model_descriptor: str,
-                    print_scores_per_class,
-                    word_norm_option,
-                    randomize_strategy,
-                    pretrained_embedding_model=None, expected_embedding_dim=None):
-    raw_data = pd.read_csv(input_data_file, sep=',', encoding="utf-8")
-    M = get_word_vocab(raw_data.tweet, sys_out, word_norm_option)
-    # M=self.feature_scale(M)
-    M0 = M[0]
-
-    pretrained_word_matrix = None
-    if pretrained_embedding_model is not None:
-        pretrained_word_matrix = pretrained_embedding(M[1], pretrained_embedding_model, expected_embedding_dim,
-                                                      randomize_strategy)
-
-    # split the dataset into two parts, 0.75 for train and 0.25 for testing
-    X_data = M0
-    y_data = raw_data['class']
-    y_data = y_data.astype(int)
-
-    X_data = sequence.pad_sequences(X_data, maxlen=MAX_SEQUENCE_LENGTH)
-
-    instance_data_source_column = None
-    accepted_ds_tags = None
-    if print_scores_per_class:
-        instance_data_source_column = pd.Series(raw_data.ds)
-        accepted_ds_tags = ["c", "td"]
-
-    cross_eval_dnn(dataset_name, sys_out, model_descriptor,
-                   -1, 5,
-                   X_data,
-                   y_data,
-                   len(M[1]), pretrained_word_matrix,
-                   instance_data_source_column, accepted_ds_tags)
-    print("complete {}".format(datetime.datetime.now()))
+# def cross_fold_eval(input_data_file, dataset_name, sys_out, model_descriptor: str,
+#                     print_scores_per_class,
+#                     word_norm_option,
+#                     randomize_strategy,
+#                     pretrained_embedding_model=None, expected_embedding_dim=None):
+#     raw_data = pd.read_csv(input_data_file, sep=',', encoding="utf-8")
+#     M = get_word_vocab(raw_data.tweet, sys_out, word_norm_option)
+#     # M=self.feature_scale(M)
+#     M0 = M[0]
+#
+#     pretrained_word_matrix = None
+#     if pretrained_embedding_model is not None:
+#         pretrained_word_matrix = pretrained_embedding(M[1], pretrained_embedding_model, expected_embedding_dim,
+#                                                       randomize_strategy)
+#
+#     # split the dataset into two parts, 0.75 for train and 0.25 for testing
+#     X_data = M0
+#     y_data = raw_data['class']
+#     y_data = y_data.astype(int)
+#
+#     X_data = sequence.pad_sequences(X_data, maxlen=MAX_SEQUENCE_LENGTH)
+#
+#     instance_data_source_column = None
+#     accepted_ds_tags = None
+#     if print_scores_per_class:
+#         instance_data_source_column = pd.Series(raw_data.ds)
+#         accepted_ds_tags = ["c", "td"]
+#
+#     cross_eval_dnn(dataset_name, sys_out, model_descriptor,
+#                    -1, 5,
+#                    X_data,
+#                    y_data,
+#                    len(M[1]), pretrained_word_matrix,
+#                    instance_data_source_column, accepted_ds_tags)
+#     print("complete {}".format(datetime.datetime.now()))
 
 
 ##############################################
@@ -413,3 +501,9 @@ if __name__ == "__main__":
     # output=/home/zqz/Work/chase/output
     # dataset=rm
     # model_desc="dropout=0.2,conv1d=100-4,maxpooling1d=4,lstm=100-True,gmaxpooling1d,dense=2-softmax"
+
+
+
+
+# emb_model=/home/zz/Work/data/glove.840B.300d.bin.gensim
+# emb_dim=300

@@ -14,9 +14,12 @@ def create_regularizer(string):
     string_array=string.split("_")
     return L1L2(float(string_array[0]),float(string_array[1]))
 
-def create_model_without_branch(embedding_layer, model_descriptor:str):
+def create_model_without_branch(embedding_layers, model_descriptor:str):
     model = Sequential()
-    model.add(embedding_layer)
+    if len(embedding_layers)==1:
+        model.add(embedding_layers[0])
+    else:
+        concat_embedding_layers(embedding_layers, model)
     for layer_descriptor in model_descriptor.split(","):
         ld=layer_descriptor.split("=")
         # if layer_descriptor.endswith("_"):
@@ -115,7 +118,7 @@ def create_model_without_branch(embedding_layer, model_descriptor:str):
     return model
 
 
-def create_final_model_with_concat_cnn(embedding_layer, model_descriptor:str):
+def create_final_model_with_concat_cnn(embedding_layers, model_descriptor:str):
     #model_desc=(conv1d=100-[3,4,5],so),lstm=100-True,gmaxpooling1d,dense=2-softmax
     target_grams=model_descriptor[model_descriptor.index("[")+1: model_descriptor.index("]")]
 
@@ -125,7 +128,7 @@ def create_final_model_with_concat_cnn(embedding_layer, model_descriptor:str):
     else:
         skip_layers_only=False
     for n in target_grams.split(","):
-        for mod in create_skipped_conv1d_submodels(embedding_layer, int(n), skip_layers_only):
+        for mod in create_skipped_conv1d_submodels(embedding_layers, int(n), skip_layers_only):
             submodels.append(mod)
 
     submodel_outputs = [model.output for model in submodels]
@@ -134,7 +137,7 @@ def create_final_model_with_concat_cnn(embedding_layer, model_descriptor:str):
     else:
         x= submodel_outputs[0]
 
-    parallel_layers=Model(inputs=embedding_layer.input, outputs=x)
+    parallel_layers=Model(inputs=embedding_layers[0].input, outputs=x)
     #print("submodel:")
     #parallel_layers.summary()
     #print("\n")
@@ -240,7 +243,7 @@ def create_final_model_with_concat_cnn(embedding_layer, model_descriptor:str):
     return big_model
 
 
-def create_skipped_conv1d_submodels(embedding_layer, cnn_ks, skip_layer_only:bool):
+def create_skipped_conv1d_submodels(embedding_layers, cnn_ks, skip_layer_only:bool):
     models=[]
 
     conv_layers=[]
@@ -259,7 +262,7 @@ def create_skipped_conv1d_submodels(embedding_layer, cnn_ks, skip_layer_only:boo
             conv_layers.append(SkipConv1D(filters=100,
                           kernel_size=int(ks_and_masks[0]), validGrams=mask,
                           padding='same', activation='relu'))
-        add_skipped_conv1d_submodel_other_layers(conv_layers,embedding_layer,models)
+        add_skipped_conv1d_submodel_other_layers(conv_layers,embedding_layers,models)
 
     elif cnn_ks==4:
         if not skip_layer_only:
@@ -278,7 +281,7 @@ def create_skipped_conv1d_submodels(embedding_layer, cnn_ks, skip_layer_only:boo
             conv_layers.append(SkipConv1D(filters=100,
                           kernel_size=int(ks_and_masks[0]), validGrams=mask,
                           padding='same', activation='relu'))
-        add_skipped_conv1d_submodel_other_layers(conv_layers,embedding_layer,models)
+        add_skipped_conv1d_submodel_other_layers(conv_layers,embedding_layers,models)
 
 
     elif cnn_ks==5:
@@ -307,20 +310,40 @@ def create_skipped_conv1d_submodels(embedding_layer, cnn_ks, skip_layer_only:boo
         conv_layers.append(Conv1D(filters=100,
                           kernel_size=3, dilation_rate=1,
                           padding='same', activation='relu'))
-        add_skipped_conv1d_submodel_other_layers(conv_layers,embedding_layer,models)
+        add_skipped_conv1d_submodel_other_layers(conv_layers,embedding_layers,models)
 
     return models
 
 
-def add_skipped_conv1d_submodel_other_layers(conv_layers, embedding_layer,models:list):
+def add_skipped_conv1d_submodel_other_layers(conv_layers, embedding_layers,models:list):
     for conv_layer in conv_layers:
         model = Sequential()
-        model.add(embedding_layer)
+        if len(embedding_layers)==1:
+            model.add(embedding_layers[0])
+        else:
+            concat_embedding_layers(embedding_layers, model)
         model.add(Dropout(0.2))
         model.add(conv_layer)
         model.add(MaxPooling1D(pool_size=4))
         models.append(model)
 
+#warning: concat embedding layers currently does not work!
+def concat_embedding_layers(embedding_layers, big_model):
+    submodels = []
+
+    for el in embedding_layers:
+        m = Sequential()
+        m.add(el)
+        submodels.append(m)
+
+    submodel_outputs = [model.output for model in submodels]
+    if len(submodel_outputs) > 1:
+        x = Concatenate(axis=2)(submodel_outputs)
+    else:
+        x = submodel_outputs[0]
+
+    parallel_layers = Model(inputs=[embedding_layers[0].input, embedding_layers[1].input], outputs=x)
+    big_model.add(parallel_layers)
 
 
 
@@ -330,9 +353,7 @@ def add_skipped_conv1d_submodel_other_layers(conv_layers, embedding_layer,models
 
 
 
-
-
-def create_model_with_branch(embedding_layer, model_descriptor:str):
+def create_model_with_branch(embedding_layers, model_descriptor:str):
     "sub_conv[2,3,4](dropout=0.2,conv1d=100-v,)"
     submod_str_start=model_descriptor.index("sub_conv")
     submod_str_end=model_descriptor.index(")")
@@ -350,16 +371,16 @@ def create_model_with_branch(embedding_layer, model_descriptor:str):
     submod_layer_descriptor = submod_str[submod_str.index("(")+1:]
     submodels = []
     for ks in kernel_str.split(","):
-        submodels.append(create_submodel(embedding_layer, submod_layer_descriptor, ks))
+        submodels.append(create_submodel(embedding_layers, submod_layer_descriptor, ks))
 
     for dr in dilation_rates:
         for ks in kernel_str.split(","):
-            submodels.append(create_submodel(embedding_layer, submod_layer_descriptor, ks, dr))
+            submodels.append(create_submodel(embedding_layers, submod_layer_descriptor, ks, dr))
 
     for sk in skipgrams:
         for ks in kernel_str.split(","):
             skipconv_submodels=(
-                create_submodel_with_skipconv1d(embedding_layer, submod_layer_descriptor, int(ks),int(sk)))
+                create_submodel_with_skipconv1d(embedding_layers, submod_layer_descriptor, int(ks),int(sk)))
             for sm in skipconv_submodels:
                 submodels.append(sm)
 
@@ -369,7 +390,7 @@ def create_model_with_branch(embedding_layer, model_descriptor:str):
     else:
         x=submodel_outputs[0]
 
-    parallel_layers=Model(inputs=embedding_layer.input, outputs=x)
+    parallel_layers=Model(inputs=embedding_layers[0].input, outputs=x)
     #print("submodel:")
     #parallel_layers.summary()
     #print("\n")
@@ -431,9 +452,12 @@ def create_model_with_branch(embedding_layer, model_descriptor:str):
     return big_model
 
 
-def create_submodel(embedding_layer, submod_layer_descriptor, cnn_ks, cnn_dilation=None):
+def create_submodel(embedding_layers, submod_layer_descriptor, cnn_ks, cnn_dilation=None):
     model = Sequential()
-    model.add(embedding_layer)
+    if len(embedding_layers)==1:
+        model.add(embedding_layers[0])
+    else:
+        concat_embedding_layers(embedding_layers, model)
     for layer_descriptor in submod_layer_descriptor.split(","):
         if "=" not in layer_descriptor:
             continue
