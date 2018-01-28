@@ -465,6 +465,39 @@ def remove_offensive_label(in_file, out_file):
 
                 writer.writerow(row)
 
+def read_word_dist_features(csv_file):
+    if csv_file is None:
+        return None
+    with open(csv_file, newline='\n') as csvfile:
+        csvreader = csv.reader(csvfile, delimiter=',', quotechar='"')
+        count=0
+        pos_col=-1
+        result={}
+        for row in csvreader:
+            count+=1
+            if count==1:
+                for i in range(0,len(row)):
+                    if row[i]=='0':
+                        pos_col=i
+                continue
+
+            word=row[0]
+            scores={}
+            neg_sum=0
+            for i in range(1, len(row)):
+                if i==pos_col:
+                    scores["0"]=row[i]
+                else:
+                    neg_sum+=row[i]
+            scores["2"]=neg_sum
+            result[word]=scores
+        return result
+
+
+def append_word_dist_features(vector, word, word_dist_scores_map):
+    word_dist=word_dist_scores_map[word]
+    vector.append(word_dist["0"])
+    vector.append(word_dist["1"])
 
 # remove_offensive_label("/home/zqz/Work/chase/data/ml/w+ws/labeled_data_all_part2.csv",
 #                        "/home/zqz/Work/chase/data/ml/w+ws/labeled_data_all3_part2.csv")

@@ -1,26 +1,28 @@
 import os
 
 from numpy.random import seed
+
 seed(1)
 
 os.environ['PYTHONHASHSEED'] = '0'
-os.environ['THEANO_FLAGS']="floatX=float64,device=cpu,openmp=True"
-#os.environ['THEANO_FLAGS']="openmp=True"
-os.environ['OMP_NUM_THREADS']='8'
+os.environ['THEANO_FLAGS'] = "floatX=float64,device=cpu,openmp=True"
+# os.environ['THEANO_FLAGS']="openmp=True"
+os.environ['OMP_NUM_THREADS'] = '8'
 import theano
-theano.config.openmp=True
 
-#import tensorflow as tf
-#tf.set_random_seed(2)
-#single thread
-#session_conf = tf.ConfigProto(
+theano.config.openmp = True
+
+# import tensorflow as tf
+# tf.set_random_seed(2)
+# single thread
+# session_conf = tf.ConfigProto(
 #  intra_op_parallelism_threads=1,
 #  inter_op_parallelism_threads=1)
 
-#sess = tf.Session(graph=tf.get_default_graph(), config=session_conf)
-#K.set_session(sess)
-#sess = tf.Session(config=session_conf)
-#with sess.as_default():
+# sess = tf.Session(graph=tf.get_default_graph(), config=session_conf)
+# K.set_session(sess)
+# sess = tf.Session(config=session_conf)
+# with sess.as_default():
 #  print(tf.constant(42).eval())
 
 import datetime
@@ -45,9 +47,9 @@ from ml import nlp
 from ml import text_preprocess as tp
 from ml import dnn_model_creator as dmc
 
-MAX_SEQUENCE_LENGTH = 100 #maximum # of words allowed in a tweet
+MAX_SEQUENCE_LENGTH = 100  # maximum # of words allowed in a tweet
 WORD_EMBEDDING_DIM_OUTPUT = 300
-CPUS=1
+CPUS = 1
 
 
 def get_word_vocab(tweets, out_folder, normalize_option):
@@ -63,9 +65,9 @@ def get_word_vocab(tweets, out_folder, normalize_option):
         max_df=0.99
     )
 
-    #logger.info("\tgenerating word vectors, {}".format(datetime.datetime.now()))
+    # logger.info("\tgenerating word vectors, {}".format(datetime.datetime.now()))
     counts = word_vectorizer.fit_transform(tweets).toarray()
-    #logger.info("\t\t complete, dim={}, {}".format(counts.shape, datetime.datetime.now()))
+    # logger.info("\t\t complete, dim={}, {}".format(counts.shape, datetime.datetime.now()))
     vocab = {v: i for i, v in enumerate(word_vectorizer.get_feature_names())}
     pickle.dump(vocab, open(out_folder + "/" + "DNN_WORD_EMBEDDING" + ".pk", "wb"))
 
@@ -79,7 +81,7 @@ def get_word_vocab(tweets, out_folder, normalize_option):
     return word_embedding_input, vocab
 
 
-def create_model(model_descriptor:str, max_index=100, wemb_matrix=None):
+def create_model(model_descriptor: str, max_index=100, wemb_matrix=None):
     '''A model that uses word embeddings'''
     if wemb_matrix is None:
         embedding_layer = Embedding(input_dim=max_index, output_dim=WORD_EMBEDDING_DIM_OUTPUT,
@@ -92,15 +94,15 @@ def create_model(model_descriptor:str, max_index=100, wemb_matrix=None):
                                     input_length=MAX_SEQUENCE_LENGTH,
                                     trainable=False)
     if model_descriptor.startswith("b_"):
-        model_descriptor=model_descriptor[2:].strip()
-        model=dmc.create_model_with_branch(embedding_layer, model_descriptor)
+        model_descriptor = model_descriptor[2:].strip()
+        model = dmc.create_model_with_branch(embedding_layer, model_descriptor)
     elif model_descriptor.startswith("f_"):
-        model=dmc.create_final_model_with_concat_cnn(embedding_layer,model_descriptor)
+        model = dmc.create_final_model_with_concat_cnn(embedding_layer, model_descriptor)
     else:
-        model=dmc.create_model_without_branch(embedding_layer, model_descriptor)
-    #create_model_conv_lstm_multi_filter(embedding_layer)
+        model = dmc.create_model_without_branch(embedding_layer, model_descriptor)
+    # create_model_conv_lstm_multi_filter(embedding_layer)
 
-    #logger.info("New run started at {}\n{}".format(datetime.datetime.now(), model.summary()))
+    # logger.info("New run started at {}\n{}".format(datetime.datetime.now(), model.summary()))
     return model
 
 
@@ -115,10 +117,15 @@ class MyKerasClassifier(KerasClassifier):
         return self.classes_[classes]
 
 
-def pretrained_embedding(word_vocab: dict, models:list, expected_emb_dim, randomize_strategy):
-    #logger.info("\tloading pre-trained embedding model... {}".format(datetime.datetime.now()))
-    #logger.info("\tloading complete. {}".format(datetime.datetime.now()))
-    randomized_vectors={}
+def pretrained_embedding(word_vocab: dict, models: list, expected_emb_dim, randomize_strategy,
+                         word_dist_scores_file=None):
+    # logger.info("\tloading pre-trained embedding model... {}".format(datetime.datetime.now()))
+    # logger.info("\tloading complete. {}".format(datetime.datetime.now()))
+    word_dist_scores = None
+    if word_dist_scores_file is not None:
+        word_dist_scores = util.read_word_dist_features(word_dist_scores_file)
+
+    randomized_vectors = {}
     matrix = numpy.zeros((len(word_vocab), expected_emb_dim))
     count = 0
     random = 0
@@ -127,35 +134,41 @@ def pretrained_embedding(word_vocab: dict, models:list, expected_emb_dim, random
             if word in model.wv.vocab.keys():
                 vec = model.wv[word]
                 matrix[i] = vec
+                if word_dist_scores is not None:
+                    util.append_word_dist_features(vec, word, word_dist_scores)
                 break
         else:
             random += 1
-            model=models[0]
+            model = models[0]
             if randomize_strategy == 1:  # randomly set values following a continuous uniform distribution
                 vec = numpy.random.random_sample(expected_emb_dim)
+                if word_dist_scores is not None:
+                    util.append_word_dist_features(vec, word, word_dist_scores)
                 matrix[i] = vec
             elif randomize_strategy == 2:  # randomly take a vector from the model
                 if word in randomized_vectors.keys():
-                    vec=randomized_vectors[word]
+                    vec = randomized_vectors[word]
                 else:
                     max = len(model.wv.vocab.keys()) - 1
                     index = rn.randint(0, max)
                     word = model.index2word[index]
                     vec = model.wv[word]
-                    randomized_vectors[word]=vec
+                    randomized_vectors[word] = vec
+                if word_dist_scores is not None:
+                    util.append_word_dist_features(vec, word, word_dist_scores)
                 matrix[i] = vec
         count += 1
         if count % 100 == 0:
             print(count)
     models.clear()
-    if randomize_strategy!=0:
+    if randomize_strategy != 0:
         print("randomized={}".format(random))
     else:
         print("oov={}".format(random))
     return matrix
 
 
-def grid_search_dnn(dataset_name, outfolder, model_descriptor:str,
+def grid_search_dnn(dataset_name, outfolder, model_descriptor: str,
                     cpus, nfold, X_train, y_train, X_test, y_test,
                     embedding_layer_max_index, pretrained_embedding_matrix=None,
                     instance_data_source_tags=None, accepted_ds_tags: list = None):
@@ -170,7 +183,7 @@ def grid_search_dnn(dataset_name, outfolder, model_descriptor:str,
         functools.partial(create_model, max_index=embedding_layer_max_index,
                           wemb_matrix=pretrained_embedding_matrix,
                           model_descriptor=model_descriptor)
-    #model = MyKerasClassifier(build_fn=create_model_with_args, verbose=0)
+    # model = MyKerasClassifier(build_fn=create_model_with_args, verbose=0)
     model = KerasClassifier(build_fn=create_model_with_args, verbose=0)
 
     # model = KerasClassifier(build_fn=create_model_with_args, verbose=0, batch_size=100,
@@ -178,14 +191,12 @@ def grid_search_dnn(dataset_name, outfolder, model_descriptor:str,
     #
     # nfold_predictions = cross_val_predict(model, X_train, y_train, cv=nfold)
 
-
-
     # define the grid search parameters
     batch_size = [100]
     epochs = [10]
     param_grid = dict(batch_size=batch_size, nb_epoch=epochs)
 
-    _classifier = GridSearchCV(estimator=model, param_grid=param_grid, n_jobs=cpus ,
+    _classifier = GridSearchCV(estimator=model, param_grid=param_grid, n_jobs=cpus,
                                cv=nfold)
     print("\tfitting model...{}".format(datetime.datetime.now()))
     _classifier.fit(X_train, y_train)
@@ -198,7 +209,7 @@ def grid_search_dnn(dataset_name, outfolder, model_descriptor:str,
 
     # util.save_classifier_model(best_estimator, ann_model_file)
 
-    #logger.info("testing on development set ....")
+    # logger.info("testing on development set ....")
     if (X_test is not None):
         print("\tpredicting...{}".format(datetime.datetime.now()))
         heldout_predictions_final = best_estimator.predict(X_test)
@@ -217,11 +228,13 @@ def grid_search_dnn(dataset_name, outfolder, model_descriptor:str,
         #                       time_ann_predict_dev,
         #                       time_ann_train, y_test)
 
-def gridsearch(input_data_file, dataset_name, sys_out, model_descriptor:str,
+
+def gridsearch(input_data_file, dataset_name, sys_out, model_descriptor: str,
                print_scores_per_class,
                word_norm_option,
                randomize_strategy,
-               pretrained_embedding_models=None, expected_embedding_dim=None):
+               pretrained_embedding_models=None, expected_embedding_dim=None,
+               word_dist_features_file=None):
     raw_data = pd.read_csv(input_data_file, sep=',', encoding="utf-8")
     M = get_word_vocab(raw_data.tweet, sys_out, word_norm_option)
     # M=self.feature_scale(M)
@@ -232,7 +245,8 @@ def gridsearch(input_data_file, dataset_name, sys_out, model_descriptor:str,
         pretrained_word_matrix = pretrained_embedding(M[1],
                                                       pretrained_embedding_models,
                                                       expected_embedding_dim,
-                                                      randomize_strategy)
+                                                      randomize_strategy,
+                                                      word_dist_features_file)
 
     # split the dataset into two parts, 0.75 for train and 0.25 for testing
     X_train_data, X_test_data, y_train, y_test = \
@@ -251,7 +265,6 @@ def gridsearch(input_data_file, dataset_name, sys_out, model_descriptor:str,
         instance_data_source_column = pd.Series(raw_data.ds)
         accepted_ds_tags = ["c", "td"]
 
-
     grid_search_dnn(dataset_name, sys_out, model_descriptor,
                     CPUS, 5,
                     X_train_data,
@@ -261,7 +274,7 @@ def gridsearch(input_data_file, dataset_name, sys_out, model_descriptor:str,
     print("complete {}".format(datetime.datetime.now()))
 
 
-def cross_eval_dnn(dataset_name, outfolder, model_descriptor:str,
+def cross_eval_dnn(dataset_name, outfolder, model_descriptor: str,
                    cpus, nfold, X_data, y_data,
                    embedding_layer_max_index, pretrained_embedding_matrix=None,
                    instance_data_source_tags=None, accepted_ds_tags: list = None):
@@ -276,26 +289,26 @@ def cross_eval_dnn(dataset_name, outfolder, model_descriptor:str,
         functools.partial(create_model, max_index=embedding_layer_max_index,
                           wemb_matrix=pretrained_embedding_matrix,
                           model_descriptor=model_descriptor)
-    #model = MyKerasClassifier(build_fn=create_model_with_args, verbose=0)
+    # model = MyKerasClassifier(build_fn=create_model_with_args, verbose=0)
     model = KerasClassifier(build_fn=create_model_with_args, verbose=0, batch_size=100)
-    model.fit(X_data,y_data)
+    model.fit(X_data, y_data)
 
     nfold_predictions = cross_val_predict(model, X_data, y_data, cv=nfold)
 
     util.save_scores(nfold_predictions, y_data, None, None,
-                         model_descriptor, dataset_name, 3,
-                         outfolder, instance_data_source_tags, accepted_ds_tags)
+                     model_descriptor, dataset_name, 3,
+                     outfolder, instance_data_source_tags, accepted_ds_tags)
 
-        # util.print_eval_report(best_param_ann, cv_score_ann, dev_data_prediction_ann,
-        #                       time_ann_predict_dev,
-        #
+    # util.print_eval_report(best_param_ann, cv_score_ann, dev_data_prediction_ann,
+    #                       time_ann_predict_dev,
+    #
 
 
-def cross_fold_eval(input_data_file, dataset_name, sys_out, model_descriptor:str,
-               print_scores_per_class,
-               word_norm_option,
-               randomize_strategy,
-               pretrained_embedding_model=None, expected_embedding_dim=None):
+def cross_fold_eval(input_data_file, dataset_name, sys_out, model_descriptor: str,
+                    print_scores_per_class,
+                    word_norm_option,
+                    randomize_strategy,
+                    pretrained_embedding_model=None, expected_embedding_dim=None):
     raw_data = pd.read_csv(input_data_file, sep=',', encoding="utf-8")
     M = get_word_vocab(raw_data.tweet, sys_out, word_norm_option)
     # M=self.feature_scale(M)
@@ -308,7 +321,7 @@ def cross_fold_eval(input_data_file, dataset_name, sys_out, model_descriptor:str
 
     # split the dataset into two parts, 0.75 for train and 0.25 for testing
     X_data = M0
-    y_data= raw_data['class']
+    y_data = raw_data['class']
     y_data = y_data.astype(int)
 
     X_data = sequence.pad_sequences(X_data, maxlen=MAX_SEQUENCE_LENGTH)
@@ -319,80 +332,82 @@ def cross_fold_eval(input_data_file, dataset_name, sys_out, model_descriptor:str
         instance_data_source_column = pd.Series(raw_data.ds)
         accepted_ds_tags = ["c", "td"]
 
-
     cross_eval_dnn(dataset_name, sys_out, model_descriptor,
-                    -1, 5,
-                    X_data,
-                    y_data,
-                    len(M[1]), pretrained_word_matrix,
-                    instance_data_source_column, accepted_ds_tags)
+                   -1, 5,
+                   X_data,
+                   y_data,
+                   len(M[1]), pretrained_word_matrix,
+                   instance_data_source_column, accepted_ds_tags)
     print("complete {}".format(datetime.datetime.now()))
 
 
 ##############################################
 ##############################################
 
-#/home/zqz/Work/data/GoogleNews-vectors-negative300.bin.gz
+# /home/zqz/Work/data/GoogleNews-vectors-negative300.bin.gz
 # 300
 
 if __name__ == "__main__":
     print("start {}".format(datetime.datetime.now()))
     emb_model = None
-    emb_models=None
-    emb_dim=None
-    params={}
+    emb_models = None
+    emb_dim = None
+    params = {}
 
-    sys_argv=sys.argv
-    if len(sys.argv)==2:
-        sys_argv= sys.argv[1].split(" ")
+    sys_argv = sys.argv
+    if len(sys.argv) == 2:
+        sys_argv = sys.argv[1].split(" ")
 
     for arg in sys_argv:
-        pv=arg.split("=",1)
-        if(len(pv)==1):
+        pv = arg.split("=", 1)
+        if (len(pv) == 1):
             continue
-        params[pv[0]]=pv[1]
+        params[pv[0]] = pv[1]
     if "scoreperclass" not in params.keys():
-        params["scoreperclass"]=False
+        params["scoreperclass"] = False
     if "word_norm" not in params.keys():
-        params["word_norm"]=0
+        params["word_norm"] = 0
     if "oov_random" not in params.keys():
-        params["oov_random"]=0
+        params["oov_random"] = 0
     if "emb_model" in params.keys():
-        emb_models=[]
+        emb_models = []
         print("===> use pre-trained embeddings...")
-        model_str=params["emb_model"].split(',')
+        model_str = params["emb_model"].split(',')
         for m_s in model_str:
             gensimFormat = ".gensim" in m_s
             if gensimFormat:
                 emb_models.append(gensim.models.KeyedVectors.load(m_s, mmap='r'))
             else:
                 emb_models.append(gensim.models.KeyedVectors. \
-                    load_word2vec_format(m_s, binary=True))
+                                  load_word2vec_format(m_s, binary=True))
         print("<===loaded {} models".format(len(emb_models)))
     if "emb_dim" in params.keys():
-        emb_dim=int(params["emb_dim"])
+        emb_dim = int(params["emb_dim"])
     if "gpu" in params.keys():
-        if params["gpu"]=="1":
+        if params["gpu"] == "1":
             print("using gpu...")
         else:
             print("using cpu...")
+    if "wdist" in params.keys():
+        wdist_file = params["wdist"]
+    else:
+        wdist_file = None
 
     gridsearch(params["input"],
-                params["dataset"],  # dataset name
-                params["output"],  # output
-                params["model_desc"], #model descriptor
-                params["scoreperclass"], #print scores per class
-                params["word_norm"], #0-stemming, 1-lemma, other-do nothing
-                params["oov_random"], #0-ignore oov; 1-random init by uniform dist; 2-random from embedding
-                emb_models,
-                emb_dim)
-    #K.clear_session()
+               params["dataset"],  # dataset name
+               params["output"],  # output
+               params["model_desc"],  # model descriptor
+               params["scoreperclass"],  # print scores per class
+               params["word_norm"],  # 0-stemming, 1-lemma, other-do nothing
+               params["oov_random"],  # 0-ignore oov; 1-random init by uniform dist; 2-random from embedding
+               emb_models,
+               emb_dim,
+               wdist_file)
+    # K.clear_session()
     # ... code
     sys.exit(0)
-
 
     # input=/home/zqz/Work/chase/data/ml/ml/rm/labeled_data_all.csv
     # output=/home/zqz/Work/chase/output
     # dataset=rm
     # model_desc="dropout=0.2,conv1d=100-4,maxpooling1d=4,lstm=100-True,gmaxpooling1d,dense=2-softmax"
-
