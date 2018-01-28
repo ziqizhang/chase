@@ -2,29 +2,60 @@ using RM dataset,
 eswc model: 1,548,002
 gamback: 1622702
 
-
-RM, no filter
-data=/home/zqz/Work/chase/data/ml/ml/rm/labeled_data_all.csv, model=/home/zqz/Work/data/GoogleNews-vectors-negative300.bin.gz, norm=0, vocab=4558,oov=1348
-data=/home/zqz/Work/chase/data/ml/ml/rm/labeled_data_all.csv, model=/home/zqz/Work/data/Set1_TweetDataWithoutSpam_Word.bin, norm=0, vocab=4558,oov=347
-data=/home/zqz/Work/chase/data/ml/ml/rm/labeled_data_all.csv, model=/home/zqz/Work/data/glove.840B.300d.bin.gensim, norm=0, vocab=4558,oov=657
-data=/home/zqz/Work/chase/data/ml/ml/rm/labeled_data_all.csv, model=/home/zqz/Work/data/GoogleNews-vectors-negative300.bin.gz, norm=1, vocab=5297,oov=592
-data=/home/zqz/Work/chase/data/ml/ml/rm/labeled_data_all.csv, model=/home/zqz/Work/data/Set1_TweetDataWithoutSpam_Word.bin, norm=1, vocab=5297,oov=196
-data=/home/zqz/Work/chase/data/ml/ml/rm/labeled_data_all.csv, model=/home/zqz/Work/data/glove.840B.300d.bin.gensim, norm=1, vocab=5297,oov=303
-
-RM, both filter
-data=/home/zqz/Work/chase/data/ml/ml/rm/labeled_data_all.csv, model=/home/zqz/Work/data/GoogleNews-vectors-negative300.bin.gz, norm=0, vocab=924,oov=110
-data=/home/zqz/Work/chase/data/ml/ml/rm/labeled_data_all.csv, model=/home/zqz/Work/data/Set1_TweetDataWithoutSpam_Word.bin, norm=0, vocab=924,oov=8
-data=/home/zqz/Work/chase/data/ml/ml/rm/labeled_data_all.csv, model=/home/zqz/Work/data/glove.840B.300d.bin.gensim, norm=0, vocab=924,oov=25
-data=/home/zqz/Work/chase/data/ml/ml/rm/labeled_data_all.csv, model=/home/zqz/Work/data/GoogleNews-vectors-negative300.bin.gz, norm=1, vocab=880,oov=16
-data=/home/zqz/Work/chase/data/ml/ml/rm/labeled_data_all.csv, model=/home/zqz/Work/data/Set1_TweetDataWithoutSpam_Word.bin, norm=1, vocab=880,oov=8
-data=/home/zqz/Work/chase/data/ml/ml/rm/labeled_data_all.csv, model=/home/zqz/Work/data/glove.840B.300d.bin.gensim, norm=1, vocab=880,oov=0
-
-
-RM, lessen filter
-data=/home/zqz/Work/chase/data/ml/ml/rm/labeled_data_all.csv, model=/home/zqz/Work/data/GoogleNews-vectors-negative300.bin.gz, norm=0, vocab=2165,oov=398
-data=/home/zqz/Work/chase/data/ml/ml/rm/labeled_data_all.csv, model=/home/zqz/Work/data/Set1_TweetDataWithoutSpam_Word.bin, norm=0, vocab=2165,oov=51
-data=/home/zqz/Work/chase/data/ml/ml/rm/labeled_data_all.csv, model=/home/zqz/Work/data/glove.840B.300d.bin.gensim, norm=0, vocab=2165,oov=141
-data=/home/zqz/Work/chase/data/ml/ml/rm/labeled_data_all.csv, model=/home/zqz/Work/data/GoogleNews-vectors-negative300.bin.gz, norm=1, vocab=2291,oov=84
-data=/home/zqz/Work/chase/data/ml/ml/rm/labeled_data_all.csv, model=/home/zqz/Work/data/Set1_TweetDataWithoutSpam_Word.bin, norm=1, vocab=2291,oov=26
-data=/home/zqz/Work/chase/data/ml/ml/rm/labeled_data_all.csv, model=/home/zqz/Work/data/glove.840B.300d.bin.gensim, norm=1, vocab=2291,oov=29
-
+(no filters)
+data=/home/zz/Work/chase/data/ml/ml/rm/labeled_data_all.csv, model=google, norm=0, vocab=2165,oov=398
+data=/home/zz/Work/chase/data/ml/ml/rm/labeled_data_all.csv, model=tw, norm=0, vocab=2165,oov=51
+data=/home/zz/Work/chase/data/ml/ml/rm/labeled_data_all.csv, model=glv, norm=0, vocab=2165,oov=141
+data=/home/zz/Work/chase/data/ml/ml/rm/labeled_data_all.csv, model=all, norm=0, vocab=2165,oov=44
+data=/home/zz/Work/chase/data/ml/ml/rm/labeled_data_all.csv, model=google, norm=1, vocab=2291,oov=84
+data=/home/zz/Work/chase/data/ml/ml/rm/labeled_data_all.csv, model=tw, norm=1, vocab=2291,oov=26
+data=/home/zz/Work/chase/data/ml/ml/rm/labeled_data_all.csv, model=glv, norm=1, vocab=2291,oov=29
+data=/home/zz/Work/chase/data/ml/ml/rm/labeled_data_all.csv, model=all, norm=1, vocab=2291,oov=13
+data=/home/zz/Work/chase/data/ml/ml/dt/labeled_data_all_2.csv, model=google, norm=0, vocab=7342,oov=1952
+data=/home/zz/Work/chase/data/ml/ml/dt/labeled_data_all_2.csv, model=tw, norm=0, vocab=7342,oov=276
+data=/home/zz/Work/chase/data/ml/ml/dt/labeled_data_all_2.csv, model=glv, norm=0, vocab=7342,oov=749
+data=/home/zz/Work/chase/data/ml/ml/dt/labeled_data_all_2.csv, model=all, norm=0, vocab=7342,oov=251
+data=/home/zz/Work/chase/data/ml/ml/dt/labeled_data_all_2.csv, model=google, norm=1, vocab=8290,oov=717
+data=/home/zz/Work/chase/data/ml/ml/dt/labeled_data_all_2.csv, model=tw, norm=1, vocab=8290,oov=60
+data=/home/zz/Work/chase/data/ml/ml/dt/labeled_data_all_2.csv, model=glv, norm=1, vocab=8290,oov=167
+data=/home/zz/Work/chase/data/ml/ml/dt/labeled_data_all_2.csv, model=all, norm=1, vocab=8290,oov=31
+data=/home/zz/Work/chase/data/ml/ml/w/labeled_data_all.csv, model=google, norm=0, vocab=5887,oov=1630
+data=/home/zz/Work/chase/data/ml/ml/w/labeled_data_all.csv, model=tw, norm=0, vocab=5887,oov=323
+data=/home/zz/Work/chase/data/ml/ml/w/labeled_data_all.csv, model=glv, norm=0, vocab=5887,oov=751
+data=/home/zz/Work/chase/data/ml/ml/w/labeled_data_all.csv, model=all, norm=0, vocab=5887,oov=303
+data=/home/zz/Work/chase/data/ml/ml/w/labeled_data_all.csv, model=google, norm=1, vocab=7172,oov=414
+data=/home/zz/Work/chase/data/ml/ml/w/labeled_data_all.csv, model=tw, norm=1, vocab=7172,oov=62
+data=/home/zz/Work/chase/data/ml/ml/w/labeled_data_all.csv, model=glv, norm=1, vocab=7172,oov=144
+data=/home/zz/Work/chase/data/ml/ml/w/labeled_data_all.csv, model=all, norm=1, vocab=7172,oov=39
+data=/home/zz/Work/chase/data/ml/ml/w+ws/labeled_data_all.csv, model=google, norm=0, vocab=6430,oov=1831
+data=/home/zz/Work/chase/data/ml/ml/w+ws/labeled_data_all.csv, model=tw, norm=0, vocab=6430,oov=383
+data=/home/zz/Work/chase/data/ml/ml/w+ws/labeled_data_all.csv, model=glv, norm=0, vocab=6430,oov=863
+data=/home/zz/Work/chase/data/ml/ml/w+ws/labeled_data_all.csv, model=all, norm=0, vocab=6430,oov=361
+data=/home/zz/Work/chase/data/ml/ml/w+ws/labeled_data_all.csv, model=google, norm=1, vocab=7886,oov=489
+data=/home/zz/Work/chase/data/ml/ml/w+ws/labeled_data_all.csv, model=tw, norm=1, vocab=7886,oov=81
+data=/home/zz/Work/chase/data/ml/ml/w+ws/labeled_data_all.csv, model=glv, norm=1, vocab=7886,oov=173
+data=/home/zz/Work/chase/data/ml/ml/w+ws/labeled_data_all.csv, model=all, norm=1, vocab=7886,oov=55
+data=/home/zz/Work/chase/data/ml/ml/ws-amt/labeled_data_all.csv, model=google, norm=0, vocab=3574,oov=858
+data=/home/zz/Work/chase/data/ml/ml/ws-amt/labeled_data_all.csv, model=tw, norm=0, vocab=3574,oov=145
+data=/home/zz/Work/chase/data/ml/ml/ws-amt/labeled_data_all.csv, model=glv, norm=0, vocab=3574,oov=332
+data=/home/zz/Work/chase/data/ml/ml/ws-amt/labeled_data_all.csv, model=all, norm=0, vocab=3574,oov=135
+data=/home/zz/Work/chase/data/ml/ml/ws-amt/labeled_data_all.csv, model=google, norm=1, vocab=4163,oov=197
+data=/home/zz/Work/chase/data/ml/ml/ws-amt/labeled_data_all.csv, model=tw, norm=1, vocab=4163,oov=43
+data=/home/zz/Work/chase/data/ml/ml/ws-amt/labeled_data_all.csv, model=glv, norm=1, vocab=4163,oov=70
+data=/home/zz/Work/chase/data/ml/ml/ws-amt/labeled_data_all.csv, model=all, norm=1, vocab=4163,oov=24
+data=/home/zz/Work/chase/data/ml/ml/ws-exp/labeled_data_all.csv, model=google, norm=0, vocab=3574,oov=858
+data=/home/zz/Work/chase/data/ml/ml/ws-exp/labeled_data_all.csv, model=tw, norm=0, vocab=3574,oov=145
+data=/home/zz/Work/chase/data/ml/ml/ws-exp/labeled_data_all.csv, model=glv, norm=0, vocab=3574,oov=332
+data=/home/zz/Work/chase/data/ml/ml/ws-exp/labeled_data_all.csv, model=all, norm=0, vocab=3574,oov=135
+data=/home/zz/Work/chase/data/ml/ml/ws-exp/labeled_data_all.csv, model=google, norm=1, vocab=4163,oov=197
+data=/home/zz/Work/chase/data/ml/ml/ws-exp/labeled_data_all.csv, model=tw, norm=1, vocab=4163,oov=43
+data=/home/zz/Work/chase/data/ml/ml/ws-exp/labeled_data_all.csv, model=glv, norm=1, vocab=4163,oov=70
+data=/home/zz/Work/chase/data/ml/ml/ws-exp/labeled_data_all.csv, model=all, norm=1, vocab=4163,oov=24
+data=/home/zz/Work/chase/data/ml/ml/ws-gb/labeled_data_all.csv, model=google, norm=0, vocab=3574,oov=858
+data=/home/zz/Work/chase/data/ml/ml/ws-gb/labeled_data_all.csv, model=tw, norm=0, vocab=3574,oov=145
+data=/home/zz/Work/chase/data/ml/ml/ws-gb/labeled_data_all.csv, model=glv, norm=0, vocab=3574,oov=332
+data=/home/zz/Work/chase/data/ml/ml/ws-gb/labeled_data_all.csv, model=all, norm=0, vocab=3574,oov=135
+data=/home/zz/Work/chase/data/ml/ml/ws-gb/labeled_data_all.csv, model=google, norm=1, vocab=4163,oov=197
+data=/home/zz/Work/chase/data/ml/ml/ws-gb/labeled_data_all.csv, model=tw, norm=1, vocab=4163,oov=43
+data=/home/zz/Work/chase/data/ml/ml/ws-gb/labeled_data_all.csv, model=glv, norm=1, vocab=4163,oov=70
+data=/home/zz/Work/chase/data/ml/ml/ws-gb/labeled_data_all.csv, model=all, norm=1, vocab=4163,oov=24

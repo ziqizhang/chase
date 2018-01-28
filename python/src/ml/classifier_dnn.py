@@ -48,9 +48,6 @@ from ml import dnn_model_creator as dmc
 MAX_SEQUENCE_LENGTH = 100 #maximum # of words allowed in a tweet
 WORD_EMBEDDING_DIM_OUTPUT = 300
 CPUS=1
-logger = logging.getLogger(__name__)
-LOG_DIR = os.getcwd() + "/logs"
-logging.basicConfig(filename=LOG_DIR + '/dnn-log.txt', level=logging.INFO, filemode='w')
 
 
 def get_word_vocab(tweets, out_folder, normalize_option):
@@ -66,9 +63,9 @@ def get_word_vocab(tweets, out_folder, normalize_option):
         max_df=0.99
     )
 
-    logger.info("\tgenerating word vectors, {}".format(datetime.datetime.now()))
+    #logger.info("\tgenerating word vectors, {}".format(datetime.datetime.now()))
     counts = word_vectorizer.fit_transform(tweets).toarray()
-    logger.info("\t\t complete, dim={}, {}".format(counts.shape, datetime.datetime.now()))
+    #logger.info("\t\t complete, dim={}, {}".format(counts.shape, datetime.datetime.now()))
     vocab = {v: i for i, v in enumerate(word_vectorizer.get_feature_names())}
     pickle.dump(vocab, open(out_folder + "/" + "DNN_WORD_EMBEDDING" + ".pk", "wb"))
 
@@ -119,8 +116,8 @@ class MyKerasClassifier(KerasClassifier):
 
 
 def pretrained_embedding(word_vocab: dict, models:list, expected_emb_dim, randomize_strategy):
-    logger.info("\tloading pre-trained embedding model... {}".format(datetime.datetime.now()))
-    logger.info("\tloading complete. {}".format(datetime.datetime.now()))
+    #logger.info("\tloading pre-trained embedding model... {}".format(datetime.datetime.now()))
+    #logger.info("\tloading complete. {}".format(datetime.datetime.now()))
     randomized_vectors={}
     matrix = numpy.zeros((len(word_vocab), expected_emb_dim))
     count = 0
@@ -184,7 +181,7 @@ def grid_search_dnn(dataset_name, outfolder, model_descriptor:str,
 
 
     # define the grid search parameters
-    batch_size = [200]
+    batch_size = [100]
     epochs = [10]
     param_grid = dict(batch_size=batch_size, nb_epoch=epochs)
 
@@ -337,63 +334,65 @@ def cross_fold_eval(input_data_file, dataset_name, sys_out, model_descriptor:str
 
 #/home/zqz/Work/data/GoogleNews-vectors-negative300.bin.gz
 # 300
-print("start {}".format(datetime.datetime.now()))
-emb_model = None
-emb_models=None
-emb_dim=None
-params={}
 
-sys_argv=sys.argv
-if len(sys.argv)==2:
-    sys_argv= sys.argv[1].split(" ")
+if __name__ == "__main__":
+    print("start {}".format(datetime.datetime.now()))
+    emb_model = None
+    emb_models=None
+    emb_dim=None
+    params={}
 
-for arg in sys_argv:
-    pv=arg.split("=",1)
-    if(len(pv)==1):
-        continue
-    params[pv[0]]=pv[1]
-if "scoreperclass" not in params.keys():
-    params["scoreperclass"]=False
-if "word_norm" not in params.keys():
-    params["word_norm"]=0
-if "oov_random" not in params.keys():
-    params["oov_random"]=0
-if "emb_model" in params.keys():
-    emb_models=[]
-    print("===> use pre-trained embeddings...")
-    model_str=params["emb_model"].split(',')
-    for m_s in model_str:
-        gensimFormat = ".gensim" in m_s
-        if gensimFormat:
-            emb_models.append(gensim.models.KeyedVectors.load(m_s, mmap='r'))
+    sys_argv=sys.argv
+    if len(sys.argv)==2:
+        sys_argv= sys.argv[1].split(" ")
+
+    for arg in sys_argv:
+        pv=arg.split("=",1)
+        if(len(pv)==1):
+            continue
+        params[pv[0]]=pv[1]
+    if "scoreperclass" not in params.keys():
+        params["scoreperclass"]=False
+    if "word_norm" not in params.keys():
+        params["word_norm"]=0
+    if "oov_random" not in params.keys():
+        params["oov_random"]=0
+    if "emb_model" in params.keys():
+        emb_models=[]
+        print("===> use pre-trained embeddings...")
+        model_str=params["emb_model"].split(',')
+        for m_s in model_str:
+            gensimFormat = ".gensim" in m_s
+            if gensimFormat:
+                emb_models.append(gensim.models.KeyedVectors.load(m_s, mmap='r'))
+            else:
+                emb_models.append(gensim.models.KeyedVectors. \
+                    load_word2vec_format(m_s, binary=True))
+        print("<===loaded {} models".format(len(emb_models)))
+    if "emb_dim" in params.keys():
+        emb_dim=int(params["emb_dim"])
+    if "gpu" in params.keys():
+        if params["gpu"]=="1":
+            print("using gpu...")
         else:
-            emb_models.append(gensim.models.KeyedVectors. \
-                load_word2vec_format(m_s, binary=True))
-    print("<===loaded {} models".format(len(emb_models)))
-if "emb_dim" in params.keys():
-    emb_dim=int(params["emb_dim"])
-if "gpu" in params.keys():
-    if params["gpu"]=="1":
-        print("using gpu...")
-    else:
-        print("using cpu...")
+            print("using cpu...")
 
-gridsearch(params["input"],
-            params["dataset"],  # dataset name
-            params["output"],  # output
-            params["model_desc"], #model descriptor
-            params["scoreperclass"], #print scores per class
-            params["word_norm"], #0-stemming, 1-lemma, other-do nothing
-            params["oov_random"], #0-ignore oov; 1-random init by uniform dist; 2-random from embedding
-            emb_models,
-            emb_dim)
-#K.clear_session()
-# ... code
-sys.exit(0)
+    gridsearch(params["input"],
+                params["dataset"],  # dataset name
+                params["output"],  # output
+                params["model_desc"], #model descriptor
+                params["scoreperclass"], #print scores per class
+                params["word_norm"], #0-stemming, 1-lemma, other-do nothing
+                params["oov_random"], #0-ignore oov; 1-random init by uniform dist; 2-random from embedding
+                emb_models,
+                emb_dim)
+    #K.clear_session()
+    # ... code
+    sys.exit(0)
 
 
-# input=/home/zqz/Work/chase/data/ml/ml/rm/labeled_data_all.csv
-# output=/home/zqz/Work/chase/output
-# dataset=rm
-# model_desc="dropout=0.2,conv1d=100-4,maxpooling1d=4,lstm=100-True,gmaxpooling1d,dense=2-softmax"
+    # input=/home/zqz/Work/chase/data/ml/ml/rm/labeled_data_all.csv
+    # output=/home/zqz/Work/chase/output
+    # dataset=rm
+    # model_desc="dropout=0.2,conv1d=100-4,maxpooling1d=4,lstm=100-True,gmaxpooling1d,dense=2-softmax"
 

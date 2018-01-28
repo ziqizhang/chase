@@ -14,8 +14,8 @@ def get_word_vocab(tweets, normalize_option):
         stop_words=nlp.stopwords,  # We do better when we keep stopwords
         decode_error='replace',
         max_features=50000,
-        min_df=5,
-        max_df=0.501
+        min_df=1,
+        max_df=0.99
     )
 
    # logger.info("\tgenerating word vectors, {}".format(datetime.datetime.now()))
@@ -85,13 +85,13 @@ def check_stats(processed_tweets, vocab, raw_data):
         diff=first_v-second_v
         print(str(first)+" vs others has diff "+str(len(diff))+","+str(len(diff)/len(first_v)))
 
-#input_data_file="/home/zqz/Work/chase/data/ml/ml/rm/labeled_data_all.csv"
-input_data_file="/home/zqz/Work/chase/data/ml/ml/dt/labeled_data_all_2.csv"
-#input_data_file="/home/zqz/Work/chase/data/ml/ml/w/labeled_data_all.csv"
-#input_data_file="/home/zqz/Work/chase/data/ml/ml/w+ws/labeled_data_all.csv"
-#input_data_file="/home/zqz/Work/chase/data/ml/ml/ws-exp/labeled_data_all.csv"
-#input_data_file="/home/zqz/Work/chase/data/ml/ml/ws-amt/labeled_data_all.csv"
-#input_data_file="/home/zqz/Work/chase/data/ml/ml/ws-gb/labeled_data_all.csv"
+#input_data_file="/home/zz/Work/chase/data/ml/ml/rm/labeled_data_all.csv"
+#input_data_file="/home/zz/Work/chase/data/ml/ml/dt/labeled_data_all_2.csv"
+#input_data_file="/home/zz/Work/chase/data/ml/ml/w/labeled_data_all.csv"
+#input_data_file="/home/zz/Work/chase/data/ml/ml/w+ws/labeled_data_all.csv"
+#input_data_file="/home/zz/Work/chase/data/ml/ml/ws-exp/labeled_data_all.csv"
+#input_data_file="/home/zz/Work/chase/data/ml/ml/ws-amt/labeled_data_all.csv"
+input_data_file="/home/zz/Work/chase/data/ml/ml/ws-gb/labeled_data_all.csv"
 raw_data = pd.read_csv(input_data_file, sep=',', encoding="utf-8")
 M = get_word_vocab(raw_data.tweet, 0)
 check_stats(M[0], M[1], raw_data.as_matrix())
