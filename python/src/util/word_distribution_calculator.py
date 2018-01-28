@@ -15,8 +15,8 @@ def calc_distribution(input_data_file, sys_out, output_data_file, word_norm_opti
     inverted_dict=dict([ (v, k) for k, v in M[1].items()])
     for index, row in raw_data.iterrows():
         #print(index)
-        vocab=M0[index]
-        label=row[label_col]
+        vocab=M0[index] #vocab in that tweet as indices
+        label=row[label_col] #label for that tweet
         if label in all_label_inst.keys():
             all_label_inst[label]+=1
         else:
@@ -62,7 +62,7 @@ def calc_distribution(input_data_file, sys_out, output_data_file, word_norm_opti
                     row.append("0")
             csvwriter.writerow(row)
 
-    print("")
+    print("end")
 
 
 def calc_dist_score(word_freq_ov_classes:dict, overall_label_inst_percentage:dict):
@@ -96,6 +96,6 @@ if __name__ == "__main__":
     sys_out = "/home/zz/Work/chase/output"
     output_data = "/home/zz/Work/chase/output/word_dist_w.csv"
     word_norm_option = 0
-    label_col = 5
+    label_col = 6
     calc_distribution(input_data, sys_out, output_data, word_norm_option, label_col)
 
