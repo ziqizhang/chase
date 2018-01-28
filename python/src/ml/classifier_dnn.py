@@ -123,6 +123,7 @@ def pretrained_embedding(word_vocab: dict, models: list, expected_emb_dim, rando
     # logger.info("\tloading complete. {}".format(datetime.datetime.now()))
     word_dist_scores = None
     if word_dist_scores_file is not None:
+        print("using word dist features...")
         word_dist_scores = util.read_word_dist_features(word_dist_scores_file)
         expected_emb_dim+=2
 
