@@ -124,6 +124,7 @@ def pretrained_embedding(word_vocab: dict, models: list, expected_emb_dim, rando
     word_dist_scores = None
     if word_dist_scores_file is not None:
         word_dist_scores = util.read_word_dist_features(word_dist_scores_file)
+        expected_emb_dim+=2
 
     randomized_vectors = {}
     matrix = numpy.zeros((len(word_vocab), expected_emb_dim))
@@ -133,9 +134,9 @@ def pretrained_embedding(word_vocab: dict, models: list, expected_emb_dim, rando
         for model in models:
             if word in model.wv.vocab.keys():
                 vec = model.wv[word]
-                matrix[i] = vec
                 if word_dist_scores is not None:
-                    util.append_word_dist_features(vec, word, word_dist_scores)
+                    vec=util.append_word_dist_features(vec, word, word_dist_scores)
+                matrix[i] = vec
                 break
         else:
             random += 1
@@ -143,7 +144,7 @@ def pretrained_embedding(word_vocab: dict, models: list, expected_emb_dim, rando
             if randomize_strategy == 1:  # randomly set values following a continuous uniform distribution
                 vec = numpy.random.random_sample(expected_emb_dim)
                 if word_dist_scores is not None:
-                    util.append_word_dist_features(vec, word, word_dist_scores)
+                    vec=util.append_word_dist_features(vec, word, word_dist_scores)
                 matrix[i] = vec
             elif randomize_strategy == 2:  # randomly take a vector from the model
                 if word in randomized_vectors.keys():
@@ -155,7 +156,7 @@ def pretrained_embedding(word_vocab: dict, models: list, expected_emb_dim, rando
                     vec = model.wv[word]
                     randomized_vectors[word] = vec
                 if word_dist_scores is not None:
-                    util.append_word_dist_features(vec, word, word_dist_scores)
+                    vec=util.append_word_dist_features(vec, word, word_dist_scores)
                 matrix[i] = vec
         count += 1
         if count % 100 == 0:

@@ -488,16 +488,22 @@ def read_word_dist_features(csv_file):
                 if i==pos_col:
                     scores["0"]=row[i]
                 else:
-                    neg_sum+=row[i]
+                    neg_sum+=float(row[i])
             scores["2"]=neg_sum
             result[word]=scores
         return result
 
 
 def append_word_dist_features(vector, word, word_dist_scores_map):
-    word_dist=word_dist_scores_map[word]
-    vector.append(word_dist["0"])
-    vector.append(word_dist["1"])
+    vector=list(vector)
+    if word in word_dist_scores_map.keys():
+        word_dist=word_dist_scores_map[word]
+        vector.append(word_dist["0"])
+        vector.append(word_dist["2"])
+    else:
+        vector.append(0.5)
+        vector.append(0.5)
+    return vector
 
 # remove_offensive_label("/home/zqz/Work/chase/data/ml/w+ws/labeled_data_all_part2.csv",
 #                        "/home/zqz/Work/chase/data/ml/w+ws/labeled_data_all3_part2.csv")
