@@ -127,7 +127,21 @@ def write_scores(predictoins, truth: pandas.Series, digits, writer, instance_dst
             target_names = ['%s' % l for l in labels]
             p, r, f1, s = precision_recall_fscore_support(subset_truth, subset_pred,
                                                           labels=subset_labels)
-            line = prepare_score_string(p, r, f1, s, subset_labels, target_names, digits)
+
+            line = prepare_score_string(p, r, f1, s, labels, target_names, digits)
+            pa, ra, f1a, sa = precision_recall_fscore_support(subset_truth, subset_pred,
+                                                              average='micro')
+            line += "avg_micro,"
+            for v in (pa, ra, f1a):
+                line += "{0:0.{1}f}".format(v, digits) + ","
+            line += '{0}'.format(np.sum(sa)) + "\n"
+            pa, ra, f1a, sa = precision_recall_fscore_support(subset_truth, subset_pred,
+                                                              average='macro')
+            line += "avg_macro,"
+            for v in (pa, ra, f1a):
+                line += "{0:0.{1}f}".format(v, digits) + ","
+            line += '{0}'.format(np.sum(sa)) + "\n\n"
+
             writer.write(line)
 
 

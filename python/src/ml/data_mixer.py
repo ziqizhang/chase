@@ -97,14 +97,14 @@ def score_tokens(token_dist: dict, label_instances: dict, label_pair: list):
     return token_scores_label_one, token_scores_label_two
 
 
-def replace_and_create(tweet_to_replace_and_stem,
-                       nouns_to_replace,
-                       nouns_replace_by,
-                       adjs_to_replace,
-                       adjs_replace_by,
-                       stem_to_token,
-                       new_label,
-                       raw_data):
+def replace_and_create_acrossclass(tweet_to_replace_and_stem,
+                                   nouns_to_replace,
+                                   nouns_replace_by,
+                                   adjs_to_replace,
+                                   adjs_replace_by,
+                                   stem_to_token,
+                                   new_label,
+                                   raw_data):
     # go through eah stem
     generated_tweets = []
     for tw, stems in tweet_to_replace_and_stem.items():
@@ -125,6 +125,51 @@ def replace_and_create(tweet_to_replace_and_stem,
             new_row[0] = "mix"
             new_row["class"] = new_label
             new_row["tweet"] = tweet
+
+        generated_tweets.append(new_row)
+
+    return generated_tweets
+
+
+def replace_and_create_singleclass(tweet_to_replace_and_stem,
+                                   nouns_replace_by,
+                                   adjs_replace_by,
+                                   stem_to_token,
+                                   raw_data):
+    # go through eah stem
+    generated_tweets = []
+    for tw, stems in tweet_to_replace_and_stem.items():
+        new_row = pd.Series.copy(raw_data.ix[tw])
+        tweet = new_row["tweet"]
+        tokens = tweet.split(" ")
+        tags = nltk.pos_tag(tokens)
+
+        noun_indices = []
+        adj_indices = []
+        for i in range(0, len(tags)):
+            if "NN" in tags[i]:
+                noun_indices.append(i)
+            if "J" in tags[i]:
+                adj_indices.append(i)
+        num_n = int(len(noun_indices) / 2)
+        num_a = int(len(adj_indices) / 2)
+
+        # replace nouns
+        for j in range(0, num_n):
+            tok_to_replace = tokens[random.choice(noun_indices)]
+            replaced, tweet = regex_replace(tok_to_replace,
+                                            nouns_replace_by, stem_to_token,
+                                            tweet)
+
+        # replace adj
+        for j in range(0, num_a):
+            tok_to_replace = tokens[random.choice(adj_indices)]
+            replaced, tweet = regex_replace(tok_to_replace,
+                                            nouns_replace_by, stem_to_token,
+                                            tweet)
+
+        new_row[0] = "mix"
+        new_row["tweet"] = tweet
 
         generated_tweets.append(new_row)
 
@@ -183,15 +228,16 @@ def map_tweet_to_stem(ranked_label1_stems: list,
                     map[tw] = stems
     return map
 
+
 def write_to_file(generated_tweets, raw_data, out_file):
-    merged=raw_data.as_matrix()
-    merged=numpy.concatenate((merged, generated_tweets), axis=0)
+    merged = raw_data.as_matrix()
+    merged = numpy.concatenate((merged, generated_tweets), axis=0)
 
     header = [list(raw_data.columns.values)]
     generated_tweets = numpy.concatenate((header, generated_tweets), axis=0)
     with open(out_file, 'w', newline='') as csvfile:
         csvwriter = csv.writer(csvfile, delimiter=',',
-                                quotechar='"', quoting=csv.QUOTE_MINIMAL)
+                               quotechar='"', quoting=csv.QUOTE_MINIMAL)
         for row in generated_tweets:
             csvwriter.writerow(list(row))
 
@@ -199,12 +245,12 @@ def write_to_file(generated_tweets, raw_data, out_file):
 if __name__ == "__main__":
     input_data = "/home/zz/Work/chase/data/ml/ml/w/labeled_data_all.csv"
     output_data = "/home/zz/Work/chase/data/ml/ml/w/labeled_data_all_mixed.csv"
-    #input_data = "/home/zz/Work/chase/data/ml/ml/ws-amt/labeled_data_all.csv"
-    #output_data = "/home/zz/Work/chase/data/ml/ml/ws-amt/labeled_data_all_mixed.csv"
-    #input_data = "/home/zz/Work/chase/data/ml/ml/ws-exp/labeled_data_all.csv"
-    #output_data = "/home/zz/Work/chase/data/ml/ml/ws-exp/labeled_data_all_mixed.csv"
-    #input_data = "/home/zz/Work/chase/data/ml/ml/ws-gb/labeled_data_all.csv"
-    #output_data = "/home/zz/Work/chase/data/ml/ml/ws-gb/labeled_data_all_mixed.csv"
+    # input_data = "/home/zz/Work/chase/data/ml/ml/ws-amt/labeled_data_all.csv"
+    # output_data = "/home/zz/Work/chase/data/ml/ml/ws-amt/labeled_data_all_mixed.csv"
+    # input_data = "/home/zz/Work/chase/data/ml/ml/ws-exp/labeled_data_all.csv"
+    # output_data = "/home/zz/Work/chase/data/ml/ml/ws-exp/labeled_data_all_mixed.csv"
+    # input_data = "/home/zz/Work/chase/data/ml/ml/ws-gb/labeled_data_all.csv"
+    # output_data = "/home/zz/Work/chase/data/ml/ml/ws-gb/labeled_data_all_mixed.csv"
     #
     data_col = 7
 
@@ -233,12 +279,12 @@ if __name__ == "__main__":
         map_tweet_to_stem(ranked_label2_stems, stem_to_token, token_to_tweet)
 
     # replace tweets of label 1 by tokens from label 2
-    new_data_label1=replace_and_create(tweet_to_stem_label1,
-                       selected_label1_nouns,
-                       selected_label2_nouns,
-                       selected_label1_adjs,
-                       selected_label2_adjs,
-                       stem_to_token, 1, raw_data)
+    new_data_label1 = replace_and_create(tweet_to_stem_label1,
+                                         selected_label1_nouns,
+                                         selected_label2_nouns,
+                                         selected_label1_adjs,
+                                         selected_label2_adjs,
+                                         stem_to_token, 1, raw_data)
     print("label {} original data={}, newly generated={}".format(1, len(tweet_to_stem_label1),
                                                                  len(new_data_label1)))
 
