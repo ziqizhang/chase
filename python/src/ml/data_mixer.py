@@ -1,6 +1,7 @@
 import csv
 import random
 
+import numpy
 import pandas as pd
 import re
 from nltk import PorterStemmer
@@ -182,23 +183,26 @@ def map_tweet_to_stem(ranked_label1_stems: list,
                     map[tw] = stems
     return map
 
-def write_to_file(generated_tweets, out_file):
+def write_to_file(generated_tweets, raw_data, out_file):
+    merged=raw_data.as_matrix()
+    merged=numpy.concatenate((merged, generated_tweets), axis=0)
     with open(out_file, 'w', newline='') as csvfile:
         csvwriter = csv.writer(csvfile, delimiter=',',
                                 quotechar='"', quoting=csv.QUOTE_MINIMAL)
-        for row in generated_tweets:
+        for row in merged:
             csvwriter.writerow(list(row))
 
 
 if __name__ == "__main__":
-    # input_data = "/home/zz/Work/chase/data/ml/ml/w/labeled_data_all.csv"
-    # output_data = "/home/zz/Work/chase/data/ml/ml/w/labeled_data_all_mixed.csv"
-    # input_data = "/home/zz/Work/chase/data/ml/ml/ws-amt/labeled_data_all.csv"
-    # output_data = "/home/zz/Work/chase/data/ml/ml/ws-amt/labeled_data_all_mixed.csv"
-    # input_data = "/home/zz/Work/chase/data/ml/ml/ws-exp/labeled_data_all.csv"
-    # output_data = "/home/zz/Work/chase/data/ml/ml/ws-exp/labeled_data_all_mixed.csv"
-    input_data = "/home/zz/Work/chase/data/ml/ml/ws-gb/labeled_data_all.csv"
-    output_data = "/home/zz/Work/chase/data/ml/ml/ws-gb/labeled_data_all_mixed.csv"
+    input_data = "/home/zz/Work/chase/data/ml/ml/w/labeled_data_all.csv"
+    output_data = "/home/zz/Work/chase/data/ml/ml/w/labeled_data_all_mixed.csv"
+    #input_data = "/home/zz/Work/chase/data/ml/ml/ws-amt/labeled_data_all.csv"
+    #output_data = "/home/zz/Work/chase/data/ml/ml/ws-amt/labeled_data_all_mixed.csv"
+    #input_data = "/home/zz/Work/chase/data/ml/ml/ws-exp/labeled_data_all.csv"
+    #output_data = "/home/zz/Work/chase/data/ml/ml/ws-exp/labeled_data_all_mixed.csv"
+    # input_data = "/home/zz/Work/chase/data/ml/ml/ws-gb/labeled_data_all.csv"
+    # output_data = "/home/zz/Work/chase/data/ml/ml/ws-gb/labeled_data_all_mixed.csv"
+    #
     data_col = 7
 
     # read data
@@ -244,6 +248,6 @@ if __name__ == "__main__":
     print("label {} original data={}, newly generated={}".format(0, len(tweet_to_stem_label2),
                                                                  len(new_data_label2)))
     new_data_label1.extend(new_data_label2)
-    write_to_file(new_data_label1, output_data)
+    write_to_file(new_data_label1, raw_data, output_data)
 
     print("end")

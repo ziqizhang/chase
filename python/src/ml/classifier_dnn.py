@@ -322,6 +322,8 @@ def gridsearch(input_data_file, dataset_name, sys_out, model_descriptor: str,
                randomize_strategy,
                pretrained_embedding_models=None, expected_embedding_dim=None,
                word_dist_features_file=None):
+    #TODO: add optional input data file (mixed data)
+    #read data, split to same ratio, merge with train/test split
     raw_data = pd.read_csv(input_data_file, sep=',', encoding="utf-8")
     M = get_word_vocab(raw_data.tweet, sys_out, word_norm_option)
     # M=self.feature_scale(M)
