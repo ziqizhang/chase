@@ -232,6 +232,8 @@ def build_pretrained_embedding_matrix(word_vocab: dict, models: list, expected_e
     else:
         print("oov={}".format(random))
 
+    models.clear()
+    
     return matrix
 
 
@@ -363,9 +365,6 @@ def gridsearch(input_data_file, dataset_name, sys_out, model_descriptor: str,
         X_test_data = numpy.concatenate((X_test_data, MX_X_test_data))
         y_train = numpy.concatenate((y_train, MX_y_train))
         y_test = numpy.concatenate((y_test, MX_y_test))
-
-    pretrained_embedding_models.clear()
-
 
 
     y_train = y_train.astype(int)
