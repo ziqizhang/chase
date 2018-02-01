@@ -457,6 +457,8 @@ if __name__ == "__main__":
         params[pv[0]] = pv[1]
     if "scoreperclass" not in params.keys():
         params["scoreperclass"] = False
+    else:
+        params["scoreperclass"] = True
     if "word_norm" not in params.keys():
         params["word_norm"] = 0
     if "oov_random" not in params.keys():
