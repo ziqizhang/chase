@@ -377,7 +377,7 @@ def gridsearch(input_data_file, dataset_name, sys_out, model_descriptor: str,
     accepted_ds_tags = None
     if print_scores_per_class:
         instance_data_source_column = pd.Series(raw_data.ds)
-        accepted_ds_tags = ["c", "td"]
+        accepted_ds_tags = ["w", "mix"]
 
     grid_search_dnn(dataset_name, sys_out, model_descriptor,
                     CPUS, 5,
