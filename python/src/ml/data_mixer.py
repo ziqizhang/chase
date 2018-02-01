@@ -186,10 +186,13 @@ def map_tweet_to_stem(ranked_label1_stems: list,
 def write_to_file(generated_tweets, raw_data, out_file):
     merged=raw_data.as_matrix()
     merged=numpy.concatenate((merged, generated_tweets), axis=0)
+
+    header = [list(raw_data.columns.values)]
+    generated_tweets = numpy.concatenate((header, generated_tweets), axis=0)
     with open(out_file, 'w', newline='') as csvfile:
         csvwriter = csv.writer(csvfile, delimiter=',',
                                 quotechar='"', quoting=csv.QUOTE_MINIMAL)
-        for row in merged:
+        for row in generated_tweets:
             csvwriter.writerow(list(row))
 
 
@@ -200,8 +203,8 @@ if __name__ == "__main__":
     #output_data = "/home/zz/Work/chase/data/ml/ml/ws-amt/labeled_data_all_mixed.csv"
     #input_data = "/home/zz/Work/chase/data/ml/ml/ws-exp/labeled_data_all.csv"
     #output_data = "/home/zz/Work/chase/data/ml/ml/ws-exp/labeled_data_all_mixed.csv"
-    # input_data = "/home/zz/Work/chase/data/ml/ml/ws-gb/labeled_data_all.csv"
-    # output_data = "/home/zz/Work/chase/data/ml/ml/ws-gb/labeled_data_all_mixed.csv"
+    #input_data = "/home/zz/Work/chase/data/ml/ml/ws-gb/labeled_data_all.csv"
+    #output_data = "/home/zz/Work/chase/data/ml/ml/ws-gb/labeled_data_all_mixed.csv"
     #
     data_col = 7
 

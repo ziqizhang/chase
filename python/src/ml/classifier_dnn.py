@@ -231,7 +231,7 @@ def build_pretrained_embedding_matrix(word_vocab: dict, models: list, expected_e
         print("randomized={}".format(random))
     else:
         print("oov={}".format(random))
-    models.clear()
+
     return matrix
 
 
@@ -321,9 +321,8 @@ def gridsearch(input_data_file, dataset_name, sys_out, model_descriptor: str,
                word_norm_option,
                randomize_strategy,
                pretrained_embedding_models=None, expected_embedding_dim=None,
-               word_dist_features_file=None):
-    #TODO: add optional input data file (mixed data)
-    #read data, split to same ratio, merge with train/test split
+               word_dist_features_file=None, use_mixed_data=False):
+
     raw_data = pd.read_csv(input_data_file, sep=',', encoding="utf-8")
     M = get_word_vocab(raw_data.tweet, sys_out, word_norm_option)
     # M=self.feature_scale(M)
@@ -345,6 +344,30 @@ def gridsearch(input_data_file, dataset_name, sys_out, model_descriptor: str,
         train_test_split(M0, raw_data['class'],
                          test_size=0.25,
                          random_state=42)
+
+    # using mixed data?
+    if use_mixed_data:
+        mixed_data_folder=input_data_file[0:input_data_file.rfind("/")]
+        mixed_data_file=mixed_data_folder+"/labeled_data_all_mixed.csv"
+        mixed_data = pd.read_csv(mixed_data_file, sep=',', encoding="utf-8")
+        MX = get_word_vocab(mixed_data.tweet, sys_out, word_norm_option)
+        # M=self.feature_scale(M)
+        MX0 = MX[0]
+
+        # split the dataset into two parts, 0.75 for train and 0.25 for testing
+        MX_X_train_data, MX_X_test_data, MX_y_train, MX_y_test = \
+            train_test_split(MX0, mixed_data['class'],
+                             test_size=0.25,
+                             random_state=42)
+        X_train_data=numpy.concatenate((X_train_data, MX_X_train_data))
+        X_test_data = numpy.concatenate((X_test_data, MX_X_test_data))
+        y_train = numpy.concatenate((y_train, MX_y_train))
+        y_test = numpy.concatenate((y_test, MX_y_test))
+
+    pretrained_embedding_models.clear()
+
+
+
     y_train = y_train.astype(int)
     y_test = y_test.astype(int)
 
@@ -487,6 +510,9 @@ if __name__ == "__main__":
     else:
         wdist_file = None
 
+
+    use_mixed_data=True
+    print("<<<<<< Using Mixed Data={} >>>>>>>".format(use_mixed_data))
     gridsearch(params["input"],
                params["dataset"],  # dataset name
                params["output"],  # output
@@ -496,7 +522,8 @@ if __name__ == "__main__":
                params["oov_random"],  # 0-ignore oov; 1-random init by uniform dist; 2-random from embedding
                emb_models,
                emb_dim,
-               wdist_file)
+               wdist_file,
+               use_mixed_data)
     # K.clear_session()
     # ... code
     sys.exit(0)
