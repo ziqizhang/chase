@@ -259,7 +259,8 @@ def grid_search_dnn(dataset_name, outfolder, model_descriptor: str,
                     cpus, nfold, X_train, y_train, X_test, y_test,
                     embedding_layer_max_index, pretrained_embedding_matrix=None,
                     word_dist_matrix=None,
-                    instance_data_source_tags=None, accepted_ds_tags: list = None):
+                    instance_tags_train=None, instance_tags_test=None,
+                    accepted_ds_tags: list = None):
     print("\t== Perform ANN ...")
     subfolder = outfolder + "/models"
     try:
@@ -305,13 +306,13 @@ def grid_search_dnn(dataset_name, outfolder, model_descriptor: str,
         print("\tsaving...{}".format(datetime.datetime.now()))
         util.save_scores(nfold_predictions, y_train, heldout_predictions_final, y_test,
                          model_descriptor, dataset_name,
-                         3, outfolder, instance_data_source_tags, accepted_ds_tags)
+                         3, outfolder, instance_tags_train, instance_tags_test, accepted_ds_tags)
 
     else:
         print("\tsaving...{}".format(datetime.datetime.now()))
         util.save_scores(nfold_predictions, y_train, None, y_test,
                          model_descriptor, dataset_name, 3,
-                         outfolder, instance_data_source_tags, accepted_ds_tags)
+                         outfolder, instance_tags_train, instance_tags_test, accepted_ds_tags)
 
         # util.print_eval_report(best_param_ann, cv_score_ann, dev_data_prediction_ann,
         #                       time_ann_predict_dev,
@@ -342,10 +343,14 @@ def gridsearch(input_data_file, dataset_name, sys_out, model_descriptor: str,
                                                   word_dist_features_file)
 
     # split the dataset into two parts, 0.75 for train and 0.25 for testing
-    X_train_data, X_test_data, y_train, y_test = \
-        train_test_split(M0, raw_data['class'],
+    X_train_data, X_test_data, y_train, y_test, ds_train, ds_test= \
+        train_test_split(M0, raw_data['class'], raw_data['ds'],
                          test_size=0.25,
                          random_state=42)
+
+    accepted_ds_tags = None
+    if print_scores_per_class:
+        accepted_ds_tags = ["w"]
 
     # using mixed data?
     if use_mixed_data:
@@ -357,15 +362,17 @@ def gridsearch(input_data_file, dataset_name, sys_out, model_descriptor: str,
         MX0 = MX[0]
 
         # split the dataset into two parts, 0.75 for train and 0.25 for testing
-        MX_X_train_data, MX_X_test_data, MX_y_train, MX_y_test = \
+        MX_X_train_data, MX_X_test_data, MX_y_train, MX_y_test, MX_ds_train, MX_ds_test = \
             train_test_split(MX0, mixed_data['class'],
+                             mixed_data['ds'],
                              test_size=0.25,
                              random_state=42)
         X_train_data=numpy.concatenate((X_train_data, MX_X_train_data))
         X_test_data = numpy.concatenate((X_test_data, MX_X_test_data))
         y_train = y_train.append(MX_y_train, ignore_index=True) #numpy.concatenate((y_train, MX_y_train))
         y_test = y_test.append(MX_y_test, ignore_index=True)
-
+        ds_train = ds_train.append(MX_ds_train, ignore_index=True)
+        ds_test = ds_test.append(MX_ds_test, ignore_index=True)
 
     y_train = y_train.astype(int)
     y_test = y_test.astype(int)
@@ -373,18 +380,12 @@ def gridsearch(input_data_file, dataset_name, sys_out, model_descriptor: str,
     X_train_data = sequence.pad_sequences(X_train_data, maxlen=MAX_SEQUENCE_LENGTH)
     X_test_data = sequence.pad_sequences(X_test_data, maxlen=MAX_SEQUENCE_LENGTH)
 
-    instance_data_source_column = None
-    accepted_ds_tags = None
-    if print_scores_per_class:
-        instance_data_source_column = pd.Series(raw_data.ds)
-        accepted_ds_tags = ["w"]
-
     grid_search_dnn(dataset_name, sys_out, model_descriptor,
                     CPUS, 5,
                     X_train_data,
                     y_train, X_test_data, y_test,
                     len(M[1]), pretrained_word_matrix, word_dist_matrix,
-                    instance_data_source_column, accepted_ds_tags)
+                    ds_train, ds_test, accepted_ds_tags)
     print("complete {}".format(datetime.datetime.now()))
 
 

@@ -62,7 +62,9 @@ def save_scores(nfold_predictions, nfold_truth,
                 model_descriptor,
                 dataset_name,
                 digits, outfolder,
-                instance_data_source_tags: pandas.Series = None, accepted_ds_tags: list = None):
+                instance_tags_train= None,
+                instance_tags_test= None,
+                accepted_ds_tags: list = None):
     outputFalsePredictions(nfold_predictions, nfold_truth, model_descriptor,dataset_name, outfolder)
     subfolder = outfolder + "/scores"
     try:
@@ -74,16 +76,17 @@ def save_scores(nfold_predictions, nfold_truth,
     writer.write(model_descriptor+"\n")
     if nfold_predictions is not None:
         writer.write(" N-FOLD AVERAGE :\n")
-        write_scores(nfold_predictions, nfold_truth, digits, writer, instance_data_source_tags, accepted_ds_tags)
+        write_scores(nfold_predictions, nfold_truth, digits, writer, instance_tags_train, accepted_ds_tags)
 
     if (heldout_predictions is not None):
         writer.write(" HELDOUT :\n")
-        write_scores(heldout_predictions, heldout_truth, digits, writer, instance_data_source_tags, accepted_ds_tags)
+        write_scores(heldout_predictions, heldout_truth, digits, writer, instance_tags_test, accepted_ds_tags)
 
     writer.close()
 
 
-def write_scores(predictoins, truth: pandas.Series, digits, writer, instance_dst_column=None,
+def write_scores(predictoins, truth: pandas.Series, digits, writer,
+                 instance_dst_column=None,
                  accepted_ds_tags=None):
     labels = unique_labels(truth, predictoins)
     target_names = ['%s' % l for l in labels]
@@ -112,14 +115,14 @@ def write_scores(predictoins, truth: pandas.Series, digits, writer, instance_dst
             writer.write("\n for data from {} :\n".format(dstag))
             subset_pred = []
             subset_truth = []
-            for index, label in zip(truth.index, predictoins):
-                if instance_dst_column[index] == dstag:
+            for ds, label in zip(instance_dst_column, predictoins):
+                if ds == dstag:
                     if isinstance(label, np.ndarray):
                         subset_pred.append(label[0])
                     else:
                         subset_pred.append(label)
-            for index, label in zip(truth.index, truth):
-                if instance_dst_column[index] == dstag:
+            for ds, label in zip(instance_dst_column, truth):
+                if ds == dstag:
                     subset_truth.append(label)
             # print("subset_truth={}, type={}".format(len(subset_truth), type(subset_truth)))
             # print("subset_pred={}, type={}".format(len(subset_pred), type(subset_pred)))

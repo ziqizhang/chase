@@ -141,8 +141,11 @@ def replace_and_create_singleclass(tweet_to_replace_and_stem,
     for tw, stems in tweet_to_replace_and_stem.items():
         new_row = pd.Series.copy(raw_data.ix[tw])
         tweet = new_row["tweet"]
-        tokens = tweet.split(" ")
+        tokens = tweet.split()
+        #try:
         tags = nltk.pos_tag(tokens)
+        # except IndexError:
+        #     print("")
 
         noun_indices = []
         adj_indices = []
@@ -157,15 +160,15 @@ def replace_and_create_singleclass(tweet_to_replace_and_stem,
         # replace nouns
         for j in range(0, num_n):
             tok_to_replace = tokens[random.choice(noun_indices)]
-            replaced, tweet = regex_replace(tok_to_replace,
+            tweet = regex_replace_single(tok_to_replace,
                                             nouns_replace_by, stem_to_token,
                                             tweet)
 
         # replace adj
         for j in range(0, num_a):
             tok_to_replace = tokens[random.choice(adj_indices)]
-            replaced, tweet = regex_replace(tok_to_replace,
-                                            nouns_replace_by, stem_to_token,
+            tweet = regex_replace_single(tok_to_replace,
+                                            adjs_replace_by, stem_to_token,
                                             tweet)
 
         new_row[0] = "mix"
@@ -189,6 +192,15 @@ def regex_replace(stem, stems_replace_by,
         replaced = True
     return replaced, tweet
 
+
+def regex_replace_single(tok, stems_replace_by,
+                  stem_to_token: dict, tweet):
+    stem_replace_by = random.choice(stems_replace_by)
+    tok_replace_by = list(stem_to_token[stem_replace_by])[0]
+        # replace tok by
+    insensitive_regex = re.compile(re.escape(tok), re.IGNORECASE)
+    tweet = insensitive_regex.sub(tok_replace_by, tweet)
+    return tweet
 
 def rank_and_select_top(dict_with_scores: dict, topn):
     sorted_list = sorted(dict_with_scores.items(), key=lambda x: x[1], reverse=True)
@@ -244,13 +256,13 @@ def write_to_file(generated_tweets, raw_data, out_file):
 
 if __name__ == "__main__":
     input_data = "/home/zz/Work/chase/data/ml/ml/w/labeled_data_all.csv"
-    output_data = "/home/zz/Work/chase/data/ml/ml/w/labeled_data_all_mixed.csv"
+    output_data = "/home/zz/Work/chase/data/ml/ml/w/labeled_data_all_mixed_single.csv"
     # input_data = "/home/zz/Work/chase/data/ml/ml/ws-amt/labeled_data_all.csv"
-    # output_data = "/home/zz/Work/chase/data/ml/ml/ws-amt/labeled_data_all_mixed.csv"
+    # output_data = "/home/zz/Work/chase/data/ml/ml/ws-amt/labeled_data_all_mixed_single.csv"
     # input_data = "/home/zz/Work/chase/data/ml/ml/ws-exp/labeled_data_all.csv"
-    # output_data = "/home/zz/Work/chase/data/ml/ml/ws-exp/labeled_data_all_mixed.csv"
+    # output_data = "/home/zz/Work/chase/data/ml/ml/ws-exp/labeled_data_all_mixed_single.csv"
     # input_data = "/home/zz/Work/chase/data/ml/ml/ws-gb/labeled_data_all.csv"
-    # output_data = "/home/zz/Work/chase/data/ml/ml/ws-gb/labeled_data_all_mixed.csv"
+    # output_data = "/home/zz/Work/chase/data/ml/ml/ws-gb/labeled_data_all_mixed_single.csv"
     #
     data_col = 7
 
@@ -279,21 +291,32 @@ if __name__ == "__main__":
         map_tweet_to_stem(ranked_label2_stems, stem_to_token, token_to_tweet)
 
     # replace tweets of label 1 by tokens from label 2
-    new_data_label1 = replace_and_create(tweet_to_stem_label1,
-                                         selected_label1_nouns,
-                                         selected_label2_nouns,
-                                         selected_label1_adjs,
-                                         selected_label2_adjs,
-                                         stem_to_token, 1, raw_data)
+    # new_data_label1 = replace_and_create_acrossclass(tweet_to_stem_label1,
+    #                                      selected_label1_nouns,
+    #                                      selected_label2_nouns,
+    #                                      selected_label1_adjs,
+    #                                      selected_label2_adjs,
+    #                                      stem_to_token, 1, raw_data)
+    # print("label {} original data={}, newly generated={}".format(1, len(tweet_to_stem_label1),
+    #                                                              len(new_data_label1)))
+    #
+    # new_data_label2 = replace_and_create_acrossclass(tweet_to_stem_label2,
+    #                                      selected_label2_nouns,
+    #                                      selected_label1_nouns,
+    #                                      selected_label2_adjs,
+    #                                      selected_label1_adjs,
+    #                                      stem_to_token, 0, raw_data)
+    new_data_label1 = replace_and_create_singleclass(tweet_to_stem_label1,
+                                                     selected_label1_nouns,
+                                                     selected_label1_adjs,
+                                                     stem_to_token, raw_data)
     print("label {} original data={}, newly generated={}".format(1, len(tweet_to_stem_label1),
                                                                  len(new_data_label1)))
 
-    new_data_label2 = replace_and_create(tweet_to_stem_label2,
-                                         selected_label2_nouns,
-                                         selected_label1_nouns,
-                                         selected_label2_adjs,
-                                         selected_label1_adjs,
-                                         stem_to_token, 0, raw_data)
+    new_data_label2 = replace_and_create_singleclass(tweet_to_stem_label2,
+                                                     selected_label2_nouns,
+                                                     selected_label2_adjs,
+                                                     stem_to_token, raw_data)
     print("label {} original data={}, newly generated={}".format(0, len(tweet_to_stem_label2),
                                                                  len(new_data_label2)))
     new_data_label1.extend(new_data_label2)
