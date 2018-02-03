@@ -16,6 +16,7 @@ def index_data(file_input, tweet_col, label_col):
     stem_to_token = {}
     token_to_tweet = {}
     stem_dist = {}
+    label_to_tweet_stems={}
 
     index = -1
     for row in raw_data.iterrows():
@@ -30,6 +31,7 @@ def index_data(file_input, tweet_col, label_col):
 
         tokens = tweet.split()
 
+        stems=set()
         for ot in tokens:
             if ot in token_to_tweet.keys():
                 token_to_tweet[ot].add(index)
@@ -42,6 +44,7 @@ def index_data(file_input, tweet_col, label_col):
             t = " ".join(re.split("[^a-zA-Z]*", t.lower())).strip()
             t = stemmer.stem(t)
             if len(t) > 0:
+                stems.add(t)
                 if t in stem_to_token.keys():
                     stem_to_token[t].add(ot)
                 else:
@@ -60,7 +63,14 @@ def index_data(file_input, tweet_col, label_col):
                     dist_stats[label] = 1
                 stem_dist[t] = dist_stats
 
-    return stem_dist, label_instances, stem_to_token, token_to_tweet, raw_data
+        if label in label_to_tweet_stems.keys():
+            tweet_stems=label_to_tweet_stems[label]
+        else:
+            tweet_stems=dict()
+        tweet_stems[index]=stems
+        label_to_tweet_stems[label]=tweet_stems
+
+    return stem_dist, label_instances, stem_to_token, token_to_tweet, raw_data, label_to_tweet_stems
 
 
 def score_tokens(token_dist: dict, label_instances: dict, label_pair: list):
@@ -255,23 +265,33 @@ def write_to_file(generated_tweets, raw_data, out_file):
 
 
 if __name__ == "__main__":
-    input_data = "/home/zz/Work/chase/data/ml/ml/w/labeled_data_all.csv"
-    output_data = "/home/zz/Work/chase/data/ml/ml/w/labeled_data_all_mixed_single.csv"
-    # input_data = "/home/zz/Work/chase/data/ml/ml/ws-amt/labeled_data_all.csv"
-    # output_data = "/home/zz/Work/chase/data/ml/ml/ws-amt/labeled_data_all_mixed_single.csv"
-    # input_data = "/home/zz/Work/chase/data/ml/ml/ws-exp/labeled_data_all.csv"
-    # output_data = "/home/zz/Work/chase/data/ml/ml/ws-exp/labeled_data_all_mixed_single.csv"
-    # input_data = "/home/zz/Work/chase/data/ml/ml/ws-gb/labeled_data_all.csv"
-    # output_data = "/home/zz/Work/chase/data/ml/ml/ws-gb/labeled_data_all_mixed_single.csv"
+    #input_data = "/home/zz/Work/chase/data/ml/ml/w/labeled_data_all.csv"
+    #output_data = "/home/zz/Work/chase/data/ml/ml/w/labeled_data_all_mixed_single.csv"
+    input_data = "/home/zz/Work/chase/data/ml/ml/ws-amt/labeled_data_all.csv"
+    output_data = "/home/zz/Work/chase/data/ml/ml/ws-amt/labeled_data_all_mixed_single.csv"
+    #input_data = "/home/zz/Work/chase/data/ml/ml/ws-exp/labeled_data_all.csv"
+    #output_data = "/home/zz/Work/chase/data/ml/ml/ws-exp/labeled_data_all_mixed_single.csv"
+    #input_data = "/home/zz/Work/chase/data/ml/ml/ws-gb/labeled_data_all.csv"
+    #output_data = "/home/zz/Work/chase/data/ml/ml/ws-gb/labeled_data_all_mixed_single.csv"
+
+    #input_data = "/home/zz/Work/chase/data/ml/ml/w+ws/labeled_data_all.csv"
+    #output_data = "/home/zz/Work/chase/data/ml/ml/w+ws/labeled_data_all_mixed_single.csv"
+    #input_data = "/home/zz/Work/chase/data/ml/ml/rm/labeled_data_all.csv"
+    #output_data = "/home/zz/Work/chase/data/ml/ml/rm/labeled_data_all_mixed_single.csv"
+    # input_data = "/home/zz/Work/chase/data/ml/ml/dt/labeled_data_all_2.csv"
+    # output_data = "/home/zz/Work/chase/data/ml/ml/dt/labeled_data_all_2_mixed_single.csv"
+
     #
-    data_col = 7
+    tweet_col = 7
+    label_col=6
+    label_pair=[0,1]
 
     # read data
-    stem_dist, label_instances, stem_to_token, token_to_tweet, raw_data \
-        = index_data(input_data, 7, 6)
+    stem_dist, label_instances, stem_to_token, token_to_tweet, raw_data, label_to_tweetstems \
+        = index_data(input_data, tweet_col, label_col)
 
     token_scores_label_one, token_scores_label_two \
-        = score_tokens(stem_dist, label_instances, [0, 1])
+        = score_tokens(stem_dist, label_instances, label_pair)
 
     # find the two classes to be mixed
     ranked_label1_stems = rank_and_select_top(token_scores_label_one, 100)
@@ -285,10 +305,12 @@ if __name__ == "__main__":
         postag_stems(ranked_label2_stems, stem_to_token)
 
     # map tweet to list of stems
-    tweet_to_stem_label1 = \
-        map_tweet_to_stem(ranked_label1_stems, stem_to_token, token_to_tweet)
-    tweet_to_stem_label2 = \
-        map_tweet_to_stem(ranked_label2_stems, stem_to_token, token_to_tweet)
+    # tweet_to_stem_label1 = \
+    #     map_tweet_to_stem(ranked_label1_stems, stem_to_token, token_to_tweet)
+    # tweet_to_stem_label2 = \
+    #     map_tweet_to_stem(ranked_label2_stems, stem_to_token, token_to_tweet)
+    tweet_to_stem_label1 = label_to_tweetstems[0]
+    tweet_to_stem_label2 = label_to_tweetstems[1]
 
     # replace tweets of label 1 by tokens from label 2
     # new_data_label1 = replace_and_create_acrossclass(tweet_to_stem_label1,

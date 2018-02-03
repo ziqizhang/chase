@@ -88,27 +88,28 @@ def save_scores(nfold_predictions, nfold_truth,
 def write_scores(predictoins, truth: pandas.Series, digits, writer,
                  instance_dst_column=None,
                  accepted_ds_tags=None):
-    labels = unique_labels(truth, predictoins)
-    target_names = ['%s' % l for l in labels]
-    p, r, f1, s = precision_recall_fscore_support(truth, predictoins,
-                                                  labels=labels)
+    if accepted_ds_tags is None:
+        labels = unique_labels(truth, predictoins)
+        target_names = ['%s' % l for l in labels]
+        p, r, f1, s = precision_recall_fscore_support(truth, predictoins,
+                                                      labels=labels)
 
-    line = prepare_score_string(p, r, f1, s, labels, target_names, digits)
-    pa, ra, f1a, sa = precision_recall_fscore_support(truth, predictoins,
-                                                      average='micro')
-    line += "avg_micro,"
-    for v in (pa, ra, f1a):
-        line += "{0:0.{1}f}".format(v, digits) + ","
-    line += '{0}'.format(np.sum(sa)) + "\n"
-    pa, ra, f1a, sa = precision_recall_fscore_support(truth, predictoins,
-                                                      average='macro')
-    line += "avg_macro,"
-    for v in (pa, ra, f1a):
-        line += "{0:0.{1}f}".format(v, digits) + ","
-    line += '{0}'.format(np.sum(sa)) + "\n\n"
-    # average
+        line = prepare_score_string(p, r, f1, s, labels, target_names, digits)
+        pa, ra, f1a, sa = precision_recall_fscore_support(truth, predictoins,
+                                                          average='micro')
+        line += "avg_micro,"
+        for v in (pa, ra, f1a):
+            line += "{0:0.{1}f}".format(v, digits) + ","
+        line += '{0}'.format(np.sum(sa)) + "\n"
+        pa, ra, f1a, sa = precision_recall_fscore_support(truth, predictoins,
+                                                          average='macro')
+        line += "avg_macro,"
+        for v in (pa, ra, f1a):
+            line += "{0:0.{1}f}".format(v, digits) + ","
+        line += '{0}'.format(np.sum(sa)) + "\n\n"
+        # average
 
-    writer.write(line)
+        writer.write(line)
 
     if accepted_ds_tags is not None:
         for dstag in accepted_ds_tags:
