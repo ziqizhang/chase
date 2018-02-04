@@ -88,8 +88,8 @@ def save_scores(nfold_predictions, nfold_truth,
 def write_scores(predictoins, truth: pandas.Series, digits, writer,
                  instance_dst_column=None,
                  accepted_ds_tags=None):
+    labels = unique_labels(truth, predictoins)
     if accepted_ds_tags is None:
-        labels = unique_labels(truth, predictoins)
         target_names = ['%s' % l for l in labels]
         p, r, f1, s = precision_recall_fscore_support(truth, predictoins,
                                                       labels=labels)
