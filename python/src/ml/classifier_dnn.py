@@ -344,7 +344,7 @@ def gridsearch(input_data_file, dataset_name, sys_out, model_descriptor: str,
 
     # split the dataset into two parts, 0.75 for train and 0.25 for testing
     if 'ds' in raw_data.columns:
-        col_datasource=raw_data.columns['ds']
+        col_datasource=raw_data['ds']
     else:
         col_datasource=raw_data[raw_data.columns[0]]
     X_train_data, X_test_data, y_train, y_test, ds_train, ds_test= \
