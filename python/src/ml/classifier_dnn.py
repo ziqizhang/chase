@@ -343,8 +343,12 @@ def gridsearch(input_data_file, dataset_name, sys_out, model_descriptor: str,
                                                   word_dist_features_file)
 
     # split the dataset into two parts, 0.75 for train and 0.25 for testing
+    if 'ds' in raw_data.columns:
+        col_datasource=raw_data.columns['ds']
+    else:
+        col_datasource=raw_data[raw_data.columns[0]]
     X_train_data, X_test_data, y_train, y_test, ds_train, ds_test= \
-        train_test_split(M0, raw_data['class'], raw_data[0],
+        train_test_split(M0, raw_data['class'], col_datasource,
                          test_size=0.25,
                          random_state=42)
 
