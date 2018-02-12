@@ -113,7 +113,7 @@ def write_scores(predictoins, truth: pandas.Series, digits, writer,
 
     if accepted_ds_tags is not None:
         for dstag in accepted_ds_tags:
-            writer.write("\n for data from {} :\n".format(dstag))
+            #writer.write("\n for data from {} :\n".format(dstag))
             subset_pred = []
             subset_truth = []
             for ds, label in zip(instance_dst_column, predictoins):

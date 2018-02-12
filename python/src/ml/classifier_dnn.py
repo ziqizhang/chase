@@ -344,7 +344,7 @@ def gridsearch(input_data_file, dataset_name, sys_out, model_descriptor: str,
 
     # split the dataset into two parts, 0.75 for train and 0.25 for testing
     X_train_data, X_test_data, y_train, y_test, ds_train, ds_test= \
-        train_test_split(M0, raw_data['class'], raw_data['ds'],
+        train_test_split(M0, raw_data['class'], raw_data[0],
                          test_size=0.25,
                          random_state=42)
 
