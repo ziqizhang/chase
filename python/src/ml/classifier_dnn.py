@@ -515,7 +515,8 @@ if __name__ == "__main__":
         wdist_file = None
 
 
-    use_mixed_data=True
+    use_mixed_data=False
+
     print("<<<<<< Using Mixed Data={} >>>>>>>".format(use_mixed_data))
     gridsearch(params["input"],
                params["dataset"],  # dataset name

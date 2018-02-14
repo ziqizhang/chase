@@ -438,11 +438,22 @@ def create_model_with_branch(embedding_layers, model_descriptor:str):
             big_model.add(MaxPooling1D(pool_size=int(params[0])))
         elif layer_name=="gmaxpooling1d":
             big_model.add(GlobalMaxPooling1D())
-        elif layer_name=="dense":
-            if len(params)==2:
+        elif layer_name == "dense":
+            if len(params) == 2:
                 big_model.add(Dense(int(params[0]), activation=params[1]))
-            else:
-                big_model.add(Dense(int(params[0])))
+            elif len(params) > 2:
+                kernel_reg = create_regularizer(params[2])
+                activity_reg = create_regularizer(params[3])
+                if kernel_reg is not None and activity_reg is None:
+                    big_model.add(Dense(int(params[0]), activation=params[1],
+                                        kernel_regularizer=kernel_reg))
+                elif activity_reg is not None and kernel_reg is None:
+                    big_model.add(Dense(int(params[0]), activation=params[1],
+                                        activity_regularizer=activity_reg))
+                elif activity_reg is not None and kernel_reg is not None:
+                    big_model.add(Dense(int(params[0]), activation=params[1],
+                                        activity_regularizer=activity_reg,
+                                        kernel_regularizer=kernel_reg))
         elif layer_name=="flatten":
             big_model.add(Flatten())
 
