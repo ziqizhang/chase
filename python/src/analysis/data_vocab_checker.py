@@ -4,7 +4,7 @@ import pandas as pd
 from ml import nlp
 from ml import text_preprocess as tp
 
-
+#calculate I2U and U2C stats
 def get_word_vocab(tweets, normalize_option):
     word_vectorizer = CountVectorizer(
         # vectorizer = sklearn.feature_extraction.text.CountVectorizer(
@@ -15,7 +15,7 @@ def get_word_vocab(tweets, normalize_option):
         decode_error='replace',
         max_features=50000,
         min_df=1,
-        max_df=0.99
+        max_df=0.999
     )
 
    # logger.info("\tgenerating word vectors, {}".format(datetime.datetime.now()))
@@ -56,6 +56,7 @@ def check_stats(processed_tweets, vocab, raw_data):
             instance_count[gs_label]=1
 
     print("total,"+str(len(vocab)))
+    print("I2U stats:")
     for k, v in vocab_by_class.items():
         print(str(k)+","+str(len(v))+","+str(instance_count[k])+","+str(instance_count[k]/len(v)))
 
@@ -73,6 +74,7 @@ def check_stats(processed_tweets, vocab, raw_data):
     #         print(str(first)+" and "+str(second)+" has common "+str(len(inter)))
 
     ##### calc diff ####
+    print("U2C stats")
     for i in range(0, len(keys)):
         first=keys[i]
         first_v=vocab_by_class[first]
@@ -85,13 +87,13 @@ def check_stats(processed_tweets, vocab, raw_data):
         diff=first_v-second_v
         print(str(first)+" vs others has diff "+str(len(diff))+","+str(len(diff)/len(first_v)))
 
-#input_data_file="/home/zz/Work/chase/data/ml/ml/rm/labeled_data_all.csv"
+input_data_file="/home/zz/Work/chase/data/ml/ml/rm/labeled_data_all.csv"
 #input_data_file="/home/zz/Work/chase/data/ml/ml/dt/labeled_data_all_2.csv"
 #input_data_file="/home/zz/Work/chase/data/ml/ml/w/labeled_data_all.csv"
 #input_data_file="/home/zz/Work/chase/data/ml/ml/w+ws/labeled_data_all.csv"
 #input_data_file="/home/zz/Work/chase/data/ml/ml/ws-exp/labeled_data_all.csv"
 #input_data_file="/home/zz/Work/chase/data/ml/ml/ws-amt/labeled_data_all.csv"
-input_data_file="/home/zz/Work/chase/data/ml/ml/ws-gb/labeled_data_all.csv"
+#input_data_file="/home/zz/Work/chase/data/ml/ml/ws-gb/labeled_data_all.csv"
 raw_data = pd.read_csv(input_data_file, sep=',', encoding="utf-8")
 M = get_word_vocab(raw_data.tweet, 0)
 check_stats(M[0], M[1], raw_data.as_matrix())
