@@ -20,8 +20,8 @@ def get_word_vocab(tweets, out_folder, normalize_option):
         stop_words=nlp.stopwords,  # We do better when we keep stopwords
         decode_error='replace',
         max_features=50000,
-        min_df=2,
-        max_df=0.501
+        min_df=1,
+        max_df=0.999
     )
 
     logger.info("\tgenerating word vectors, {}".format(datetime.datetime.now()))
@@ -106,11 +106,11 @@ emg_model = load_model("/home/zz/Work/data/GoogleNews-vectors-negative300.bin.gz
 emt_model = load_model("/home/zz/Work/data/Set1_TweetDataWithoutSpam_Word.bin")
 eml_model = load_model("/home/zz/Work/data/glove.840B.300d.bin.gensim")
 input_data = [
-    # "/home/zz/Work/chase/data/ml/ml/rm/labeled_data_all.csv",
-    # "/home/zz/Work/chase/data/ml/ml/dt/labeled_data_all_2.csv",
-    # "/home/zz/Work/chase/data/ml/ml/w/labeled_data_all.csv",
-    # "/home/zz/Work/chase/data/ml/ml/w+ws/labeled_data_all.csv",
-    # "/home/zz/Work/chase/data/ml/ml/ws-amt/labeled_data_all.csv",
+     "/home/zz/Work/chase/data/ml/ml/rm/labeled_data_all.csv",
+     "/home/zz/Work/chase/data/ml/ml/dt/labeled_data_all_2.csv",
+     "/home/zz/Work/chase/data/ml/ml/w/labeled_data_all.csv",
+     "/home/zz/Work/chase/data/ml/ml/w+ws/labeled_data_all.csv",
+     "/home/zz/Work/chase/data/ml/ml/ws-amt/labeled_data_all.csv",
     "/home/zz/Work/chase/data/ml/ml/ws-exp/labeled_data_all.csv",
     "/home/zz/Work/chase/data/ml/ml/ws-gb/labeled_data_all.csv"]
 output = "/home/zz/Work/chase/output"
@@ -121,22 +121,22 @@ output = "/home/zz/Work/chase/output"
 for input in input_data:
     check_vocab(emg_model, 'google',
                 input,
-                output, 0)
+                output, 1)
     check_vocab(emt_model, 'tw',
                 input,
-                output, 0)
+                output, 1)
     check_vocab(eml_model, 'glv',
                 input,
-                output, 0)
+                output, 1)
     check_vocab_multi([emg_model, emt_model, eml_model], input, output, 0)
 
-    check_vocab(emg_model, 'google',
-                input,
-                output, 1)
-    check_vocab(emt_model, 'tw',
-                input,
-                output, 1)
-    check_vocab(eml_model, 'glv',
-                input,
-                output, 1)
-    check_vocab_multi([emg_model, emt_model, eml_model], input, output, 1)
+    # check_vocab(emg_model, 'google',
+    #             input,
+    #             output, 1)
+    # check_vocab(emt_model, 'tw',
+    #             input,
+    #             output, 1)
+    # check_vocab(eml_model, 'glv',
+    #             input,
+    #             output, 1)
+    # check_vocab_multi([emg_model, emt_model, eml_model], input, output, 1)

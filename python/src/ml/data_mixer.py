@@ -91,22 +91,22 @@ def score_tokens(token_dist: dict, label_instances: dict, label_pair: list):
         #         sum += stats[l]
         # if sum==0:
         #     continue
-        for v in stats.values():
+        for v in stats.values(): #stats contains frequency of this tok found in all labels
             sum += v
 
         # calculate token's score for each label (its frequency found as label 1, and 2, divide by...)
         label_one_count = 0
         if label_pair[0] in stats.keys():
-            label_one_count = stats[label_pair[0]]
-        token_scores_label_one[tok] = label_one_count / sum / label_percent[label_pair[0]]
+            label_one_count = stats[label_pair[0]] #label one count is freq of this tok found as this label one
+        token_scores_label_one[tok] = label_one_count / sum # / label_percent[label_pair[0]]
         label_two_count = 0
         if label_pair[1] in stats.keys():
             label_two_count = stats[label_pair[1]]
-        token_scores_label_two[tok] = label_two_count / sum / label_percent[label_pair[1]]
+        token_scores_label_two[tok] = label_two_count / sum #/ label_percent[label_pair[1]]
 
     return token_scores_label_one, token_scores_label_two
 
-
+#given tweets of two classes, replace words of tweets from one class with words from another class
 def replace_and_create_acrossclass(tweet_to_replace_and_stem,
                                    nouns_to_replace,
                                    nouns_replace_by,
@@ -140,7 +140,7 @@ def replace_and_create_acrossclass(tweet_to_replace_and_stem,
 
     return generated_tweets
 
-
+#for a given class, take a tweet, replace randomly some words with other words found in this class of tweets
 def replace_and_create_singleclass(tweet_to_replace_and_stem,
                                    nouns_replace_by,
                                    adjs_replace_by,
@@ -214,7 +214,14 @@ def regex_replace_single(tok, stems_replace_by,
 
 def rank_and_select_top(dict_with_scores: dict, topn):
     sorted_list = sorted(dict_with_scores.items(), key=lambda x: x[1], reverse=True)
-    return sorted_list[0:topn]
+    if topn>0:
+        return sorted_list[0:topn]
+    else:
+        sublist=[]
+        for e in sorted_list:
+            if e[1]==1.0:
+                sublist.append(e)
+        return sublist
 
 
 def postag_stems(ranked_stems, stem_to_token):
@@ -266,13 +273,13 @@ def write_to_file(generated_tweets, raw_data, out_file):
 
 if __name__ == "__main__":
     #input_data = "/home/zz/Work/chase/data/ml/ml/w/labeled_data_all.csv"
-    #output_data = "/home/zz/Work/chase/data/ml/ml/w/labeled_data_all_mixed_single.csv"
-    input_data = "/home/zz/Work/chase/data/ml/ml/ws-amt/labeled_data_all.csv"
-    output_data = "/home/zz/Work/chase/data/ml/ml/ws-amt/labeled_data_all_mixed_single.csv"
+    #output_data = "/home/zz/Work/chase/data/ml/ml/w/labeled_data_all_mixed.csv"
+    #input_data = "/home/zz/Work/chase/data/ml/ml/ws-amt/labeled_data_all.csv"
+    #output_data = "/home/zz/Work/chase/data/ml/ml/ws-amt/labeled_data_all_mixed.csv"
     #input_data = "/home/zz/Work/chase/data/ml/ml/ws-exp/labeled_data_all.csv"
-    #output_data = "/home/zz/Work/chase/data/ml/ml/ws-exp/labeled_data_all_mixed_single.csv"
-    #input_data = "/home/zz/Work/chase/data/ml/ml/ws-gb/labeled_data_all.csv"
-    #output_data = "/home/zz/Work/chase/data/ml/ml/ws-gb/labeled_data_all_mixed_single.csv"
+    #output_data = "/home/zz/Work/chase/data/ml/ml/ws-exp/labeled_data_all_mixed.csv"
+    input_data = "/home/zz/Work/chase/data/ml/ml/ws-gb/labeled_data_all.csv"
+    output_data = "/home/zz/Work/chase/data/ml/ml/ws-gb/labeled_data_all_mixed.csv"
 
     #input_data = "/home/zz/Work/chase/data/ml/ml/w+ws/labeled_data_all.csv"
     #output_data = "/home/zz/Work/chase/data/ml/ml/w+ws/labeled_data_all_mixed_single.csv"
@@ -294,12 +301,12 @@ if __name__ == "__main__":
         = score_tokens(stem_dist, label_instances, label_pair)
 
     # find the two classes to be mixed
-    ranked_label1_stems = rank_and_select_top(token_scores_label_one, 100)
+    ranked_label1_stems = rank_and_select_top(token_scores_label_one, 0)
     # label 1 stem verbs, nouns
     selected_label1_verbs, selected_label1_nouns, selected_label1_adjs = \
         postag_stems(ranked_label1_stems, stem_to_token)
 
-    ranked_label2_stems = rank_and_select_top(token_scores_label_two, 100)
+    ranked_label2_stems = rank_and_select_top(token_scores_label_two, 0)
     # label 2 stem verbs, nouns
     selected_label2_verbs, selected_label2_nouns, selected_label2_adjs = \
         postag_stems(ranked_label2_stems, stem_to_token)
@@ -313,34 +320,35 @@ if __name__ == "__main__":
     tweet_to_stem_label2 = label_to_tweetstems[1]
 
     # replace tweets of label 1 by tokens from label 2
-    # new_data_label1 = replace_and_create_acrossclass(tweet_to_stem_label1,
-    #                                      selected_label1_nouns,
-    #                                      selected_label2_nouns,
-    #                                      selected_label1_adjs,
-    #                                      selected_label2_adjs,
-    #                                      stem_to_token, 1, raw_data)
+    new_data_label1 = replace_and_create_acrossclass(tweet_to_stem_label1,
+                                          selected_label1_nouns,
+                                          selected_label2_nouns,
+                                          selected_label1_adjs,
+                                          selected_label2_adjs,
+                                          stem_to_token, 1, raw_data)
+    print("label {} original data={}, newly generated={}".format(1, len(tweet_to_stem_label1),
+                                                                  len(new_data_label1)))
+    #
+    new_data_label2 = replace_and_create_acrossclass(tweet_to_stem_label2,
+                                          selected_label2_nouns,
+                                          selected_label1_nouns,
+                                          selected_label2_adjs,
+                                          selected_label1_adjs,
+                                          stem_to_token, 0, raw_data)
+
+    # new_data_label1 = replace_and_create_singleclass(tweet_to_stem_label1,
+    #                                                  selected_label1_nouns,
+    #                                                  selected_label1_adjs,
+    #                                                  stem_to_token, raw_data)
     # print("label {} original data={}, newly generated={}".format(1, len(tweet_to_stem_label1),
     #                                                              len(new_data_label1)))
     #
-    # new_data_label2 = replace_and_create_acrossclass(tweet_to_stem_label2,
-    #                                      selected_label2_nouns,
-    #                                      selected_label1_nouns,
-    #                                      selected_label2_adjs,
-    #                                      selected_label1_adjs,
-    #                                      stem_to_token, 0, raw_data)
-    new_data_label1 = replace_and_create_singleclass(tweet_to_stem_label1,
-                                                     selected_label1_nouns,
-                                                     selected_label1_adjs,
-                                                     stem_to_token, raw_data)
-    print("label {} original data={}, newly generated={}".format(1, len(tweet_to_stem_label1),
-                                                                 len(new_data_label1)))
-
-    new_data_label2 = replace_and_create_singleclass(tweet_to_stem_label2,
-                                                     selected_label2_nouns,
-                                                     selected_label2_adjs,
-                                                     stem_to_token, raw_data)
-    print("label {} original data={}, newly generated={}".format(0, len(tweet_to_stem_label2),
-                                                                 len(new_data_label2)))
+    # new_data_label2 = replace_and_create_singleclass(tweet_to_stem_label2,
+    #                                                  selected_label2_nouns,
+    #                                                  selected_label2_adjs,
+    #                                                  stem_to_token, raw_data)
+    # print("label {} original data={}, newly generated={}".format(0, len(tweet_to_stem_label2),
+    #                                                              len(new_data_label2)))
     new_data_label1.extend(new_data_label2)
     write_to_file(new_data_label1, raw_data, output_data)
 

@@ -234,8 +234,8 @@ def other_features_(tweet, cleaned_tweet):
 
     This is modified to only include those features in the final
     model."""
-
-    sentiment = nlp.sentiment_analyzer.polarity_scores(tweet)
+    print("WARNING>>>>>>>>>>>>>>>>> VADERSENTIMENT DISABLED")
+    sentiment =None# = nlp.sentiment_analyzer.polarity_scores(tweet)
 
     words = cleaned_tweet #Get text only
 
