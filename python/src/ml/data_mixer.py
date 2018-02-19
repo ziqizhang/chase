@@ -278,8 +278,10 @@ if __name__ == "__main__":
     #output_data = "/home/zz/Work/chase/data/ml/ml/ws-amt/labeled_data_all_mixed.csv"
     #input_data = "/home/zz/Work/chase/data/ml/ml/ws-exp/labeled_data_all.csv"
     #output_data = "/home/zz/Work/chase/data/ml/ml/ws-exp/labeled_data_all_mixed.csv"
-    input_data = "/home/zz/Work/chase/data/ml/ml/ws-gb/labeled_data_all.csv"
-    output_data = "/home/zz/Work/chase/data/ml/ml/ws-gb/labeled_data_all_mixed.csv"
+    #input_data = "/home/zz/Work/chase/data/ml/ml/ws-gb/labeled_data_all.csv"
+    #output_data = "/home/zz/Work/chase/data/ml/ml/ws-gb/labeled_data_all_mixed.csv"
+    input_data = "/home/zz/Work/chase/data/ml/ml/w+ws/labeled_data_all.csv"
+    output_data = "/home/zz/Work/chase/data/ml/ml/w+ws/labeled_data_all_mixed.csv"
 
     #input_data = "/home/zz/Work/chase/data/ml/ml/w+ws/labeled_data_all.csv"
     #output_data = "/home/zz/Work/chase/data/ml/ml/w+ws/labeled_data_all_mixed_single.csv"

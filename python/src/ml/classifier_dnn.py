@@ -37,7 +37,7 @@ import pandas as pd
 import pickle
 from keras.layers import Embedding
 from keras.wrappers.scikit_learn import KerasClassifier
-from sklearn.cross_validation import cross_val_predict, train_test_split, cross_val_score
+from sklearn.cross_validation import cross_val_predict, train_test_split, cross_val_score, StratifiedKFold
 from sklearn.feature_extraction.text import CountVectorizer
 from sklearn.model_selection import GridSearchCV
 from keras.preprocessing import sequence
@@ -286,8 +286,15 @@ def grid_search_dnn(dataset_name, outfolder, model_descriptor: str,
     epochs = [10]
     param_grid = dict(batch_size=batch_size, nb_epoch=epochs)
 
+    #it seems that the default gridsearchcv can have problem with stratifiedkfold sometimes, on w and ws dataset when we add "mixed_data"
+    fold=StratifiedKFold(n_folds=nfold, y=y_train)
     _classifier = GridSearchCV(estimator=model, param_grid=param_grid, n_jobs=cpus,
-                               cv=nfold)
+                               cv=fold)
+
+    #this is the original grid search cv object to replace the above
+    #_classifier = GridSearchCV(estimator=model, param_grid=param_grid, n_jobs=cpus,
+    #                           cv=nfold)
+
     print("\tfitting model...{}".format(datetime.datetime.now()))
     _classifier.fit(X_train, y_train)
     print("\tcrossfold running...{}".format(datetime.datetime.now()))
@@ -317,6 +324,17 @@ def grid_search_dnn(dataset_name, outfolder, model_descriptor: str,
         # util.print_eval_report(best_param_ann, cv_score_ann, dev_data_prediction_ann,
         #                       time_ann_predict_dev,
         #                       time_ann_train, y_test)
+
+
+def output_data_stats(X_train_data, y_train):
+    labels={}
+    for y in y_train:
+        if y in labels.keys():
+            labels[y]+=1
+        else:
+            labels[y]=1
+    print("training instances={}, training labels={}, training label distribution={}".
+          format(len(X_train_data), len(y_train),labels))
 
 
 def gridsearch(input_data_file, dataset_name, sys_out, model_descriptor: str,
@@ -383,6 +401,9 @@ def gridsearch(input_data_file, dataset_name, sys_out, model_descriptor: str,
 
     X_train_data = sequence.pad_sequences(X_train_data, maxlen=MAX_SEQUENCE_LENGTH)
     X_test_data = sequence.pad_sequences(X_test_data, maxlen=MAX_SEQUENCE_LENGTH)
+
+    output_data_stats(X_train_data, y_train)
+    # exit(0)
 
     grid_search_dnn(dataset_name, sys_out, model_descriptor,
                     CPUS, 5,
@@ -515,7 +536,7 @@ if __name__ == "__main__":
         wdist_file = None
 
 
-    use_mixed_data=False
+    use_mixed_data=True
 
     print("<<<<<< Using Mixed Data={} >>>>>>>".format(use_mixed_data))
     gridsearch(params["input"],
