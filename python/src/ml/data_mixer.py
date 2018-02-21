@@ -119,8 +119,9 @@ def replace_and_create_acrossclass(tweet_to_replace_and_stem,
     generated_tweets = []
     for tw, stems in tweet_to_replace_and_stem.items():
         new_row = pd.Series.copy(raw_data.ix[tw])
+        tweet_id = new_row[1]
         tweet = new_row["tweet"]
-        replaced = True
+        replaced = False
         for st in stems:
             if st in nouns_to_replace:
                 replaced, tweet = regex_replace(st,
@@ -150,6 +151,8 @@ def replace_and_create_singleclass(tweet_to_replace_and_stem,
     generated_tweets = []
     for tw, stems in tweet_to_replace_and_stem.items():
         new_row = pd.Series.copy(raw_data.ix[tw])
+        tweet_id=new_row[1]
+
         tweet = new_row["tweet"]
         tokens = tweet.split()
         #try:
@@ -272,16 +275,16 @@ def write_to_file(generated_tweets, raw_data, out_file):
 
 
 if __name__ == "__main__":
-    #input_data = "/home/zz/Work/chase/data/ml/ml/w/labeled_data_all.csv"
-    #output_data = "/home/zz/Work/chase/data/ml/ml/w/labeled_data_all_mixed.csv"
+    input_data = "/home/zz/Work/chase/data/ml/ml/w/labeled_data_all.csv"
+    output_data = "/home/zz/Work/chase/data/ml/ml/w/labeled_data_all_mixed_debug.csv"
     #input_data = "/home/zz/Work/chase/data/ml/ml/ws-amt/labeled_data_all.csv"
     #output_data = "/home/zz/Work/chase/data/ml/ml/ws-amt/labeled_data_all_mixed.csv"
     #input_data = "/home/zz/Work/chase/data/ml/ml/ws-exp/labeled_data_all.csv"
     #output_data = "/home/zz/Work/chase/data/ml/ml/ws-exp/labeled_data_all_mixed.csv"
     #input_data = "/home/zz/Work/chase/data/ml/ml/ws-gb/labeled_data_all.csv"
     #output_data = "/home/zz/Work/chase/data/ml/ml/ws-gb/labeled_data_all_mixed.csv"
-    input_data = "/home/zz/Work/chase/data/ml/ml/w+ws/labeled_data_all.csv"
-    output_data = "/home/zz/Work/chase/data/ml/ml/w+ws/labeled_data_all_mixed.csv"
+    #input_data = "/home/zz/Work/chase/data/ml/ml/w+ws/labeled_data_all.csv"
+    #output_data = "/home/zz/Work/chase/data/ml/ml/w+ws/labeled_data_all_mixed.csv"
 
     #input_data = "/home/zz/Work/chase/data/ml/ml/w+ws/labeled_data_all.csv"
     #output_data = "/home/zz/Work/chase/data/ml/ml/w+ws/labeled_data_all_mixed_single.csv"

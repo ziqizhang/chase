@@ -24,7 +24,7 @@ def load_classifier_model(classifier_pickled=None):
         return classifier
 
 
-def outputFalsePredictions(pred, truth, model_descriptor, dataset_name, outfolder):
+def outputFalsePredictions(pred, truth, index, model_descriptor, dataset_name, outfolder):
     subfolder = outfolder + "/errors"
     try:
         os.stat(subfolder)
@@ -34,12 +34,12 @@ def outputFalsePredictions(pred, truth, model_descriptor, dataset_name, outfolde
     filename = os.path.join(subfolder, filename)
     file = open(filename, "w")
     file.write(model_descriptor+"\n")
-    for p, t in zip(pred, truth):
+    for p, t, i in zip(pred, truth, index):
         if p == t:
-            line = str(p) + ",ok\n"
+            line = str(i)+","+str(p) + ",ok\n"
             file.write(line)
         else:
-            line = str(p) + ",wrong\n"
+            line = str(i)+","+str(p) + ",wrong\n"
             file.write(line)
     file.close()
 
@@ -59,13 +59,17 @@ def prepare_score_string(p, r, f1, s, labels, target_names, digits):
 
 def save_scores(nfold_predictions, nfold_truth,
                 heldout_predictions, heldout_truth,
+                nfold_index, heldout_index,
                 model_descriptor,
                 dataset_name,
                 digits, outfolder,
                 instance_tags_train= None,
                 instance_tags_test= None,
                 accepted_ds_tags: list = None):
-    outputFalsePredictions(nfold_predictions, nfold_truth, model_descriptor,dataset_name, outfolder)
+    pred = nfold_predictions.tolist()+heldout_predictions.tolist()
+    truth = list(nfold_truth)+list(heldout_truth)
+    index = nfold_index+heldout_index
+    outputFalsePredictions(pred, truth, index, model_descriptor,dataset_name, outfolder)
     subfolder = outfolder + "/scores"
     try:
         os.stat(subfolder)

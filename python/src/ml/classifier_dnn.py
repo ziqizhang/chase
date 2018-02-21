@@ -256,7 +256,7 @@ def build_word_dist_matrix(word_vocab: dict,
 
 
 def grid_search_dnn(dataset_name, outfolder, model_descriptor: str,
-                    cpus, nfold, X_train, y_train, X_test, y_test,
+                    cpus, nfold, X_train, y_train, X_test, y_test, X_train_index, X_test_index,
                     embedding_layer_max_index, pretrained_embedding_matrix=None,
                     word_dist_matrix=None,
                     instance_tags_train=None, instance_tags_test=None,
@@ -312,12 +312,13 @@ def grid_search_dnn(dataset_name, outfolder, model_descriptor: str,
         heldout_predictions_final = best_estimator.predict(X_test)
         print("\tsaving...{}".format(datetime.datetime.now()))
         util.save_scores(nfold_predictions, y_train, heldout_predictions_final, y_test,
+                         X_train_index, X_test_index,
                          model_descriptor, dataset_name,
                          3, outfolder, instance_tags_train, instance_tags_test, accepted_ds_tags)
 
     else:
         print("\tsaving...{}".format(datetime.datetime.now()))
-        util.save_scores(nfold_predictions, y_train, None, y_test,
+        util.save_scores(nfold_predictions, y_train, None, y_test,X_train_index, X_test_index,
                          model_descriptor, dataset_name, 3,
                          outfolder, instance_tags_train, instance_tags_test, accepted_ds_tags)
 
@@ -365,8 +366,9 @@ def gridsearch(input_data_file, dataset_name, sys_out, model_descriptor: str,
         col_datasource=raw_data['ds']
     else:
         col_datasource=raw_data[raw_data.columns[0]]
-    X_train_data, X_test_data, y_train, y_test, ds_train, ds_test= \
+    X_train_data, X_test_data, y_train, y_test, ds_train, ds_test, index_train, index_test=\
         train_test_split(M0, raw_data['class'], col_datasource,
+                         list(raw_data.index.values),
                          test_size=0.25,
                          random_state=42)
 
@@ -408,7 +410,7 @@ def gridsearch(input_data_file, dataset_name, sys_out, model_descriptor: str,
     grid_search_dnn(dataset_name, sys_out, model_descriptor,
                     CPUS, 5,
                     X_train_data,
-                    y_train, X_test_data, y_test,
+                    y_train, X_test_data, y_test, index_train, index_test,
                     len(M[1]), pretrained_word_matrix, word_dist_matrix,
                     ds_train, ds_test, accepted_ds_tags)
     print("complete {}".format(datetime.datetime.now()))
@@ -536,7 +538,7 @@ if __name__ == "__main__":
         wdist_file = None
 
 
-    use_mixed_data=True
+    use_mixed_data=False
 
     print("<<<<<< Using Mixed Data={} >>>>>>>".format(use_mixed_data))
     gridsearch(params["input"],
