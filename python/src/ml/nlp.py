@@ -4,7 +4,7 @@ import nltk
 from nltk import PorterStemmer, WordNetLemmatizer
 from vaderSentiment.vaderSentiment import SentimentIntensityAnalyzer as VS
 
-#sentiment_analyzer = VS()
+sentiment_analyzer = VS()
 stemmer = PorterStemmer()
 lemmatizer = WordNetLemmatizer()
 stopwords = nltk.corpus.stopwords.words("english")

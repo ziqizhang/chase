@@ -120,15 +120,15 @@ output = "/home/zz/Work/chase/output"
 
 for input in input_data:
     check_vocab(emg_model, 'google',
-                input,
-                output, 1)
+                 input,
+                 output, 1)
     check_vocab(emt_model, 'tw',
-                input,
-                output, 1)
+                 input,
+                 output, 1)
     check_vocab(eml_model, 'glv',
-                input,
-                output, 1)
-    check_vocab_multi([emg_model, emt_model, eml_model], input, output, 0)
+                 input,
+                 output, 1)
+    check_vocab_multi([emg_model, emt_model, eml_model], input, output, 1)
 
     # check_vocab(emg_model, 'google',
     #             input,

@@ -104,6 +104,8 @@ def calc_instance_unique_feature_percent(input_data_file, sys_out,
         elif score_uniqueness >= 0.7 and score_uniqueness < 0.8:
             tweet_longtail_segment[index] = "[0.7-0.8)"
         elif score_uniqueness >= 0.8 and score_uniqueness < 0.9:
+            tweet_longtail_segment[index] = "[0.8-0.9)"
+        elif score_uniqueness >= 0.9:
             tweet_longtail_segment[index] = "[0.9-1.0]"
 
     return tweet_longtail_segment
@@ -116,23 +118,35 @@ def find_corrected_tweets(ref_annotation_output, impr_annotation_output,
     ref_annotation = pd.read_csv(ref_annotation_output, sep=',', encoding="utf-8")
     impr_annotation = pd.read_csv(impr_annotation_output, sep=',', encoding="utf-8")
 
-    ref_annotation.sort_values(ref_annotation.columns[0])
-    impr_annotation.sort_values(impr_annotation.columns[0])
-
     correction_stats = {}
-    for index, row in raw_data.iterrows():
-        # print(index)
-        label = row[label_col]
-        if label == "2" or label == 2:
+    correction_stats["0"]=0
+    correction_stats["(0-0.1)"] = 0
+    correction_stats["[0.1-0.2)"] = 0
+    correction_stats["[0.2-0.3)"] = 0
+    correction_stats["[0.3-0.4)"] = 0
+    correction_stats["[0.4-0.5)"] = 0
+    correction_stats["[0.5-0.6)"] = 0
+    correction_stats["[0.6-0.7)"] = 0
+    correction_stats["[0.7-0.8)"] = 0
+    correction_stats["[0.8-0.9)"] = 0
+    correction_stats["[0.9-1.0]"] = 0
+
+
+    for index in range(0, len(ref_annotation)):
+        if index not in tweet_longtail_segment.keys():
             continue
+        # print(index)
+        #label = row[label_col]
 
         # get ref annotation
-        ref_ann = ref_annotation.loc[ref_annotation[ref_annotation.columns[0]]
-                                     == index]
-        impr_ann = impr_annotation.loc[impr_annotation[impr_annotation.columns[0]]
-                                       == index]
+        ref_ann = ref_annotation.loc[index]
+        impr_ann = impr_annotation.loc[index]
 
-        if impr_ann[1] == "ok" and ref_ann[1] == "wrong":
+        if not ref_ann[0]==impr_ann[0]:
+            print("index on the same row of two data files are not the same...")
+
+        if impr_ann[2] == "ok" and ref_ann[2] == "wrong":
+            print(ref_ann[0])
             # this is a corrected tweet by impr'ed model
             longtail_segment = tweet_longtail_segment[index]
             if longtail_segment in correction_stats.keys():
@@ -163,10 +177,13 @@ def generate_stats(input_data_file, sys_out,
 
 
 if __name__ == "__main__":
-    input_data = "/home/zz/Work/chase/data/ml/ml/ws-gb/labeled_data_all.csv"
-    ref_ann_folder="/home/zz/Work/chase/output/errors/nfold_only/amt/base"
-    impr_skip_ann_folder="/home/zz/Work/chase/output/errors/nfold_only/amt/base+skip"
-    impr_gru_ann_folder="/home/zz/Work/chase/output/errors/nfold_only/amt/base+gru"
+    #ref_annotation = pd.read_csv("/home/zz/Work/chase/output/errors/errors.csv", sep=',', encoding="utf-8")
+    #ref_annotation.sort_values(ref_annotation.columns[0])
+
+    input_data = "/home/zz/Work/chase/data/ml/ml/w+ws/labeled_data_all.csv"
+    ref_ann_folder="/home/zz/Work/chase/output/errors/entire_dataset/w+ws/base"
+    impr_skip_ann_folder="/home/zz/Work/chase/output/errors/entire_dataset/w+ws/base_scnn"
+    impr_gru_ann_folder="/home/zz/Work/chase/output/errors/entire_dataset/w+ws/base_gru"
     sys_out = "/home/zz/Work/chase/output"
     word_norm_option = 0
     label_col = 6
@@ -176,11 +193,13 @@ if __name__ == "__main__":
     impr_gru_ann_files = sorted(os.listdir(impr_gru_ann_folder))
 
     for rf, skipf, gruf in zip(ref_ann_files, impr_skip_ann_files, impr_gru_ann_files):
+        print("rf={}\nskipf={}".format(rf,skipf))
         generate_stats(input_data, sys_out,
                        sys_out+"/skip_vs_base-{}".format(skipf), word_norm_option, label_col,
                        ref_ann_folder+"/"+rf,
                        impr_skip_ann_folder+"/"+skipf)
+        print("rf={}\ngruf={}".format(rf, gruf))
         generate_stats(input_data, sys_out,
-                       sys_out + "/gru_vs_base-{}".format(skipf), word_norm_option, label_col,
+                       sys_out + "/gru_vs_base-{}".format(gruf), word_norm_option, label_col,
                        ref_ann_folder + "/" + rf,
-                       impr_gru_ann_folder + "/" + skipf)
+                       impr_gru_ann_folder + "/" + gruf)

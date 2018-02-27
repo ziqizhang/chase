@@ -88,8 +88,9 @@ class ChaseGridSearch(object):
         #M=self.feature_scale(M)
 
         # split the dataset into two parts, 0.75 for train and 0.25 for testing
-        X_train_data, X_test_data, y_train, y_test = \
+        X_train_data, X_test_data, y_train, y_test,index_train, index_test = \
             train_test_split(M, self.raw_data['class'],
+                             list(self.raw_data.index.values),
                              test_size=TEST_SPLIT_PERCENT,
                              random_state=42)
         X_train_data=util.feature_scale(SCALING_STRATEGY,X_train_data)
@@ -101,7 +102,7 @@ class ChaseGridSearch(object):
         accepted_ds_tags=None
         if self.output_scores_per_ds:
             instance_data_source_column=pd.Series(self.raw_data.ds)
-            accepted_ds_tags=["c","td"]
+            accepted_ds_tags=None
 
         # #if not self.feature_selection:
         # print("APPLYING FEATURE SCALING: [%s]" % SCALING_STRATEGY)
@@ -120,7 +121,7 @@ class ChaseGridSearch(object):
         if WITH_SGD:
             cl.learn_general(NUM_CPU, N_FOLD_VALIDATION, self.task_name, LOAD_MODEL_FROM_FILE, "sgd",
                              meta_M[1], X_train_data, y_train,
-                             X_test_data, y_test, self.identifier, self.sys_out,
+                             X_test_data, y_test, self.sys_out,
                              self.cl_gridsearch, self.dr_option, self.dr_gridsearch,
                              self.fs_option,self.fs_gridsearch,
                              instance_data_source_column, accepted_ds_tags)
@@ -129,7 +130,7 @@ class ChaseGridSearch(object):
         if WITH_SLR:
             cl.learn_general(NUM_CPU, N_FOLD_VALIDATION, self.task_name, LOAD_MODEL_FROM_FILE, "lr",
                              meta_M[1],X_train_data, y_train,
-                             X_test_data, y_test, self.identifier, self.sys_out, self.cl_gridsearch
+                             X_test_data, y_test, self.sys_out, self.cl_gridsearch
                              , self.dr_option, self.dr_gridsearch,
                              self.fs_option,self.fs_gridsearch,
                              instance_data_source_column, accepted_ds_tags)
@@ -140,7 +141,7 @@ class ChaseGridSearch(object):
                              meta_M[1],
                              X_train_data,
                              y_train,
-                             X_test_data, y_test, self.identifier, self.sys_out, self.cl_gridsearch
+                             X_test_data, y_test, self.sys_out, self.cl_gridsearch
                              , self.dr_option, self.dr_gridsearch,
                              self.fs_option,self.fs_gridsearch,
                              instance_data_source_column, accepted_ds_tags)
@@ -150,7 +151,8 @@ class ChaseGridSearch(object):
             cl.learn_general(NUM_CPU, N_FOLD_VALIDATION, self.task_name, LOAD_MODEL_FROM_FILE,
                                     "svml",
                              meta_M[1],X_train_data,
-                             y_train, X_test_data, y_test, self.identifier, self.sys_out,
+                             y_train, X_test_data, y_test,
+                             index_train, index_test,self.sys_out,
                              self.cl_gridsearch, self.dr_option, self.dr_gridsearch,
                              self.fs_option,self.fs_gridsearch,
                              instance_data_source_column, accepted_ds_tags)
@@ -161,7 +163,7 @@ class ChaseGridSearch(object):
                                     "svmrbf",
                              meta_M[1],
                              X_train_data,
-                             y_train, X_test_data, y_test, self.identifier, self.sys_out,
+                             y_train, X_test_data, y_test, self.sys_out,
                              self.cl_gridsearch, self.dr_option, self.dr_gridsearch,
                              self.fs_option,self.fs_gridsearch,
                              instance_data_source_column, accepted_ds_tags)

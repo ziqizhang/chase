@@ -42,27 +42,27 @@ def create_dimensionality_reducer(option, gridsearch: bool):
 
 
 def create_feature_selector(option, gridsearch: bool):
-    fs=None
-    params=None
+    fs = None
+    params = None
     if option == 99:
         # selector=SelectKBest(score_func=chi2, k=200)
         return fs, params
     elif option == 0:
         # selector=PCA(n_components=2, svd_solver='auto')
-        fs=SelectFromModel(LogisticRegression(class_weight='balanced', penalty="l1", C=0.01))
-        params={}
+        fs = SelectFromModel(LogisticRegression(class_weight='balanced', penalty="l1", C=0.01))
+        params = {}
     elif option == 1:
-        fs=SelectKBest(k=1000, score_func=f_classif)
-        params={PIPELINE_FEATURE_SELECTION + 'score_func': [f_classif],
-                       PIPELINE_FEATURE_SELECTION + 'k': [100, 250, 500, 1000,1500,2000]}
+        fs = SelectKBest(k=1000, score_func=f_classif)
+        params = {PIPELINE_FEATURE_SELECTION + 'score_func': [f_classif],
+                  PIPELINE_FEATURE_SELECTION + 'k': [100, 250, 500, 1000, 1500, 2000]}
     elif option == 2:
         # fs=RandomizedLogisticRegression(n_jobs=4, random_state=42)
         # params = {PIPELINE_FEATURE_SELECTION+'sample_fraction':[0.3,0.5],
         #           PIPELINE_FEATURE_SELECTION+'selection_threshold':[0.25,0.5]}
         logreg = LogisticRegression()
         # Use RFECV to pick best features, using Stratified Kfold
-        fs=RFECV(estimator=logreg, step=250, cv=5, scoring='accuracy')
-        params={}
+        fs = RFECV(estimator=logreg, step=250, cv=5, scoring='accuracy')
+        params = {}
 
     if gridsearch:
         return fs, params
@@ -163,9 +163,10 @@ def create_classifier(outfolder, model, task, nfold, classifier_gridsearch, dr_o
 
 def learn_general(cpus, nfold, task, load_model, model,
                   feature_vocbs: dict, X_train, y_train, X_test, y_test,
+                  index_train, index_test,
                   outfolder, classifier_gridsearch=True,
                   dr_option=0, dr_gridsearch=True, fs_option=0, fs_gridsearch=True,
-                  instance_data_source_tags=None, accepted_ds_tags:list=None
+                  instance_data_source_tags=None, accepted_ds_tags: list = None
                   ):
     c = create_classifier(outfolder, model, task, nfold, classifier_gridsearch,
                           dr_option, dr_gridsearch, fs_option, fs_gridsearch, cpus)
@@ -211,10 +212,11 @@ def learn_general(cpus, nfold, task, load_model, model,
         heldout_predictions_final = best_estimator.predict(X_test)
         util.save_scores(nfold_predictions, y_train,
                          heldout_predictions_final,
-                         y_test,
+                         y_test,index_train, index_test,
                          model, task,
                          2, outfolder,
                          instance_data_source_tags, accepted_ds_tags)
+
     else:
         util.save_scores(nfold_predictions, y_train, None, y_test, model, task,
                          2, outfolder,
