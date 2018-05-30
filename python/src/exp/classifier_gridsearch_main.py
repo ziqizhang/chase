@@ -64,6 +64,7 @@ class ChaseGridSearch(object):
                  folder_sysout,
                  output_scores_per_ds=False):
         self.raw_data = numpy.empty
+        self.cleaned_data=numpy.empty
         self.data_file = data_file
         self.identifier = identifier
         self.task_name = task
@@ -81,9 +82,11 @@ class ChaseGridSearch(object):
         ec.logger.info("loading input data from: {}, exist={}".format(self.data_file,
                                     os.path.exists(self.data_file)))
         self.raw_data = pd.read_csv(self.data_file, sep=',', encoding="utf-8")
+        self.cleaned_data=pd.read_csv(self.data_file+"c.csv",sep=',', encoding="utf-8")
 
     def gridsearch(self):
-        meta_M=util.feature_extraction(self.raw_data.tweet, self.feat_v, self.sys_out,ec.logger)
+        meta_M=util.feature_extraction(self.raw_data.tweet, self.feat_v, self.sys_out,ec.logger,
+                                       self.cleaned_data.tweet)
         M=meta_M[0]
         #M=self.feature_scale(M)
 

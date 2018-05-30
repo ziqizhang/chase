@@ -1,0 +1,1 @@
+1. everytime before running, check classifier_dnn.py line 513 to set word_norm option. 

@@ -7,7 +7,7 @@ seed(1)
 os.environ['PYTHONHASHSEED'] = '0'
 os.environ['THEANO_FLAGS'] = "floatX=float64,device=cpu,openmp=True"
 # os.environ['THEANO_FLAGS']="openmp=True"
-os.environ['OMP_NUM_THREADS'] = '8'
+os.environ['OMP_NUM_THREADS'] = '16'
 import theano
 
 theano.config.openmp = True
@@ -211,10 +211,10 @@ def build_pretrained_embedding_matrix(word_vocab: dict, models: list, expected_e
         if not is_in_model:
             random += 1
             model = models[0]
-            if randomize_strategy == 1:  # randomly set values following a continuous uniform distribution
+            if randomize_strategy == '1' or randomize_strategy == 1:  # randomly set values following a continuous uniform distribution
                 vec = numpy.random.random_sample(expected_emb_dim)
                 matrix[i] = vec
-            elif randomize_strategy == 2:  # randomly take a vector from the model
+            elif randomize_strategy == '2' or randomize_strategy == 2:  # randomly take a vector from the model
                 if word in randomized_vectors.keys():
                     vec = randomized_vectors[word]
                 else:
@@ -227,7 +227,7 @@ def build_pretrained_embedding_matrix(word_vocab: dict, models: list, expected_e
         count += 1
         if count % 100 == 0:
             print(count)
-    if randomize_strategy != 0:
+    if randomize_strategy != '0':
         print("randomized={}".format(random))
     else:
         print("oov={}".format(random))
@@ -510,7 +510,7 @@ if __name__ == "__main__":
     else:
         params["scoreperclass"] = True
     if "word_norm" not in params.keys():
-        params["word_norm"] = 0
+        params["word_norm"] = 1
     if "oov_random" not in params.keys():
         params["oov_random"] = 0
     if "emb_model" in params.keys():

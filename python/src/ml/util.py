@@ -325,13 +325,17 @@ def feature_scale(option, M):
     return M
 
 
-def feature_extraction(data_column, feat_vectorizer, sysout, logger):
-    tweets = data_column
+def feature_extraction(raw_data_column,feat_vectorizer, sysout, logger, cleaned_data_column=None):
+    tweets = raw_data_column
     tweets = [x for x in tweets if type(x) == str]
     logger.info("FEATURE EXTRACTION AND VECTORIZATION FOR ALL data, insatance={}, {}"
                 .format(len(tweets), datetime.datetime.now()))
     logger.info("\tbegin feature extraction and vectorization...")
-    tweets_cleaned = [text_preprocess.strip_hashtags(x) for x in tweets]
+
+    if cleaned_data_column is None:
+        tweets_cleaned = [text_preprocess.strip_hashtags(x) for x in tweets]
+    else:
+        tweets_cleaned=[x for x in cleaned_data_column if type(x) == str]
     # tweets_cleaned = [text_preprocess.preprocess_clean(x, True, True) for x in tweets]
     M = feat_vectorizer.transform_inputs(tweets, tweets_cleaned, sysout, "na")
     logger.info("FEATURE MATRIX dimensions={}".format(M[0].shape))
