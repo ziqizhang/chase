@@ -1,4 +1,6 @@
 import functools
+import re
+
 import gensim
 import pandas as pd
 import logging
@@ -54,18 +56,25 @@ def check_vocab(model, model_str, input_date_file, sys_out, word_norm_option):
     raw_data = pd.read_csv(input_date_file, sep=',', encoding="utf-8")
     M = get_word_vocab(raw_data.tweet, sys_out, word_norm_option)
 
+    oov = list()
     word_vocab = M[1]
     count = 0
     random = 0
     for word, i in word_vocab.items():
+        nopunc=re.sub(r'[^\w\s]', '', word).strip()
+        if len(nopunc)==0:
+            continue
+        if len(word)==1:
+            continue
         if word in model.wv.vocab.keys():
             pass
         else:
             random += 1
+            oov.append(word)
         count += 1
     print("data={}, model={}, norm={}, vocab={},oov={}".
           format(input_date_file, model_str, word_norm_option, count, random))
-
+    sorted(oov)
 
 def check_vocab_multi(models: list, input_date_file, sys_out, word_norm_option):
     raw_data = pd.read_csv(input_date_file, sep=',', encoding="utf-8")
@@ -128,7 +137,7 @@ for input in input_data:
     check_vocab(eml_model, 'glv',
                  input,
                  output, 1)
-    check_vocab_multi([emg_model, emt_model, eml_model], input, output, 1)
+    #check_vocab_multi([emg_model, emt_model, eml_model], input, output, 1)
 
     # check_vocab(emg_model, 'google',
     #             input,

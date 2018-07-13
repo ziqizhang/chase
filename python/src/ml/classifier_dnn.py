@@ -49,6 +49,7 @@ from ml import dnn_model_creator as dmc
 
 MAX_SEQUENCE_LENGTH = 100  # maximum # of words allowed in a tweet
 WORD_EMBEDDING_DIM_OUTPUT = 300
+WORD_EMBEDDING_DIM_OUTPUT = 300
 CPUS = 1
 
 
