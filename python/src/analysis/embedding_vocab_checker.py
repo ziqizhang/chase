@@ -55,26 +55,27 @@ def load_model(model_file):
 def check_vocab(model, model_str, input_date_file, sys_out, word_norm_option):
     raw_data = pd.read_csv(input_date_file, sep=',', encoding="utf-8")
     M = get_word_vocab(raw_data.tweet, sys_out, word_norm_option)
+    with open("oov_list", 'wb') as oov_file:
+        oov = list()
+        word_vocab = M[1]
+        count = 0
+        random = 0
+        for word, i in word_vocab.items():
+            nopunc = re.sub(r'[^\w\s]', '', word).strip()
+            if len(nopunc) == 0:
+                continue
+            if len(word) == 1:
+                continue
+            if word in model.wv.vocab.keys():
+                pass
+            else:
+                random += 1
+                oov.append(word)
+            count += 1
+        print("data={}, model={}, norm={}, vocab={},oov={}".
+              format(input_date_file, model_str, word_norm_option, count, random))
+        sorted(oov)
 
-    oov = list()
-    word_vocab = M[1]
-    count = 0
-    random = 0
-    for word, i in word_vocab.items():
-        nopunc=re.sub(r'[^\w\s]', '', word).strip()
-        if len(nopunc)==0:
-            continue
-        if len(word)==1:
-            continue
-        if word in model.wv.vocab.keys():
-            pass
-        else:
-            random += 1
-            oov.append(word)
-        count += 1
-    print("data={}, model={}, norm={}, vocab={},oov={}".
-          format(input_date_file, model_str, word_norm_option, count, random))
-    sorted(oov)
 
 def check_vocab_multi(models: list, input_date_file, sys_out, word_norm_option):
     raw_data = pd.read_csv(input_date_file, sep=',', encoding="utf-8")
@@ -84,13 +85,13 @@ def check_vocab_multi(models: list, input_date_file, sys_out, word_norm_option):
     count = 0
     random = 0
     for word, i in word_vocab.items():
-        found=False
+        found = False
         for m in models:
             if word in m.wv.vocab.keys():
-                found=True
+                found = True
                 break
         if not found:
-            random+=1
+            random += 1
         count += 1
     print("data={}, model=all, norm={}, vocab={},oov={}".
           format(input_date_file, word_norm_option, count, random))
@@ -111,33 +112,34 @@ def check_vocab_presence(model_file, list: []):
             print(word + ", no")
 
 
-emg_model = load_model("/home/zz/Work/data/GoogleNews-vectors-negative300.bin.gz")
-emt_model = load_model("/home/zz/Work/data/Set1_TweetDataWithoutSpam_Word.bin")
+#emg_model = load_model("/home/zz/Work/data/GoogleNews-vectors-negative300.bin.gz")
+#emt_model = load_model("/home/zz/Work/data/Set1_TweetDataWithoutSpam_Word.bin")
 eml_model = load_model("/home/zz/Work/data/glove.840B.300d.bin.gensim")
 input_data = [
-     "/home/zz/Work/chase/data/ml/ml/rm/labeled_data_all.csv",
-     "/home/zz/Work/chase/data/ml/ml/dt/labeled_data_all_2.csv",
-     "/home/zz/Work/chase/data/ml/ml/w/labeled_data_all.csv",
-     "/home/zz/Work/chase/data/ml/ml/w+ws/labeled_data_all.csv",
-     "/home/zz/Work/chase/data/ml/ml/ws-amt/labeled_data_all.csv",
-    "/home/zz/Work/chase/data/ml/ml/ws-exp/labeled_data_all.csv",
-    "/home/zz/Work/chase/data/ml/ml/ws-gb/labeled_data_all.csv"]
+
+    "/home/zz/Work/chase/data/ml/ml/dt/labeled_data_all_2.csvc.csv"]
+    # "/home/zz/Work/chase/data/ml/ml/rm/labeled_data_all.csv",
+    # "/home/zz/Work/chase/data/ml/ml/w/labeled_data_all.csv",
+    # "/home/zz/Work/chase/data/ml/ml/w+ws/labeled_data_all.csv",
+    # "/home/zz/Work/chase/data/ml/ml/ws-amt/labeled_data_all.csv",
+    # "/home/zz/Work/chase/data/ml/ml/ws-exp/labeled_data_all.csv",
+    # "/home/zz/Work/chase/data/ml/ml/ws-gb/labeled_data_all.csv"]
 output = "/home/zz/Work/chase/output"
 
 # list=["faggot"]
 # check_vocab_presence(emg_model, list)
 
 for input in input_data:
-    check_vocab(emg_model, 'google',
-                 input,
-                 output, 1)
-    check_vocab(emt_model, 'tw',
-                 input,
-                 output, 1)
+    # check_vocab(emg_model, 'google',
+    #             input,
+    #             output, 1)
+    # check_vocab(emt_model, 'tw',
+    #             input,
+    #             output, 1)
     check_vocab(eml_model, 'glv',
-                 input,
-                 output, 1)
-    #check_vocab_multi([emg_model, emt_model, eml_model], input, output, 1)
+                input,
+                output, 1)
+    # check_vocab_multi([emg_model, emt_model, eml_model], input, output, 1)
 
     # check_vocab(emg_model, 'google',
     #             input,

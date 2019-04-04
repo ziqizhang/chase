@@ -43,17 +43,18 @@ text_processor = TextPreProcessor(
 
 
 sentences = [
+    "#YouTube",
     "CANT WAIT for the new season of #TwinPeaks ＼(^o^)／!!! #davidlynch #tvseries :)))",
     "I saw the new #johndoe movie and it suuuuucks!!! WAISTED $10... #badmovies :/",
     "@SentimentSymp:  hoooolly can't wait for the Nov 9 #Sentiment talks! *VERY* good, f**k YAAAAAAY !!! :-D http://sentimentsymposium.com/.",
     "Add anotherJEW fined a bi$$ion for stealing like a lil maggot"
 ]
 
-# for s in sentences:
-#     res=text_processor.pre_process_doc(s)
-#     res=list(filter(lambda a: a != '<elongated>', res))
-#     print(res)
-# exit(1)
+for s in sentences:
+    res=text_processor.pre_process_doc(s)
+    res=list(filter(lambda a: a != '<elongated>', res))
+    print(res)
+exit(1)
 
 col_text=7
 input_data_file="/home/zz/Work/chase/data/ml/ml/rm/labeled_data_all_corrected.csv"
