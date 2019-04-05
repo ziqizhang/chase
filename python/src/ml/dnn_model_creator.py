@@ -136,7 +136,6 @@ def create_final_model_with_concat_cnn(embedding_layers, model_descriptor:str):
         x = Concatenate(axis=1)(submodel_outputs)
     else:
         x= submodel_outputs[0]
-
     parallel_layers=Model(inputs=embedding_layers[0].input, outputs=x)
     #print("submodel:")
     #parallel_layers.summary()
