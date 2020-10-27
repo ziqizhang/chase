@@ -36,7 +36,7 @@ text_processor = TextPreProcessor(
     # the tokenizer, should take as input a string and return a list of tokens
     tokenizer=SocialTokenizer(lowercase=False).tokenize,
 
-    # list of dictionaries, for replacing tokens extracted from the text,
+    # list of dictionaries, for replacing tokens extracnormalisationted from the text,
     # with other expressions. You can pass more than one dictionaries.
     dicts=[emoticons]
 )
